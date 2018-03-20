@@ -1,0 +1,219 @@
+﻿body {
+    color: #666;
+}
+.list-group-item {
+    padding: 7px 10px;
+}
+.input-group-addon {
+    padding: 6px 6px;
+}
+
+
+.box-body.querySuite-wrapper {
+    padding: 5px 5px 0px;
+}
+
+.querySuite-filter {
+    margin-bottom: 5px;
+}
+
+    .querySuite-filter td, th {
+        padding: 0px 5px 0px 5px;
+    }
+
+    .querySuite-filter th {
+        white-space:nowrap;
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .querySuite-filter .form-control {
+        height: 28px;
+        width: 150px;
+        border-radius: 4px;
+    }
+
+    .querySuite-filter .input-group-addon {
+        font-size: 12px;
+    }
+
+.querySuite-button {
+    margin: 0px -15px 5px 0;
+    float: right !important;
+}
+
+    .querySuite-button .btn {
+        padding: 3px 12px;
+    }
+
+.querySuite-table .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 4px 8px;
+}
+
+.querySuite-table .btn {
+    padding: 0px 5px 0px 5px;
+}
+
+.querySuite-paging .pagination > li > a, .pagination > li > span {
+    padding: 4px 12px;
+}
+
+.querySuite-sortable {
+    width: 12px;
+    height: 12px;
+    margin-left: 5px;
+    display: inline-block;
+    cursor: pointer;
+    background-repeat: repeat;
+}
+
+
+.querySuiteSearch {
+    left: 20px;
+    top: 20px;
+    width: 324px;
+    height: 100px;
+    position: absolute;
+    z-index: 999999;
+
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #f6f6f6;
+}
+
+    .querySuiteSearch:before, .querySuiteSearch:after {
+        content: "";
+        display: block;
+        border-width: 10px;
+        position: absolute;
+        bottom: 98px;
+        left: 20px;
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent #ccc transparent;
+        font-size: 0;
+        line-height: 0;
+    }
+
+    .querySuiteSearch:after {
+        bottom: 97px;
+        border-color: transparent transparent #f6f6f6 transparent;
+    }
+    .querySuiteSearch .btnContnet {
+        height: 30px;
+        line-height: 30px;
+        position: relative;
+    }
+
+    .querySuiteSearch .btnClose {
+        top: 0px;
+        right: 5px;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .querySuiteSearch .inputContent {
+        top: 35px;
+        padding-left: 20px;
+        position: absolute;
+    }
+
+        .querySuiteSearch .inputContent input {
+            border-radius: 2px;
+            border: 1px solid rgb(192, 192, 192);
+            border-image: none;
+            width: 220px;
+            height: 35px;
+            line-height: 35px;
+            vertical-align: middle;
+            padding-left: 5px;
+            margin-right: 10px;
+        }
+
+    .querySuiteSearch .btnSearch {
+        width: 50px;
+        height: 34px;
+        text-align: center;
+        color: rgb(255, 255, 255);
+        line-height: 34px;
+        margin-left: 10px;
+        vertical-align: middle;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+
+.formSuite-wrapper {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+    .formSuite-wrapper .modal-dialog {
+        overflow-y: auto;
+    }
+
+    .formSuite-wrapper .modal-body table {
+        width: 100%;
+    }
+
+        .formSuite-wrapper .modal-body table th {
+            width:5%;
+            text-align: right;
+        }
+        .formSuite-wrapper .modal-body table td {
+            width:45%;
+        }
+        .formSuite-wrapper .modal-body table th,.formSuite-wrapper .modal-body table td {
+            padding: 5px;
+            word-break: keep-all;white-space:nowrap;
+        }
+        
+            .formSuite-wrapper .modal-body table .error {
+                color: red;
+            }
+
+.modal-content {
+   border-radius: 6px;
+}
+.form-control {
+    border-radius: 4px;
+}
+.input-group .input-group-addon:last-of-type {
+    border-radius:0px 4px 4px 0px;
+    border-width:1px 1px 1px 0px;
+}
+
+.table {
+    margin-bottom:5px;
+}
+.box {
+    margin-bottom:0px;
+    padding-top: 5px;
+    box-shadow:0px 0px;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    vertical-align: middle;
+}
+.modal-header .close {
+    margin-top: 2px;
+}
+
+/*jquery ui autocomplete 自动显示滚动条*/
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* 防止水平滚动条 */
+    overflow-x: hidden;
+}
+/* IE 6 不支持 max-height
+   * 我们使用 height 代替，但是这会强制菜单总是显示为那个高度
+   */
+* html .ui-autocomplete {
+    height: 200px;
+}
+.ui-front{
+    z-index:10000   /*模态框弹出,需设置自动提示下拉框属性*/
+}
+

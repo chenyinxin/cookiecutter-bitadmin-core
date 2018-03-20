@@ -1,0 +1,185 @@
+﻿
+<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
+<style type="text/css">
+    .modal .panel-body {
+        padding: 0;
+    }
+</style>
+
+<div class="modal fade" id="UserSelection" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="top: 30px">
+    <div class="modal-dialog" style="width:870px;overflow-y:auto;">
+        <div class="modal-content" style="width:850px">
+            <div class="panel panel-default" style="margin-bottom:0; width:850px">
+                <div class="panel-heading">
+                    人员选择
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="panel-body">
+                    <div role="search">
+                        <table>
+                            <tr>
+                                <td class="SearchName" style="width: 60px; text-align: right">姓名：</td>
+                                <td style="width: 180px">
+                                    <input type="text" class="form-control" id="UserPickeUserName" />
+                                </td>
+                                <td>
+                                    <button class="btn btn-default navbar-btn" id="btnQuery">
+                                        <span class="glyphicon glyphicon-search"></span> 查询
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" style="width:250px; float:left">
+                <div class="panel-heading">
+                    组织架构导航
+                </div>
+                <div class="panel-body" style="height:400px">
+                    <div id="departmentTree" data-url="../../picker/GetDepData" data-text="departmentName" data-nodes="children"></div>
+                </div>
+            </div>
+            <div class="panel panel-default" style="width:250px; float:left">
+                <div class="panel-heading">
+                    未选择人员
+                </div>
+                <div class="panel-body" style="height:400px">
+                    <select name="from" id="UserSelect" class="form-control" style="height:100%" multiple="multiple"></select>
+                </div>
+            </div>
+            <div class="panel panel-default" style="width:100px; float:left">
+                <div class="panel-heading" style=" height:41px">
+                </div>
+                <div class="panel-body" style="height:400px;padding:40px 15px;">
+                    <button type="button" id="UserSelect_RightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                    <button type="button" id="UserSelect_RightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                    <button type="button" id="UserSelect_LeftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                    <button type="button" id="UserSelect_LeftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                </div>
+            </div>
+            <div class="panel panel-default" style="width:250px; float:left">
+                <div class="panel-heading">
+                    已选择人员
+                </div>
+                <div class="panel-body" style="height:400px">
+                    <select name="to" id="UserSelected" class="form-control" style="height:100%" multiple="multiple"></select>
+                </div>
+            </div>
+            <div class="modal-footer" style=" padding:0 15px 15px 0">
+                <button type="button" class="btn btn-primary" id="btnSave">
+                    <span class="glyphicon glyphicon-saved"></span> 确定
+                </button>
+                <button type="button" id="close_module" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="../../lib/framework/js/multiselect.min.js"></script>
+<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script type="text/javascript">
+    $("#UserSelection").modal('hide');//防止重复点击
+    $("#UserSelection").modal('show');
+    var param = JSON.parse($("#UserSelection").parent().attr("data-param"));
+    var valueInput = param.value;
+    var textInput = param.text;
+    var single = param.single;
+    
+    $('#UserSelect').multiselect({
+        single: single,
+        right: "#UserSelected",
+        leftAll: "#UserSelect_LeftAll",
+        rightAll: "#UserSelect_RightAll",
+        leftSelected: "#UserSelect_LeftSelected",
+        rightSelected: "#UserSelect_RightSelected"
+    });
+
+    //确定
+    $("#UserSelection #btnSave").click(function () {
+        var val = "";
+        var text = "";
+        $.each($("#UserSelected").find('option'), function (i, d) {
+            if (val != "") {
+                val += ",";
+                text += ",";
+            }
+            text += $(this).text();
+            val += $(this).val();
+        });
+
+        $(valueInput).val(val);
+        $(textInput).val(text);
+        $(textInput).change();
+        if (param.callback != undefined)
+            eval(param.callback + "()");
+
+        $("#UserSelection").modal('hide');
+
+    });
+
+    //查询
+    $("#UserSelection #btnQuery").click(function () {
+        departmentTree.load();
+    });
+
+    //加载部门
+    var departmentTree = $("#departmentTree").bitTree()
+        .load(function (result) {
+            if (result.data && result.data.length > 0) {
+                $('#departmentTree > ul >li:eq(0)').click();
+            }
+        })
+        .select(function (event, node) {
+            $("#UserPickeUserName").val();
+            bindUserInfo(node.departmentId);
+        })
+        .load();
+
+    //选择部门加载用户信息
+    function bindUserInfo(id) {
+        $("#UserSelect").find("option").remove();
+        $.ajax({
+            url: '../../picker/GetUserData',
+            type: 'post',
+            cache: false,
+            async: true,
+            data: {
+                userType: $("#picker_UserType").val(),
+                DepID: id,
+                userName: $("#UserPickeUserName").val()
+            },
+            success: function (result) {
+                $.each(result.data, function (i, d) {
+                    var isBool = true;
+                    $.each($("#UserSelected option"), function () {
+                        if ($(this).val() == d.userId)
+                            isBool = false;
+                    });
+                    if (isBool)
+                        $("#UserSelect").append('<option value="' + d.userId + '">' + d.userName + '</option>');
+                });
+            }
+        });
+    }
+
+    //加载已选的用户
+    $.ajax({
+        url: '../../picker/GetSelectUserData',
+        type: 'post',
+        cache: false,
+        async: true,
+        data: { userId: $(valueInput).val() },
+        success: function (result) {
+            $.each(result.data, function (i, d) {
+                $("#UserSelected").append('<option value="' + d.UserID + '">' + d.userName + '</option>');
+            });
+        }
+    });
+
+
+</script>

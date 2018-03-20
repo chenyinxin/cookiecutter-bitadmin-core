@@ -1,0 +1,59 @@
+﻿
+<style type="text/css">
+    .modal .panel-body {
+        padding: 0;
+    }
+</style>
+<link href="../../Content/Components/bootstrap-treeview.min.css" rel="stylesheet" />
+
+<div class="modal fade" id="Module_module" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="top: 30px">
+    <div class="modal-dialog" style="width:400px;overflow-y:auto;">
+        <div class="modal-content">
+            <div class="panel panel-default" style="margin-bottom: 0; width:100%;">
+                <div class="panel-heading">
+                    模块选择
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        <div id="Module_Tree" data-url="../../picker/GetModuleTreeData" data-text="ModuleName" data-nodes="children" style="height:300px; overflow-y:auto"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="clear_input" class="btn btn-default">
+                    <span class="glyphicon glyphicon-remove-circle"></span> 清空
+                </button>
+                <button type="button" id="close_module" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script type="text/javascript">
+    $("#Module_module").modal('hide');//防止重复点击
+    $("#Module_module").modal('show');
+    var param = JSON.parse($("#Module_module").parent().attr("data-param"));
+    var valueInput = param.value;
+    var textInput = param.text;
+    
+    $("#Module_module #Module_Tree").tree({
+        onNodeSelected: function (event, node) {
+            $(valueInput).val(node.ModuleID);
+            $(textInput).val(node.ModuleName);
+            $(textInput).change();
+            $("#Module_module").modal('hide');
+        }
+    }).load();
+
+    $("#clear_input").click(function () {
+        $(valueInput).val("");
+        $(textInput).val("");
+        $("#Module_module").modal('hide');
+    });
+</script>

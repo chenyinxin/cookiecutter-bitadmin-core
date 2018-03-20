@@ -1,0 +1,149 @@
+﻿<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="box">
+            <div class="box-body querySuite-wrapper">
+                <div class="panel-heading">
+                    组织架构导航
+                </div>
+                <div id="DPTree" data-url="../../system/GetAllDPData" data-text="departmentName" data-nodes="children"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box">
+            <div id="querySuite" class="box-body querySuite-wrapper">
+                <!-- 条件搜索 -->
+                <div class="querySuite-filter">
+                    <table>
+                        <tr>
+                            <th>部门编号:</th>
+                            <td><input type="text" name="departmentCode" class="form-control" /></td>
+                            <th>部门名称：</th>
+                            <td>
+                                <input type="text" name="departmentName" class="form-control" />
+                                <!--隐藏主键--><input type="hidden" id="parentId" name="parentId" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- 按钮 查询 导入 -->
+                <div class="querySuite-button">
+                    <button class="btn btn-default" action="query">
+                        <span class="glyphicon glyphicon-search"></span> 查询
+                    </button>
+                    <button class="btn btn-default" action="add" action-modal="formSuiteModal">
+                        <span class="glyphicon glyphicon-plus-sign"></span> 添加
+                    </button>
+                    <button class="btn btn-danger" action="delete">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </div>
+                <!-- 列表-->
+                <div class="querySuite-table"
+                     data-key="departmentId"
+                     data-query-url="../../system/GetDepartmentData"
+                     data-delete-url="../../system/DelDepartment">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:30px;"><input type="checkbox" /></th>
+                                <th data-field="departmentCode" data-format="edit">部门编号</th>
+                                <th data-field="departmentName">部门名称</th>
+                                <th data-field="departmentFullName">部门全称</th>
+                                <th data-field="createTime" data-format="time">创建时间</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- 分页 -->
+                <div class="querySuite-paging" data-page-size="10"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框（Modal）编辑数据字典信息 -->
+<div id="formSuiteModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form data-title="组织架构"
+                      data-save-url="../../system/SaveDepartment"
+                      data-load-url="../../system/LoadDepartment" method="post">
+                    <table>
+                        <tr>
+                            <th>部门编号：</th>
+                            <td>
+                                <input type="text" name="departmentCode" required class="form-control" maxlength="64" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>部门名称：</th>
+                            <td>
+                                <input type="text" name="departmentName" required class="form-control" maxlength="64">
+                                <!--隐藏主键-->
+                                <input type="hidden" name="departmentId" />
+                                <input type="hidden" name="parentDepartmentId" id="parentDepartmentId" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave" action="save">
+                    <span class="glyphicon glyphicon-saved"></span> 保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script src="../../lib/framework/js/jquery.ui.widget.js"></script>
+<script src="../../lib/framework/js/jquery.iframe-transport.js"></script>
+<script src="../../lib/framework/js/jquery.fileupload.js"></script>
+<script src="../../js/framework/BitAdmin.fileupload.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //查询套件初始化
+        var querySuite = $("#querySuite").querySuite()
+            .delete(function () {//点击删除：删除数据成功后
+                ouTree.load();
+            })
+            .query();
+
+        //表单套件初始化
+        var formSuite = $("#formSuiteModal").formSuite()
+            .add(function () {//点击添加：初始化表单后
+                $("#parentDepartmentId").val($("#parentId").val());
+            })
+            .edit(function () {//点击编辑：加载数据后
+                $("#parentDepartmentId").val($("#parentId").val());
+            })
+            .submit(function () {//点击保存：数据保存成功后
+                ouTree.load();
+            });
+
+
+        var ouTree = $("#DPTree").bitTree()
+            .load(function (result) {
+                if (result.data && result.data.length > 0) {
+                    $('#DPTree > ul >li:eq(0)').click();
+                }
+            })
+            .select(function (event, data) {
+                $("#parentId").val(data.departmentId);
+                querySuite.query();
+            })
+            .unselect(function (event, data) {
+                $("#parentId").val('');
+                querySuite.query();
+            })
+            .load();        
+    });
+</script>

@@ -1,0 +1,145 @@
+﻿
+<link rel="stylesheet" href="../../lib/framework/css/jquery.treegrid.css" />
+<div class="box">
+    <div class="box-body querySuite-wrapper">
+        <!-- 按钮 查询 导入 -->
+        <div class="querySuite-button container-fluid navbar-right">
+            <button class="btn btn-default" action="back" onclick="javascript:history.back(-1);">
+                <span class="glyphicon glyphicon-back"></span> 返回
+            </button>
+        </div>
+        <!-- 列表-->
+        <div class="querySuite-table" data-sort-name="logTime" data-sort-order="desc"
+             data-key="id" data-parent="parentId" data-children="child"
+             data-query-url="../../system/GetRoleMeunsData?Roles">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:200px;" data-field="name">页面名称</th>
+                        <th style="width:50px;text-align:center" data-formatter="allCheckFormatter">全选</th>
+                        <th data-formatter="operationFormatter">操作</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <!-- 分页 -->
+        <div class="querySuite-paging"></div>
+    </div>
+</div>
+
+<script src="../../lib/framework/js/jquery.treegrid.js"></script>
+<script type="text/javascript">
+    var saveRoleModuleData;
+    $(function () {
+        var url = BitPage.GetQueryString("page");
+        var isQuery = BitPage.GetQueryString("isQuery", url);
+        var roleId = BitPage.GetQueryString("roleId", url);
+        $(".querySuite-table").attr("data-query-url", "../../system/GetRoleMeunsData?roleId=" + roleId);
+        //初始化表格
+        var treetable = $(".querySuite-wrapper").treeTable({
+            initialState: 'expanded',
+            allCheckFormatter: function (data) {
+                if (data.type == 1) {
+                    var checked = "";
+                    var pageOperation = data.pageOperation;
+                    if (pageOperation != null && pageOperation != "null" && pageOperation != "") {
+                        var operation = pageOperation.split(',');
+                        if (data.operationSign != null && data.operationSign != "null" && data.operationSign != "") {
+                            var operationSign = data.operationSign.split(',');
+                            if (operation.length == operationSign.length) {
+                                checked = "checked";
+                            }
+                        }
+                    }
+                    var input = $('<input type="checkbox" id="' + data.id + ' "' + checked + '/>');
+                    input.bind("click", function () {
+                        var is_checked = $(this).prop("checked");
+                        if (is_checked == false) {
+                            $("." + data.id).prop('checked', false);
+                        } else {
+                            $("." + data.id).prop('checked', true);
+                        }
+                        saveRoleModuleData(data.id, data.parentId);
+                    });
+                    return input;
+                }
+                else {
+                    return "";
+                }
+            },
+            operationFormatter: function (data) {
+                var pageOperation = data.pageOperation;
+                if (pageOperation != null && pageOperation != "null" && pageOperation != "") {
+                    var operation = pageOperation.split(',');
+                    var div = $("<div></div>");
+                    $.each(operation, function (i, d) {
+                        var operationSignArr = d.split('_');
+                        var operationSign = operationSignArr[0];
+                        var operationName = operationSignArr[1];
+                        var checked = "";
+                        if (data.operationSign != null && data.operationSign != "null" && data.operationSign != "") {
+                            $.each(data.operationSign.split(','), function (i, d) {//是否选中
+                                if (operationSign == d) {
+                                    checked = "checked";
+                                    return;
+                                }
+                            });
+                        }
+                        div.append('<p style="float:left;padding:2px 10px;margin:0px;"><input type="checkbox" class="' + data.id +
+                            '" value="' + operationSign + '" onclick="saveRoleModuleData(\'' + data.id + '\',\'' + data.parentId + '\')" ' + checked + ' />' + operationName + '</p>');
+                    });
+                    return div;
+                }
+                else {
+                    return "";
+                }
+            }
+        });
+        if (isQuery != "") {
+            $("input[type=checkbox]").attr("disabled", isQuery);
+        }
+
+        saveRoleModuleData = function (modulePageId, parentId) {
+            var ckList = $("." + modulePageId + ":checked");
+            var operationSign = [];
+            if (ckList.length > 0) {
+                $.each(ckList, function (i, d) {
+                    var value = $(d).attr("value");
+                    operationSign.push(value);
+                });
+            }
+            if (ckList.length == $("." + modulePageId).length) {//全选
+                $("#" + modulePageId).prop('checked', true);
+            } else {
+                $("#" + modulePageId).prop('checked', false);
+            }
+
+            var msg = "";
+            if (operationSign.toString().toLocaleLowerCase().indexOf("query") == -1 && operationSign.length > 0) {
+                operationSign = [];
+                msg = "页面没有访问权限不能选择其她权限！";
+            }
+            $.ajax({
+                type: "post",
+                url: "../../system/saveRoleModuleData",
+                datatype: "json",
+                data: {
+                    operationSign: operationSign.toString(),
+                    modulePageId: modulePageId,
+                    roleId: roleId,
+                    parentId: parentId
+                },
+                success: function (result) {
+                    if (result.code == 0) {
+                        if (msg != "") {
+                            alert(msg);
+                            $("." + modulePageId + ",#" + modulePageId).prop('checked', false);
+                        }
+                    }
+                }
+            });
+        }
+
+    });
+</script>

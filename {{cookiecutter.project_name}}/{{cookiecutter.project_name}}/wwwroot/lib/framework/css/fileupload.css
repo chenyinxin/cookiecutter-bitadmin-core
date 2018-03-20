@@ -1,0 +1,60 @@
+﻿.fileControl-queueID {
+    background-color: #FFF;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    max-height: 200px;
+    overflow: auto;
+    padding: 5px 10px;
+    width: 100%;
+    display: none;
+    margin: 5px 0px;
+}
+
+.fileControl-table > thead > tr > th,
+.fileControl-table > tbody > tr > th,
+.fileControl-table > tfoot > tr > th,
+.fileControl-table > thead > tr > td,
+.fileControl-table > tbody > tr > td,
+.fileControl-table > tfoot > tr > td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+}
+
+.fileControl-content a {
+    margin-left: 5px;
+}
+
+    .fileControl-content a:first-child {
+        margin-left: 0px;
+    }
+
+.fileControl-btn {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.fileControl-size {
+    font-size: 13px;
+}
+
+.fileControl-color {
+    color: #777;
+}
+
+.fileControl-paddingHorizontal0 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.fileControl-margin0 {
+    margin: 0px;
+}
+
+.fileControl-padding0 {
+    padding: 0px;
+}
+
+.fileControl-marBot10 {
+    margin-bottom: 10px;
+}

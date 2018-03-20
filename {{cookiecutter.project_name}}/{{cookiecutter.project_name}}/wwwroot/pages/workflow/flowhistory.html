@@ -1,0 +1,84 @@
+﻿
+<div id="flowHistoryBlock" class="box-body querySuite-wrapper" style="display: none;">
+    <!-- 条件搜索 -->
+    <div class="querySuite-filter">
+        <table>
+            <tr>
+                <th></th>
+                <td>
+                    <!-- 隐藏控件 -->
+                    <input type="hidden" name="taskUserId" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- 按钮 查询 导入 -->
+    <div class="querySuite-button"></div>
+    <!-- 列表-->
+    <div class="querySuite-table"
+         data-key="taskUserId"
+         data-query-url="../../Workflow/GetHistory" style="text-align:left;">
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="stepName">步骤名</th>
+                    <th data-field="userName">处理人</th>
+                    <th data-field="choice">处理结果</th>
+                    <th data-field="description">处理意见</th>
+                    <th data-field="startTime" data-format="time|yyyy-MM-dd HH:mm:ss" style="width:200px;">开始时间</th>
+                    <th data-field="endTime" data-format="time|yyyy-MM-dd HH:mm:ss" style="width:200px;">结束时间</th>
+                    <th data-field="timespace">处理计时</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- 分页 -->
+    <!--<div class="querySuite-paging" data-page-size="10"></div>-->
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        var _options = workflowHisotry;
+        $('#flowHistoryBlock [name=taskUserId]').val(_options.taskUserId);
+        //查询套件初始化
+        var querySuite = $("#flowHistoryBlock")
+        .querySuite()
+        .columns["userName"].format(function (val, data) {
+            if (!data.userName)
+                return '';
+            return (data.userName) || '' + "(" + (data.userCode || '') + ")";
+        })
+        .columns["choice"].format(function (val, data) {
+            var result = '';
+            switch (data.choice) {
+                case '1':
+                    result = '同意';
+                    break;
+                case '10':
+                    result = '回退';
+                    break;
+                case '50':
+                    result = '转交';
+                    break;
+            }
+            switch (data.State) {
+                case 'Auto':
+                    result = '自动运行';
+                    break;
+                case 'void':
+                    result = '作废';
+                    break;
+                case 'ToRead':
+                    result = '待阅';
+                    break;
+                case 'ReadEnd':
+                    result = '已阅';
+                    break;
+            }
+            return result;
+        })
+        .query();
+    });
+</script>
+

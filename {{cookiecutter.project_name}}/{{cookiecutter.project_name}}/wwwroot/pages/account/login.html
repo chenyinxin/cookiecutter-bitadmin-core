@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户登录</title>
+    <meta name="description" content="BitAdminCore, Version 0.1, Alpha" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--基础引用-->
+    <link href="../../lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--框架引用-->
+    <link rel="stylesheet" href="../../css/framework/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../css/framework/BitAdmin.css" />
+    <style type="text/css">
+        .login-box-body, .form-control {
+            border-radius: 2px;
+        }
+
+        .gray {
+            -webkit-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            filter: grayscale(100%);
+            filter: gray;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="javascript:void(0);"><b>BitAdmin.Core</b></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">用户登录</p>
+            <div class="form-group has-feedback">
+                <input type="text" id="txtUserCode" class="form-control" placeholder="帐号/手机/邮箱" value="admin">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" id="txtPassword" class="form-control" placeholder="密码" value="123456">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <span id="spanmsg" style="color:red;"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8" style="padding-left: 15px;">
+                    <div class="checkbox" style="padding-left:0px;">
+                        <label>
+                            <input type="checkbox"> 记住密码
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4" style="padding-right: 15px;">
+                    <button type="button" id="btnLogin" class="btn btn-primary btn-block ">登录</button>
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="row" style="padding-left:15px;padding-top:5px;">
+                使用第三方账号登录
+            </div>
+            <div class="row" style="padding-left:8px;">
+                <a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101107448&redirect_uri=http%3A%2F%2Fbit.bitdao.cn%2Faccount%2Fqqsignin&scope=">
+                    <img style="width:48px;" src="../../images/account/qq.png" />
+                </a>
+                <a href="https://open.weixin.qq.com/connect/qrconnect?appid={0}&redirect_uri=http%3A%2F%2Fbit.bitdao.cn%2Faccount%2Fweixinsignin&response_type=code&scope=snsapi_login&state=#wechat_redirect">
+                    <img style="width:48px;" class="gray" src="../../images/account/weixin.png" />
+                </a>
+                <a href="javascript:void(0);">
+                    <img style="width:48px;" class="gray" src="../../images/account/weibo.png" />
+                </a>
+            </div>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!--基础引用-->
+    <script src="../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--组件引用-->
+    <script type="text/javascript" src="../../lib/framework/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../lib/framework/js/jquery.form.min.js"></script>
+    <!--框架引用-->
+    <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (self.frameElement && self.frameElement.tagName == "IFRAME") {
+                parent.location = this.location;
+            }
+            BitAdmin.IsLogin(function () {
+                //window.location.href = "http://www.example.com/login.html"; //外部登录时启用
+            }, "login");
+
+            $("#btnLogin").click(function () {
+                var spanmsg = $("#spanmsg");
+                var userCode = $("#txtUserCode").val();
+                if (userCode == "") {
+                    $("#spanmsg").text("请输入帐号/手机/邮箱");
+                    return;
+                }
+                var password = $("#txtPassword").val();
+                if (password == "") {
+                    $("#spanmsg").text("请输入登录密码");
+                    return;
+                }
+
+                $.showLoading();
+                $.ajax({
+                    url: "../../account/login",
+                    data: { userCode: userCode, password: password },
+                    datatype: "json",
+                    type: "post",
+                    success: function (result) {
+                        if (result.code == 0) {
+                            BitAdmin.RedirectToHomePage();
+                        } else {
+                            $("#spanmsg").text(result.msg);
+                            $("#txtPassword").val('');
+                        }
+                        $.hideLoading();
+                    },
+                    error: function (a, b, c) {
+                        alert(a.responseText);
+                        $.hideLoading();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

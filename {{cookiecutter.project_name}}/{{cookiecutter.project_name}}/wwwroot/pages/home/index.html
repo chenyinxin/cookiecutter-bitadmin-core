@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>BitAdminCore-首页</title>
+    <meta name="description" content="BitAdminCore, Version 0.1, Alpha" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--基础引用-->
+    <link href="../../lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/framework/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../css/framework/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../../css/framework/BitAdmin.css" />
+    <link href="../../lib/framework/css/spop.min.css" rel="stylesheet" />
+    <style>
+        .content-wrapper .content {
+            padding: 2px 0px 0px 0px;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+            border-bottom-color: #ddd;
+        }
+
+        #page-tabs {
+            position: relative;
+            z-index: 26;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+            margin: 0px 20px;
+        }
+
+            #page-tabs li {
+                display: inline-block;
+            }
+
+        .scrollBtn {
+            position: absolute;
+            z-index: 20;
+            width: 100%;
+            padding-right: 20px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+            .scrollBtn span {
+                cursor: pointer;
+            }
+
+        .nav-tabs > li {
+            float: none;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+    <div class="wrapper" style="margin-top:0px;">
+        <header class="main-header">
+            <a href="/pages/home/index.html" class="logo">
+                <span class="logo-mini"><b>系统</b></span>
+                <span class="logo-lg"><b>BitAdminCore</b></span>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="../../images/home/user.jpg" class="user-image">
+                                <span class="hidden-xs userName"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header">
+                                    <img src="../../images/home/user.jpg" class="img-circle">
+                                    <p>
+                                        <span class="userName"></span><span>-</span><span class="departmentName"></span>
+                                        <small class="idCard"></small>
+                                    </p>
+                                </li>
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 text-right">
+                                            <small class="mobile"></small>
+                                        </div>
+                                        <div class="col-xs-12 text-right">
+                                            <small class="email"></small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="javascript:void(1)" class="btn btn-default btn-flat changepassowrd">修改密码</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="javascript:void(1)" class="btn btn-default btn-flat signout">退出登录</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- =============================================== -->
+        <aside class="main-sidebar">
+            <section class="sidebar" style="overflow: auto;">
+                <ul class="sidebar-menu" data-widget="tree"></ul>
+            </section>
+        </aside>
+        <!-- =============================================== -->
+        <div class="content-wrapper" style="background-color:white;" mode="tab">
+            <section class="content">
+                <div class="tab-title" style="position: relative; border-bottom: 1px solid #ddd; padding:0px 5px;">
+                    <div>
+                        <a href="javascript:void(0);"><span id="Up" class="glyphicon glyphicon-chevron-left" style="float:left;margin-top:7px;"></span></a>
+                        <a href="javascript:void(0);"><span id="Down" class="glyphicon glyphicon-chevron-right" style="float:right;margin-top:7px;"></span></a>
+                    </div>
+                    <ul class="nav nav-tabs" id="page-tabs" style="border-bottom: none; position: relative; white-space: nowrap; overflow: hidden;">
+                        <li class=""><a href="#home" data-toggle="tab" aria-expanded="false">首页</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <iframe id="iframe_page_home" style="width: 100%;" src="Readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+                    </div>
+                </div>
+                
+            </section>
+        </div>
+        <!--<div class="content-wrapper" style="background-color:white;" mode="iframe">
+            <iframe id="iframe_page_home" style="width: 100%;" src="Readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+        </div>-->
+        <footer class="main-footer" style="padding: 5px;">
+            <strong>Copyright &copy; 2017-2018 <a href="javascript:void();">bitdao</a>.</strong> All rights reserved.
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0.0
+            </div>
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+    <!--基础引用-->
+    <script src="../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- 组件引用 -->
+    <script type="text/javascript" src="../../js/framework/adminlte.min.js"></script>
+    <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
+    <script type="text/javascript" src="../../js/framework/BitAdmin.frame.js"></script>
+    <script src="../../lib/framework/js/spop.min.js"></script>
+
+    <script type="text/javascript">
+        BitAdmin.IsLogin(function () {
+            $(".user").GetUserInfo();
+            $(".sidebar-menu").GetMenus();
+        }, "page");
+
+        $(window).bind("load", function () {
+            BitAdmin.setTabsWidth();
+            BitAdmin.setMentHeight();
+            $("[mode=" + BitAdmin.mode + "] iframe").height(BitAdmin.getIframeHeight());            
+        });
+
+        $(function () {
+            $(window).resize(function () {
+                BitAdmin.setTabsWidth();
+                BitAdmin.setMentHeight();
+                $("[mode=" + BitAdmin.mode + "] iframe").height(BitAdmin.getIframeHeight());
+            });
+
+            $('#Down').bind('click', function () {
+                var num = $('#page-tabs').scrollLeft();
+                $('#page-tabs').scrollLeft(num + 100);
+            });
+
+            $('#Up').bind('click', function () {
+                var num = $('#page-tabs').scrollLeft();
+                if (num < 0) {
+                    return;
+                }
+                $('#page-tabs').scrollLeft(num - 100);
+            });
+            $(".signout").click(function () {
+                $.get("../../account/signOut", function (result) {
+                    if (result.code == 0) BitAdmin.RedirectToLoginPage();
+                });
+                return false;
+            });  
+            function bitWebSocket() {
+                //消息推送
+                var uri = "ws://" + window.location.host + "/websocket/notice";
+                var socket = new WebSocket(uri);
+                socket.onopen = function (e) { write("opened " + uri); send("open"); };
+                socket.onclose = function (e) { write("closed"); };
+                socket.onmessage = function (e) { receive(e.data); };
+                socket.onerror = function (e) { write("error: " + e.data); };
+
+                function send(message) {
+                    var msgObj = {
+                        Sender: "sender",
+                        Receiver: "receiver",
+                        MessageType: "chat",
+                        Content: message
+                    };
+                    write("sending: " + JSON.stringify(msgObj));
+                    socket.send(JSON.stringify(msgObj));
+                }
+                function receive(msg) {
+                    spop({
+                        template: msg,
+                        position: 'bottom-right'
+                    });
+                }
+                function write(s) {
+                    //console.log(s);
+                }
+                function noticexample() {
+                    $.get("../../account/noticexample", function (result) { });
+                }
+                setTimeout(noticexample, 5000) 
+            }
+            bitWebSocket();
+        });
+
+    </script>
+</body>
+</html>

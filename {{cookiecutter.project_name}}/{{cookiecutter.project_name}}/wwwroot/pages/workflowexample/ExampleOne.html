@@ -1,0 +1,112 @@
+﻿
+<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
+
+<div id="exampleModal" class="formSuite-wrapper"
+     data-submit-close="false">
+    <div class="modal-content">
+        <div class="modal-body">
+            <form data-save-url="../../WorkFlowTemp/SaveCompleteExample"
+                  data-load-url="../../WorkFlowTemp/LoadCompleteExample">
+                <input type="hidden" name="exampleId" />
+                <table class="table-bordered">
+                    <tr>
+                        <th>第一步骤：</th>
+                        <td>
+                            <input name="exampleName" type="text" class="form-control required" placeholder="示例名称" />
+                        </td>
+                        <th>普通文本：</th>
+                        <td>
+                            <input name="plainText" type="text" class="form-control required" placeholder="普通文本">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div id="workflowBtn"
+                 data-type="button"
+                 data-maincode="999">
+            </div>
+            <div id="workflowHisotry"
+                 data-type="hisotry"
+                 data-maincode="999">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../../lib/framework/js/jquery.jedate.js"></script>
+<script src="../../js/workflow/workflow.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        //url取值
+        var url = BitPage.GetQueryString("page");
+        var orderId = BitPage.GetQueryString('exampleId', url);
+        var taskUserId = BitPage.GetQueryString('taskUserId', url);
+        var state = BitPage.GetQueryString('state', url);
+
+        //表单套件初始化
+        var formSuite = $("#exampleModal").generalForm()
+        .add(function () {//点击添加：初始化表单后
+
+        })
+        .edit(function (result) {//点击编辑：加载数据后
+
+        })
+        .submit(function (result) {//点击保存：数据保存成功后
+            workflowbtn.flowSubmit(result.data.exampleId, "工单名称：" + result.data.ExampleName, result.data.MobileText);
+        })
+            .load({ 'exampleId': orderId });
+
+        //按钮模块
+        $('#workflowBtn').workflow({
+            BillsCode: orderId,
+            taskUserId: taskUserId,
+            btnAuths: []    //设置按钮权限:2为保存草稿按钮 [{ Key: 2, Value: 'show' }]
+        })
+        .btnBefore(function (data) {
+            //流程审批界面 按钮点击触发事件之前
+            //0：发起按钮    1：提交按钮  2：保存数据  10：返回按钮     50：转交   100：关闭
+            //return true（继续）|false（停止）
+        })
+        .save(function (result) {
+            formSuite.submit();
+        })
+        .close(function (result) {
+            switch (state) {
+                case 'ToDo':
+                    BitPage.Redirect("/Workbench/ToDoList", null, "ToDoList", 1);
+                    break;
+                case 'Done':
+                    BitPage.Redirect("/Workbench/DoneList", null, "DoneList", 1);
+                    break;
+                case 'ToRead':
+                    BitPage.Redirect("/Workbench/ToReadList", null, "ToReadList", 1);
+                    break;
+                case 'ReadEnd':
+                    BitPage.Redirect("/Workbench/ReadEndList", null, "ReadEndList", 1);
+                    break;
+                default:
+                    BitPage.Redirect("/WorkflowExample/Example", null, "WorkflowExample");
+                    break;
+            }
+        })
+        .load(function () {//加载后的回调方法
+            //权限控制
+            workflow.SetEnabled(taskUserId, state, '1');
+        });
+
+        //审批履历模块
+        $('#workflowHisotry').workflow({
+            taskUserId: taskUserId
+        })
+        .load(function () {
+
+        });
+
+    });
+
+</script>

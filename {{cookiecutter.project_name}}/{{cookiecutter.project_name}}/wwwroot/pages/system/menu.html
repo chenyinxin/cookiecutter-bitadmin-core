@@ -1,0 +1,298 @@
+﻿
+<link rel="stylesheet" href="../../lib/framework/css/jquery.treegrid.css" />
+<div class="box">
+    <div class="box-body querySuite-wrapper">
+        <!-- 按钮 查询 导入 -->
+        <div class="querySuite-button container-fluid navbar-right" style="margin-bottom:10px;">
+            <button class="btn btn-default" action="query">
+                <span class="glyphicon glyphicon-search"></span> 查询
+            </button>
+            <button class="btn btn-default" action="add" action-modal="addModel">
+                <span class="glyphicon glyphicon-plus-sign"></span> 新增模块
+            </button>
+            <button class="btn btn-default" action="add" action-modal="addPage">
+                <span class="glyphicon glyphicon-plus-sign"></span> 新增页面
+            </button>
+            <button class="btn btn-danger" action="delete">
+                <span class="glyphicon glyphicon-trash"></span> 删除
+            </button>
+        </div>
+        <!-- 列表-->
+        <div class="querySuite-table"
+             data-parent="parentId" data-children="child"
+             data-key="id"
+             data-query-url="../../system/QueryMeunsData"
+             data-delete-url="../../system/DeleteMeunsData">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:30px;"><input type="checkbox" /></th>
+                        <th data-field="name">页面名称</th>
+                        <th data-field="pageSign">页面标识</th>
+                        <th data-field="url">页面URL</th>
+                        <th data-field="type" data-formatter="typeFormatter" style="text-align:center">类型</th>
+                        <th data-field="orderNo" style="text-align:center">排序</th>
+                        <th data-formatter="operationFormatter" style="text-align:center">操作</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <!-- 分页 -->
+        <div class="querySuite-paging" data-page-size="10"></div>
+    </div>
+</div>
+<!-- 模态框（Modal）编辑模块 -->
+<div id="addModel" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 500px;overflow-y:auto;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form data-title="模块"
+                      data-save-url="../../system/SaveModuleData"
+                      data-load-url="../../system/LoadModuleData">
+                    <table>
+                        <tr>
+                            <th>模块名称：</th>
+                            <td>
+                                <input type="hidden" name="moduleId" />
+                                <input type="text" name="moduleName" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>上级模块：</th>
+                            <td>
+                                <div class="input-group" data-control="picker" data-control-type="ModulePicker">
+                                    <input type="text" name="selectParentModule" class="form-control" />
+                                    <input type="hidden" name="parentId" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>图标ICON：</th>
+                            <td>
+                                <input type="text" name="moduleIcon" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>描述：</th>
+                            <td>
+                                <textarea name="description" class="form-control"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" action="save">
+                    <span class="glyphicon glyphicon-saved"></span> 保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal）编辑页面 -->
+<div id="addPage" class="modal fade formSuite-wrapper" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px;overflow-y:auto;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form data-title="菜单页面"
+                      data-save-url="../../system/SaveMeunsData"
+                      data-load-url="../../system/LoadMeunsData">
+                    <table>
+                        <tr>
+                            <th>页面名称：</th>
+                            <td colspan="3">
+                                <input type="hidden" name="id" />
+                                <input type="text" name="pageName" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>所属模块：</th>
+                            <td>
+                                <div class="input-group" data-control="picker" data-control-type="ModulePicker">
+                                    <input type="text" name="moduleName" class="form-control" />
+                                    <input type="hidden" name="moduleId" />
+                                </div>
+                            </td>
+                            <th>唯一标识：</th>
+                            <td>
+                                <input type="text" name="pageSign" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>页面URL：</th>
+                            <td colspan="3">
+                                <input type="text" name="pageUrl" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>页面图标：</th>
+                            <td colspan="3">
+                                <input type="text" name="pageIcon" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>描述：</th>
+                            <td colspan="3">
+                                <textarea name="pageDesc" class="form-control"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" action="save">
+                    <span class="glyphicon glyphicon-saved"></span>
+                    保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal）设置操作 -->
+<div class="modal fade" id="Modal_operation" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="overflow-y: auto; overflow-x:hidden;">
+    <div class="modal-dialog" style="width: 500px;overflow-y:auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="operationLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="formOperation" method="post">
+                    <table class="InfoTable">
+                        <tr>
+                            <td style="padding:5px; width:40px; text-align:center">
+                                <input type="checkbox" id="ckOperationAll" title="全选">
+                            </td>
+                            <td id="td_Operation"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnOperationSave" action="save">
+                    <span class="glyphicon glyphicon-saved"></span>
+                    保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="../../lib/framework/js/jquery.treegrid.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var treetable = $(".querySuite-wrapper").treeTable({
+            initialState: 'expanded',
+            operationFormatter: function (data) {
+                var span = $("<span></span>");
+                var updateSpan = $('<span class="btn btn-link">修改</span>');
+                updateSpan.bind('click', function () {
+                    if (data.type == 1)
+                        addPageSuite.load({ id: data.id });
+                    else
+                        addModelSuite.load({ id: data.id });
+                });
+                span.append(updateSpan);
+                if (data.type == 1) {
+                    var operationSpan = $('<span class="btn btn-link">设置操作</span>');
+                    operationSpan.bind('click', function () {
+                        operation(data.id, data.name);
+                    });
+                    span.append(operationSpan);
+                }
+                return span;
+            },
+            typeFormatter: function (data) {
+                return data.type == 0 ? "模块" : "页面";
+            }
+        });
+
+        //设置页面操作全选
+        $("#ckOperationAll").change(function () {
+            var is_checked = $(this).prop("checked");
+            if (is_checked == false) {
+                $("#td_Operation").find("input").prop('checked', false);
+            } else {
+                $("#td_Operation").find("input").prop('checked', true);
+            }
+        });
+
+        //设置页面操作
+        function operation(id, name) {
+            $("#td_Operation").find("p").remove();
+            $.ajax({
+                type: "post",
+                url: "../../system/GetPageOperationData",
+                datatype: "json",
+                data: { id: id },
+                success: function (result) {
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return false;
+                    }
+                    $.each(result.data, function (i, d) {
+                        var checked = "";
+                        if (d.PageID != null && d.PageID != "")
+                            checked = "checked";
+                        $("#td_Operation").append('<p style="float: left;padding:2px 10px;"><input type="checkbox" name="Operation" value="' + d.operationSign + '" ' + checked + '/>' + d.operationName + '</p>');
+                    });
+                    $("#ckOperationAll").attr("value", id);
+                    $("#ckOperationAll").prop('checked', false);
+                    $("#operationLabel").text("设置【" + name + "】页面操作");
+                    $("#Modal_operation").modal('show');
+                }
+            });
+        }
+
+        //表单套件初始化
+        var addPageSuite = $("#addPage").formSuite()
+            .submit(function () {
+                treetable.query();
+            });
+        var addModelSuite = $("#addModel").formSuite()
+            .submit(function () {
+                treetable.query();
+            });
+
+        //保存页面操作
+        $("#btnOperationSave").click(function () {
+            var ckList = $("#td_Operation").find("input:checked");
+            var DataList = [];
+            if (ckList.length > 0) {
+                $.each(ckList, function (i, d) {
+                    var value = $(d).attr("value");
+                    DataList.push(value);
+                });
+            }
+            var pageID = $("#ckOperationAll").attr("value");
+            $.ajax({
+                type: "post",
+                url: "../../system/SavePageOperationData",
+                datatype: "json",
+                async: false,
+                data: { operationSign: DataList.toString(), PageID: pageID },
+                success: function (result) {
+                    alert(result.msg);
+                    if (result.code == 0) {
+                        $("#Modal_operation").modal('hide');
+                    }
+                }
+            });
+        });
+    });
+
+</script>

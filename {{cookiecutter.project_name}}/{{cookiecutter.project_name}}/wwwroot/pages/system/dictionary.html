@@ -1,0 +1,121 @@
+﻿<div class="box">
+    <div class="box-body querySuite-wrapper">
+        <!-- 条件搜索 -->
+        <div class="querySuite-filter">
+            <table>
+                <tr>
+                    <th>字典分类:</th>
+                    <td><input type="text" name="type" class="form-control"></td>
+                    <th>字典成员：</th>
+                    <td><input type="text" name="member" class="form-control"></td>
+                    <th>成员名称：</th>
+                    <td><input type="text" name="memberName" class="form-control"></td>
+                </tr>
+            </table>
+        </div>
+        <!-- 按钮 查询 导入 -->
+        <div class="querySuite-button">
+            <button class="btn btn-default" action="query">
+                <span class="glyphicon glyphicon-search"></span> 查询
+            </button>
+            <button class="btn btn-default" action="add" action-modal="myModal">
+                <span class="glyphicon glyphicon-plus-sign"></span> 添加
+            </button>
+            <button class="btn btn-danger" action="delete">
+                <span class="glyphicon glyphicon-trash"></span> 删除
+            </button>
+        </div>
+        <!-- 列表-->
+        <div class="querySuite-table" data-sort-name="OrderNo" data-sort-order="desc"
+             data-key="type,member"
+             data-query-url="../../system/QueryDictionary"
+             data-delete-url="../../system/DeleteDictionary">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:30px;"><input type="checkbox" /></th>
+                        <th data-field="type" data-format="edit">字典分类</th>
+                        <th data-field="member">字典成员</th>
+                        <th data-field="memberName">成员名称</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <!-- 分页 -->
+        <div class="querySuite-paging" data-page-size="10"></div>
+    </div>
+</div>
+<!-- 模态框（Modal）编辑数据字典信息 -->
+<div id="myModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form data-title="数据字典"
+                      data-save-url="../../system/SaveDictionary"
+                      data-load-url="../../system/LoadDictionary">
+                    <table>
+                        <tr>
+                            <th>字典分类：</th>
+                            <td>
+                                <input name="type" id="Type" class="form-control required" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>字典成员：</th>
+                            <td>
+                                <input type="text" id="Member" name="member" class="form-control required">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>成员名称：</th>
+                            <td>
+                                <input type="text" name="memberName" class="form-control required">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>描述：</th>
+                            <td>
+                                <input type="text" name="describe" class="form-control">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>排序：</th>
+                            <td>
+                                <input type="text" name="orderNo" class="form-control required number">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" action="save">
+                    <span class="glyphicon glyphicon-saved"></span> 保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        //查询套件初始化
+        var querySuite = $(".querySuite-wrapper").querySuite().query();
+
+        //表单套件初始化
+        var formSuite = $("#myModal").formSuite()
+            .add(function () {//点击添加：初始化表单后
+                $('#Type').attr('readonly', false);
+                $('#Member').attr('readonly', false);
+            })
+            .edit(function () {//点击编辑：加载数据后
+                $('#Type').attr('readonly', true);
+                $('#Member').attr('readonly', true);
+            })
+            .submit(function () {//点击保存：数据保存成功后
+                querySuite.query();
+            });
+    });
+
+</script>

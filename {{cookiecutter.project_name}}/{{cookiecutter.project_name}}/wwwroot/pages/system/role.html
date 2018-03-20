@@ -1,0 +1,290 @@
+﻿
+<div class="row">
+    <div class="col-md-3">
+        <div class="box">
+            <div class="box-body querySuite-wrapper">
+                <!-- 按钮 -->
+                <div class="querySuite-button container-fluid">
+                    <button class="btn btn-default" action="add" action-modal="AddRole">
+                        <span class="glyphicon glyphicon-plus-sign"></span> 添加
+                    </button>
+                    <button class="btn btn-default" action="add" id="btnRoleUpdate">
+                        <span class="glyphicon glyphicon-list-alt"></span> 修改
+                    </button>
+                    <button class="btn btn-danger" action="delete" id="btnRoleDel">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </div>
+
+                <ul class="list-group" id="roleList" style="min-height: 250px; overflow: auto;width:100%;margin-top:10px;"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box">
+            <div class="box-body querySuite-wrapper querySuite-user">
+                <!-- 条件搜索 -->
+                <div class="querySuite-filter">
+                    <table>
+                        <tr>
+                            <th>姓名:</th>
+                            <td>
+                                <input type="text" name="userName" class="form-control" />
+                                <input type="hidden" id="roleId" name="roleId" />
+                                <input type="hidden" id="roleName" />
+                            </td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- 按钮 查询 导入 -->
+                <div class="querySuite-button">
+                    <button class="btn btn-default" action="query">
+                        <span class="glyphicon glyphicon-search"></span>
+                        查询
+                    </button>
+                    <button class="btn btn-default" action="add" id="btnAddUser">
+                        <span class="glyphicon glyphicon-user"></span>
+                        设置角色人员
+                    </button>
+                    <input type="hidden" id="UserInfo" />
+                    <button class="btn btn-default" action="add" id="btnAddRole">
+                        <span class="glyphicon glyphicon-cog"></span>
+                        设置角色权限
+                    </button>
+                    <button class="btn btn-default" action="query" id="btnQueryPower">
+                        <span class="glyphicon glyphicon-search"></span>
+                        查看角色权限
+                    </button>
+                </div>
+                <!-- 列表-->
+                <div class="querySuite-table"
+                     data-query-url="../../system/QueryRoleUserData">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-field="userName">姓名</th>
+                                <th data-field="departmentFullName">部门</th>
+                                <th data-field="post">职位</th>
+                                <th data-field="mobile">联系电话</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- 分页 -->
+                <div class="querySuite-paging"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框（Modal）编辑角色组 -->
+<div id="AddRole" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form data-title="角色"
+                      data-save-url="../../system/SaveRoleData"
+                      data-load-url="../../system/LoadRoleEdit"
+                      id="form" method="post">
+                    <table class="InfoTable">
+                        <tr>
+                            <th>角色名称：</th>
+                            <td>
+                                <input type="hidden" name="id" />
+                                <input type="text" name="roleName" required class="form-control" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" action="save">
+                    <span class="glyphicon glyphicon-saved"></span>
+                    保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal）编辑数据字典信息 -->
+<div id="myModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true"
+     data-title-add="添加数据字典" data-title-edit="修改数据字典">
+    <div class="modal-dialog" style="width: 500px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="SaveOperationData"
+                      data-load-url="LoadOperation" method="post">
+                    <table>
+                        <tr>
+                            <th>标识：</th>
+                            <td>
+                                <input type="hidden" name="id" />
+                                <input type="text" name="OperationSign" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>名称：</th>
+                            <td>
+                                <input type="text" name="operationName" required class="form-control" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave" action="save">
+                    <span class="glyphicon glyphicon-saved"></span> 保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="../../lib/framework/js/jquery.treegrid.js"></script>
+<script type="text/javascript">
+        var querySuite;
+        $(function () {
+            //查询套件初始化
+            querySuite = $(".querySuite-user").querySuite().query();
+
+            //表单套件初始化
+            var formSuite = $("#AddRole").formSuite()
+                .submit(function () {
+                    getRoleData();
+                });
+
+            //加载角色组
+            function getRoleData() {
+                $("#roleList").html('');
+                $.ajax({
+                    url: '../../system/GetRoleData',
+                    type: 'post',
+                    cache: false,
+                    success: function (result) {
+                        if (result.code == 1) {
+                            alert(result.msg);
+                            return false;
+                        }
+                        $.each(result.data, function (i, d) {
+                            var li = $('<li class="list-group-item">' + d.roleName + '</li>');
+                            if (i == 0) {
+                                li.addClass("active");
+                                $("#roleId").val(d.id);
+                                $("#roleName").val(d.roleName);
+                                querySuite.query();
+                            }
+                            li.bind("click", function () {
+                                $(this).parent().find('.active').removeClass("active");
+                                $(this).addClass("active");
+                                $("#roleId").val(d.id);
+                                $("#roleName").val(d.roleName);
+                                querySuite.query();
+                            });
+                            $("#roleList").append(li);
+                        });
+                    }
+                });
+            }
+
+            //修改角色组
+            $("#btnRoleUpdate").click(function () {
+                formSuite.load({ id: $("#roleId").val() });
+            });
+
+            //删除角色组
+            $("#btnRoleDel").click(function () {
+                if (confirm("您确定要删除所选内容吗？")) {
+                    $.ajax({
+                        type: "get",
+                        url: '../../system/DelRoleData',
+                        datatype: "json",
+                        data: {
+                            roleId: $("#roleId").val()
+                        },
+                        success: function (result) {
+                            alert(result.msg);
+                            if (result.code == 0) {
+                                getRoleData();
+                            }
+                        }
+                    });
+                }
+            });
+
+            //设置角色用户
+            $("#btnAddUser").click(function () {
+                $.showLoading();
+                $.ajax({
+                    url: '../../system/LoadRoleUserEdit',
+                    type: 'post',
+                    cache: false,
+                    async: true,
+                    data: {
+                        roleId: $("#roleId").val()
+                    },
+                    success: function (result) {
+                        var userID = "";
+                        if (result.data != "") {
+                            $.each(result.data, function (i, d) {
+                                if (userID != "")
+                                    userID += ",";
+                                userID += d.userId;
+                            });
+                        }
+                        $("#UserInfo").val(userID);
+                        if ($("#departmentSelectPicker").length == 0)
+                            $("body").append('<div id="departmentSelectPicker"></div>');
+                        var _data = {
+                            text: "",
+                            value: "#UserInfo",
+                            callback:'saveRoleUser',
+                            single:'false'
+                        }
+                        $("#departmentSelectPicker").attr("data-param", JSON.stringify(_data));
+                        $("#departmentSelectPicker").load("../../pages/picker/userpicker.html");
+                        $.hideLoading();
+                    }
+                });
+
+            });
+
+            //设置角色权限
+            $("#btnAddRole").click(function () {
+                BitPage.Redirect("system/roleOperate", { isQuery: "", roleId: $("#roleId").val(), roleName: $("#roleName").val() }, "Role");
+            });
+
+            //查看角色权限
+            $("#btnQueryPower").click(function () {
+                BitPage.Redirect("system/roleOperate", { isQuery: "disabled", roleId: $("#roleId").val(), roleName: $("#roleName").val() }, "Role");
+            });
+            getRoleData();
+        });
+
+        //将用户保存到角色组下（选择用户后回调函数）
+        function saveRoleUser() {
+            $.showLoading();
+            $.ajax({
+                url: '../../system/SaveRoleUserData',
+                type: 'post',
+                cache: false,
+                async: true,
+                data: {
+                    roleId: $("#roleId").val(),
+                    userId: $("#UserInfo").val()
+                },
+                success: function (result) {
+                    if (result)
+                        querySuite.query();
+                    $.hideLoading();
+                }
+            });
+        }
+</script>

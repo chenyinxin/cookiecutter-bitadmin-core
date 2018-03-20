@@ -1,0 +1,894 @@
+﻿<style type="text/css">
+    .table-centent th {
+        background-color: white;
+    }
+
+    .table-centent td {
+        text-align: center;
+    }
+
+    #FlowHandleModal, #FlowTransferModal {
+        text-align: left;
+    }
+
+    .margin-top5 {
+        margin: 5px 0px;
+    }
+</style>
+<div id="WorkflowBtnGroup" style="margin-bottom: 10px;"></div>
+
+<!-- 发起、提交、回退 -->
+<div id="FlowHandleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="FlowHandleModalLab" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="FlowHandleModalLab">下一环节处理信息</h4>
+            </div>
+            <div class="modal-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist" id="NextStepList"></ul>
+                <!-- Tab panes -->
+                <div class="tab-content" style="max-height:350px;overflow-y:auto;">
+                    <div class="tab-pane active" id="FlowNextStep">
+                        <table class="table table-bordered" style="margin-bottom: 0px; border: 1px solid #dddddd;">
+                            <tbody>
+                                <tr>
+                                    <td style="background-color: #E5F0FA; font-weight:bold;" class="ToDoBlock"><span>请选择【环节处理人】<span style="color: red;">*</span></span></td>
+                                    <td style="background-color: #E5F0FA; font-weight:bold;" class="ToDoResultBlock"><span>【环节处理人】选择结果<span style="color: red;">*</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="ToDoBlock">
+                                        <div>
+                                            <!-- 环节处理人 -->
+                                            <table class="table table-bordered table-hover table-centent">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 50px; text-align: center;">操作</th>
+                                                        <th style="width: 45%; text-align: center;">登录账号</th>
+                                                        <th style="width: auto; text-align: center;">姓名</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="stepUserList"></tbody>
+                                            </table>
+                                            <nav aria-label="Page navigation" class="text-right" id="StepUserListPage">
+                                                <ul class="pagination margin-top5"></ul>
+                                            </nav>
+                                        </div>
+                                    </td>
+                                    <td class="ToDoResultBlock">
+                                        <div>
+                                            <!-- 环节处理人选择结果 -->
+                                            <table class="table table-bordered table-hover table-centent">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 50px; text-align: center;">操作</th>
+                                                        <th style="width: 45%; text-align: center;">登录账号</th>
+                                                        <th style="width: auto; text-align: center;">姓名</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="stepUserList_To"></tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="ToReadBlock">
+                                    <td style="background-color: #E5F0FA; font-weight:bold;">请选择【环节传阅人】</td>
+                                    <td style="background-color: #E5F0FA; font-weight:bold;">【环节传阅人】选择结果</td>
+                                </tr>
+                                <tr class="ToReadBlock">
+                                    <td>
+                                        <!-- 环节传阅人 -->
+                                        <table class="table table-bordered table-hover table-centent">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50px; text-align: center;">操作</th>
+                                                    <th style="width: 45%; text-align: center;">登录账号</th>
+                                                    <th style="width: auto; text-align: center;">姓名</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="CirculationUserList"></tbody>
+                                        </table>
+                                        <div class="paging">
+                                            <nav aria-label="Page navigation" class="text-right" id="CirculationUserListPage">
+                                                <ul class="pagination margin-top5"></ul>
+                                            </nav>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- 环节传阅人选择结果 -->
+                                        <table class="table table-bordered table-hover table-centent">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50px; text-align: center;">操作</th>
+                                                    <th style="width: 45%; text-align: center;">登录账号</th>
+                                                    <th style="width: auto; text-align: center;">姓名</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="circulationUserList_To"></tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- 处理结果 -->
+                                <tr>
+                                    <td colspan="2" style="background-color: #E5F0FA; font-weight:bold;">处理结果</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <textarea placeholder="处理结果" rows="5" class="form-control" name="FlowTreatmentResult"></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" name="SaveData">
+                    <span class="glyphicon glyphicon-ok"></span> 确 定
+                </button>
+                <button class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-off"></span> 关 闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 转交 -->
+<div id="FlowTransferModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="FlowTransferModalLab" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">转交-人员选择</h4>
+            </div>
+            <div class="modal-body" style="padding-top: 0px; ">
+                <div class="navbar-form navbar-right">
+                    <div class="row" style="padding:8px 5px 0px 0px;">
+                        <input type="text" class="form-control" style="width:300px;" id="keyTransfer" placeholder="通过人员和电话号码查询！">
+                        <button type="submit" class="btn btn-success" id="searchTransfer">查询</button>
+                    </div>
+                </div>
+                <table class="table table-bordered table-hover table-centent">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center;"></th>
+                            <th style="width: 250px; text-align: center;">登录账号</th>
+                            <th style="width: auto; text-align: center;">姓名</th>
+                            <th style="width: auto; text-align: center;">联系方式</th>
+                        </tr>
+                    </thead>
+                    <tbody id="TransferList"></tbody>
+                </table>
+                <nav aria-label="Page navigation" class="text-right" id="TransferListPage">
+                    <ul class="pagination margin-top5"></ul>
+                </nav>
+                <div class="row" style="margin:0px;">
+                    <textarea placeholder="转交意见" rows="5" class="form-control" name="DescriptionTransfer"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" name="SaveDataTransfer">
+                    <span class="glyphicon glyphicon-ok"></span> 确 定
+                </button>
+                <button class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-off"></span> 关 闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var defaultoptions = {
+            mainCode: null,
+            taskUserId: null,
+            expression: null,
+            condition: null,
+            btnAuths: []
+        }
+        var _options = $.extend(true, defaultoptions, workflowbtn);
+        //选择结果：环节处理人列表
+        _options.stepUserList_To = [];
+        _options.processType = '';//处理类型
+        //环节处理人列表
+        _options.stepUserList = [];
+        //下一处理环节
+        _options.nextStepList_To = [];//[{ StepId: data.StepId, StepName: data.StepName, UserCount:0), nextStepIsEnd: _options.nextStepIsEnd }]
+        _options.nextStepList_ToEx = [];//[{ StepId: data.StepId, StepName: data.StepName, UserCount:0), nextStepIsEnd: _options.nextStepIsEnd }]
+        _options.selectNextStep = null;
+        _options.nextStepIsEnd = false;
+        //当前处理环节信息
+        _options.nowStepRunMode = null;//当前处理环节 后续步骤启动方式[auto,select]
+        _options.nowIsAgainHandleStep = false;//当前环节 是否重新处理的环节
+
+        //加载页面
+        _options.OnLoadPage = function () {
+            _options.GetNextStep();
+        }
+
+        //发起、提交、回退 确定
+        $('#FlowHandleModal [name=SaveData]').click(function () {
+            _options.nextStepList_ToEx = array.removeAll(_options.nextStepList_ToEx);
+            $.each(_options.nextStepList_To, function (index, value) {
+                if (value.processType == _options.processType) {
+                    _options.nextStepList_ToEx.push(value);
+                }
+            });
+            //验证
+            if (!_options.nextStepIsEnd) {
+                if (_options.nextStepList_ToEx.length == 0) {
+                    alert('请选择下一处理环节！');
+                    return;
+                }
+                if (_options.nowStepRunMode == 'auto' && !_options.nowIsAgainHandleStep && _options.nextStepList_ToEx.length != $('#FlowHandleModal #NextStepList li').length) {
+                    alert('请为所有环节选择处理人！');
+                    return;
+                }
+                var IsPass = true;
+                $.each(_options.nextStepList_ToEx, function (index, value) {
+                    if (value.userCount == 0) {
+                        IsPass = false;
+                        return false;
+                    }
+                });
+                if (!IsPass) {
+                    alert('请为所有环节选择处理人！');
+                    return;
+                }
+            }
+            _options._saveCallback({
+                NextStepList: _options.nextStepList_ToEx,
+                stepUserList: _options.stepUserList_To,
+                FlowTreatmentResult: $('#FlowHandleModal [name=FlowTreatmentResult]').val(),
+                processType: _options.processType
+            });
+        });
+        //发起流程 入库
+        _options.StartFlow = function (workOrderName, workOrderCode, billsType) {
+            $.showLoading();
+            $.ajax({
+                url: '../../Workflow/StartFlow',
+                cache: false,
+                type: "post",
+                data: {
+                    mainCode: _options.mainCode,
+                    parentId: _options.parentId,
+                    billsCode: _options.billsCode,
+                    description: $('#FlowHandleModal [name=FlowTreatmentResult]').val(),
+                    nextStepList_To: _options.nextStepList_ToEx,
+                    stepUserList_To: _options.stepUserList_To,
+                    workOrderName: workOrderName,
+                    workOrderCode: workOrderCode,
+                    billsType: billsType,
+                    circulationUserList_To: _options.circulationUserList_To
+                },
+                success: function (result) {
+                    $.hideLoading();
+                    $('#FlowHandleModal').modal('hide');
+                    if (result.code == 0) {
+                        _options._closeCallback({ processType: _options.processType });
+                    }
+                    else {
+                        alert(result.msg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('发起流程失败，请联系管理员！');
+                    $.hideLoading();
+                }
+            });
+        }
+        //流程提交、回退 入库
+        _options.SubmitNextStep = function () {
+            $.showLoading();
+            $.ajax({
+                url: '../../Workflow/SubmitNextStep',
+                cache: false,
+                type: "post",
+                data: {
+                    taskUserId: _options.taskUserId,
+                    agree: _options.condition,
+                    description: $('#FlowHandleModal [name=FlowTreatmentResult]').val(),
+                    nextStepList_To: _options.nextStepList_ToEx,
+                    stepUserList_To: _options.stepUserList_To,
+                    circulationUserList_To: _options.circulationUserList_To
+                },
+                success: function (result) {
+                    $.hideLoading();
+                    if (result.code != 0) {
+                        alert('流程提交失败，请联系管理员！');
+                        return;
+                    }
+                    $('#FlowHandleModal').modal('hide');
+                    _options._closeCallback({ processType: _options.processType });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('流程提交失败，请联系管理员！');
+                    $.hideLoading();
+                }
+            });
+        }
+        //流程提交
+        workflowbtn.flowSubmit = function (billsCode, workOrderName, workOrderCode, billsType) {
+            _options.billsCode = billsCode;
+            switch (_options.processType) {
+                case 0:
+                    //发起流程
+                    _options.StartFlow(workOrderName, workOrderCode, billsType);
+                    break;
+                case 2:
+                    _options._closeCallback({ processType: _options.processType });
+                    break;
+                case 1:
+                case 10:
+                    //提交下一步 回退
+                    _options.SubmitNextStep();
+                    break;
+                case 50:
+                    //转交
+                    _options.TransferNextStep();
+                    break;
+            }
+        }
+
+        //设置流转参数
+        workflowbtn.setExpression = function (expression) {
+            workflowbtn.expression = expression;
+            _options.expression = expression;
+        }
+
+        //获取操作按钮
+        var GetFlowBtnList = function () {
+            $.showLoading();
+            $.ajax({
+                url: '../../Workflow/GetFlowBtn',
+                cache: false,
+                type: "POST",
+                data: {
+                    billsCode: _options.billsCode,
+                    taskUserId: _options.taskUserId,
+                    mainCode: _options.mainCode,
+                    btnAuths: _options.btnAuths
+                },
+                success: function (result) {
+                    $.hideLoading();
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return;
+                    }
+                    var _btnGroup = $('#WorkflowBtnGroup');
+                    _btnGroup.html('');
+                    $.each(result.data, function (index, element) {
+                        var className = ['', ''];
+                        switch (element.condition) {
+                            case 0:
+                                //Open 发起流程
+                                className[0] = 'btn-primary';
+                                className[1] = 'glyphicon-saved';
+                                break;
+                            case 1:
+                                //Open 提交下一步
+                                className[0] = 'btn-primary';
+                                className[1] = 'glyphicon-arrow-right';
+                                break;
+                            case 2:
+                                //Open 保存数据
+                                className[0] = 'btn-primary notHide';
+                                className[1] = 'glyphicon-saved';
+                                break;
+                            case 10:
+                                //Open 回退
+                                className[0] = 'btn-primary';
+                                className[1] = 'glyphicon-arrow-left';
+                                break;
+                            case 50:
+                                //Open 转交
+                                className[0] = 'btn-primary';
+                                className[1] = "glyphicon-transfer";
+                                break;
+                            case 100:
+                                //关闭
+                                className[0] = 'btn-default notHide';
+                                className[1] = "glyphicon-remove";
+                                break;
+                            default:
+                                break;
+                        }
+                        var span = $('<button class="btn ' + className[0] + '"><span class="glyphicon ' + className[1] + '"></span> ' + element.btnName + '</button>');
+                        span.bind('click', function () {
+                            _options.FlowBtnClick(element.condition);
+                        });
+                        _btnGroup.append(span);
+                    })
+                    if ($.isFunction(_options._loadCallback)) {
+                        _options._loadCallback();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('获取按钮权限失败，请联系管理远');
+                    console.log(XMLHttpRequest.responseText)
+                }
+            });
+        }
+        GetFlowBtnList();
+
+        //获取当前处理环节信息
+        var GetNowStep = function () {
+            $.ajax({
+                url: '../../Workflow/GetNowStep',
+                cache: false,
+                type: "POST",
+                async: false,
+                data: {
+                    taskUserId: _options.taskUserId,
+                    mainCode: _options.mainCode,
+                    linkCode: ''
+                },
+                success: function (result) {
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return;
+                    }
+                    _options.nowStepRunMode = result.data.runMode;
+                    _options.nowIsAgainHandleStep = result.data.nowIsAgainHandleStep;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('获取环节信息失败，请联系管理员');
+                    console.log(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        GetNowStep();
+
+        //获取下一环节数据集
+        _options.GetNextStep = function () {
+            $.showLoading();
+            $.ajax({
+                url: '../../Workflow/GetNextStep',
+                cache: false,
+                type: "POST",
+                data: {
+                    mainCode: _options.mainCode,
+                    taskUserId: _options.taskUserId,
+                    expression: _options.expression,
+                    condition: _options.condition
+                },
+                success: function (result) {
+                    $.hideLoading();
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return;
+                    }
+                    var _obj = $("#FlowHandleModal #NextStepList");
+                    _obj.html('');
+                    $.each(result.data, function (index, element) {
+                        var span = $('<li role="presentation" class="' + (index == 0 ? 'active' : '') + '">' + '<a href="#FlowNextStep" role="tab" data-toggle="tab" >' + element.stepName + '</a></li>');
+                        span.click(function () {
+                            _options.clickStepName(element.stepId, element.stepName, element.stepStatus, element.circularize);
+                        });
+                        _obj.append(span);
+                        if (index == 0)
+                            span.click();
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('获取下一环节数据集失败，请联系管理员');
+                    console.log(XMLHttpRequest.responseText);
+                    $.hideLoading();
+                }
+            })
+        }
+
+        //流程按钮单击事件
+        _options.FlowBtnClick = function (condition) {
+            //0：发起按钮    1：提交按钮  2：保存数据  10：返回按钮     50：转交   100：关闭
+            _options.processType = condition;
+            if ($.isFunction(_options._btnBeforeCallback)) {
+                if (_options._btnBeforeCallback(condition) == false)
+                    return;
+            }
+            $.showLoading();
+            switch (condition) {
+                case 0:
+                    //Open 发起流程
+                    _options.condition = '1';
+                    $('#FlowHandleModal').modal('show');
+                    _options.stepUserList = array.removeAll(_options.stepUserList);
+                    _options.OnLoadPage();
+                    break;
+                case 1:
+                    //Open 提交下一步
+                    _options.condition = '1';
+                    $('#FlowHandleModal').modal('show');
+                    _options.OnLoadPage();
+                    break;
+                case 2:
+                    _options.condition = '2';
+                    _options._saveCallback({
+                        NextStepList: null,
+                        stepUserList: null,
+                        FlowTreatmentResult: null,
+                        processType: _options.processType
+                    });
+                    $.hideLoading();
+                    break;
+                case 10:
+                    //Open 回退
+                    _options.condition = '10';
+                    $('#FlowHandleModal').modal('show');
+                    _options.OnLoadPage();
+                    break;
+                case 50:
+                    //Open 转交
+                    _options.condition = '50';
+                    $('#FlowTransferModal').modal('show');
+                    _options.getTransfer();
+                    break;
+                case 100:
+                    //关闭
+                    _options._closeCallback({ processType: _options.processType });
+                    break;
+                default:
+                    _options.condition = '';
+                    $.hideLoading();
+                    break;
+            }
+        }
+
+        //操作块权限
+        _options.HandleBlock = function (val, type) {
+            if (type == "ToDo") {
+                if (val != '100' && _options.processType != 10) {
+                    $('#FlowNextStep .ToDoBlock').show();
+                    $('#FlowNextStep .ToDoResultBlock').removeAttr('colspan');
+                }
+                else {
+                    $('#FlowNextStep .ToDoBlock').hide();
+                    $('#FlowNextStep .ToDoResultBlock').attr("colspan", "2");
+                }
+                if (val != '100') {
+                    $('#FlowNextStep .ToDoResultBlock').show();
+                    $('#FlowHandleModal #stepUserList_To tr').hide();
+                    $('#FlowHandleModal #stepUserList_To tr[data-stepId=' + _options.selectNextStep + ']').show();
+                    _options.nextStepIsEnd = false;
+                }
+                else {
+                    $('#FlowNextStep .ToDoResultBlock').hide();
+                    _options.nextStepIsEnd = true;
+                }
+                _options.GetStepUserList(1, 4, "ToDo");
+            }
+            else if (type == "Read") {
+                if (val == "Circularize") {
+                    _options.GetCirculationUserList(1, 4);
+                    $('#FlowNextStep .ToReadBlock').show();
+                    $('#FlowHandleModal #circulationUserList_To tr').hide();
+                    $('#FlowHandleModal #circulationUserList_To tr[data-stepId=' + _options.selectNextStep + ']').show();
+                }
+                else {
+                    $('#FlowNextStep .ToReadBlock').hide();
+                }
+            }
+        }
+
+        //环节tab 点击事件
+        _options.clickStepName = function (stepId, stepName, stepStatus, circularize) {
+            _options.selectNextStep = stepId;
+            _options.HandleBlock(stepStatus, 'ToDo');
+            _options.HandleBlock(circularize, 'Read');
+            //根据 后续步骤启动方式   做出处理
+            if (_options.nowStepRunMode == 'auto' && !_options.nowIsAgainHandleStep) {
+                var isAdd = true;
+                $.each(_options.nextStepList_To, function (index, value) {
+                    if (value.stepId == stepId) {
+                        isAdd = false;
+                        return false;
+                    }
+                });
+                if (isAdd)
+                    _options.nextStepList_To.push({ stepId: stepId, stepName: stepName, userCount: 0, processType: _options.processType });
+            }
+            else {
+                _options.nextStepList_To = [];
+                var userCount = 0;
+                $.each(_options.stepUserList_To, function (index, value) {
+                    if (value.stepId == _options.selectNextStep) {
+                        userCount++;
+                    }
+                });
+                _options.nextStepList_To.push({ stepId: stepId, stepName: stepName, userCount: userCount, processType: _options.processType });
+            }
+        }
+
+        //获取所有人
+        _options.getUsers = function (key, PageIndex, PageSize, type) {
+            $.showLoading();
+            $.ajax({
+                url: '../../Workflow/GetUsers',
+                cache: false,
+                type: 'POST',
+                data: { Key: key, stepId: _options.selectNextStep || '', PageIndex: PageIndex, PageSize: PageSize },
+                success: function (result) {
+                    $.hideLoading();
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return;
+                    }
+                    switch (type) {
+                        case 'transfer':
+                            var _userlist = $('#FlowTransferModal #TransferList');
+                            _userlist.html('');
+                            $.each(result.data, function (index, value) {
+                                var checked = _options.checkuserTransfer == value.UserId ? 'checked' : '';
+                                var span = $('<tr>' +
+                                                '<td style="width:auto;"><input type="radio" name="TransferGroup" ' + checked + ' /></td>' +
+                                                '<td style="width:auto;">' + value.UserCode + '</td>' +
+                                                '<td style="width:auto;">' + value.UserName + '</td>' +
+                                                '<td style="width:auto;">' + (value.Mobile || '') + '</td>' +
+                                            '</tr>');
+                                span.find('input[type=radio]').bind('click', function () {
+                                    _options.checkTransfer(value);
+                                });
+                                _userlist.append(span);
+                            });
+                            $('#TransferListPage').pagination({
+                                pageIndex: PageIndex,
+                                pageSize: PageSize,
+                                totalContent: result.total,
+                                loadCallback: function (PageIndex, PageSize) {
+                                    _options.getUsers(key, PageIndex, PageSize, 'transfer');
+                                }
+                            });
+                            break;
+                            //case 'Read':
+                            //    var _userlist = $('#FlowHandleModal #CirculationUserList');
+                            //    _userlist.html('');
+                            //    $.each(result.Data, function (index, value) {
+                            //        var span = $('<tr>' +
+                            //                        '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
+                            //                        '<td style="width:auto;">' + value.UserCode + '</td>' +
+                            //                        '<td style="width:auto;">' + value.UserName + '</td>' +
+                            //                    '</tr>');
+                            //        span.find('a').bind('click', function () {
+                            //            _options.CirculationUserAdd(value);
+                            //        });
+                            //        _userlist.append(span);
+                            //    });
+                            //    $('#CirculationUserListPage').pagination({
+                            //        pageIndex: PageIndex,
+                            //        pageSize: PageSize,
+                            //        totalContent: result.Total,
+                            //        loadCallback: function (PageIndex, PageSize) {
+                            //            _options.getUsers(key, PageIndex, PageSize, 'Read');
+                            //        }
+                            //    });
+                            //    break;
+                    }
+
+                },
+                error: function (xhr, textStatus, err) {
+                    alert('获取人员列表失败，请联系管理员');
+                    console.log(err.responseText);
+                    $.hideLoading();
+                }
+            });
+        }
+
+        //环节处理人列表
+        _options.GetStepUserList = function (PageIndex, PageSize, Type) {
+            $.showLoading();
+            $.ajax({
+                url: '../../Workflow/GetStepUsers',
+                cache: false,
+                type: "POST",
+                data: {
+                    stepId: _options.selectNextStep,
+                    taskUserId: _options.taskUserId,
+                    condition: _options.condition,
+                    Type: Type,
+                    PageIndex: PageIndex,
+                    PageSize: PageSize
+                },
+                success: function (result) {
+                    $.hideLoading();
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return;
+                    }
+                    if (Type == "Read") {
+                        var _userlist = $('#FlowHandleModal #CirculationUserList');
+                        _userlist.html('');
+                        $.each(result.data, function (index, value) {
+                            var span = $('<tr>' +
+                                            '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
+                                            '<td style="width:auto;">' + value.userCode + '</td>' +
+                                            '<td style="width:auto;">' + value.userName + '</td>' +
+                                        '</tr>');
+                            span.find('a').bind('click', function () {
+                                _options.CirculationUserAdd(value);
+                            });
+                            _userlist.append(span);
+                        });
+                        $('#CirculationUserListPage').pagination({
+                            pageIndex: PageIndex,
+                            pageSize: PageSize,
+                            totalContent: result.total,
+                            loadCallback: function (PageIndex, PageSize) {
+                                _options.GetStepUserList(PageIndex, PageSize, 'Read');
+                            }
+                        });
+                    }
+                    else {
+                        var _userlist = $('#FlowHandleModal #stepUserList');
+                        _userlist.html('');
+                        _options.stepUserList = result.data;
+                        $.each(result.data, function (index, value) {
+                            var span = $('<tr>' +
+                                            '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
+                                            '<td style="width:auto;">' + value.userCode + '</td>' +
+                                            '<td style="width:auto;">' + value.userName + '</td>' +
+                                        '</tr>');
+                            span.find('a').bind('click', function () {
+                                _options.StepUserAdd(value);
+                            });
+                            _userlist.append(span);
+                        });
+
+                        if (_options.processType == '10' && result.data != null && result.data.length > 0) {
+                            _options.StepUserAdd(result.data[0]);
+                        }
+
+                        $('#StepUserListPage').pagination({
+                            pageIndex: PageIndex,
+                            pageSize: PageSize,
+                            totalContent: result.total,
+                            loadCallback: function (PageIndex, PageSize) {
+                                _options.GetStepUserList(PageIndex, PageSize, "ToDo");
+                            }
+                        });
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('获取环节处理人列表失败，请联系管理员');
+                    console.log(XMLHttpRequest.responseText);
+                    $.hideLoading();
+                }
+            });
+        }
+        //添加环节处理人
+        _options.StepUserAdd = function (data) {
+            var isAdd = true;
+            $.each(_options.stepUserList_To, function (index, value) {
+                if (value.userId == data.userId && value.stepId == _options.selectNextStep) {
+                    isAdd = false;
+                    return false;
+                }
+            });
+            if (isAdd) {
+                _options.stepUserList_To.push(data);
+                var span = $('<tr data-value="' + data.userId + '" data-stepId="' + data.stepId + '">' +
+                                '<td style="width:auto;"><a href="javascript:void(0);">移除</a></td>' +
+                    '<td style="width:auto;">' + data.userCode + '</td>' +
+                    '<td style="width:auto;">' + data.userName + '</td>' +
+                            '</tr>');
+                span.find('a').bind('click', function () {
+                    _options.StepUserRemove(data);
+                });
+                $('#FlowHandleModal #stepUserList_To').append(span);
+                debugger;
+                $.each(_options.nextStepList_To, function (index, value) {
+                    debugger;
+                    if (value.stepId == _options.selectNextStep) {
+                        value.userCount = value.userCount + 1;
+                        return false;
+                    }
+                });
+            }
+        }
+        //移除环节处理人
+        _options.StepUserRemove = function (data) {
+            _options.stepUserList_To = array.remove(_options.stepUserList_To, data);
+            $('#FlowHandleModal #stepUserList_To tr[data-value=' + data.userId + '][data-stepId=' + data.stepId + ']').remove();
+            $.each(_options.nextStepList_To, function (index, value) {
+                if (value.dtepId == _options.selectNextStep) {
+                    value.userCount = value.userCount - 1;
+                    return false;
+                }
+            });
+        }
+
+        //目标转交人
+        _options.checkuserTransfer = '';
+        //获取转交人员
+        _options.getTransfer = function () {
+            _options.getUsers($('#FlowTransferModal #keyTransfer').val(), 1, 4, 'transfer');
+        }
+        $('#FlowTransferModal #searchTransfer').click(function () {
+            _options.getTransfer();
+        });
+        //转交 确定
+        $('#FlowTransferModal [name=SaveDataTransfer]').click(function () {
+            if (!_options.checkuserTransfer && _options.checkuserTransfer.length == 0) {
+                alert("请选择人员！");
+                return;
+            }
+            _options._saveCallback({
+                NextStepList: _options.checkuserTransfer,
+                stepUserList: '',
+                FlowTreatmentResult: $('#FlowTransferModal [name=DescriptionTransfer]').val(),
+                processType: _options.processType
+            });
+        });
+        //转交流程 入库
+        _options.TransferNextStep = function () {
+            $.showLoading();
+            $.ajax({
+                url: '../../Workflow/TransferNextStep',
+                cache: false,
+                type: "post",
+                data: {
+                    taskUserId: _options.taskUserId,
+                    description: $('#FlowTransferModal [name=DescriptionTransfer]').val(),
+                    UserId: _options.checkuserTransfer
+                },
+                success: function (result) {
+                    $.hideLoading();
+                    if (result.code == 1) {
+                        alert('流程转交失败，请联系管理员！');
+                        return;
+                    }
+                    $('#FlowTransferModal').modal('hide');
+                    _options._closeCallback({ processType: _options.condition });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('流程转交失败，请联系管理员！');
+                    console.log(XMLHttpRequest.responseText)
+                    $.hideLoading();
+                }
+            });
+        }
+        //选中转交人
+        _options.checkTransfer = function (data) {
+            _options.checkuserTransfer = data.userId;
+        }
+
+
+        //环节传阅人列表
+        _options.circulationUserList_To = [];
+        //获取环节传阅人数据源
+        _options.GetCirculationUserList = function (pageindex, pagesize) {
+            _options.GetStepUserList(1, 4, 'Read');
+        }
+        //添加环节传阅人
+        _options.CirculationUserAdd = function (data) {
+            debugger;
+            var isAdd = true;
+            $.each(_options.circulationUserList_To, function (index, value) {
+                if (value.userId == data.userId && value.stepId == _options.selectNextStep) {
+                    isAdd = false;
+                    return false;
+                }
+            });
+            if (isAdd) {
+                _options.circulationUserList_To.push(data);
+                var span = $('<tr data-value="' + data.userId + '" data-stepId="' + data.stepId + '">' +
+                               '<td style="width:auto;"><a href="javascript:void(0);" onclick="">移除</a></td>' +
+                    '<td style="width:auto;">' + data.userCode + '</td>' +
+                    '<td style="width:auto;">' + data.userName + '</td>' +
+                           '</tr>');
+                span.find('a').bind('click', function () {
+                    _options.CirculationUserRemove(data);
+                });
+                $('#FlowHandleModal #circulationUserList_To').append(span);
+            }
+        }
+        //移除环节传阅人
+        _options.CirculationUserRemove = function (data) {
+            _options.circulationUserList_To = array.remove(_options.circulationUserList_To, data);
+            $('#FlowHandleModal #circulationUserList_To tr[data-value=' + data.userId + '][data-stepId=' + data.stepId + ']').remove();
+        }
+    });
+</script>

@@ -1,0 +1,160 @@
+﻿<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
+<style>
+</style>
+<div id="exampleModal" class="formSuite-wrapper"
+     data-submit-close="false">
+    <div class="modal-content">
+        <div class="modal-body">
+            <form data-save-url="../../Example/SaveExample"
+                  data-load-url="../../Example/LoadExample">
+                <table class="table-bordered">
+                    <tr>
+                        <th>示例名称：</th>
+                        <td>
+                            <input type="hidden" name="id" />
+                            <input name="exampleName" type="text" class="form-control required" placeholder="示例名称" />
+                        </td>
+                        <th>普通文本：</th>
+                        <td>
+                            <input name="exampleText" type="text" class="form-control required" placeholder="普通文本">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>单选：</th>
+                        <td>
+                            <label data-control="bitRadio" data-control-type="DicUrl" data-type="A" data-text="memberName" data-value="member" data-inline="true" data-control-name="radioChange">
+                                <input type="radio" name="exampleRadio">
+                            </label>
+                        </td>
+                        <th>复选：</th>
+                        <td>
+                            <label data-control="bitCheckbox" data-control-type="DicUrl" data-type="b" data-text="memberName" data-value="member" data-inline="true">
+                                <input type="checkbox" name="exampleCheckbox">
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>下拉框：</th>
+                        <td>
+                            <select class="form-control" name="exampleSelect" data-control="bitSelect" data-control-type="DicUrl" data-type="A" data-text="memberName" data-value="member"></select>
+                        </td>
+                        <th>电话号码：</th>
+                        <td>
+                            <input type="text" name="examplePhone" class="form-control phone required" placeholder="电话号码">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>下拉联动(异步)：</th>
+                        <td>
+                            <div id="linkageSelectTrue" data-url="../../Example/GetLinkageSelect" data-ajax="true" data-text="departmentName" data-value="departmentId">
+                                <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectD"></select>
+                                <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectE"></select>
+                                <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectF"></select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>下拉联动(同步)：</th>
+                        <td>
+                            <div id="linkageSelectFalse" data-url="../../Example/QueryTreeTableData" data-ajax="false" data-text="departmentName" data-value="departmentId">
+                                <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectA"></select>
+                                <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectB"></select>
+                                <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectC"></select>
+                            </div>
+                        </td>
+                        <th>日期时间：</th>
+                        <td>
+                            <div data-control="datePicker" data-format="yyyy-MM-dd HH:mm:ss" data-control-name="selectChange">
+                                <input type="text" name="exampleTime" class="form-control" placeholder="日期时间" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>用户：</th>
+                        <td>
+                            <div class="input-group" data-control="picker" data-control-type="UserPicker" data-param="single:true">
+                                <input type="text" name="userName" class="form-control" placeholder="用户" />
+                                <input type="hidden" name="exampleUser" />
+                            </div>
+                        </td>
+                        <th>部门：</th>
+                        <td>
+                            <div class="input-group" data-control="picker" data-control-type="OUPicker" data-param="single:false">
+                                <input type="text" name="departmentName" class="form-control" placeholder="部门" />
+                                <input type="hidden" name="department" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>自动提示文本</th>
+                        <td>
+                            <input class="form-control" data-control="bitAutoComplete" id="inputAutoCmplete" name="autoComplete" data-text="member" data-control-type="DicUrl" data-type="A" />
+                        </td>
+                        <th>自动提示下拉框</th>
+                        <td>
+                            <input type="text" data-control="bitAutoComSelect" data-control-type="DicUrl" name="autoComSelectText" class="form-control" data-target="autoComSelect" data-text="memberName" data-value="member" data-type="A" />
+                            <input type="hidden" name="autoComSelect" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary notHide" id="save">
+                 <span class="glyphicon glyphicon-saved"></span> 保存
+            </button>
+            <button class="btn btn-default notHide" id="close">
+                 <span class="glyphicon glyphicon-remove"></span>关闭
+            </button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/framework/js/jquery.jedate.js"></script>
+<script type="text/javascript">
+   
+    $(function () {
+        var url = BitPage.GetQueryString("page");
+        var id = BitPage.GetQueryString('id', url);
+
+        var linkageSelectTrue = $("#linkageSelectTrue").linkageSelect().change(function (e) {
+        });
+        //同步
+        var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) {     
+        });       
+
+        //表单套件初始化
+        var formSuite = $("#exampleModal").generalForm()
+            .add(function () {//点击添加：初始化表单后
+            })
+            .edit(function (result) {//点击编辑：加载数据后
+                linkageSelectFalse.wrapper.find('select:first').change();
+
+                linkageSelectTrue.wrapper.find('select:first').change();
+            })
+            .controls["selectChange"].change(function (a) {
+                debugger
+            })
+            .load({ "id": id });
+
+        //radio回调事件
+        $("body").on("change", "#myModal :radio[name=exampleRadio]", function () { })
+
+        //checkbox回调事件
+        $("body").on("change", "#myModal :checkbox[name=exampleCheckbox]", function () { })
+
+        $("#save").click(function () {
+            formSuite.submit();
+            BitPage.Redirect("/Templates/ExampleRedirect", null, "CompleteRedirect");
+        })
+        $("#close").click(function () {
+
+            BitPage.Redirect("/Templates/ExampleRedirect", null, "CompleteRedirect");
+        });
+       
+    });
+
+    
+
+</script>

@@ -1,0 +1,99 @@
+﻿<div class="box" id="tabSource">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation"><a href="#step0" role="tab" data-toggle="tab"></a></li>
+        <li role="presentation"><a href="#step1" role="tab" data-toggle="tab"></a></li>
+        <li role="presentation"><a href="#step2" role="tab" data-toggle="tab"></a></li>
+        <li role="presentation"><a href="#step3" role="tab" data-toggle="tab"></a></li>
+        <li role="presentation"><a href="#step4" role="tab" data-toggle="tab"></a></li>
+        <li role="presentation"><a href="#step5" role="tab" data-toggle="tab"></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade" id="step0">
+            <iframe data-src="/WorkflowExample/ExampleEdit.LayoutFlow" style="width:100%;" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="step1">
+            <iframe data-src="/WorkflowExample/ExampleOne.LayoutFlow" style="width:100%;" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="step2">
+            <iframe data-src="/WorkflowExample/ExampleTwo.LayoutFlow" style="width:100%;" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="step3">
+            <iframe data-src="/WorkflowExample/ExampleThree.LayoutFlow" style="width:100%;" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="step4">
+            <iframe data-src="/WorkflowExample/ExampleFour.LayoutFlow" style="width:100%;" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="step5">
+            <iframe data-src="/WorkflowExample/ExampleFive.LayoutFlow" style="width:100%;" frameborder="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/workflow/workflow.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $('#tabSource ul li a').hide();
+        $('#tabSource .tab-content>div>iframe').css('height', $(window).height() - 105);
+        var url = BitPage.GetQueryString("page");
+        var orderId = BitPage.GetQueryString('orderId', url);
+        var taskUserId = BitPage.GetQueryString('taskUserId', url);
+        var state = BitPage.GetQueryString('state', url);
+
+        $(window).resize(function () {
+            $('#tabSource .tab-content>div>iframe').css('height', $(window).height() - 105);
+        });
+
+        function GetTabSource() {
+            $.ajax({
+                url: '../../Workflow/GetTabSource',
+                cache: false,
+                type: "Get",
+                data: {
+                    "taskUserId": taskUserId
+                },
+                success: function (result) {
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return;
+                    }
+                    if (result.data != null && result.data.length > 0) {
+                        var currentStepId = result.data[0].currentStepId;
+                        $.each(result.data, function (index, val) {
+                            $('#tabSource ul li a[href="#step' + val.linkCode + '"]').text(val.stepName);
+                            if (val.stepId == currentStepId) {
+                                var showTabIndexs = val.showTabIndex.split(',');
+                                $.each(showTabIndexs, function (index2, tabIndex) {
+                                    var _a = $('#tabSource ul li a[href="#step' + tabIndex + '"]');
+                                    _a.show();
+                                    _a.click(function () {
+                                        var _iframe = $('#tabSource .tab-content #step' + tabIndex + " iframe");
+                                        if (_iframe.attr('src') == '' || _iframe.attr('src') == null) {
+                                            var src = _iframe.attr('data-src');
+                                            src = BitPage.GetRedirect({ "tabUrl": src, "param": { "exampleId": orderId, "state": state, "taskUserId": taskUserId }, "tabSign": "WorkflowExample" });
+                                            _iframe.attr('src', src);
+                                        }
+                                    });
+                                });
+                                $('#tabSource ul li a[href="#step' + val.linkCode + '"]').click();
+                            }
+                        });
+                    }
+                    else {
+                        currentStepId = null;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("获取数据，请联系管理员");
+                    console.log(XMLHttpRequest.responseText);
+                }
+            });
+        }
+        GetTabSource();
+
+        //流程待阅 操作
+        workflow.workFlowRead(taskUserId, state);
+    });
+</script>

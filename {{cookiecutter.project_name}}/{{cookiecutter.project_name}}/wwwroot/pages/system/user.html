@@ -1,0 +1,144 @@
+﻿<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="box">
+            <div class="box-body querySuite-wrapper">
+                <div class="panel-heading">
+                    组织架构
+                </div>
+                <div id="DPTree" data-url="../../system/GetAllDPData" data-text="departmentName" data-nodes="children"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box">
+            <div id="querySuite" class="box-body querySuite-wrapper">
+                <!-- 条件搜索 -->
+                <div class="querySuite-filter">
+                    <table>
+                        <tr>
+                            <th>姓名:</th>
+                            <td><input type="text" name="userName" class="form-control" /></td>
+                            <th></th>
+                            <td>
+                                <input type="hidden" id="parentId" name="parentId" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- 按钮 查询 导入 -->
+                <div class="querySuite-button">
+                    <button class="btn btn-default" action="query">
+                        <span class="glyphicon glyphicon-search"></span> 查询
+                    </button>
+                    <button class="btn btn-default" action="add" action-modal="formSuiteModal">
+                        <span class="glyphicon glyphicon-plus-sign"></span> 添加
+                    </button>
+                    <button class="btn btn-danger" action="delete">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </div>
+                <!-- 列表-->
+                <div class="querySuite-table"
+                     data-key="userId"
+                     data-query-url="../../system/QueryUserData"
+                     data-delete-url="../../system/DeleteUser">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:30px;"><input type="checkbox" /></th>
+                                <th data-field="userCode" data-format="edit">工号</th>
+                                <th data-field="userName">姓名</th>
+                                <th data-field="post">职位</th>
+                                <th data-field="mobile">联系电话</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- 分页 -->
+                <div class="querySuite-paging" data-page-size="10"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框（Modal）编辑数据字典信息 -->
+<div id="formSuiteModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form data-title="用户信息"
+                      data-save-url="../../system/SaveUser"
+                      data-load-url="../../system/LoadUser">
+                    <table>
+                        <tr>
+                            <th>工号：</th>
+                            <td>
+                                <input type="hidden" name="userId">
+                                <input name="userCode" required class="form-control required" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>姓名：</th>
+                            <td>
+                                <input name="userName" class="form-control required" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>电话号码：</th>
+                            <td>
+                                <input type="text" name="mobile" class="form-control phone" placeholder="电话号码">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>所属部门：</th>
+                            <td>
+                                <div class="input-group" data-control="picker" data-control-type="OUPicker" data-control-name="DepartmentPicker" data-param="single:true">
+                                    <input type="text" name="departmentName" class="form-control required" placeholder="部门" />
+                                    <input type="hidden" name="departmentId" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave" action="save">
+                    <span class="glyphicon glyphicon-saved"></span>保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        //查询套件初始化
+        var querySuite = $("#querySuite").querySuite();
+
+        //表单套件初始化
+        var formSuite = $("#formSuiteModal").formSuite()
+            .submit(function () {
+                querySuite.query();
+            });
+
+        //加载组织架构
+        var ouTree = $("#DPTree").bitTree()
+            .load(function (result) {
+                if (result.data && result.data.length > 0) {
+                    $('#DPTree > ul >li:eq(0)').click();
+                    querySuite.query();
+                }
+            })
+            .select(function (event, data) {
+                $("#parentId").val(data.departmentId);
+                querySuite.query();
+            })
+            .load();
+    });
+</script>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>首页</title>
+    <meta name="description" content="BitAdmin, Version 0.1, Alpha" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 8]>
+    <script>alert("Incompatible web browser.");</script>
+    <![endif]-->
+    <!--基础引用-->
+    <link href="../../lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--jquery-ui css-->
+    <link rel="stylesheet" href="../../lib/framework/css/jquery-ui.css">
+    <!--组件引用-->
+    <link rel="stylesheet" href="../../css/framework/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../css/framework/skins/_all-skins.min.css">
+    <!--框架引用-->
+    <link rel="stylesheet" href="../../css/framework/BitAdmin.css" />
+    <link rel="stylesheet" href="../../css/framework/AdminSuite.css" />
+
+    <style>
+        .fixed .content-wrapper, .fixed .right-side {
+            padding-top: 0px;
+        }
+
+        .content-wrapper, .main-footer {
+            margin-left: 0px;
+        }
+    </style>
+
+    <!--基础引用-->
+    <script src="../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--juqery-ui-min-->
+    <script src="../../lib/framework/js/jquery-ui.min.js"></script>
+    <!--组件引用-->
+    <script type="text/javascript" src="../../lib/framework/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../../lib/framework/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="../../js/framework/adminlte.min.js"></script>
+    <!-- 框架引用 -->
+    <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
+    <script type="text/javascript" src="../../js/framework/adminSuite.tools.js"></script>
+    <script type="text/javascript" src="../../js/framework/adminSuite.js"></script>
+    <script type="text/javascript">
+        BitAdmin.IsLogin(function () {
+            BitPage.LoadContent();
+        });
+
+        $.adminSetup({
+            addLogs: function (title, type, msg) { BitAdmin.AddLogs(title, type, msg); },
+            Pickers: {
+                OUPicker: "../Picker/OUSelection.html",
+                UserPicker: "../Picker/UserSelection.html",
+                ModulePicker: "../Picker/ModuleSelection.html",
+            },
+            DataApis: {
+                DicUrl: "../../SysInfoManage/GetDictionary"
+            }
+        });
+    </script>
+</head>
+<body class="hold-transition skin-blue">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <section class="content"></section>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,8 +1,5 @@
 {
-	"module_name": "bitadmin_module_name",
-	"service": "bitadmin_service",
-	"repo_group": "bitadmin_repo_group",
-	"repo_name": "bitadmin_repo_name",
-	"launchpad_project": "bitadmin_launchpad_project",
-	"project_short_description": "bitadmin_project_short_description"
+  "project_name": "BitAdminCore",
+  "author": "chenyinxin@163.com",
+  "description": "NET Core管理应用系统快速开发框架"
 }

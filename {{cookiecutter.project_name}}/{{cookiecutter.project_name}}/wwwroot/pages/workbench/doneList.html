@@ -1,0 +1,86 @@
+﻿
+<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
+
+<div class="box">
+    <div id="exampleQuery" class="box-body querySuite-wrapper">
+        <!-- 条件搜索 -->
+        <div class="querySuite-filter">
+            <table>
+                <tr>
+                    <th>流程类型：</th>
+                    <td>
+                        <input type="text" name="name" class="form-control">
+                        <!-- 隐藏控件 -->
+                        <input type="hidden" name="state" value="Done" />
+                    </td>
+                    <th>当前处理环节：</th>
+                    <td><input type="text" name="stepName" class="form-control"></td>
+                    <th>待办结束时间：</th>
+                    <td>
+                        <div data-control="dataPicker" data-formatter="yyyy-MM-dd">
+                            <input type="text" name="startDate" class="form-control" />
+                        </div>
+                    </td>
+                    <th>至</th>
+                    <td>
+                        <div data-control="dataPicker" data-formatter="yyyy-MM-dd">
+                            <input type="text" name="endDate" class="form-control" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- 按钮 查询 导入 -->
+        <div class="querySuite-button">
+            <button class="btn btn-default" action="query">
+                <span class="glyphicon glyphicon-search"></span> 查询
+            </button>
+        </div>
+        <!-- 列表-->
+        <div class="querySuite-table"
+             data-order-by="BRU.endTime"
+             data-order-type="DESC"
+             data-key="taskUserId"
+             data-query-url="../../WorkFlow/GetWorkbenchList">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-field="name">流程类型</th>
+                        <th data-field="workOrderName">工单名称</th>
+                        <th data-field="stepName">处理环节</th>
+                        <th data-field="userName">环节处理人</th>
+                        <th data-field="startTime" data-format="time|yyyy-MM-dd HH:mm:ss" style="width:200px;">待办开始时间</th>
+                        <th data-field="endTime" data-format="time|yyyy-MM-dd HH:mm:ss" style="width:200px;">待办结束时间</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <!-- 分页 -->
+        <div class="querySuite-paging" data-page-size="10"></div>
+    </div>
+</div>
+
+<script src="../../lib/framework/js/jquery.jedate.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //查询套件初始化
+        var querySuite = $("#exampleQuery").querySuite()
+        .columns["workOrderName"].format(function (val, data) {
+            var span = $('<span class="btn btn-link">' + (val || '') + '</span>');
+            span.bind('click', function () {
+                switch (data.mainCode) {
+                    case "999":
+                        BitPage.Redirect("/WorkflowExample/ExampleTab", { orderId: data.billsCode, state: $('.querySuite-filter [name=state]').val(), taskUserId: data.taskUserId }, "WorkflowExample");
+                        break;
+                    case '':
+                        break;
+                }
+            });
+            return span;
+        })
+        .columns["userName"].format(function (val, data) {
+            return data.userName + "(" + data.userCode + ")";
+        })
+        .query();
+    });
+</script>
