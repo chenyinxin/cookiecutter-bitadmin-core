@@ -34,7 +34,7 @@ namespace {{cookiecutter.project_name}}
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            //services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //登录认证
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -50,6 +50,7 @@ namespace {{cookiecutter.project_name}}
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                HttpContextCore.ConfigurationFile = "appsettings.Development.json";
             }
 
             HttpContextCore.ServiceProvider = svc;
@@ -57,7 +58,7 @@ namespace {{cookiecutter.project_name}}
             app.UseSession();
             //静态文件
             string fileupload= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UploadFiles") ;
-            if (Directory.Exists(fileupload)) Directory.CreateDirectory(fileupload);
+            if (!Directory.Exists(fileupload)) Directory.CreateDirectory(fileupload);
             app.UseStaticFiles().UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(fileupload),
