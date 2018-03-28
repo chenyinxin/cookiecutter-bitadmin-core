@@ -1,8 +1,14 @@
 # 框架使用说明
-
-## 新建项目
-* 创建项目数据库，分别初始化 bitadmin.mssql.tables.sql(表结构)、bitadmin.mssql.datas.sql（初始数据）数据库脚本。
-* 运行以下命令生成实体:<br>
+`BitAdminCore`是基于`net core`的`管理应用``快速开发框架`，为管理应用开发提供必要的`基础功能`。<br>
+示例地址：http://bit.bitdao.cn <br>
+技术支持：http://doc.bitdao.cn <br>
+## 创建项目
+* 使用`Visual Studio 2017` 的 `Cookiecutter` 创建项目。
+* 创建项目数据库，分别初始化脚本:`bitadmin.mssql.tables.sql`(表结构)、`bitadmin.mssql.datas.sql`（数据）。
+* 运行以下命令生成实体(`注意修改数据库连接`):<br>
   `Scaffold-DbContext “data source=.;initial catalog=BitAdminCore;user id=sa;password=123456;” Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context DataContext -Force`<br>
-  可能出现`Build failed.`原因我也不知道，新建一个net core项目，生成之后，把实体文件拷贝过来即可。<br>
-* F5运行项目
+  可能出现`Build failed.`原因我也不知道，问`微软`或`想办法`。<br>
+  `EFCore`技术相关问题，从官方获得支持。<br>
+* 修改`appsettings.json`和`appsettings.Development.json`的`数据库连接`。
+* `F5`运行项目。
+
