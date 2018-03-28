@@ -180,7 +180,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                QuerySuite querySuite = new QuerySuite(this, "userName asc");
+                QuerySuite querySuite = new QuerySuite(this, "orderNo asc");
                 querySuite.Select("select * from SysUser");
                 querySuite.AddParam(" and departmentId=@departmentId", new SqlParameter("departmentId", parentId));
                 querySuite.AddParam("userName", "like");
@@ -261,14 +261,34 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 删除页面操作
         /// </summary>
         /// <returns></returns>
-        public JsonResult DeleteUser(string IDs)
+        public JsonResult DeleteUser(string ids)
         {
             try
             {
-                string sql = QuerySuite.DeleteSql(IDs, "SysUser", "UserID");
+                string sql = QuerySuite.DeleteSql(ids, "SysUser", "UserID");
                 var result = SqlHelper.ExecuteSql(sql);
 
                 return Json(new { Code = 0, Msg = "删除成功" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        /// <summary>
+        /// 用户拖动排序
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult SortUser(string ids)
+        {
+            try
+            {
+                string sql = QuerySuite.SortSql(ids, "SysUser", "orderNo", "UserID");
+                var result = SqlHelper.ExecuteSql(sql);
+
+                return Json(new { Code = 0, Msg = "保存成功" });
             }
             catch (Exception ex)
             {
@@ -552,18 +572,15 @@ namespace {{cookiecutter.project_name}}.Controllers
                     formSuite.ToModel(model);
                     ModuleID = Guid.NewGuid();
                     model.ModuleId = ModuleID.Value;
-                    
-                    //int OrderNo = dbContext.Database.SqlQuery<int>(@"select ISNULL(MAX(OrderNo),0) from SysModule 
-                    //    where ISNULL(cast(parentId as varchar(50)),'')=@parentId and OrderNo <90 ",
-                    //    new SqlParameter("@parentId", parentId.HasValue ? parentId.Value.ToString() : "")).FirstOrDefault();
-                    //model.OrderNo = OrderNo + 1;
+                    int OrderNo = (int)SqlHelper.GetSingle(@"select ISNULL(MAX(OrderNo),0) from SysModule 
+                        where ISNULL(cast(parentId as varchar(50)),'')=@parentId and OrderNo <90 ",
+                        new SqlParameter("@parentId", parentId.HasValue ? parentId.Value.ToString() : ""));
+                    model.OrderNo = OrderNo + 1;
                     dbContext.SysModule.Add(model);
 
                     //添加操作和权限
-                    string sql = string.Format(@"insert into SysPageOperation values(newid(),'{0}','query')
-                                    insert into SysRoleOperatePower values(newid(),'3F9578C5-C0A2-4C7A-B0FD-C93FAE47194B','{0}','query',null)"
-                                    , model.ModuleId);
-                    SqlHelper.ExecuteSql(sql);
+                    dbContext.SysPageOperation.Add(new SysPageOperation() { Id = Guid.NewGuid(), PageId = model.ModuleId, OperationSign = "query" });
+                    dbContext.SysRoleOperatePower.Add(new SysRoleOperatePower() { Id = Guid.NewGuid(), RoleId = Guid.Parse("3F9578C5-C0A2-4C7A-B0FD-C93FAE47194B"), ModulePageId = model.ModuleId, OperationSign = "query" });
                 }
                 dbContext.SaveChanges();
 
@@ -629,23 +646,21 @@ namespace {{cookiecutter.project_name}}.Controllers
                     formSuite.ToModel(model);
                     id = Guid.NewGuid();
                     model.Id = id.Value;
-                    //int OrderNo = dbContext.Database.SqlQuery<int>(@"select ISNULL(MAX(OrderNo),0) from (
-                    //                    SELECT  parentId,OrderNo
-                    //                    FROM SysModule module
-                    //                    UNION
-                    //                    SELECT  ModuleID AS parentId ,OrderNo
-                    //                    FROM SysModulePage) t where parentId=@parentId", new SqlParameter("@parentId", model.ModuleID)).FirstOrDefault();
-                    //model.OrderNo = OrderNo + 1;
+                    int OrderNo = (int)SqlHelper.GetSingle(@"select ISNULL(MAX(OrderNo),0) from (
+                                        SELECT  parentId,OrderNo
+                                        FROM SysModule module
+                                        UNION
+                                        SELECT  ModuleID AS parentId ,OrderNo
+                                        FROM SysModulePage) t where parentId=@parentId", new SqlParameter("@parentId", model.ModuleId));
+                    model.OrderNo = OrderNo + 1;
                     dbContext.SysModulePage.Add(model);
 
                     //添加操作和权限
-                    string sql=string.Format(@"insert into SysPageOperation values(newid(),'{0}','query')
-                                    insert into SysPageOperation values(newid(),'{0}','add')
-                                    insert into SysPageOperation values(newid(),'{0}','save')
-                                    insert into SysPageOperation values(newid(),'{0}','delete')
-                                    insert into SysRoleOperatePower values(newid(),'3F9578C5-C0A2-4C7A-B0FD-C93FAE47194B','{0}','query,add,save,delete','{1}')"
-                                    , model.Id, model.ModuleId);
-                    SqlHelper.ExecuteSql(sql);
+                    dbContext.SysPageOperation.Add(new SysPageOperation() { Id = Guid.NewGuid(), PageId = model.Id, OperationSign = "query" });
+                    dbContext.SysPageOperation.Add(new SysPageOperation() { Id = Guid.NewGuid(), PageId = model.Id, OperationSign = "add" });
+                    dbContext.SysPageOperation.Add(new SysPageOperation() { Id = Guid.NewGuid(), PageId = model.Id, OperationSign = "save" });
+                    dbContext.SysPageOperation.Add(new SysPageOperation() { Id = Guid.NewGuid(), PageId = model.Id, OperationSign = "delete" });
+                    dbContext.SysRoleOperatePower.Add(new SysRoleOperatePower() { Id = Guid.NewGuid(), RoleId = Guid.Parse("3F9578C5-C0A2-4C7A-B0FD-C93FAE47194B"), ModulePageId = model.Id,ModuleParentId=model.ModuleId, OperationSign = "query,add,save,delete" });
                 }
                 dbContext.SaveChanges();
 
@@ -1222,29 +1237,5 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
         #endregion
-
-        public JsonResult Sync(string type)
-        {
-            try
-            {
-                switch (type)
-                {
-                    case "department":
-                        SSOClient.SyncDepartment();
-                        break;
-                    case "user":
-                        SSOClient.SyncUser();
-                        break;
-                    default:
-                        break;
-                }
-                return Json(new { Code = 0, Msg = "同步成功！" });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
     }
 }

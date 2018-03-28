@@ -110,15 +110,5 @@ namespace {{cookiecutter.project_name}}.Helpers
                 return (HttpContextCore.Current.User.Identity as ClaimsIdentity).FindAll(x => x.Type == ClaimTypes.Role);
             }
         }
-
-        public static void SyncUser() {
-            //使用江门移动线上能力平台(Online)同步，放开以下代码
-            //JMOnlineSSOClient.SyncUser();
-        }
-        public static void SyncDepartment()
-        {
-            //使用江门移动线上能力平台(Online)同步，放开以下代码
-            //JMOnlineSSOClient.SyncDepartment();
-        }
     }
 }

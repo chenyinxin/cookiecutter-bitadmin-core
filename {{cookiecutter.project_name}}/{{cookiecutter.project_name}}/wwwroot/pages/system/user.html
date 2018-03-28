@@ -42,8 +42,10 @@
                 <!-- 列表-->
                 <div class="querySuite-table"
                      data-key="userId"
+                     data-order-by="orderNo"
                      data-query-url="../../system/QueryUserData"
-                     data-delete-url="../../system/DeleteUser">
+                     data-delete-url="../../system/DeleteUser"
+                     data-sort-url="../../system/sortUser">
                     <table>
                         <thead>
                             <tr>
@@ -119,7 +121,7 @@
     $(function () {
 
         //查询套件初始化
-        var querySuite = $("#querySuite").querySuite();
+        var querySuite = $("#querySuite").querySuite().sortable(function (ids) { console.log(ids); });
 
         //表单套件初始化
         var formSuite = $("#formSuiteModal").formSuite()
@@ -140,5 +142,21 @@
                 querySuite.query();
             })
             .load();
+        
+
+
+        //排序保存
+        function orderTree(ids) {
+            console.log(ids);
+            //$.ajax({
+            //    type: "GET",
+            //    url: "/api/menu/OrderMenu",
+            //    data: { NodeIDs: ids.join(",") },
+            //    dataType: "json",
+            //    success: function (data) {
+            //        getNode(nodeid);
+            //    }
+            //});
+        }
     });
 </script>

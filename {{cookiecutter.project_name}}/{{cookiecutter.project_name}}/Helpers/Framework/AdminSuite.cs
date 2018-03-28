@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace {{cookiecutter.project_name}}.Helpers
 {
@@ -172,7 +173,8 @@ namespace {{cookiecutter.project_name}}.Helpers
 
                 StringBuilder _sql = new StringBuilder();
                 var sel = _select.Trim().Substring(0, 6);
-                string selectSql = _select.Replace(sel, "select row_number()over (order by {0} {1}) rowNumber,");
+                Regex regex = new Regex(sel);
+                string selectSql = regex.Replace(_select, "select row_number()over (order by {0} {1}) rowNumber,", 1);
                 if (!_select.Contains("where")) selectSql += " where 1=1 ";
                 _sql.AppendFormat(selectSql, OrderBy, OrderType);
 
@@ -234,6 +236,24 @@ namespace {{cookiecutter.project_name}}.Helpers
                     filter.Add(string.Format("{0}='{1}'", key, value[i]));
                 }
                 string sql = string.Format(" delete from {0} where {1} ", table, string.Join(" and ", filter.ToArray()));
+                list.Add(sql);
+            }
+            return string.Join(";", list.ToArray());
+        }
+        public static string SortSql(string ids, string table,string order, params string[] keys)
+        {
+            List<string> list = new List<string>();
+            foreach (string primary in ids.Split(','))
+            {
+                string[] value = primary.Split('_');
+
+                List<string> filter = new List<string>();
+                for (int i = 0; i < keys.Length; i++)
+                {
+                    var key = keys[i];
+                    filter.Add(string.Format("{0}='{1}'", key, value[i]));
+                }
+                string sql = string.Format(" update {0} set {1}={2} where {3} ", table, order, list.Count + 1, string.Join(" and ", filter.ToArray()));
                 list.Add(sql);
             }
             return string.Join(";", list.ToArray());

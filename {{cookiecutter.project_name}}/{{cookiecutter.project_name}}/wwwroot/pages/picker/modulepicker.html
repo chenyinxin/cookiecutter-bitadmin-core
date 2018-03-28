@@ -4,7 +4,7 @@
         padding: 0;
     }
 </style>
-<link href="../../Content/Components/bootstrap-treeview.min.css" rel="stylesheet" />
+<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
 
 <div class="modal fade" id="Module_module" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="top: 30px">
     <div class="modal-dialog" style="width:400px;overflow-y:auto;">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel-body">
-                        <div id="Module_Tree" data-url="../../picker/GetModuleTreeData" data-text="ModuleName" data-nodes="children" style="height:300px; overflow-y:auto"></div>
+                        <div id="Module_Tree" data-url="../../picker/getModuleTreeData" data-text="moduleName" data-nodes="children" style="height:300px; overflow-y:auto"></div>
                     </div>
                 </div>
             </div>
@@ -42,10 +42,10 @@
     var valueInput = param.value;
     var textInput = param.text;
     
-    $("#Module_module #Module_Tree").tree({
+    $("#Module_module #Module_Tree").bitTree({
         onNodeSelected: function (event, node) {
-            $(valueInput).val(node.ModuleID);
-            $(textInput).val(node.ModuleName);
+            $(valueInput).val(node.moduleID);
+            $(textInput).val(node.moduleName);
             $(textInput).change();
             $("#Module_module").modal('hide');
         }

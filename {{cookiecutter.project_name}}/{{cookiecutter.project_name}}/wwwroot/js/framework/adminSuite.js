@@ -313,6 +313,7 @@ $.fn.zk_table = function (option, querySuite) {
                 var node = rows[i];
                 var index_th = 0;
                 var tr = $('<tr></tr>');
+                tr.data('data', node);
                 ///绑定全选按钮
                 if (_option.isSelect) {
                     var style = _option.Table.find("thead").find('th:eq(' + index_th + ')').attr('style');
@@ -578,6 +579,7 @@ $.fn.querySuite = function (option) {
     _option.queryOrderType = _table.attr("data-order-type");
 
     _option.deleteUrl = _table.attr("data-delete-url");
+    _option.sortUrl = _table.attr("data-sort-url");
     _option.exportUrl = _table.attr("data-export-url");
     _option.key = _table.attr("data-key");
 
@@ -657,8 +659,14 @@ $.fn.querySuite = function (option) {
     };
 
     var _zkTable;
+    var _queryCallback;
     //查询
-    _option.query = function () {
+    _option.query = function (callback) {
+        if ($.isFunction(callback)) {
+            _queryCallback = callback;
+            return _option;
+        }
+
         if (_zkTable){
             _option.pageIndex = 1;
             return _option.refresh();
@@ -677,8 +685,54 @@ $.fn.querySuite = function (option) {
     //刷新
     _option.refresh = function () {
         _zkTable.updata(_option.GetData().data);
+        if ($.isFunction(_queryCallback)) _queryCallback();
+        if (_option.sortUrl != undefined && _option.sortUrl != "") _option.sortable();
         return _option;
     };
+
+    //拖动排序
+    var _sortCallback;
+    _option.sortable = function (callback) {
+        if ($.isFunction(callback)) {
+            _sortCallback = callback;
+            return _option;
+        }
+        _option.jqTable.find("tbody").sortable({
+            helper: function (e, tr) {
+                var $originals = tr.children();
+                var $helper = tr.clone();
+                $helper.children().each(function (index) {
+                    $(this).width($originals.eq(index).width())
+                });
+                return $helper;
+            },
+            stop: function (e, ui) {
+                $('td.index', ui.item.parent()).each(function (i) {
+                    $(this).html(i + 1);
+                });
+                var ids = new Array();
+                var primarys = _option.key.split(',');
+                _option.jqTable.find("tbody tr").each(function (index, row) {
+                    var row = $(this).data("data");
+                    var val = "";
+                    $.each(primarys, function (j, d) {
+                        if (val != "")
+                            val += "_";
+                        val += row[d];
+                    })
+                    if (val != "") ids.push(val);
+                });
+                $.post(_option.sortUrl, { ids: ids.toString() }, function (result) {
+                    if (result && result.code == 0) {
+                        if ($.isFunction(_sortCallback)) {
+                            _sortCallback(ids);
+                        }
+                    }
+                });
+            }
+        }).disableSelection();
+        return _option;
+    }
 
     //删除
     var _deleteCallback;
@@ -705,7 +759,7 @@ $.fn.querySuite = function (option) {
             }
 
             if (confirm("您确定要删除所选内容吗？")) {
-                $.post(_option.deleteUrl, { IDs: selections.toString() }, function (result) {
+                $.post(_option.deleteUrl, { ids: selections.toString() }, function (result) {
                     if (result && result.code == 0) {
                         $.adminSetting.addLogs($(document).attr("title"), "删除", "删除数据" + selections.toString());   //添加日志
                         _option.query();

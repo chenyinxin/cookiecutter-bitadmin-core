@@ -31,6 +31,7 @@ namespace {{cookiecutter.project_name}}
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddMemoryCache();
             services.AddDistributedMemoryCache();
             services.AddSession();
 

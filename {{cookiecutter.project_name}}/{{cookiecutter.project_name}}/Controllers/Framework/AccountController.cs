@@ -14,12 +14,21 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using {{cookiecutter.project_name}}.Services;
+using System.DrawingCore;
+using System.IO;
+using System.DrawingCore.Imaging;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
     public class AccountController : Controller
     {
         DataContext dbContext = new DataContext();
+        private IMemoryCache _memoryCache;
+        public AccountController(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+        }
         public ActionResult Index()
         {
             return Redirect("/pages/account/login.html");
@@ -45,14 +54,39 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             return Json(Convert.ToString(SSOClient.IsLogin).ToLower());
         }
-
-        public JsonResult Login(string userCode, string password)
+        public ActionResult VerifyCode()
         {
             try
             {
-                //验证服务根据项目调整
+                string code = VerificationCode.CreateCode(4);
+                Bitmap image = VerificationCode.CreateImage(code);
+                MemoryStream ms = new MemoryStream();
+                image.Save(ms, ImageFormat.Png);
+                byte[] bytes = ms.GetBuffer();
+                ms.Close();
+
+                HttpContextCore.Current.Session.Set("VerificationCode", code);
+                return File(bytes, "image/jpeg");
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        public JsonResult Login(string userCode, string password,string verifyCode)
+        {
+            try
+            {
+                string vcode = HttpContextCore.Current.Session.Get<string>("VerificationCode");
+                if (Convert.ToString(verifyCode).ToLower() != Convert.ToString(vcode).ToLower())
+                    return Json(new { Code = 1, Msg = "验证码不正确，请重新输入！" });
+
                 if (!SSOClient.Validate(userCode, password, out Guid userId))
                     return Json(new { Code = 1, Msg = "帐号或密码不正确，请重新输入！" });
+
+                HttpContextCore.Current.Session.Set("VerificationCode", string.Empty);
 
                 SSOClient.SignIn(userId);
                 return Json(new { Code = 0 });

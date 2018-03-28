@@ -13,11 +13,10 @@ namespace {{cookiecutter.project_name}}.Controllers
 {
     public class QRCodeController : Controller
     {
-        public ActionResult Encode(string id)
+        public ActionResult Encode(string msg = "http://bit.bitdao.cn/")
         {
             try
             {
-                string msg = "http://bit.bitdao.cn/";
                 QRCodeGenerator qrGenerator = new QRCodeGenerator();
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(msg, QRCodeGenerator.ECCLevel.L);
                 QRCode qrCode = new QRCode(qrCodeData);

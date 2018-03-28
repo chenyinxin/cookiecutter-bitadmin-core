@@ -1,4 +1,3 @@
-/// <reference path="../jquery-3.2.1.min.js" />
 /** =======================================
 * adminSuite.tools是基于adminSuite的扩展工具集。
 * @Author  chenyinxin

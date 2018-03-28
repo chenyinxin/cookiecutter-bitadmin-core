@@ -63,7 +63,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string sql = @" select ModuleID,parentId,ModuleName from SysModule order by OrderNo asc";
+                string sql = @" select moduleID,parentId,moduleName from SysModule order by OrderNo asc";
                 DataTable dt = SqlHelper.Query(sql).Tables[0];
                 return Json(new { Code = 0, Data = QuerySuite.ToDictionary(dt, "parentId", "ModuleID") });
             }
@@ -192,7 +192,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 if (!string.IsNullOrEmpty(userID))
                 {
-                    string sql = string.Format("select userName,UserID from SysUser where UserID in ('{0}')", userID.Replace(",", "','"));
+                    string sql = string.Format("select userName,userID from SysUser where UserID in ('{0}')", userID.Replace(",", "','"));
                     DataTable dt = SqlHelper.Query(sql).Tables[0];
                     var json = QuerySuite.ToDictionary(dt);
                     return Json(new { Code = 0, Data = json });
