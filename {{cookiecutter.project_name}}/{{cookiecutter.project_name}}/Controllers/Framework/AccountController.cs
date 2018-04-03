@@ -33,22 +33,6 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             return Redirect("/pages/account/login.html");
         }
-        [BitAuthorize]
-        [HttpGet]
-        public async Task<JsonResult> NoticExample()
-        {
-            try
-            {
-                //仅是一个推送通知示例,顺带个二维码示例
-                await BitNoticeService.SendStringAsync(SSOClient.UserId, "<h4 class=\"spop-title\">系统通知示例</h4><img src=\"../../qrcode/encode/user\" width=\"100\" height=\"100\" /><br />生成二维码");
-                return Json(new { Code = 0 });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
         [HttpGet]
         public JsonResult IsLogin()
         {
@@ -97,7 +81,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-
+        
         public JsonResult BindUser(string userCode, string password, string openId, string sign)
         {
             try
@@ -123,6 +107,34 @@ namespace {{cookiecutter.project_name}}.Controllers
                 dbContext.SaveChanges();
 
                 SSOClient.SignIn(userId);
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        [BitAuthorize]
+        public JsonResult BindClientId(string clientId, Guid? userId)
+        {
+            try
+            {
+                if (!userId.HasValue) userId = SSOClient.UserId;
+                 var item = dbContext.SysUserClientId.FirstOrDefault(x => x.ClientId == clientId);
+                if (item == null)
+                {
+                    item = new SysUserClientId() { ClientId = clientId, UserId = userId, UpdateTime = DateTime.Now };
+                    dbContext.SysUserClientId.Add(item);
+                }
+                else
+                {
+                    item.UserId = userId;
+                    item.UpdateTime = DateTime.Now;
+                }
+                dbContext.SaveChanges();
+
                 return Json(new { Code = 0 });
             }
             catch (Exception ex)

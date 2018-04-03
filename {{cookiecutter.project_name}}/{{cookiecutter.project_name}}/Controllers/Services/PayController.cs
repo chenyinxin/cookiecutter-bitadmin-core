@@ -84,6 +84,23 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
         /// <summary>
+        /// 微信支付NativePayOne回调地址
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public ActionResult NativePayOneCallback(string productId)
+        {
+            try
+            {
+                return Json(new { Code = 0, Msg = "成功" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        /// <summary>
         /// 扫码支付（模式二）
         /// 官方文档：https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_1
         /// </summary>

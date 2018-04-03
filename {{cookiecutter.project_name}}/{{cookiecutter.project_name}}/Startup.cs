@@ -51,7 +51,6 @@ namespace {{cookiecutter.project_name}}
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
-                HttpContextCore.ConfigurationFile = "appsettings.Development.json";
             }
 
             HttpContextCore.ServiceProvider = svc;

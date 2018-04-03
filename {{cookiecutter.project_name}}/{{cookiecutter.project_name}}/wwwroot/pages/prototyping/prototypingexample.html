@@ -1,0 +1,125 @@
+﻿
+<div class="box">
+    <div class="box-body querySuite-wrapper">
+        <!-- 条件搜索 -->
+        <div class="querySuite-filter">
+            <table>
+                <tr>
+                    <th>列一:</th>
+                    <td><input type="text" name="c1" class="form-control" /></td>
+                    <th>列一:</th>
+                    <td><input type="text" name="c2" class="form-control" /></td>
+                    <th>列一:</th>
+                    <td><input type="text" name="c3" class="form-control" /></td>
+                    <th>列一:</th>
+                    <td>
+                        <input type="text" name="c4" class="form-control" />
+                        <input type="hidden" name="sign" value="prototypingexample" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- 按钮 查询 导入 -->
+        <div class="querySuite-button">
+            <button class="btn btn-default" action="query">
+                <span class="glyphicon glyphicon-search"></span> 查询
+            </button>
+            <button class="btn btn-default" action="add" action-modal="myModal">
+                <span class="glyphicon glyphicon-plus-sign"></span> 添加
+            </button>
+            <button class="btn btn-danger" action="delete">
+                <span class="glyphicon glyphicon-trash"></span> 删除
+            </button>
+        </div>
+        <!-- 列表-->
+        <div class="querySuite-table"
+             data-key="c1,sign"
+             data-query-url="../../prototyping/query"
+             data-delete-url="../../prototyping/delete">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:30px;"><input type="checkbox" /></th>
+                        <th data-field="c1" data-format="edit">列一</th>
+                        <th data-field="c2">列二</th>
+                        <th data-field="c3">列三</th>
+                        <th data-field="c4">列四</th>
+                        <th data-field="c5">列五</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <!-- 分页 -->
+        <div class="querySuite-paging"></div>
+    </div>
+</div>
+<!-- 模态框（Modal）编辑数据字典信息 -->
+<div id="myModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form data-title="原型示例"
+                      data-save-url="../../prototyping/save"
+                      data-load-url="../../prototyping/load">
+                    <table>
+                        <tr>
+                            <th>列一：</th>
+                            <td>
+                                <input type="text" name="c1" required class="form-control" />                             
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>列二：</th>
+                            <td>
+                                <input type="text" name="c2" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>列三：</th>
+                            <td>
+                                <input type="text" name="c3" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>列四：</th>
+                            <td>
+                                <input type="text" name="c4" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>列五：</th>
+                            <td>
+                                <input type="text" name="c5" required class="form-control" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSave" action="save">
+                    <span class="glyphicon glyphicon-saved"></span> 保存
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //查询套件初始化
+        var querySuite = $(".querySuite-wrapper").querySuite().query();
+
+        //表单套件初始化
+        var formSuite = $("#myModal").formSuite()
+            .add(function () {//点击添加：初始化表单后
+            })
+            .edit(function () {//点击编辑：加载数据后
+            })
+            .submit(function () {//点击保存：数据保存成功后
+                querySuite.query();
+            });
+    });
+</script>

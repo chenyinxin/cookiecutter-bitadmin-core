@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../../css/framework/AdminLTE.min.css">
     <link rel="stylesheet" href="../../css/framework/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../../css/framework/BitAdmin.css" />
+
     <link href="../../lib/framework/css/spop.min.css" rel="stylesheet" />
     <style>
         .content-wrapper .content {
@@ -129,7 +130,7 @@
                         <iframe id="iframe_page_home" style="width: 100%;" src="Readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
                     </div>
                 </div>
-                
+
             </section>
         </div>
         <!--<div class="content-wrapper" style="background-color:white;" mode="iframe">
@@ -150,8 +151,8 @@
     <script type="text/javascript" src="../../js/framework/adminlte.min.js"></script>
     <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
     <script type="text/javascript" src="../../js/framework/BitAdmin.frame.js"></script>
-    <script src="../../lib/framework/js/spop.min.js"></script>
 
+    <script src="../../lib/framework/js/spop.min.js"></script>
     <script type="text/javascript">
         BitAdmin.IsLogin(function () {
             $(".user").GetUserInfo();
@@ -161,7 +162,7 @@
         $(window).bind("load", function () {
             BitAdmin.setTabsWidth();
             BitAdmin.setMentHeight();
-            $("[mode=" + BitAdmin.mode + "] iframe").height(BitAdmin.getIframeHeight());            
+            $("[mode=" + BitAdmin.mode + "] iframe").height(BitAdmin.getIframeHeight());
         });
 
         $(function () {
@@ -188,42 +189,71 @@
                     if (result.code == 0) BitAdmin.RedirectToLoginPage();
                 });
                 return false;
-            });  
-            function bitWebSocket() {
-                //消息推送
-                var uri = "ws://" + window.location.host + "/websocket/notice";
-                var socket = new WebSocket(uri);
-                socket.onopen = function (e) { write("opened " + uri); send("open"); };
-                socket.onclose = function (e) { write("closed"); };
-                socket.onmessage = function (e) { receive(e.data); };
-                socket.onerror = function (e) { write("error: " + e.data); };
-
-                function send(message) {
-                    var msgObj = {
-                        Sender: "sender",
-                        Receiver: "receiver",
-                        MessageType: "chat",
-                        Content: message
-                    };
-                    write("sending: " + JSON.stringify(msgObj));
-                    socket.send(JSON.stringify(msgObj));
-                }
-                function receive(msg) {
-                    spop({
-                        template: msg,
-                        position: 'bottom-right'
-                    });
-                }
-                function write(s) {
-                    //console.log(s);
-                }
-                function noticexample() {
-                    $.get("../../account/noticexample", function (result) { });
-                }
-                setTimeout(noticexample, 5000) 
-            }
-            bitWebSocket();
+            });
+            BitNoticeService = BitNotice();
         });
+
+        var BitNotice = function () {
+            var uri = "ws://" + window.location.host + "/websocket/notice";
+            var socket = new WebSocket(uri);
+            socket.onopen = function (e) { write("opened " + uri); send("open"); };
+            socket.onclose = function (e) { write("closed"); };
+            socket.onmessage = function (e) { receive(e.data); };
+            socket.onerror = function (e) { write("error: " + e.data); };
+            var send = function (message) {
+                var msgObj = {
+                    Sender: "open",
+                    Receiver: "server",
+                    MessageType: "notice",
+                    Content: message
+                };
+                write("sending: " + JSON.stringify(msgObj));
+                socket.send(JSON.stringify(msgObj));
+            };
+            var receive = function (msg) {
+                var msgObj = JSON.parse(msg);
+                switch (msgObj.MessageType) {
+                    case "notice"://通知消息
+                        spop({
+                            template: msgObj.Content,
+                            position: 'bottom-right'
+                        });
+                        break;
+                    case "chat"://聊天消息
+                        spop({
+                            template: msgObj.Content,
+                            position: 'bottom-right'
+                        });
+                        break;
+                }
+            };
+            var write = function (msg) {
+                //console.log(msg);
+            };
+            var result = {};
+            result.sendNotice = function (message) {
+                var msgObj = {
+                    Sender: "",
+                    Receiver: "server",
+                    MessageType: "notice",
+                    Content: message
+                };
+                write("sending: " + JSON.stringify(msgObj));
+                socket.send(JSON.stringify(msgObj));
+            };
+            result.sendChat = function (receiver, message) {
+                var msgObj = {
+                    Sender: "",
+                    Receiver: receiver,
+                    MessageType: "chat",
+                    Content: message
+                };
+                write("sending: " + JSON.stringify(msgObj));
+                socket.send(JSON.stringify(msgObj));
+            };
+            return result;
+        }
+
 
     </script>
 </body>
