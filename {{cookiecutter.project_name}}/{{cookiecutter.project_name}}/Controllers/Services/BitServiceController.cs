@@ -48,7 +48,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                     var text = reader.ReadToEnd();
                     LogHelper.SaveLog("SendWebSocketString", text);
                     var msg = JsonConvert.DeserializeObject<BitNoticeMessage>(text);
-                    await BitNoticeService.SendStringAsync(msg);
+                    await BitNoticeService.SendStringAsync(msg, true);
                     return Json(true);
                 }
             }

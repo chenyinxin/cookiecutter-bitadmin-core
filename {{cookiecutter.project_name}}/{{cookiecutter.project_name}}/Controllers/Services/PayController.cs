@@ -27,20 +27,7 @@ namespace {{cookiecutter.project_name}}.Controllers
     /// </summary>
     public class PayController : Controller
     {
-        public string GenerateOutTradeNo()
-        {
-            var ran = new Random();
-            return string.Format("{0}{1}{2}", "mch_id", DateTime.Now.ToString("yyyyMMddHHmmss"), ran.Next(999));
-        }
-        public string GenerateTimeStamp()
-        {
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return Convert.ToInt64(ts.TotalSeconds).ToString();
-        }
-        public string GenerateNonceStr()
-        {
-            return Guid.NewGuid().ToString().Replace("-", "");
-        }
+
         //=======【基本信息设置】=====================================
         /* 微信公众号信息配置
         * appid：绑定支付的APPID（必须配置）
@@ -64,18 +51,20 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                if(string.IsNullOrEmpty(productId))
+                if (string.IsNullOrEmpty(productId))
                     return Json(new { Code = 1, Msg = "产品不能为空！" });
 
-                WxPayData data = new WxPayData();
-                data.SetValue("appid", appid);
-                data.SetValue("mch_id", mch_id);
-                data.SetValue("time_stamp", GenerateTimeStamp());
-                data.SetValue("nonce_str", GenerateNonceStr());
-                data.SetValue("product_id", productId);
-                data.SetValue("sign", data.MakeSign());
+                SortedDictionary<string, object> data = new SortedDictionary<string, object>
+                {
+                    { "appid", appid },
+                    { "mch_id", mch_id },
+                    { "time_stamp", PayHelper.Time_stamp },
+                    { "nonce_str", PayHelper.Nonce_str },
+                    { "product_id", productId }
+                };
+                data.Add("sign", PayHelper.MakeSign(data));
 
-                return Json(new { Code = 0, Msg = "weixin://wxpay/bizpayurl?" + data.ToUrl(true) });
+                return Json(new { Code = 0, Msg = "weixin://wxpay/bizpayurl?" + PayHelper.ToUrl(data) });
             }
             catch (Exception ex)
             {
@@ -105,7 +94,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 官方文档：https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_1
         /// </summary>
         /// <returns></returns>
-        public ActionResult NativePayTow(string productId,string body,string attach,string goods_tag,string total_fee)
+        public ActionResult NativePayTow(string productId, string body, string attach, string goods_tag, string total_fee)
         {
             try
             {
@@ -114,19 +103,21 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (string.IsNullOrEmpty(total_fee))
                     return Json(new { Code = 1, Msg = "金额不能为空！" });
 
-                WxPayData data = new WxPayData();
-                data.SetValue("trade_type", "NATIVE");              //交易类型
-                data.SetValue("out_trade_no", GenerateOutTradeNo());//随机字符串
-                data.SetValue("body", body);                        //商品描述
-                data.SetValue("total_fee", total_fee);              //总金额
-                data.SetValue("goods_tag", goods_tag);
-                data.SetValue("product_id", productId);
-                data.SetValue("attach", attach);
-                data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
-                data.SetValue("time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
+                SortedDictionary<string, object> data = new SortedDictionary<string, object>
+                {
+                    { "trade_type", "NATIVE" },                     //交易类型
+                    { "out_trade_no", PayHelper.Out_trade_no },     //随机字符串
+                    { "body", body },                               //商品描述
+                    { "total_fee", total_fee },                     //总金额
+                    { "goods_tag", goods_tag },
+                    { "product_id", productId },
+                    { "attach", attach },
+                    { "time_start", DateTime.Now.ToString("yyyyMMddHHmmss") },
+                    { "time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss") }
+                };
 
-                WxPayData result = UnifiedOrder(data);              //统一下单
-                string url = result.GetValue("code_url").ToString();//获得统一下单接口返回的二维码链接
+                var result = UnifiedOrder(data);                //统一下单
+                string url = result["code_url"].ToString();     //获得统一下单接口返回的二维码链接
                 return Json(new { Code = 0, Msg = url });
             }
             catch (Exception ex)
@@ -145,30 +136,31 @@ namespace {{cookiecutter.project_name}}.Controllers
         */
         public ActionResult MicroPay(string body, string total_fee, string auth_code)
         {
-            WxPayData data = new WxPayData();
-            data.SetValue("auth_code", auth_code);  //用户出示授权码
-            data.SetValue("body", body);            //商品描述
-            data.SetValue("total_fee", int.Parse(total_fee));   //总金额
-            data.SetValue("out_trade_no", GenerateOutTradeNo());//产生随机的商户订单号 
-            data.SetValue("spbill_create_ip", ip);  //终端ip
-            data.SetValue("appid", appid);
-            data.SetValue("mch_id", mch_id);
-            data.SetValue("nonce_str", GenerateNonceStr());//随机字符串
-            data.SetValue("sign", data.MakeSign());//签名
-            string xml = data.ToXml();
+            SortedDictionary<string, object> data = new SortedDictionary<string, object>
+            {
+                { "auth_code", auth_code },                 //用户出示授权码
+                { "body", body },                           //商品描述
+                { "total_fee", int.Parse(total_fee) },      //总金额
+                { "out_trade_no", PayHelper.Out_trade_no }, //产生随机的商户订单号 
+                { "spbill_create_ip", ip },                 //终端ip
+                { "appid", appid },
+                { "mch_id", mch_id },
+                { "nonce_str", PayHelper.Nonce_str }//随机字符串
+            };
+            data.Add("sign", PayHelper.MakeSign(data));//签名
 
+            string xml = PayHelper.ToXml(data);
             string url = "https://api.mch.weixin.qq.com/pay/micropay";
             string response = HttpService.Post(xml, url, false, 10);//调用HTTP通信接口以提交数据到API
-            
+
 
             //将xml格式的结果转换为对象以返回
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
-            
+            SortedDictionary<string, object> result = PayHelper.FromXml(response);
+
             //如果提交被扫支付接口调用失败，则抛异常
-            if (!result.IsSet("return_code") || result.GetValue("return_code").ToString() == "FAIL")
+            if (!result.ContainsKey("return_code") || result["return_code"].ToString() == "FAIL")
             {
-                string returnMsg = result.IsSet("return_msg") ? result.GetValue("return_msg").ToString() : "";
+                string returnMsg = result.ContainsKey("return_msg") ? result["return_msg"].ToString() : "";
                 throw new Exception("Micropay API interface call failure, return_msg : " + returnMsg);
             }
 
@@ -176,31 +168,31 @@ namespace {{cookiecutter.project_name}}.Controllers
             result.CheckSign();
 
             //刷卡支付直接成功
-            if (result.GetValue("return_code").ToString() == "SUCCESS" &&
-                result.GetValue("result_code").ToString() == "SUCCESS")
+            if (result["return_code"].ToString() == "SUCCESS" &&
+                result["result_code"].ToString() == "SUCCESS")
             {
-                return Content(result.ToPrintStr());
+                return Json(result);
             }
 
             /******************************************************************
              * 剩下的都是接口调用成功，业务失败的情况
              * ****************************************************************/
             //1）业务结果明确失败
-            if (result.GetValue("err_code").ToString() != "USERPAYING" &&
-            result.GetValue("err_code").ToString() != "SYSTEMERROR")
+            if (result["err_code"].ToString() != "USERPAYING" &&
+            result["err_code"].ToString() != "SYSTEMERROR")
             {
-                return Content(result.ToPrintStr());
+                return Json(result);
             }
 
             //2）不能确定是否失败，需查单
             //用商户订单号去查单
-            string out_trade_no = data.GetValue("out_trade_no").ToString();
+            string out_trade_no = data["out_trade_no"].ToString();
 
             //确认支付是否成功,每隔一段时间查询一次订单，共查询10次
             int queryTimes = 10;//查询次数计数器
             while (queryTimes-- > 0)
             {
-                WxPayData queryResult = MicroPayQuery(out_trade_no, out int succResult);
+                SortedDictionary<string, object> queryResult = MicroPayQuery(out_trade_no, out int succResult);
                 //如果需要继续查询，则等待2s后继续
                 if (succResult == 2)
                 {
@@ -210,12 +202,12 @@ namespace {{cookiecutter.project_name}}.Controllers
                 else if (succResult == 1)
                 {
                     //查询成功,返回订单查询接口返回的数据
-                    return Content(queryResult.ToPrintStr());
+                    return Json(queryResult);
                 }
                 else
                 {
                     //订单交易失败，直接返回刷卡支付接口返回的结果，失败原因会在err_code中描述
-                    return Content(result.ToPrintStr());
+                    return Json(result);
                 }
             }
 
@@ -225,7 +217,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 throw new Exception("Reverse order failure！");
             }
 
-            return Content(result.ToPrintStr());
+            return Json(result);
         }
 
         /**
@@ -235,38 +227,38 @@ namespace {{cookiecutter.project_name}}.Controllers
 	    * @param int succCode         查询订单结果：0表示订单不成功，1表示订单成功，2表示继续查询
 	    * @return 订单查询接口返回的数据，参见协议接口
 	    */
-        private WxPayData MicroPayQuery(string out_trade_no, out int succCode)
+        private SortedDictionary<string, object> MicroPayQuery(string out_trade_no, out int succCode)
         {
-            WxPayData queryOrderInput = new WxPayData();
-            queryOrderInput.SetValue("out_trade_no", out_trade_no);
             string url = "https://api.mch.weixin.qq.com/pay/orderquery";
             string appid = "WeChat_APPID";
             string MCHID = "WeChat_MCHID";
 
-            queryOrderInput.SetValue("appid", appid);//公众账号ID
-            queryOrderInput.SetValue("mch_id", MCHID);//商户号
-            queryOrderInput.SetValue("nonce_str", GenerateNonceStr());//随机字符串
-            queryOrderInput.SetValue("sign", queryOrderInput.MakeSign());//签名
+            SortedDictionary<string, object> data = new SortedDictionary<string, object>
+            {
+                { "out_trade_no", out_trade_no },
+                { "appid", appid },//公众账号ID
+                { "mch_id", MCHID },//商户号
+                { "nonce_str", PayHelper.Nonce_str }//随机字符串
+            };
+            data.Add("sign", PayHelper.MakeSign(data));//签名
 
-            string xml = queryOrderInput.ToXml();
-            
+            string xml = data.ToXml();
             string response = HttpService.Post(xml, url, false, 10);//调用HTTP通信接口提交数据
 
             //将xml格式的数据转化为对象以返回
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
+           var result = PayHelper.FromXml(response);
 
-            if (result.GetValue("return_code").ToString() == "SUCCESS"
-                && result.GetValue("result_code").ToString() == "SUCCESS")
+
+            if (result["return_code"].ToString() == "SUCCESS"&& result["result_code"].ToString() == "SUCCESS")
             {
                 //支付成功
-                if (result.GetValue("trade_state").ToString() == "SUCCESS")
+                if (result["trade_state"].ToString() == "SUCCESS")
                 {
                     succCode = 1;
                     return result;
                 }
                 //用户支付中，需要继续查询
-                else if (result.GetValue("trade_state").ToString() == "USERPAYING")
+                else if (result["trade_state"].ToString() == "USERPAYING")
                 {
                     succCode = 2;
                     return result;
@@ -274,7 +266,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
 
             //如果返回错误码为“此交易订单号不存在”则直接认定失败
-            if (result.GetValue("err_code").ToString() == "ORDERNOTEXIST")
+            if (result["err_code"].ToString() == "ORDERNOTEXIST")
             {
                 succCode = 0;
             }
@@ -301,22 +293,22 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return false;
             }
 
-            WxPayData reverseInput = new WxPayData();
-            reverseInput.SetValue("out_trade_no", out_trade_no);
-            WxPayData result = Reverse(reverseInput);
+            SortedDictionary<string, object> reverseInput = new SortedDictionary<string, object>();
+            reverseInput.Add("out_trade_no", out_trade_no);
+            SortedDictionary<string, object> result = Reverse(reverseInput);
 
             //接口调用失败
-            if (result.GetValue("return_code").ToString() != "SUCCESS")
+            if (result["return_code"].ToString() != "SUCCESS")
             {
                 return false;
             }
 
             //如果结果为success且不需要重新调用撤销，则表示撤销成功
-            if (result.GetValue("result_code").ToString() != "SUCCESS" && result.GetValue("recall").ToString() == "N")
+            if (result["result_code"].ToString() != "SUCCESS" && result["recall"].ToString() == "N")
             {
                 return true;
             }
-            else if (result.GetValue("recall").ToString() == "Y")
+            else if (result["recall"].ToString() == "Y")
             {
                 return MicroPayCancel(out_trade_no, ++depth);
             }
@@ -354,35 +346,39 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <param name="openid">openid</param>
         /// <param name="total_fee">金额</param>
         /// <returns></returns>
-        public string JsApiPayOrder(string openid,int total_fee)
+        public SortedDictionary<string, object> JsApiPayOrder(string openid, int total_fee)
         {
             //统一下单
-            WxPayData data = new WxPayData();
-            data.SetValue("body", "test");
-            data.SetValue("attach", "test");
-            data.SetValue("out_trade_no", GenerateOutTradeNo());
-            data.SetValue("total_fee", total_fee);
-            data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            data.SetValue("time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
-            data.SetValue("goods_tag", "test");
-            data.SetValue("trade_type", "JSAPI");
-            data.SetValue("openid", openid);
+            SortedDictionary<string, object> data = new SortedDictionary<string, object>
+            {
+                { "body", "test" },
+                { "attach", "test" },
+                { "out_trade_no", PayHelper.Out_trade_no },
+                { "total_fee", total_fee },
+                { "time_start", DateTime.Now.ToString("yyyyMMddHHmmss") },
+                { "time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss") },
+                { "goods_tag", "test" },
+                { "trade_type", "JSAPI" },
+                { "openid", openid }
+            };
 
-            WxPayData result = UnifiedOrder(data);
-            if (!result.IsSet("appid") || !result.IsSet("prepay_id") || result.GetValue("prepay_id").ToString() == "")
+            var result = UnifiedOrder(data);
+            if (!result.ContainsKey("appid") || !result.ContainsKey("prepay_id") || result["prepay_id"].ToString() == "")
             {
                 throw new Exception("UnifiedOrder response error!");
             }
 
-            WxPayData jsApiParam = new WxPayData();
-            jsApiParam.SetValue("appId", result.GetValue("appid"));
-            jsApiParam.SetValue("timeStamp", GenerateTimeStamp());
-            jsApiParam.SetValue("nonceStr", GenerateNonceStr());
-            jsApiParam.SetValue("package", "prepay_id=" + result.GetValue("prepay_id"));
-            jsApiParam.SetValue("signType", "MD5");
-            jsApiParam.SetValue("paySign", jsApiParam.MakeSign());
+            SortedDictionary<string, object> jsApiParam = new SortedDictionary<string, object>
+            {
+                { "appId", result["appid"] },
+                { "timeStamp", PayHelper.Time_stamp },
+                { "nonceStr", PayHelper.Nonce_str },
+                { "package", "prepay_id=" + result["prepay_id"] },
+                { "signType", "MD5" }
+            };
+            jsApiParam.Add("paySign", PayHelper.MakeSign(jsApiParam));
 
-            return JsonConvert.SerializeObject(jsApiParam.GetValues());
+            return jsApiParam;
         }
 
         /**
@@ -396,24 +392,28 @@ namespace {{cookiecutter.project_name}}.Controllers
             string url = "http://redirect_uri";
 
             //构造需要用SHA1算法加密的数据
-            WxPayData signData = new WxPayData();
-            signData.SetValue("appid", appid);
-            signData.SetValue("url", url);
-            signData.SetValue("timestamp", GenerateTimeStamp());
-            signData.SetValue("noncestr", GenerateNonceStr());
-            signData.SetValue("accesstoken", access_token);
-            string addrSign = EncryptHelper.SHA1(signData.ToUrl());
+            SortedDictionary<string, object> data = new SortedDictionary<string, object>
+            {
+                { "appid", appid },
+                { "url", url },
+                { "timestamp", PayHelper.Time_stamp },
+                { "noncestr", PayHelper.Nonce_str },
+                { "accesstoken", access_token }
+            };
+            string addrSign = EncryptHelper.SHA1(PayHelper.ToUrl(data));
 
             //获取收货地址js函数入口参数
-            WxPayData afterData = new WxPayData();
-            afterData.SetValue("appId", appid);
-            afterData.SetValue("scope", "jsapi_address");
-            afterData.SetValue("signType", "sha1");
-            afterData.SetValue("addrSign", addrSign);
-            afterData.SetValue("timeStamp", signData.GetValue("timestamp"));
-            afterData.SetValue("nonceStr", signData.GetValue("noncestr"));
-            
-            return JsonConvert.SerializeObject(afterData.GetValues());
+            SortedDictionary<string, object> afterData = new SortedDictionary<string, object>
+            {
+                { "appId", appid },
+                { "scope", "jsapi_address" },
+                { "signType", "sha1" },
+                { "addrSign", addrSign },
+                { "timeStamp", data["timestamp"] },
+                { "nonceStr", data["noncestr"] }
+            };
+
+            return JsonConvert.SerializeObject(afterData);
         }
         private string ToUrlParams(SortedDictionary<string, object> map)
         {
@@ -434,32 +434,22 @@ namespace {{cookiecutter.project_name}}.Controllers
         * @throws Exception
         * @return 成功时返回API调用结果，其他抛异常
         */
-        public WxPayData Reverse(WxPayData inputObj, int timeOut = 6)
+        public SortedDictionary<string, object> Reverse(SortedDictionary<string, object> inputObj, int timeOut = 6)
         {
-            string url = "https://api.mch.weixin.qq.com/secapi/pay/reverse";
             //检测必填参数
-            if (!inputObj.IsSet("out_trade_no") && !inputObj.IsSet("transaction_id"))
+            if (!inputObj.ContainsKey("out_trade_no") && !inputObj.ContainsKey("transaction_id"))
             {
                 throw new Exception("撤销订单API接口中，参数out_trade_no和transaction_id必须填写一个！");
             }
 
-            inputObj.SetValue("appid", appid);//公众账号ID
-            inputObj.SetValue("mch_id", mch_id);//商户号
-            inputObj.SetValue("nonce_str", GenerateNonceStr());//随机字符串
-            inputObj.SetValue("sign", inputObj.MakeSign());//签名
-            string xml = inputObj.ToXml();
+            inputObj.Add("appid", appid);//公众账号ID
+            inputObj.Add("mch_id", mch_id);//商户号
+            inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串
+            inputObj.Add("sign", PayHelper.MakeSign(inputObj));//签名
+            string xml = inputObj.ToXml();            
+            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/secapi/pay/reverse", true, timeOut);            
 
-            var start = DateTime.Now;//请求开始时间
-
-            string response = HttpService.Post(xml, url, true, timeOut);
-
-            var end = DateTime.Now;
-            int timeCost = (int)((end - start).TotalMilliseconds);
-
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
-
-            return result;
+            return PayHelper.FromXml(response);
         }
 
 
@@ -471,49 +461,44 @@ namespace {{cookiecutter.project_name}}.Controllers
         * @throws Exception
         * @return 成功时返回接口调用结果，其他抛异常
         */
-        public static WxPayData Refund(WxPayData inputObj, int timeOut = 30)
+        public static SortedDictionary<string, object> Refund(SortedDictionary<string, object> inputObj, int timeOut = 30)
         {
-            string url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
             //检测必填参数
-            if (!inputObj.IsSet("out_trade_no") && !inputObj.IsSet("transaction_id"))
+            if (!inputObj.ContainsKey("out_trade_no") && !inputObj.ContainsKey("transaction_id"))
             {
                 throw new Exception("退款申请接口中，out_trade_no、transaction_id至少填一个！");
             }
-            else if (!inputObj.IsSet("out_refund_no"))
+            else if (!inputObj.ContainsKey("out_refund_no"))
             {
                 throw new Exception("退款申请接口中，缺少必填参数out_refund_no！");
             }
-            else if (!inputObj.IsSet("total_fee"))
+            else if (!inputObj.ContainsKey("total_fee"))
             {
                 throw new Exception("退款申请接口中，缺少必填参数total_fee！");
             }
-            else if (!inputObj.IsSet("refund_fee"))
+            else if (!inputObj.ContainsKey("refund_fee"))
             {
                 throw new Exception("退款申请接口中，缺少必填参数refund_fee！");
             }
-            else if (!inputObj.IsSet("op_user_id"))
+            else if (!inputObj.ContainsKey("op_user_id"))
             {
                 throw new Exception("退款申请接口中，缺少必填参数op_user_id！");
             }
 
-            inputObj.SetValue("appid", "WeChat_APPID");//公众账号ID
-            inputObj.SetValue("mch_id", "WeChat_MCHID");//商户号
-            inputObj.SetValue("nonce_str", Guid.NewGuid().ToString().Replace("-", ""));//随机字符串
-            inputObj.SetValue("sign", inputObj.MakeSign());//签名
+            inputObj.Add("appid", "WeChat_APPID");//公众账号ID
+            inputObj.Add("mch_id", "WeChat_MCHID");//商户号
+            inputObj.Add("nonce_str", Guid.NewGuid().ToString().Replace("-", ""));//随机字符串
+            inputObj.Add("sign", inputObj.MakeSign());//签名
 
             string xml = inputObj.ToXml();
             var start = DateTime.Now;
 
-            string response = HttpService.Post(xml, url, true, timeOut);//调用HTTP通信接口提交数据到API
+            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/secapi/pay/refund", true, timeOut);//调用HTTP通信接口提交数据到API
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
-
-            //将xml格式的结果转换为对象以返回
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
-
-            return result;
+            
+            return PayHelper.FromXml(response);
         }
 
 
@@ -528,35 +513,24 @@ namespace {{cookiecutter.project_name}}.Controllers
         * @throws Exception
         * @return 成功时返回，其他抛异常
         */
-        public WxPayData RefundQuery(WxPayData inputObj, int timeOut = 6)
+        public SortedDictionary<string, object> RefundQuery(SortedDictionary<string, object> inputObj, int timeOut = 6)
         {
-            string url = "https://api.mch.weixin.qq.com/pay/refundquery";
             //检测必填参数
-            if (!inputObj.IsSet("out_refund_no") && !inputObj.IsSet("out_trade_no") &&
-                !inputObj.IsSet("transaction_id") && !inputObj.IsSet("refund_id"))
+            if (!inputObj.ContainsKey("out_refund_no") && !inputObj.ContainsKey("out_trade_no") &&
+                !inputObj.ContainsKey("transaction_id") && !inputObj.ContainsKey("refund_id"))
             {
                 throw new Exception("退款查询接口中，out_refund_no、out_trade_no、transaction_id、refund_id四个参数必填一个！");
             }
 
-            inputObj.SetValue("appid", appid);//公众账号ID
-            inputObj.SetValue("mch_id", mch_id);//商户号
-            inputObj.SetValue("nonce_str", GenerateNonceStr());//随机字符串
-            inputObj.SetValue("sign", inputObj.MakeSign());//签名
+            inputObj.Add("appid", appid);//公众账号ID
+            inputObj.Add("mch_id", mch_id);//商户号
+            inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串
+            inputObj.Add("sign", PayHelper.MakeSign(inputObj));//签名
 
-            string xml = inputObj.ToXml();
+            string xml = inputObj.ToXml();   
+            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/pay/refundquery", false, timeOut);//调用HTTP通信接口以提交数据到API
 
-            var start = DateTime.Now;//请求开始时间
-
-            string response = HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
-
-            var end = DateTime.Now;
-            int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
-
-            //将xml格式的结果转换为对象以返回
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
-
-            return result;
+            return PayHelper.FromXml(response);
         }
 
 
@@ -567,35 +541,27 @@ namespace {{cookiecutter.project_name}}.Controllers
         * @throws Exception
         * @return 成功时返回，其他抛异常
         */
-        public WxPayData DownloadBill(WxPayData inputObj, int timeOut = 6)
+        public SortedDictionary<string, object> DownloadBill(SortedDictionary<string, object> inputObj, int timeOut = 6)
         {
-            string url = "https://api.mch.weixin.qq.com/pay/downloadbill";
             //检测必填参数
-            if (!inputObj.IsSet("bill_date"))
+            if (!inputObj.ContainsKey("bill_date"))
             {
                 throw new Exception("对账单接口中，缺少必填参数bill_date！");
             }
 
-            inputObj.SetValue("appid", appid);//公众账号ID
-            inputObj.SetValue("mch_id", mch_id);//商户号
-            inputObj.SetValue("nonce_str", GenerateNonceStr());//随机字符串
-            inputObj.SetValue("sign", inputObj.MakeSign());//签名
+            inputObj.Add("appid", appid);//公众账号ID
+            inputObj.Add("mch_id", mch_id);//商户号
+            inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串
+            inputObj.Add("sign", PayHelper.MakeSign(inputObj));//签名
 
             string xml = inputObj.ToXml();
-
-            string response = HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
-
-            WxPayData result = new WxPayData();
-            //若接口调用失败会返回xml格式的结果
+            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/pay/downloadbill", false, timeOut);//调用HTTP通信接口以提交数据到API
+            
             if (response.Substring(0, 5) == "<xml>")
-            {
-                result.FromXml(response);
-            }
-            //接口调用成功则返回非xml格式的数据
+                return PayHelper.FromXml(response);
             else
-                result.SetValue("result", response);
+                return new SortedDictionary<string, object>() { { "result", response } };
 
-            return result;
         }
 
 
@@ -609,27 +575,21 @@ namespace {{cookiecutter.project_name}}.Controllers
         * @throws Exception
         * @return 成功时返回，其他抛异常
         */
-        public WxPayData ShortUrl(WxPayData inputObj, int timeOut = 6)
+        public SortedDictionary<string, object> ShortUrl(SortedDictionary<string, object> inputObj, int timeOut = 6)
         {
-            string url = "https://api.mch.weixin.qq.com/tools/shorturl";
             //检测必填参数
-            if (!inputObj.IsSet("long_url"))
+            if (!inputObj.ContainsKey("long_url"))
             {
                 throw new Exception("需要转换的URL，签名用原串，传输需URL encode！");
             }
 
-            inputObj.SetValue("appid", appid);//公众账号ID
-            inputObj.SetValue("mch_id", mch_id);//商户号
-            inputObj.SetValue("nonce_str", GenerateNonceStr());//随机字符串	
-            inputObj.SetValue("sign", inputObj.MakeSign());//签名
+            inputObj.Add("appid", appid);//公众账号ID
+            inputObj.Add("mch_id", mch_id);//商户号
+            inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串	
+            inputObj.Add("sign", PayHelper.MakeSign(inputObj));//签名
             string xml = inputObj.ToXml();
-
-            string response = HttpService.Post(xml, url, false, timeOut);
-
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
-
-            return result;
+            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/tools/shorturl", false, timeOut);
+            return PayHelper.FromXml(response); ;
         }
 
 
@@ -641,56 +601,51 @@ namespace {{cookiecutter.project_name}}.Controllers
         * @throws Exception
         * @return 成功时返回，其他抛异常
         */
-        public WxPayData UnifiedOrder(WxPayData inputObj, int timeOut = 6)
+        public SortedDictionary<string, object> UnifiedOrder(SortedDictionary<string, object> inputObj, int timeOut = 6)
         {
-            string url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
             //检测必填参数
-            if (!inputObj.IsSet("out_trade_no"))
+            if (!inputObj.ContainsKey("out_trade_no"))
             {
                 throw new Exception("缺少统一支付接口必填参数out_trade_no！");
             }
-            else if (!inputObj.IsSet("body"))
+            else if (!inputObj.ContainsKey("body"))
             {
                 throw new Exception("缺少统一支付接口必填参数body！");
             }
-            else if (!inputObj.IsSet("total_fee"))
+            else if (!inputObj.ContainsKey("total_fee"))
             {
                 throw new Exception("缺少统一支付接口必填参数total_fee！");
             }
-            else if (!inputObj.IsSet("trade_type"))
+            else if (!inputObj.ContainsKey("trade_type"))
             {
                 throw new Exception("缺少统一支付接口必填参数trade_type！");
             }
 
             //关联参数
-            if (inputObj.GetValue("trade_type").ToString() == "JSAPI" && !inputObj.IsSet("openid"))
+            if (inputObj["trade_type"].ToString() == "JSAPI" && !inputObj.ContainsKey("openid"))
             {
                 throw new Exception("统一支付接口中，缺少必填参数openid！trade_type为JSAPI时，openid为必填参数！");
             }
-            if (inputObj.GetValue("trade_type").ToString() == "NATIVE" && !inputObj.IsSet("product_id"))
+            if (inputObj["trade_type"].ToString() == "NATIVE" && !inputObj.ContainsKey("product_id"))
             {
                 throw new Exception("统一支付接口中，缺少必填参数product_id！trade_type为JSAPI时，product_id为必填参数！");
             }
 
             //异步通知url未设置，则使用配置文件中的url
-            if (!inputObj.IsSet("notify_url"))
+            if (!inputObj.ContainsKey("notify_url"))
             {
-                inputObj.SetValue("notify_url", "http://url");//异步通知url
+                inputObj.Add("notify_url", "http://url");//异步通知url
             }
 
-            inputObj.SetValue("appid", appid);//公众账号ID
-            inputObj.SetValue("mch_id", mch_id);//商户号
-            inputObj.SetValue("spbill_create_ip", ip);//终端ip	  	    
-            inputObj.SetValue("nonce_str", GenerateNonceStr());//随机字符串
+            inputObj.Add("appid", appid);//公众账号ID
+            inputObj.Add("mch_id", mch_id);//商户号
+            inputObj.Add("spbill_create_ip", ip);//终端ip	  	    
+            inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串
 
-            //签名
-            inputObj.SetValue("sign", inputObj.MakeSign());
-            string response = HttpService.Post(inputObj.ToXml(), url, false, timeOut);
+            inputObj.Add("sign", PayHelper.MakeSign(inputObj));
+            string response = HttpService.Post(PayHelper.ToXml(inputObj), "https://api.mch.weixin.qq.com/pay/unifiedorder", false, timeOut);            
 
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
-
-            return result;
+            return PayHelper.FromXml(response);
         }
 
 
@@ -702,96 +657,49 @@ namespace {{cookiecutter.project_name}}.Controllers
         * @throws Exception
         * @return 成功时返回，其他抛异常
         */
-        public WxPayData CloseOrder(WxPayData inputObj, int timeOut = 6)
+        public SortedDictionary<string, object> CloseOrder(SortedDictionary<string, object> inputObj, int timeOut = 6)
         {
-            string url = "https://api.mch.weixin.qq.com/pay/closeorder";
             //检测必填参数
-            if (!inputObj.IsSet("out_trade_no"))
+            if (!inputObj.ContainsKey("out_trade_no"))
             {
                 throw new Exception("关闭订单接口中，out_trade_no必填！");
             }
 
-            inputObj.SetValue("appid", appid);//公众账号ID
-            inputObj.SetValue("mch_id", mch_id);//商户号
-            inputObj.SetValue("nonce_str", GenerateNonceStr());//随机字符串		
-            inputObj.SetValue("sign", inputObj.MakeSign());//签名
-            string xml = inputObj.ToXml();
+            inputObj.Add("appid", appid);//公众账号ID
+            inputObj.Add("mch_id", mch_id);//商户号
+            inputObj.Add("nonce_str", PayHelper.Nonce_str); //随机字符串		
+            inputObj.Add("sign", PayHelper.MakeSign(inputObj));//签名
 
-            string response = HttpService.Post(xml, url, false, timeOut);
+            string xml = PayHelper.ToXml(inputObj);
+            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/pay/closeorder", false, timeOut);
 
-            WxPayData result = new WxPayData();
-            result.FromXml(response);
-
-            return result;
+            return PayHelper.FromXml(response);
         }
-
     }
 
-
-    /// <summary>
-    /// 微信支付协议接口数据类，所有的API接口通信都依赖这个数据结构，
-    /// 在调用接口之前先填充各个字段的值，然后进行接口通信，
-    /// 这样设计的好处是可扩展性强，用户可随意对协议进行更改而不用重新设计数据结构，
-    /// 还可以随意组合出不同的协议数据包，不用为每个协议设计一个数据包结构
-    /// </summary>
-    public class WxPayData
+    public static class PayHelper
     {
+        public static string Out_trade_no => string.Format("{0}{1}{2}", "mch_id", DateTime.Now.ToString("yyyyMMddHHmmss"), new Random().Next(999));
+        public static string Time_stamp => Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalSeconds).ToString();
+        public static string Nonce_str => Guid.NewGuid().ToString().Replace("-", "");
 
-        //采用排序的Dictionary的好处是方便对数据包进行签名，不用再签名之前再做一次排序
-        private SortedDictionary<string, object> m_values = new SortedDictionary<string, object>();
-
-        /**
-        * 设置某个字段的值
-        * @param key 字段名
-         * @param value 字段值
-        */
-        public void SetValue(string key, object value)
+        public static string MakeSign(this SortedDictionary<string, object> data)
         {
-            m_values[key] = value;
+            return EncryptHelper.MD5(ToUrl(data)).ToUpper();
         }
-
-        /**
-        * 根据字段名获取某个字段的值
-        * @param key 字段名
-         * @return key对应的字段值
-        */
-        public object GetValue(string key)
-        {
-            object o = null;
-            m_values.TryGetValue(key, out o);
-            return o;
-        }
-
-        /**
-         * 判断某个字段是否已设置
-         * @param key 字段名
-         * @return 若字段key已被设置，则返回true，否则返回false
-         */
-        public bool IsSet(string key)
-        {
-            object o = null;
-            m_values.TryGetValue(key, out o);
-            if (null != o)
-                return true;
-            else
-                return false;
-        }
-
-        /**
-        * @将Dictionary转成xml
-        * @return 经转换得到的xml串
-        * @throws Exception
-        **/
-        public string ToXml()
-        {
-            //数据为空时不能转化为xml格式
-            if (0 == m_values.Count)
+        public static string ToUrl(SortedDictionary<string, object> data)
+        {            
+            string buff = "";
+            foreach (var pair in data)
             {
-                throw new Exception("WxPayData数据为空!");
+                buff += pair.Key + "=" + pair.Value + "&";
             }
-
+            return buff.Trim('&');
+        }
+        public static string ToXml(this SortedDictionary<string, object> data)
+        {
             string xml = "<xml>";
-            foreach (KeyValuePair<string, object> pair in m_values)
+            foreach (KeyValuePair<string, object> pair in data)
             {
                 //字段值不能为null，会影响后续流程
                 if (pair.Value == null)
@@ -815,141 +723,35 @@ namespace {{cookiecutter.project_name}}.Controllers
             xml += "</xml>";
             return xml;
         }
-
-        /**
-        * @将xml转为WxPayData对象并返回对象内部的数据
-        * @param string 待转换的xml串
-        * @return 经转换得到的Dictionary
-        * @throws Exception
-        */
-        public SortedDictionary<string, object> FromXml(string xml)
+        public static SortedDictionary<string, object> FromXml(string xml)
         {
-            if (string.IsNullOrEmpty(xml))
-            {
-                throw new Exception("将空的xml串转换为WxPayData不合法!");
-            }
-
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xml);
-            XmlNode xmlNode = xmlDoc.FirstChild;//获取到根节点<xml>
-            XmlNodeList nodes = xmlNode.ChildNodes;
+            XmlNodeList nodes = xmlDoc.FirstChild.ChildNodes;
+
+            SortedDictionary<string, object> data = new SortedDictionary<string, object>();
             foreach (XmlNode xn in nodes)
             {
                 XmlElement xe = (XmlElement)xn;
-                m_values[xe.Name] = xe.InnerText;//获取xml的键值对到WxPayData内部的数据中
+                data[xe.Name] = xe.InnerText;
             }
 
-            try
-            {
-                //2015-06-29 错误是没有签名
-                if (m_values["return_code"] != "SUCCESS")
-                {
-                    return m_values;
-                }
-                CheckSign();//验证签名,不通过会抛异常
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            if (data["return_code"].ToString() != "SUCCESS")
+                return data;
 
-            return m_values;
+            if (!CheckSign(data)) throw new Exception("签名较验不通过：" + JsonConvert.SerializeObject(data));
+            return data;
         }
-
-        /**
-        * @Dictionary格式转化成url参数格式
-        * @ return url格式串, 该串不包含sign字段值
-        */
-        public string ToUrl(bool hasSign = false)
+        public static bool CheckSign(this SortedDictionary<string, object> data)
         {
-            string buff = "";
-            foreach (KeyValuePair<string, object> pair in m_values)
-            {
-                if ((pair.Key != "sign" || hasSign) && pair.Value.ToString() != "")
-                {
-                    buff += pair.Key + "=" + pair.Value + "&";
-                }
-            }
-            buff = buff.Trim('&');
-            return buff;
-        }
-
-        /**
-        * @values格式化成能在Web页面上显示的结果（因为web页面上不能直接输出xml格式的字符串）
-        */
-        public string ToPrintStr()
-        {
-            string str = "";
-            foreach (KeyValuePair<string, object> pair in m_values)
-            {
-                if (pair.Value == null)
-                {
-                    throw new Exception("WxPayData内部含有值为null的字段!");
-                }
-
-                str += string.Format("{0}={1}<br>", pair.Key, pair.Value.ToString());
-            }
-            return str;
-        }
-
-        /**
-        * @生成签名，详见签名生成算法
-        * @return 签名, sign字段不参加签名
-        */
-        public string MakeSign()
-        {
-            string appid = "WeChat_APIKEY";
-            //转url格式
-            string str = ToUrl();
-            //在string后加入API KEY
-            str += "&key=" + appid;
-            //MD5加密
-            return EncryptHelper.MD5(str).ToUpper();
-        }        
-
-        /**
-        * 
-        * 检测签名是否正确
-        * 正确返回true，错误抛异常
-        */
-        public bool CheckSign()
-        {
-            //如果没有设置签名，则跳过检测
-            if (!IsSet("sign"))
-            {
-                throw new Exception("WxPayData签名存在但不合法!");
-            }
-            //如果设置了签名但是签名为空，则抛异常
-            else if (GetValue("sign") == null || GetValue("sign").ToString() == "")
-            {
-                throw new Exception("WxPayData签名存在但不合法!");
-            }
-
-            //获取接收到的签名
-            string return_sign = GetValue("sign").ToString();
-
-            //在本地计算新的签名
-            string cal_sign = MakeSign();
-
-            if (cal_sign == return_sign)
-            {
-                return true;
-            }
+            if (!data.ContainsKey("sign"))
+                return false;
+            if (string.IsNullOrEmpty(data["sign"].ToString()))
+                return false;
             
-            throw new Exception("WxPayData签名验证错误!");
-        }
-
-        /**
-        * @获取Dictionary
-        */
-        public SortedDictionary<string, object> GetValues()
-        {
-            return m_values;
+            return MakeSign(data) == data["sign"].ToString();
         }
     }
-    /**
-    * 	配置账号信息
-    */
 
     public class HttpService
     {

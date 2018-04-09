@@ -17,32 +17,30 @@ namespace {{cookiecutter.project_name}}.Helpers
         {
             get
             {
-                //从省公司Portal跳转，放开以下代码
-                //Guid userid;
-                //if (!HttpContext.Current.User.Identity.IsAuthenticated && UIPSSOClient.ValidateToken(out userid))
-                //    SignIn(userid);                
-                
                 if (HttpContextCore.Current.User == null || HttpContextCore.Current.User.Identity == null)
                     return false;
                 return HttpContextCore.Current.User.Identity.IsAuthenticated;
             }
         }
-        public static bool Validate(string user, string password,out Guid userid)
+        public static bool Validate(string sign, string password,out Guid userid)
         {
-            //使用省公司Portal登录验证，放开以下代码
-            //return UIPSSOClient.Validate(user, password, out userid);
-
-            //使用江门移动线上能力平台(Online)登录验证，放开以下代码
-            //return JMOnlineSSOClient.Validate(user, password, out userid);
-
             userid = Guid.Empty;
             DataContext dbContext = new DataContext();
             password = EncryptHelper.MD5(password);
-            var userModel = dbContext.SysUser.FirstOrDefault(t => (t.Mobile == user || t.Email == user || t.UserCode == user) && t.UserPassword == password);
+            var userModel = dbContext.SysUser.FirstOrDefault(t => (t.Mobile == sign || t.Email == sign || t.UserCode == sign) && t.UserPassword == password);
             if (userModel == null)
                 return false;
 
             userid = userModel.UserId;
+            return true;
+        }
+        public static bool Validate(string sign, out SysUser user)
+        {
+            DataContext dbContext = new DataContext();
+            user = dbContext.SysUser.FirstOrDefault(t => (t.Mobile == sign || t.Email == sign || t.UserCode == sign) );
+            if (user == null)
+                return false;
+            
             return true;
         }
         public static void SignIn(Guid userid)

@@ -34,27 +34,51 @@
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">用户登录</p>
-            <div class="form-group has-feedback">
-                <input type="text" id="txtUserCode" class="form-control" placeholder="帐号/手机/邮箱" value="admin">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" id="txtPassword" class="form-control" placeholder="密码" value="123456">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-                <div class="col-xs-4" style="padding-left: 15px;">
-                    <input type="text" id="verifyCode" class="form-control" placeholder="验证码">
+            <h3 class="login-box-msg">用户登录</h3>
+            <ul class="nav nav-tabs nav-justified">
+                <li role="presentation" class="active"><a href="#t1" data-toggle="tab">账号密码登录</a></li>
+                <li role="presentation"><a href="#t2" data-toggle="tab">手机验证登录</a></li>
+            </ul>
+            <div class="tab-content" style="padding-top:15px;">
+                <div id="t1" class="tab-pane fade in active">
+                    <div class="form-group has-feedback">
+                        <input type="text" id="txtUserCode1" class="form-control" placeholder="帐号/手机/邮箱" value="admin">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" id="txtPassword" class="form-control" placeholder="密码" value="123456">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-4" style="padding-left: 15px;">
+                            <input type="text" id="verifyCode" class="form-control" placeholder="验证码">
+                        </div>
+                        <div class="col-xs-4" style="padding-left: 15px;" id="divImg">
+                            <img id="verifyCodeImage" src="../../account/verifycode" style="cursor:pointer;" title="点击刷新" />
+                        </div>
+                        <div class="col-xs-4" style="padding-right: 15px;">
+                            <button type="button" id="btnLogin" class="btn btn-primary btn-block ">登录</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-4" style="padding-left: 15px;" id="divImg">
-                    <img id="verifyCodeImage" src="../../account/verifycode" style="cursor:pointer;" title="点击刷新" />
+                <div id="t2" class="tab-pane fade">
+                    <div class="form-group has-feedback">
+                        <input type="text" id="txtUserCode2" class="form-control" placeholder="帐号/手机" value="admin">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-xs-4" style="padding-left: 15px;">
+                            <input type="text" id="smsCode" class="form-control" placeholder="验证码">
+                            <input type="hidden" id="smsSign" />
+                        </div>
+                        <div class="col-xs-8" style="padding-right: 15px;">
+                            <button type="button" id="smsSend" class="btn btn-primary btn-block ">发送验证短信</button>
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <button type="button" id="smsLogin" class="btn btn-primary btn-block " disabled>短信验证登录</button>
+                    </div>
                 </div>
-                <!-- /.col -->
-                <div class="col-xs-4" style="padding-right: 15px;">
-                    <button type="button" id="btnLogin" class="btn btn-primary btn-block ">登录</button>
-                </div>
-                <!-- /.col -->
             </div>
             <div class="form-group has-feedback">
                 <span id="spanmsg" style="color:red;"></span>
@@ -98,9 +122,8 @@
             });
 
             $("#btnLogin").click(function () {
-                var spanmsg = $("#spanmsg");
-                var userCode = $("#txtUserCode").val();
-                if (userCode == "") {
+                var account = $("#txtUserCode1").val();
+                if (account == "") {
                     $("#spanmsg").text("请输入帐号/手机/邮箱");
                     return;
                 }
@@ -114,12 +137,11 @@
                     $("#spanmsg").text("请输入验证码");
                     return;
                 }
-
-                var spanmsg = $("#spanmsg");
+                
                 $.showLoading();
                 $.ajax({
                     url: "../../account/login",
-                    data: { userCode: userCode, password: password, verifyCode: verifyCode },
+                    data: { account: account, password: password, verifyCode: verifyCode },
                     datatype: "json",
                     type: "post",
                     success: function (result) {
@@ -138,6 +160,65 @@
                     }
                 });
             });
+
+            $("#smsSend").click(function () {
+                $("#spanmsg").text("");
+                var account = $("#txtUserCode2").val();
+                if (account == "") {
+                    $("#spanmsg").text("请输入账号/手机/邮箱");
+                    return;
+                }
+                settime();
+                var sign = Math.random();
+                $("#smsSign").val(sign);
+                $.get("../../account/smscode", { account: account, t: sign }, function (result) {
+                    if (result.code == 0) {
+                        $("#smsLogin").attr('disabled', false);        
+                    } else {
+                        countdown = 0;
+                        $("#spanmsg").text("发送失败，请重新发送");
+                    }
+                });
+            });
+            $("#smsLogin").click(function () {
+                var account = $("#txtUserCode2").val();
+                if (account == "") {
+                    $("#spanmsg").text("请输入账号/手机/邮箱");
+                    return;
+                }
+                var smsCode = $("#smsCode").val();
+                if (smsCode == "") {
+                    $("#spanmsg").text("请输入验证码");
+                    return;
+                }
+                $.showLoading();
+                $.get("../../account/smslogin", { account: account, t: $("#smsSign").val(), code: smsCode }, function (result) {
+                    if (result.code == 0) {
+                        BitAdmin.RedirectToHomePage();
+                    } else {
+                        countdown = 0;
+                        $("#smsCode").val('');
+                        $("#smsSend").attr('disabled', false);
+                        $("#spanmsg").text(result.msg);
+                    }
+                    $.hideLoading();
+                });
+            });
+
+            var countdown = 5;
+            function settime() {
+                if (countdown == 0) {
+                    $("#smsSend").attr('disabled', false);
+                    $("#smsSend").text("发送验证短信");
+                    countdown = 60;
+                    return;
+                } else {
+                    $("#smsSend").attr('disabled', true);
+                    $("#smsSend").text("重新发送(" + countdown + ")");
+                    countdown--;
+                    setTimeout(settime, 1000);
+                }
+            }
         });
     </script>
 </body>

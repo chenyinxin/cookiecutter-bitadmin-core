@@ -2,8 +2,12 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/{{cookiecutter.project_name}}",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:51671/",
+      "applicationUrl": "http://192.168.1.69:51671/",
       "sslPort": 0
     }
   },

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -56,13 +57,23 @@ namespace {{cookiecutter.project_name}}
             HttpContextCore.ServiceProvider = svc;
 
             app.UseSession();
+
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings[".apk"] = "application/vnd.android.package-archive";
             //静态文件
-            string fileupload= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UploadFiles") ;
+            string fileupload= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploadfiles") ;
             if (!Directory.Exists(fileupload)) Directory.CreateDirectory(fileupload);
+            string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
+            if (!Directory.Exists(apps)) Directory.CreateDirectory(apps);
             app.UseStaticFiles().UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(fileupload),
                 RequestPath = "/UploadFiles"
+            }).UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(apps),
+                RequestPath = "/apps",
+                ContentTypeProvider = provider
             });
             //登录认证
             app.UseAuthentication();

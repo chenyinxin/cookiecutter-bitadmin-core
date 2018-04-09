@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.ui-page-login,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			.mui-content {
+				height: 100%;
+			}
+			
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group {
+				margin-top: 10px;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="mui-input-group" style="text-align: center;margin-top: 0px;padding-top: 30px;">
+				<img src="images/logo.png" />
+			</div>
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号" value="admin">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码" value="123456">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">绑定账号</button>
+			</div>
+			<div class="mui-content-padded oauth-area">
+
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
+		<script src="js/bitadmin.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				var isBind = false;
+				backButtonPress = 0;
+				$.init({
+					statusBarBackground: '#f7f7f7',
+					beforeback: function() {
+						//已登录，单击返回
+						if(app.getState().token != undefined && isBind)
+							return true;
+
+						backButtonPress++;
+						if(backButtonPress > 1) {
+							plus.runtime.quit();
+						} else {
+							plus.nativeUI.toast('再按一次退出应用');
+						}
+						setTimeout(function() {
+							backButtonPress = 0;
+						}, 1000);
+						return false;
+					}
+				});
+				$.plusReady(function() {
+					var openId = plus.webview.currentWebview().openId;
+					var loginButton = doc.getElementById('login');
+					var accountBox = doc.getElementById('account');
+					var passwordBox = doc.getElementById('password');
+					loginButton.addEventListener('tap', function(event) {
+						mui.ajax(bitadmin.host + '/account/binduser', {
+							data: {
+								account: accountBox.value,
+								password: passwordBox.value,
+								openId: openId
+							},
+							dataType: 'json',
+							type: 'post',
+							success: function(result) {
+								if(result.code == 0) {
+									isBind = true;
+									app.createState(accountBox.value, function() {});
+									$.back();
+									//关闭登录页
+									mui.fire(plus.webview.getWebviewById(plus.runtime.appid), 'refresh');
+									var ws = plus.webview.getWebviewById("login");
+									plus.webview.close(ws);
+								} else {
+									plus.nativeUI.toast(result.msg);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log(xhr["status"]);
+								return plus.nativeUI.toast('绑定错误，请稍后再试');
+							}
+						});
+					});
+					$.enterfocus('#login-form input', function() {
+						$.trigger(loginButton, 'tap');
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

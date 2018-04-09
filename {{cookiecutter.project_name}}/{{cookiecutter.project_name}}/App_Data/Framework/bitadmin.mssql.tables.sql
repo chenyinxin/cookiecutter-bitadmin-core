@@ -533,6 +533,28 @@ CREATE TABLE [dbo].[SysServer](
 ) ON [PRIMARY]
 GO
 
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SysSmsCode](
+	[id] [uniqueidentifier] NOT NULL,
+	[mobile] [nvarchar](32) NULL,
+	[smsSign] [nvarchar](32) NULL,
+	[smsCode] [nvarchar](32) NULL,
+	[isVerify] [int] NULL,
+	[createTime] [datetime] NULL,
+	[overTime] [datetime] NULL,
+	[verifyTime] [datetime] NULL,
+ CONSTRAINT [PK_SysSMSCode] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
 ALTER TABLE [dbo].[FlowBills]  WITH CHECK ADD  CONSTRAINT [FK_dbo.FlowBills_dbo.FlowBills_ParentId] FOREIGN KEY([parentId])
 REFERENCES [dbo].[FlowBills] ([id])
 GO

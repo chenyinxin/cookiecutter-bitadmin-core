@@ -22,7 +22,7 @@
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">绑定账号</p>
+            <h3 class="login-box-msg">绑定账号</h3>
             <div class="form-group has-feedback">
                 <input type="text" id="txtUserCode" class="form-control" placeholder="帐号/手机/邮箱" value="">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -57,8 +57,8 @@
         $(document).ready(function () {
             $("#btnLogin").click(function () {
                 var spanmsg = $("#spanmsg");
-                var userCode = $("#txtUserCode").val();
-                if (userCode == "") {
+                var account = $("#txtUserCode").val();
+                if (account == "") {
                     $("#spanmsg").text("请输入帐号/手机/邮箱");
                     return;
                 }
@@ -68,19 +68,15 @@
                     return;
                 }
                 var openId = BitPage.GetQueryString("openid");
-                var sign = BitPage.GetQueryString("sign");
                 $.showLoading();
                 $.ajax({
                     url: "../../account/binduser",
-                    data: { userCode: userCode, password: password, openId: openId, sign: sign},
+                    data: { account: account, password: password, openId: openId},
                     datatype: "json",
                     type: "post",
                     success: function (result) {
                         if (result.code == 0) {
-                            if (sign == "pc")
                                 window.location.href = "../../pages/home/index.html";
-                            if (sign == "wx")
-                                window.location.href = "../../pages/home/weixin.html";
                         } else {
                             $("#spanmsg").text(result.msg);
                             $("#txtPassword").val('');

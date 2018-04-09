@@ -29,6 +29,46 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             _memoryCache = memoryCache;
         }
+        public JsonResult SetCookies()
+        {
+            try
+            {
+                var val = new Random().Next();
+                Response.Cookies.Append("random", val.ToString());
+                HttpContextCore.Current.Session.Set("random", val);
+                return Json(new { Code = 0, Msg = val });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public JsonResult GetCookies()
+        {
+            try
+            {
+
+                return Json(new { Code = 0, Msg = Request.Cookies["random"] });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public JsonResult GetSession()
+        {
+            try
+            {
+                return Json(new { Code = 0, Msg = HttpContextCore.Current.Session.Get<string>("random") });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
         public ActionResult Index()
         {
             return Redirect("/pages/account/login.html");
@@ -59,7 +99,71 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
 
-        public JsonResult Login(string userCode, string password,string verifyCode)
+        public JsonResult AppLogin(string account, string password)
+        {
+            try
+            {
+                LogHelper.SaveLog("app", account + password);
+                if (!SSOClient.Validate(account, password, out Guid userId))
+                    return Json(new { Code = 1, Msg = "帐号或密码不正确，请重新输入！" });                
+
+                SSOClient.SignIn(userId);
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public JsonResult AppAuthLogin(string openId)
+        {
+            try
+            {
+                SysUserOpenId userOpenId = dbContext.Set<SysUserOpenId>().Where(x => x.OpenId == openId).FirstOrDefault();
+                if (userOpenId == null || userOpenId.UserId == Guid.Empty)
+                    return Json(new { Code = -1, Msg = "用户未绑定！" });
+
+                SSOClient.SignIn(userOpenId.UserId.Value);
+                return Json(new { Code = 0 ,User= userOpenId.UserId });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        public JsonResult AppUpdate()
+        {
+            try
+            {
+                string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
+                Dictionary<string,string> vers = new Dictionary<string, string>();
+                foreach(var file in Directory.GetFiles(apps))
+                {
+                    var path = Path.GetFileNameWithoutExtension(file).Split("_");
+                    string key = "";
+                    foreach (var v in path[path.Length - 1].Split("."))
+                        key += v.PadLeft(5, '0');
+                    vers.Add(key, file);                    
+                }
+                var ver = vers.Keys.Max();
+
+                string url = string.Format("{0}://{1}/apps/{2}", Request.Scheme, Request.Host, Path.GetFileName(vers[ver]));
+                var varx = Path.GetFileNameWithoutExtension(vers[ver]).Split("_");
+
+                return Json(new { Code = 0, update = true, Ver = varx[varx.Length - 1], Url = url });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+
+        public JsonResult Login(string account, string password,string verifyCode)
         {
             try
             {
@@ -67,7 +171,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (Convert.ToString(verifyCode).ToLower() != Convert.ToString(vcode).ToLower())
                     return Json(new { Code = 1, Msg = "验证码不正确，请重新输入！" });
 
-                if (!SSOClient.Validate(userCode, password, out Guid userId))
+                if (!SSOClient.Validate(account, password, out Guid userId))
                     return Json(new { Code = 1, Msg = "帐号或密码不正确，请重新输入！" });
 
                 HttpContextCore.Current.Session.Set("VerificationCode", string.Empty);
@@ -81,12 +185,64 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-        
-        public JsonResult BindUser(string userCode, string password, string openId, string sign)
+        public ActionResult SMSCode(string account, string t)
         {
             try
             {
-                if (!SSOClient.Validate(userCode, password, out Guid userId))
+                if (!SSOClient.Validate(account,  out SysUser user))
+                    return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
+
+                string code = VerificationCode.CreateNumber(4);
+                SMSService.Send(user.Mobile, code);
+                dbContext.SysSmsCode.Add(new SysSmsCode()
+                {
+                    Id = Guid.NewGuid(),
+                    Mobile = user.Mobile,
+                    CreateTime = DateTime.Now,
+                    OverTime = DateTime.Now.AddMinutes(3),
+                    IsVerify = 0,
+                    SmsCode = code,
+                    SmsSign = t
+                });
+                dbContext.SaveChanges();
+                return Json(new { Code = 0, Msg = "发送成功！" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        public JsonResult SMSLogin(string account, string t, string code)
+        {
+            try
+            {
+                if (!SSOClient.Validate(account, out SysUser user))
+                    return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
+
+                var item = dbContext.SysSmsCode.FirstOrDefault(x => x.Mobile == user.Mobile && x.SmsCode == code && x.SmsSign == t && x.OverTime > DateTime.Now);
+                if(item==null)
+                    return Json(new { Code = 1, Msg = "验证码验证失败，请重新输入！" });
+                item.IsVerify = 1;
+                item.VerifyTime = DateTime.Now;
+                dbContext.SaveChanges();
+
+                SSOClient.SignIn(user.UserId);
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        public JsonResult BindUser(string account, string password, string openId)
+        {
+            try
+            {
+                if (!SSOClient.Validate(account, password, out Guid userId))
                     return Json(new { Code = 1, Msg = "帐号或密码不正确，请重新输入！" });
                 //公众号绑定
                 SysUserOpenId userOpenId = dbContext.Set<SysUserOpenId>().Where(x => x.OpenId == openId).FirstOrDefault();
@@ -145,7 +301,6 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
 
         [BitAuthorize]
-        [HttpGet]
         public JsonResult GetUser()
         {
             try
@@ -156,9 +311,9 @@ namespace {{cookiecutter.project_name}}.Controllers
                 {
                     userCode = Convert.ToString(user.UserCode),
                     userName = Convert.ToString(user.UserName),
-                    IDCard = Convert.ToString(user.IdCard),
+                    idCard = Convert.ToString(user.IdCard),
                     mobile = Convert.ToString(user.Mobile),
-                    Email = Convert.ToString(user.Email),
+                    email = Convert.ToString(user.Email),
                     departmentName = Convert.ToString(department.DepartmentName)
                 });
             }
@@ -263,6 +418,7 @@ namespace {{cookiecutter.project_name}}.Controllers
 
         #endregion
 
+        #region 获取操作权限
         /// <summary>
         /// 获取操作code，用于判断是否有操作权限
         /// </summary>
@@ -324,7 +480,8 @@ namespace {{cookiecutter.project_name}}.Controllers
                 LogHelper.SaveLog(ex);
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
-        }
+        } 
+        #endregion
 
 
         #region QQ互联登录

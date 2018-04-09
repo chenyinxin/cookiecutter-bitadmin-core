@@ -3,15 +3,16 @@ using {{cookiecutter.project_name}}.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
     [BitAuthorize]
     public class ReadmeController : Controller
     {
-        [HttpGet]
         public async Task<JsonResult> NoticWebSocket()
         {
             try
@@ -33,7 +34,6 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-        [HttpGet]
         public JsonResult NoticIgetui()
         {
             try
@@ -41,6 +41,40 @@ namespace {{cookiecutter.project_name}}.Controllers
                 //string clientid = "cf6f30e351b39bce2978705e20db8578";
                 var msg = IgetuiNoticeService.Create("BitAdmin消息", "这是BitAdmin后台发送给用户【" + SSOClient.User.UserName + "】的消息", "", "", "");
                 IgetuiNoticeService.Push(SSOClient.UserId, msg);
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public async Task<JsonResult> Apk()
+        {
+            try
+            {
+                string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
+                Dictionary<string, string> vers = new Dictionary<string, string>();
+                foreach (var file in Directory.GetFiles(apps))
+                {
+                    var path = Path.GetFileNameWithoutExtension(file).Split("_");
+                    string key = "";
+                    foreach (var v in path[path.Length - 1].Split("."))
+                        key += v.PadLeft(5, '0');
+                    vers.Add(key, file);
+                }
+                var ver = vers.Keys.Max();
+                string url = string.Format("{0}://{1}/apps/{2}", Request.Scheme, Request.Host, Path.GetFileName(vers[ver]));
+                
+
+                BitNoticeMessage message = new BitNoticeMessage()
+                {
+                    Sender = "readme",
+                    Receiver = SSOClient.UserId.ToString(),
+                    Content = "<h4 class=\"spop-title\">扫码下载框架APP示例</h4><img src=\"../../qrcode/encode?msg=" + HttpUtility.UrlEncode(url) + "\" width=\"100\" height=\"100\" /><br />",
+                    MessageType = "notice"
+                };
+                await BitNoticeService.SendStringAsync(message);
                 return Json(new { Code = 0 });
             }
             catch (Exception ex)

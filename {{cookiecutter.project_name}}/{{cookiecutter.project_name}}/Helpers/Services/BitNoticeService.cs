@@ -40,7 +40,7 @@ namespace {{cookiecutter.project_name}}.Services
         }
         public static Dictionary<string, List<UserSocket>> Sockets => sockets;
 
-        public static async Task SendStringAsync(BitNoticeMessage message)
+        public static async Task SendStringAsync(BitNoticeMessage message,bool isLocal=false)
         {
             foreach (var user in sockets)
             {
@@ -48,7 +48,7 @@ namespace {{cookiecutter.project_name}}.Services
                 foreach (var socket in user.Value)
                 {
                     LogHelper.SaveLog("WebSockets", string.Format("发送消息：{0}:{1}:{2}:{3}", socket.IsRemote, socket.RemoteIp, socket.RemoteTime, JsonConvert.SerializeObject(message)));
-                    if (socket.IsRemote)
+                    if (socket.IsRemote && !isLocal)
                     {//远程通道
                         try
                         {
