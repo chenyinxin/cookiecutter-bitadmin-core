@@ -7,8 +7,7 @@
 * 创建项目数据库，分别初始化脚本:`bitadmin.mssql.tables.sql`(表结构)、`bitadmin.mssql.datas.sql`（数据）。
 * 运行以下命令生成实体(`注意修改数据库连接`):<br>
   `Scaffold-DbContext “data source=.;initial catalog=BitAdminCore;user id=sa;password=123456;” Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context DataContext -Force`<br>
-  可能出现`Build failed.`原因我也不知道，问`微软`或`想办法`。<br>
-  `EFCore`技术相关问题，从官方获得支持。<br>
-* 修改`appsettings.json`的`数据库连接`。
+  将 `DataContext.cs` 文件中的连接串改为 `optionsBuilder.UseSqlServer(SqlHelper.connectionString);` 并引入 `using`<br>
+* 修改`appsettings.json` 的 `数据库连接串 DataContext `。
 * `F5`运行项目。
 
