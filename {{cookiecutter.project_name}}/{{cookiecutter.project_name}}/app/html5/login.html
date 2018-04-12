@@ -274,6 +274,11 @@
 						plus.nativeUI.toast("获取登录认证失败：" + e.message);
 					});
 
+					// 关闭启动页
+					setTimeout(function() {
+						plus.navigator.closeSplashscreen();
+					}, 1000);
+
 					//检查 "登录状态/锁屏状态" 结束
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
@@ -379,7 +384,7 @@
 							setTimeout(settime, 1000);
 						}
 					}
-					
+
 					//用户注册
 
 					regButton.addEventListener('tap', function(event) {
@@ -398,7 +403,7 @@
 							}
 						});
 					}, false);
-					
+
 					//忘记密码
 					forgetButton.addEventListener('tap', function(event) {
 						mui.openWindow({

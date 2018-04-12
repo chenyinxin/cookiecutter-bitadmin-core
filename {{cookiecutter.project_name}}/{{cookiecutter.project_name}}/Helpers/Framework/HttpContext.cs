@@ -30,17 +30,7 @@ namespace {{cookiecutter.project_name}}
             var value = session.GetString(key);
             return value == null ? default(T) :JsonConvert.DeserializeObject<T>(value);
         }
-
-        public static string ConfigurationFile = "appsettings.json";
-        static IConfiguration configuration;
-        public static IConfiguration Configuration
-        {
-            get
-            {
-                if (configuration == null)
-                    configuration = new ConfigurationBuilder().Add(new JsonConfigurationSource { Path = ConfigurationFile, ReloadOnChange = true }).Build();
-                return configuration;
-            }
-        }
+        
+        public static IConfiguration Configuration{get;set;}
     }
 }

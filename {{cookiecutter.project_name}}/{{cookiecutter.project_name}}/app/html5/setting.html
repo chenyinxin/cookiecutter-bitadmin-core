@@ -598,14 +598,11 @@
 							$.each(data, function(i, norms) {
 								$.each(norms, function(key, value) {
 									$.each(value, function(j, normItem) {
-										if(j == "version") {
-											if(normItem > inf.version) {
-												plus.nativeUI.confirm("当前应用有新版本，是否更新？", function(e) {
-													if(e.index != 0) return;
-													document.location.href = 'https://itunes.apple.com/cn/app/san-gu-hui/id111030274?mt=8'; //上新APPStore下载地址
-												}, "系统更新", ["确认", "取消"]);
-
-											}
+										if(j == "version"&&normItem > inf.version) {
+											plus.nativeUI.confirm("当前应用有新版本，是否更新？", function(e) {
+												if(e.index != 0) return;
+												document.location.href = 'https://itunes.apple.com/cn/app/san-gu-hui/id111030274?mt=8'; //上新APPStore下载地址
+											}, "系统更新", ["确认", "取消"]);											
 										}
 									});
 								});
@@ -615,22 +612,19 @@
 					});
 				} else if(/android/.test(ua)) { //安卓应用
 					mui.get(bitadmin.host + '/account/appupdate', {}, function(result) {
-						console.log(result.update);
-						console.log(result.ver);
 						if(result.update && result.ver != inf.version) {
-							plus.ui.confirm("当前应用有新版本，是否更新？", function(i) {
-								if(0 == i) {
-									var waiting = plus.nativeUI.showWaiting('下载更新中，请勿关闭');
-									var task = plus.downloader.createDownload(result.url, {}, function(d, status) {
-										if(status == 200) {
-											waiting.close();
-											plus.runtime.install(d.filename);
-										} else {
-											alert("下载失败");
-										}
-									});
-									task.start();
-								}
+							plus.ui.confirm("当前应用有新版本，是否更新？", function(e) {
+								if(e.index != 0) return;
+								var waiting = plus.nativeUI.showWaiting('下载更新中，请勿关闭');
+								plus.downloader.createDownload(result.url, {}, function(d, status) {
+									if(status == 200) {
+										waiting.close();
+										plus.runtime.install(d.filename);
+									} else {
+										mui.alert("下载失败，请稍后再试！");
+									}
+								}).start();
+
 							}, "更新提示", ["立即更新", "取　　消"]);
 						}
 					}, 'json');

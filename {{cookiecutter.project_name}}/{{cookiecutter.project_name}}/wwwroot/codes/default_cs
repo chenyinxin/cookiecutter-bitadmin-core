@@ -1,0 +1,115 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using System.Data;
+using System.Data.SqlClient;
+using {{cookiecutter.project_name}}.Models;
+using Microsoft.AspNetCore.Mvc;
+using {{cookiecutter.project_name}}.Helpers;
+
+namespace {{cookiecutter.project_name}}.Controllers
+{
+    [BitAuthorize]
+    public class abc : Controller
+    {
+        /// <summary>
+        /// 获取{title}
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult Query{name}()
+        {
+            try
+            {
+                QuerySuite querySuite = new QuerySuite(this, "OrderNo asc");
+
+                querySuite.Select("select * from {name}");
+
+                {filter}
+
+                DataSet ds = SqlHelper.Query(querySuite.QuerySql, querySuite.Params);
+
+                return Json(new { Code = 0, Total = ds.Tables[0].Rows[0][0], Data = QuerySuite.ToDictionary(ds.Tables[1]) });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        /// <summary>
+        /// 加载{title}
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult Load{name}({keyparam})
+        {
+            try
+            {
+                using (DataContext context = new DataContext())
+                {
+                    var model = context.Set<{name}>().FirstOrDefault(s => {keylinq});
+                    return Json(new { Code = 0, Data = model });
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        /// <summary>
+        /// 保存{title}
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult Save{name}({keyparam})
+        {
+            try
+            {
+                var model = dbContext.{name}.FirstOrDefault(s => {keylinq});
+
+                FormSuite formSuite = new FormSuite(this);
+                if (model != null)
+                {
+                    //修改
+                    formSuite.ToModel(model);
+                }
+                else
+                {
+                    //新增
+                    model = new {name}();
+                    formSuite.ToModel(model);
+                    dbContext.{name}.Add(model);
+                }
+                dbContext.SaveChanges();
+                return Json(new { Code = 0, Msg = "保存成功" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        /// <summary>
+        /// 删除{title}
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult Delete{name}(string IDs)
+        {
+            try
+            {
+                string sql = QuerySuite.DeleteSql(IDs, "{name}",{key});
+                var result = SqlHelper.ExecuteSql(sql);
+
+                return Json(new { Code = 0, Msg = "删除成功" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+    }
+}

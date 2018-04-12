@@ -437,12 +437,6 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                //新增
-                if (string.IsNullOrEmpty(Type) || string.IsNullOrEmpty(Member))
-                {
-                    return Json(true);
-                }
-                //修改
                 using (DataContext context = new DataContext())
                 {
                     SysDictionary model = context.Set<SysDictionary>().FirstOrDefault(s => s.Type == Type && s.Member == Member);

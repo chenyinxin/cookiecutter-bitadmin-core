@@ -7,7 +7,7 @@
       "sslPort": 0
     },
     "iisExpress": {
-      "applicationUrl": "http://192.168.1.69:51671/",
+      "applicationUrl": "http://192.168.1.88:51671/",
       "sslPort": 0
     }
   },
@@ -18,7 +18,8 @@
       "launchUrl": "pages/account/login.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "use64Bit": true
     }
   }
 }

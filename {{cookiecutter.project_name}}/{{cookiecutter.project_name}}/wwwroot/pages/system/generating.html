@@ -1,0 +1,133 @@
+﻿<link href="../../css/prettify.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-3">
+        <button type="button" class="btn btn-default" id="showTable" style="width:100%;">显示/隐藏</button>
+    </div>
+</div>
+<div class="row">
+    <div id="left" class="col-md-3">
+        <div class="list-group" id="tables"></div>
+    </div>
+    <div id="right" class="col-md-9">
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" class="active"><a href="#tfiled" data-toggle="tab">字段</a></li>
+            <li role="presentation"><a href="#thtml" data-toggle="tab">html</a></li>
+            <li role="presentation"><a href="#tcs" data-toggle="tab">cs</a></li>
+        </ul>
+        <div class="tab-content" style="padding-top:5px;">
+            <div id="tfiled" class="tab-pane fade in active">
+                <table class="table" id="rows">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>主键</th>
+                            <th>非空</th>
+                            <th>字段名</th>
+                            <th>类型</th>
+                            <th>字段说明</th>
+                            <th>长度</th>
+                            <th>小数</th>
+                            <th>默认值</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="thtml" class="tab-pane fade">
+<pre class="prettyprint linenums lang-html">
+
+</pre>
+            </div>
+            <div id="tcs" class="tab-pane fade">
+<pre class="prettyprint linenums lang-javascript">
+&lt;select id=&quot;selectOne&quot; data-url=&quot;../adminSuiteExample/GetSelect&quot; data-value=&quot;DepartmentID&quot; data-text=&quot;DepartmentName&quot; class=&quot;form-control&quot;&gt;&lt;/select&gt;
+</pre>
+                cs
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../js/codeprettify/prettify.js"></script>
+<script src="../../js/codeprettify/lang-css.js"></script>
+<script src="../../js/codeprettify/lang-tex.js"></script>
+<script>
+    $(function () {
+        $.get("../../generating/one", function (result) {
+            $.each(result.data, function (index, item) {
+                var one = $('<button type="button" class="list-group-item">' + item.name + "(" + item.remark + ')</button>');
+                $("#tables").append(one);
+                one.click(function () {
+                    var key = "";
+                    var filter = "", table = "", form = "";
+                    //filed
+                    $.get("../../generating/one", { tablename: item.name }, function (resultone) {
+                        $("#rows tbody").empty();
+                        $.each(resultone.data[0].columns, function (i, row) {
+                            var tr = "<tr>"
+                                + "<td>" + row.order + "</td>"
+                                + "<td>" + row.isKey + "</td>"
+                                + "<td>" + row.isNull + "</td>"
+                                + "<td>" + row.name + "</td>"
+                                + "<td>" + row.type + "</td>"
+                                + "<td>" + row.label + "</td>"
+                                + "<td>" + row.length + "</td>"
+                                + "<td>" + row.scale + "</td>"
+                                + "<td>" + row.value + "</td>"
+                                + "</tr>";
+                            $("#rows tbody").append(tr);
+
+                            //key
+                            if (row.isKey == "√") key += "," + row.name;
+
+                            //field
+                            filter += fieldtemplates.filtertext.replace(/{title}/, row.label).replace(/{name}/, row.name);
+                            table += fieldtemplates.tabletext.replace(/{title}/, row.label).replace(/{name}/, row.name);
+                            form += fieldtemplates.formtext.replace(/{title}/, row.label).replace(/{name}/, row.name);
+                        });
+                        key = key.substring(1);
+                        
+                        //html
+                        $.get("../../generating/htmltemplates", { name: item.name, title: item.remark }, function (resulttow) {
+                            $("#thtml pre").empty();
+
+                            var html = resulttow.data.replace(/{filter}/, filter).replace(/{table}/, table).replace(/{form}/, form).replace(/{key}/, key)
+                            $("#thtml pre").html(html);
+
+                            $("#thtml pre").removeClass("prettyprinted");
+                            prettyPrint();
+                        });
+
+                        //cs
+                        $.get("../../generating/csharptemplates", { name: item.name, title: item.remark }, function (resultCsharp) {
+                            $("#tcs pre").empty();
+                            $("#tcs pre").html(resultCsharp.data);
+                            $("#tcs pre").removeClass("prettyprinted");
+                            prettyPrint();
+                        });
+                    });
+                    $("#showTable").click();
+                });
+            });
+        });
+
+        var fieldtemplates = {};
+        //field
+        $.get("../../generating/fieldtemplates", {}, function (result) {
+            fieldtemplates = result.data;
+        });
+
+        $("#showTable").click(function () {
+            if ($("#left").data("state") == false) {
+                $("#left").show();
+                $("#left").data("state", true);
+                $("#right").removeClass("col-md-12");
+                $("#right").addClass("col-md-9");
+            } else {
+                $("#left").hide();
+                $("#left").data("state", false);
+                $("#right").removeClass("col-md-9");
+                $("#right").addClass("col-md-12");
+            }
+        });
+    });
+</script>

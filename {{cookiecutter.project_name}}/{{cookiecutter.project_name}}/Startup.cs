@@ -53,7 +53,7 @@ namespace {{cookiecutter.project_name}}
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-
+            HttpContextCore.Configuration = this.Configuration;
             HttpContextCore.ServiceProvider = svc;
 
             app.UseSession();
@@ -61,14 +61,14 @@ namespace {{cookiecutter.project_name}}
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".apk"] = "application/vnd.android.package-archive";
             //静态文件
-            string fileupload= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploadfiles") ;
+            string fileupload = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploadfiles");
             if (!Directory.Exists(fileupload)) Directory.CreateDirectory(fileupload);
             string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
             if (!Directory.Exists(apps)) Directory.CreateDirectory(apps);
             app.UseStaticFiles().UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(fileupload),
-                RequestPath = "/UploadFiles"
+                RequestPath = "/uploadfiles"
             }).UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(apps),

@@ -35,7 +35,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 var val = new Random().Next();
                 Response.Cookies.Append("random", val.ToString());
-                HttpContextCore.Current.Session.Set("random", val);
+                HttpContext.Session.Set("random", val);
                 return Json(new { Code = 0, Msg = val });
             }
             catch (Exception ex)

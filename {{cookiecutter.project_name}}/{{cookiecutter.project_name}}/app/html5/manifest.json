@@ -7,7 +7,7 @@
 	"id": "{{cookiecutter.project_name}}",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "{{cookiecutter.project_name}}",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.2",/*应用版本名称*/
+		"name": "1.0.3",/*应用版本名称*/
 		"code": ""
 	},
 	"description": "{{cookiecutter.project_name}} App框架",/*应用描述信息*/
@@ -241,7 +241,7 @@
 			]
 		},
 		"splashscreen": {
-			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
+			"autoclose": false,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
 			"waiting": true
 		},
 		"popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/

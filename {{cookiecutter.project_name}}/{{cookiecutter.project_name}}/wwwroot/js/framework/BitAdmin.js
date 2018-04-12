@@ -77,7 +77,7 @@ var BitPage = {
         if (modulePage != null) {
             $(document).attr("title", modulePage.PageName);
             $(".header-moduleName").text(modulePage.ModuleName);
-            //$(".header-pageName").text(modulePage.PageName);
+            $(".header-pageName").text(modulePage.PageName);
             //$(".header-PageDesc").text(modulePage.Description);
         }
     },

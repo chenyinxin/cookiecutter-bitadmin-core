@@ -47,14 +47,13 @@
 					swipeBack: true //启用右滑关闭功能
 				});
 				mui.plusReady(function() {
+					//打开启动页
 					plus.screen.lockOrientation("portrait-primary");
 
-					mui.get('http://192.168.1.69:51671/account/islogin', {}, function(result) {
+					mui.get(bitadmin.host + '/account/islogin', {}, function(result) {
 						console.log(result);
 					}, 'json');
-					//							mui.get('http://192.168.1.69:51671/account/setcookies', {}, function(result) {
-					//								console.log(result.msg);
-					//							}, 'json');
+					
 					var self = plus.webview.currentWebview(),
 						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 					/**	
@@ -227,6 +226,10 @@
 						});
 					} else if(settings.autoLogin && state.token) {
 						console.log("已登录，加载数据");
+						// 关闭启动页
+						setTimeout(function() {
+							plus.navigator.closeSplashscreen();
+						}, 1000);
 					} else {
 						console.log("未登录，跳转登录页");
 						app.setState(null);
@@ -237,11 +240,6 @@
 					window.addEventListener('refresh', function(event) {
 						console.log("刷新页面，加载数据");
 					});
-										
-					// 关闭 splash
-					setTimeout(function() {
-						plus.navigator.closeSplashscreen();
-					}, 1000);
 
 				});
 			})();

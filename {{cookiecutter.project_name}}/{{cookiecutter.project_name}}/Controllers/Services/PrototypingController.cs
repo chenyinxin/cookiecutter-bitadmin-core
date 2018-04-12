@@ -21,7 +21,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
                 string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Prototyping", sign + ".txt");
-                var lines = System.IO.File.ReadAllLines(file);
+                var lines = System.IO.File.ReadAllLines(file, Encoding.GetEncoding("gb2312"));
                 for (int i = 1; i < lines.Length; i++)
                 {
                     string line = lines[i];
@@ -54,7 +54,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Prototyping", sign + ".txt");
-                var lines = System.IO.File.ReadAllLines(file);
+                var lines = System.IO.File.ReadAllLines(file, Encoding.GetEncoding("gb2312"));
                 Dictionary<string, string> row = new Dictionary<string, string>();
 
                 foreach (var line in lines)

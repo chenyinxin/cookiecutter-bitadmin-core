@@ -1,0 +1,70 @@
+/* Tomorrow Night Eighties Theme */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+/* css88 0.1*/
+.prettyprint,pre.prettyprint {
+    background-color: #444444;
+    border: 1px solid #272822;
+    overflow: hidden;
+    padding: 0px;
+    margin: 20px 0;
+    font: 14px/20px 'courier new';
+    color: #666;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    white-space:pre;
+    white-space:pre-wrap;
+    word-break:break-all;
+    word-wrap:break-word;
+}
+
+.prettyprint.linenums,
+pre.prettyprint.linenums {
+  -webkit-box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+  -moz-box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+  box-shadow: inset 40px 0 0 #39382E, inset 41px 0 0 #464741;
+}
+.prettyprint.linenums ol,
+pre.prettyprint.linenums ol {
+    margin: 0 0 0 33px;
+}
+.prettyprint.linenums ol li,
+pre.prettyprint.linenums ol li {
+    padding-left: 12px;
+  color: #bebec5;
+  line-height: 20px;
+  margin-left: 0;
+  list-style: decimal;
+}
+.prettyprint ol.linenums{ margin-bottom: 0;/*margin-bottom: -8px; margin-top:-8px; margin-right: -8px; position:relative;*/background-color: #272822; padding: 8px}
+.prettyprint .com { color: #93a1a1; }
+.prettyprint .lit { color: #AE81FF; }
+.prettyprint .pun,
+.prettyprint .opn,
+.prettyprint .clo { color: #F8F8F2; }
+.prettyprint .fun { color: #dc322f; }
+.prettyprint .str,
+.prettyprint .atv { color: #E6DB74; }
+.prettyprint .kwd,
+.prettyprint .tag { color: #F92659; }
+.prettyprint .typ,
+.prettyprint .atn,
+.prettyprint .dec,
+.prettyprint .var { color: #A6E22E; }
+.prettyprint .pln { color: #66D9EF; }
+.prettyprint h6{padding-left: 10px; line-height: 30px; font-weight: 400;}
+.prettyprint  h6 .com,
+.prettyprint  h6 .lit,
+.prettyprint  h6 .pun,
+.prettyprint  h6 .opn,
+.prettyprint  h6 .clo,
+.prettyprint  h6 .fun,
+.prettyprint  h6 .str,
+.prettyprint  h6 .atv,
+.prettyprint  h6 .kwd,
+.prettyprint  h6 .tag,
+.prettyprint  h6 .typ,
+.prettyprint  h6 .atn,
+.prettyprint  h6 .dec,
+.prettyprint  h6 .var,
+.prettyprint  h6 .pln{color: #FFFFFF;}

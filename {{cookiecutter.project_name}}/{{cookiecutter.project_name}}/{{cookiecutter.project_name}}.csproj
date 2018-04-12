@@ -12,16 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="IgetuiServerApiSDK.Core" Version="1.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
-    <PackageReference Include="MsieJavaScriptEngine" Version="2.2.6" />
-    <PackageReference Include="QRCoder" Version="1.3.2" />
+    <PackageReference Include="BitAdminCore.ALL" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,8 +21,47 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\codeprettify\lang-apollo.js" />
+    <None Include="wwwroot\js\codeprettify\lang-basic.js" />
+    <None Include="wwwroot\js\codeprettify\lang-clj.js" />
+    <None Include="wwwroot\js\codeprettify\lang-config.js" />
+    <None Include="wwwroot\js\codeprettify\lang-css.js" />
+    <None Include="wwwroot\js\codeprettify\lang-dart.js" />
+    <None Include="wwwroot\js\codeprettify\lang-erlang.js" />
+    <None Include="wwwroot\js\codeprettify\lang-go.js" />
+    <None Include="wwwroot\js\codeprettify\lang-hs.js" />
+    <None Include="wwwroot\js\codeprettify\lang-lasso.js" />
+    <None Include="wwwroot\js\codeprettify\lang-lisp.js" />
+    <None Include="wwwroot\js\codeprettify\lang-llvm.js" />
+    <None Include="wwwroot\js\codeprettify\lang-logtalk.js" />
+    <None Include="wwwroot\js\codeprettify\lang-lua.js" />
+    <None Include="wwwroot\js\codeprettify\lang-matlab.js" />
+    <None Include="wwwroot\js\codeprettify\lang-ml.js" />
+    <None Include="wwwroot\js\codeprettify\lang-mumps.js" />
+    <None Include="wwwroot\js\codeprettify\lang-n.js" />
+    <None Include="wwwroot\js\codeprettify\lang-pascal.js" />
+    <None Include="wwwroot\js\codeprettify\lang-proto.js" />
+    <None Include="wwwroot\js\codeprettify\lang-r.js" />
+    <None Include="wwwroot\js\codeprettify\lang-rd.js" />
+    <None Include="wwwroot\js\codeprettify\lang-rust.js" />
+    <None Include="wwwroot\js\codeprettify\lang-scala.js" />
+    <None Include="wwwroot\js\codeprettify\lang-scss.js" />
+    <None Include="wwwroot\js\codeprettify\lang-sql.js" />
+    <None Include="wwwroot\js\codeprettify\lang-swift.js" />
+    <None Include="wwwroot\js\codeprettify\lang-tcl.js" />
+    <None Include="wwwroot\js\codeprettify\lang-tex.js" />
+    <None Include="wwwroot\js\codeprettify\lang-vb.js" />
+    <None Include="wwwroot\js\codeprettify\lang-vhdl.js" />
+    <None Include="wwwroot\js\codeprettify\lang-vim.js" />
+    <None Include="wwwroot\js\codeprettify\lang-wiki.js" />
+    <None Include="wwwroot\js\codeprettify\lang-xq.js" />
+    <None Include="wwwroot\js\codeprettify\lang-yaml.js" />
+    <None Include="wwwroot\js\codeprettify\prettify.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

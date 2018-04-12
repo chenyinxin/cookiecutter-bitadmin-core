@@ -113,6 +113,11 @@
 						}, 1000);
 						return false;
 					};
+					
+					// 关闭启动页
+					setTimeout(function() {
+						plus.navigator.closeSplashscreen();
+					}, 1000);
 				});
 			}(mui, document));
 		</script>
