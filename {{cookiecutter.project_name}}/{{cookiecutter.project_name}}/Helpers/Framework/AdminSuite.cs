@@ -17,14 +17,13 @@ namespace {{cookiecutter.project_name}}.Helpers
     #region QuerySuite
 
     /// <summary>
-    /// 查询套件封装,与前端querySuite组件对应
+    /// 查询套件封装,与前端querySuite组件对应。
     /// 说明：项目根据需要扩展
     /// </summary>
     public class QuerySuite
     {
         Controller _controller;
-
-        //StringBuilder _sql = new StringBuilder();
+        
         string _select = string.Empty;
         Dictionary<string, string> _filter = new Dictionary<string, string>();
         List<SqlParameter> _params = new List<SqlParameter>();
@@ -32,7 +31,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         string _ordertype, _orderby;
 
         /// <summary>
-        /// 
+        /// 查询套件封装,与前端querySuite组件对应。
         /// </summary>
         /// <param name="controller"></param>
         /// <param name="defaultOrder">默认排序字段名称</param>
@@ -53,50 +52,13 @@ namespace {{cookiecutter.project_name}}.Helpers
                 _ordertype = "asc";
             }
         }
-        public string OrderBy
-        {
-            get
-            {
-                return _controller.HttpContext.Request.Form["orderby"].FirstOrDefault() ?? _orderby;
-            }
-        }
-        public string OrderType
-        {
-            get
-            {
-                return _controller.HttpContext.Request.Form["ordertype"].FirstOrDefault() ?? _ordertype;
-            }
-        }
-        public int Offset
-        {
-            get
-            {
-                string offset = _controller.HttpContext.Request.Form["offset"].FirstOrDefault() ?? "0";
-                return Convert.ToInt32(offset);
-            }
-        }
-        public int Limit
-        {
-            get
-            {
-                string limit = _controller.HttpContext.Request.Form["limit"].FirstOrDefault() ?? "10";
-                return Convert.ToInt32(limit);
-            }
-        }
-        public int StartRow
-        {
-            get
-            {
-                return Offset + 1;
-            }
-        }
-        public int EndRow
-        {
-            get
-            {
-                return Offset + Limit;
-            }
-        }
+        public string OrderBy=> _controller.HttpContext.Request.Form["orderby"].FirstOrDefault() ?? _orderby;
+        public string OrderType=> _controller.HttpContext.Request.Form["ordertype"].FirstOrDefault() ?? _ordertype;
+        public int Offset=> Convert.ToInt32(_controller.HttpContext.Request.Form["offset"].FirstOrDefault() ?? "0");
+        public int Limit=> Convert.ToInt32(_controller.HttpContext.Request.Form["limit"].FirstOrDefault() ?? "10");
+        public int StartRow=> Offset + 1;
+        public int EndRow => Offset + Limit;
+
         public void Select(string select)
         {
             _select = select;
@@ -333,9 +295,9 @@ namespace {{cookiecutter.project_name}}.Helpers
                 var value = _controller.HttpContext.Request.Form[key].FirstOrDefault();
                 filter.Add(string.Format("{0}='{1}'", key, value));
             }
-            return string.Format(" select * from {0} where {1} ", string.Join(" and ", filter.ToArray()));
+            return string.Format(" select * from {0} where {1} ", table, string.Join(" and ", filter.ToArray()));
         }
-        public void ToModel<T>(T t)
+        public void ToModel<T>(T t) where T : class, new()
         {
             SetFormToModel(t, _controller.Request.Form);
         }

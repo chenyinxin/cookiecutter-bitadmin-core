@@ -36,8 +36,9 @@
         <div class="login-box-body">
             <h3 class="login-box-msg">用户登录</h3>
             <ul class="nav nav-tabs nav-justified">
-                <li role="presentation" class="active"><a href="#t1" data-toggle="tab">账号密码登录</a></li>
-                <li role="presentation"><a href="#t2" data-toggle="tab">手机验证登录</a></li>
+                <li role="presentation" class="active"><a href="#t1" data-toggle="tab">账号密码</a></li>
+                <li role="presentation"><a href="#t2" data-toggle="tab">手机验证</a></li>
+                <li role="presentation"><a href="#t3" data-toggle="tab">人脸验证</a></li>
             </ul>
             <div class="tab-content" style="padding-top:15px;">
                 <div id="t1" class="tab-pane fade in active">
@@ -79,7 +80,23 @@
                         <button type="button" id="smsLogin" class="btn btn-primary btn-block " disabled>短信验证登录</button>
                     </div>
                 </div>
+                <div id="t3" class="tab-pane fade">
+                    <div class="form-group has-feedback">
+                        <input type="text" id="txtUserCode3" class="form-control disabled" placeholder="帐号/手机" value="admin">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <div class="vidaoing" style="position:relative;float:left;width:320px;height:210px;padding-left:20px;">
+                            <video id="video" style="position: absolute;width:280px;height:210px;" preload autoplay loop muted></video>
+                            <canvas id="canvas" style="position: absolute;width:280px;height:210px;" width="280" height="210"></canvas>
+                        </div>
+                        <div class="vidaooff" style="display:none;padding-left:20px;">
+                            <canvas id="shortCut" width="280" height="210"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="clearfix"></div>
             <div class="form-group has-feedback">
                 <span id="spanmsg" style="color:red;"></span>
             </div>
@@ -108,6 +125,10 @@
     <script type="text/javascript" src="../../lib/framework/js/jquery.form.min.js"></script>
     <!--框架引用-->
     <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
+
+    <script type="text/javascript" src="../../js/tracking/tracking-min.js"></script>
+    <script type="text/javascript" src="../../js/tracking/face-min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             if (self.frameElement && self.frameElement.tagName == "IFRAME") {
@@ -137,7 +158,7 @@
                     $("#spanmsg").text("请输入验证码");
                     return;
                 }
-                
+
                 $.showLoading();
                 $.ajax({
                     url: "../../account/login",
@@ -161,6 +182,7 @@
                 });
             });
 
+            //手机验证登录
             $("#smsSend").click(function () {
                 $("#spanmsg").text("");
                 var account = $("#txtUserCode2").val();
@@ -173,7 +195,7 @@
                 $("#smsSign").val(sign);
                 $.get("../../account/smscode", { account: account, t: sign }, function (result) {
                     if (result.code == 0) {
-                        $("#smsLogin").attr('disabled', false);        
+                        $("#smsLogin").attr('disabled', false);
                     } else {
                         countdown = 0;
                         $("#spanmsg").text("发送失败，请重新发送");
@@ -218,6 +240,75 @@
                     countdown--;
                     setTimeout(settime, 1000);
                 }
+            }
+
+            //人脸登录
+            $(".nav-tabs").click(function () {
+                if ($("#t3").hasClass("active"))
+                    faceTrack.stop();//暂停
+                else
+                    setTimeout(face, 500);
+            });
+            var faceTrack;
+            function face() {
+                var video = document.getElementById('video');
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+                var shortCut = document.getElementById('shortCut');
+                var scContext = shortCut.getContext('2d');
+
+                var tracker = new tracking.ObjectTracker('face');
+                tracker.setInitialScale(4);
+                tracker.setStepSize(2);
+                tracker.setEdgesDensity(0.1);
+
+                faceTrack = tracking.track('#video', tracker, { camera: true });
+                console.log(faceTrack);
+                var flag = true; isAjax = false;
+                tracker.on('track', function (event) {
+                    if (event.data.length === 0) {
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                    } else {
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        event.data.forEach(function (rect) {
+                            context.strokeStyle = '#ff0000';
+                            context.fillStyle = "#ff0000";
+                            context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+                        });
+                        if (flag && !isAjax) {
+                            flag = false;
+                            isAjax = true;
+                            setTimeout(function () { flag = true; }, 10000);//冷却
+
+                            setTimeout(function () {//延后处理
+                                scContext.drawImage(video, 0, 0, 280, 210);
+                                var imgStr = shortCut.toDataURL("image/png");
+                                $(".vidaoing").hide();
+                                $(".vidaooff").show();
+                                $.ajax({
+                                    url: "../../account/facelogin",
+                                    type: "post",
+                                    dataType: "json",
+                                    data: {
+                                        account: $("#txtUserCode3").val(),
+                                        imgStr: imgStr.substring(imgStr.indexOf(",") + 1)
+                                    },
+                                    success: function (result) {
+                                        if (result.code == 0) {
+                                            BitAdmin.RedirectToHomePage();
+                                        } else {
+                                            isAjax = false;
+                                            $(".vidaoing").show();
+                                            $(".vidaooff").hide();
+                                        }
+                                    }
+                                });
+                            }, 1000);
+                        } else {
+                            //console.log("冷却中");
+                        }
+                    }
+                });
             }
         });
     </script>

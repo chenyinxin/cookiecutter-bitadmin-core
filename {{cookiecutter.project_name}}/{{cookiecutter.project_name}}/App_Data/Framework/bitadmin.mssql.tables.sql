@@ -5,27 +5,27 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Example](
 	[id] [uniqueidentifier] NOT NULL,
-	[exampleName] [varchar](255) NULL,
-	[exampleText] [varchar](255) NULL,
-	[exampleRadio] [varchar](255) NULL,
-	[exampleCheckbox] [varchar](255) NULL,
-	[exampleSelect] [varchar](255) NULL,
-	[examplePhone] [varchar](13) NULL,
+	[exampleName] [varchar](256) NULL,
+	[exampleText] [varchar](256) NULL,
+	[exampleRadio] [varchar](256) NULL,
+	[exampleCheckbox] [varchar](256) NULL,
+	[exampleSelect] [varchar](256) NULL,
+	[examplePhone] [varchar](256) NULL,
 	[exampleTime] [datetime] NULL,
-	[exampleUser] [nvarchar](4000) NULL,
-	[department] [nvarchar](4000) NULL,
-	[autoComplete] [nvarchar](4000) NULL,
-	[autoComSelectText] [nvarchar](4000) NULL,
-	[autoComSelect] [nvarchar](4000) NULL,
-	[linkageSelectA] [nvarchar](50) NULL,
-	[linkageSelectB] [nvarchar](50) NULL,
-	[linkageSelectC] [nvarchar](50) NULL,
+	[exampleUser] [nvarchar](max) NULL,
+	[department] [nvarchar](max) NULL,
+	[autoComplete] [nvarchar](max) NULL,
+	[autoComSelectText] [nvarchar](max) NULL,
+	[autoComSelect] [nvarchar](max) NULL,
+	[linkageSelectA] [nvarchar](32) NULL,
+	[linkageSelectB] [nvarchar](32) NULL,
+	[linkageSelectC] [nvarchar](32) NULL,
 	[createTime] [datetime] NULL,
-	[linkageSelectD] [nvarchar](50) NULL,
-	[linkageSelectE] [nvarchar](50) NULL,
-	[linkageSelectF] [nvarchar](50) NULL,
+	[linkageSelectD] [nvarchar](32) NULL,
+	[linkageSelectE] [nvarchar](32) NULL,
+	[linkageSelectF] [nvarchar](32) NULL,
 	[parentId] [uniqueidentifier] NULL,
- CONSTRAINT [PK__Example__3214EC27E0ACAC72] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Example] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -39,19 +39,19 @@ GO
 CREATE TABLE [dbo].[FlowBills](
 	[id] [uniqueidentifier] NOT NULL,
 	[parentId] [uniqueidentifier] NULL,
-	[workOrderName] [nvarchar](2000) NULL,
+	[workOrderName] [nvarchar](max) NULL,
 	[billsCode] [nvarchar](255) NULL,
-	[mainId] [nvarchar](50) NULL,
-	[stepId] [nvarchar](50) NULL,
+	[mainId] [nvarchar](64) NULL,
+	[stepId] [nvarchar](64) NULL,
 	[sort] [int] NOT NULL,
-	[state] [nvarchar](50) NULL,
+	[state] [nvarchar](64) NULL,
 	[submitUser] [uniqueidentifier] NOT NULL,
 	[createTime] [datetime] NOT NULL,
 	[updateTime] [datetime] NULL,
-	[Description] [nvarchar](1000) NULL,
+	[Description] [nvarchar](1024) NULL,
 	[Version] [int] NULL,
-	[BillsType] [nvarchar](500) NULL,
-	[WorkOrderCode] [nvarchar](500) NULL,
+	[BillsType] [nvarchar](1024) NULL,
+	[WorkOrderCode] [nvarchar](1024) NULL,
  CONSTRAINT [PK_dbo.FlowBills] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -72,12 +72,12 @@ CREATE TABLE [dbo].[FlowBillsRecord](
 	[auditDate] [datetime] NULL,
 	[sort] [int] NOT NULL,
 	[condition] [int] NOT NULL,
-	[state] [nvarchar](4000) NULL,
+	[state] [nvarchar](max) NULL,
 	[startTime] [datetime] NULL,
 	[endTime] [datetime] NULL,
-	[choice] [nvarchar](4000) NULL,
+	[choice] [nvarchar](max) NULL,
 	[type] [int] NOT NULL,
-	[description] [nvarchar](1000) NULL,
+	[description] [nvarchar](1024) NULL,
 	[batch] [int] NULL,
 	[upBillsRecordId] [nvarchar](50) NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecord] PRIMARY KEY CLUSTERED 
@@ -100,15 +100,15 @@ CREATE TABLE [dbo].[FlowBillsRecordUser](
 	[startTime] [datetime] NULL,
 	[endTime] [datetime] NULL,
 	[type] [int] NOT NULL,
-	[state] [nvarchar](4000) NULL,
-	[condition] [nvarchar](4000) NULL,
-	[stepId] [nvarchar](4000) NULL,
-	[choice] [nvarchar](4000) NULL,
-	[opinion] [nvarchar](4000) NULL,
-	[displayState] [nvarchar](4000) NULL,
+	[state] [nvarchar](max) NULL,
+	[condition] [nvarchar](max) NULL,
+	[stepId] [nvarchar](max) NULL,
+	[choice] [nvarchar](max) NULL,
+	[opinion] [nvarchar](max) NULL,
+	[displayState] [nvarchar](max) NULL,
 	[runTime] [datetime] NULL,
 	[portalToDoId] [int] NULL,
-	[smsId] [nvarchar](4000) NULL,
+	[smsId] [nvarchar](max) NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecordUser] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -122,9 +122,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowMain](
 	[id] [uniqueidentifier] NOT NULL,
-	[code] [nvarchar](1023) NULL,
-	[name] [nvarchar](200) NULL,
-	[description] [nvarchar](1000) NULL,
+	[code] [nvarchar](1024) NULL,
+	[name] [nvarchar](256) NULL,
+	[description] [nvarchar](1024) NULL,
  CONSTRAINT [PK_dbo.FlowMain] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -161,23 +161,23 @@ CREATE TABLE [dbo].[FlowStep](
 	[auditId] [nvarchar](256) NULL,
 	[auditors] [int] NOT NULL,
 	[stepStatus] [int] NOT NULL,
-	[description] [nvarchar](4000) NULL,
-	[deployInfo] [nvarchar](4000) NULL,
-	[openChoices] [nvarchar](4000) NULL,
-	[power] [nvarchar](4000) NULL,
-	[runMode] [nvarchar](4000) NULL,
-	[joinMode] [nvarchar](4000) NULL,
-	[examineMode] [nvarchar](4000) NULL,
-	[relationStepKey] [nvarchar](4000) NULL,
+	[description] [nvarchar](max) NULL,
+	[deployInfo] [nvarchar](max) NULL,
+	[openChoices] [nvarchar](max) NULL,
+	[power] [nvarchar](max) NULL,
+	[runMode] [nvarchar](max) NULL,
+	[joinMode] [nvarchar](max) NULL,
+	[examineMode] [nvarchar](max) NULL,
+	[relationStepKey] [nvarchar](max) NULL,
 	[percentage] [int] NOT NULL,
-	[function] [nvarchar](1000) NULL,
+	[function] [nvarchar](1024) NULL,
 	[linkCode] [nvarchar](128) NULL,
 	[auditLinkCode] [nvarchar](128) NULL,
-	[showTabIndex] [nvarchar](4000) NULL,
-	[circularize] [nvarchar](4000) NULL,
+	[showTabIndex] [nvarchar](max) NULL,
+	[circularize] [nvarchar](max) NULL,
 	[reminderTimeout] [bigint] NULL,
-	[smsTemplateToDo] [nvarchar](4000) NULL,
-	[smsTemplateRead] [nvarchar](4000) NULL,
+	[smsTemplateToDo] [nvarchar](max) NULL,
+	[smsTemplateRead] [nvarchar](max) NULL,
 	[auditNormRead] [nvarchar](128) NULL,
 	[auditIdRead] [nvarchar](256) NULL,
  CONSTRAINT [PK_dbo.FlowStep] PRIMARY KEY CLUSTERED 
@@ -199,7 +199,7 @@ CREATE TABLE [dbo].[FlowStepPath](
 	[condition] [int] NOT NULL,
 	[expression] [nvarchar](1024) NULL,
 	[description] [nvarchar](1024) NULL,
-	[btnName] [nvarchar](4000) NULL,
+	[btnName] [nvarchar](max) NULL,
  CONSTRAINT [PK_dbo.FlowStepPath] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -433,7 +433,7 @@ CREATE TABLE [dbo].[SysRoleOperatePower](
 	[modulePageId] [uniqueidentifier] NULL,
 	[moduleParentId] [uniqueidentifier] NULL,
 	[operationSign] [nvarchar](512) NULL,
- CONSTRAINT [PK__SysRoleM__3214EC2729E23816] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_SysRoleM_] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -523,12 +523,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[SysServer](
-	[ServerIP] [nvarchar](128) NOT NULL,
-	[CreateTime] [datetime] NULL,
-	[UpdateTime] [datetime] NULL,
+	[serverIP] [nvarchar](128) NOT NULL,
+	[createTime] [datetime] NULL,
+	[updateTime] [datetime] NULL,
  CONSTRAINT [PK_SysServer] PRIMARY KEY CLUSTERED 
 (
-	[ServerIP] ASC
+	[serverIP] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -627,11 +627,11 @@ CREATE FUNCTION [dbo].[fn_GetDepartmentFullName]
 	-- Add the parameters for the function here
 	@DepartmentID uniqueidentifier
 )
-RETURNS nvarchar(1000)
+RETURNS nvarchar(1024)
 AS
 BEGIN
 	-- Declare the return variable here
-	DECLARE @fullName nvarchar(1000);
+	DECLARE @fullName nvarchar(1024);
 
 	-- Add the T-SQL statements to compute the return value here
 	with OUInfo

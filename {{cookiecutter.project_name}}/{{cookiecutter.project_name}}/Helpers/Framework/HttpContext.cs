@@ -1,6 +1,7 @@
 /***********************
  * BitAdmin2.0框架文件
  ***********************/
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
@@ -12,6 +13,10 @@ namespace {{cookiecutter.project_name}}
     public static class HttpContextCore
     {
         public static IServiceProvider ServiceProvider;
+        public static IConfiguration Configuration { get; set; }
+        public static IHostingEnvironment HostingEnvironment { get; set; }
+
+
         public static HttpContext Current
         {
             get
@@ -31,6 +36,5 @@ namespace {{cookiecutter.project_name}}
             return value == null ? default(T) :JsonConvert.DeserializeObject<T>(value);
         }
         
-        public static IConfiguration Configuration{get;set;}
     }
 }

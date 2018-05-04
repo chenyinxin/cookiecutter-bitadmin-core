@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Text;
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -17,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace {{cookiecutter.project_name}}
 {
@@ -31,19 +34,32 @@ namespace {{cookiecutter.project_name}}
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            services.AddMemoryCache();
+            //使用Session缓存（Memory，Redis二选一）
             services.AddDistributedMemoryCache();
+            //services.AddDistributedRedisCache(option => option.Configuration = RedisHelper.connectionString);
             services.AddSession();
 
+            //注册HttpContext单例
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //登录认证
+            //使用登录认证
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o =>
+                .AddCookie(options => options.TicketDataFormat = new TicketDataFormat<AuthenticationTicket>());
+
+            //使用Swagger服务
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info
                 {
-                    o.TicketDataFormat = new TicketDataFormat<AuthenticationTicket>();
+                    Version = "v1",
+                    Title = "{{cookiecutter.project_name}} api v1"
                 });
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
+                options.IncludeXmlComments(xmlPath);
+            });
+
+            //使用Mvc服务
+            services.AddMvc();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger, IServiceProvider svc)
@@ -53,14 +69,22 @@ namespace {{cookiecutter.project_name}}
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            HttpContextCore.Configuration = this.Configuration;
-            HttpContextCore.ServiceProvider = svc;
-
+            //使用Session缓存
             app.UseSession();
 
+            //使用配置
+            HttpContextCore.Configuration = this.Configuration;
+            HttpContextCore.ServiceProvider = svc;
+            HttpContextCore.HostingEnvironment = env;
+
+            //添加编码支持
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            //添加安卓安装包mine
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".apk"] = "application/vnd.android.package-archive";
-            //静态文件
+
+            //启用静态文件（uploadfiles:附件目录;apps:apk下载目录）
             string fileupload = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploadfiles");
             if (!Directory.Exists(fileupload)) Directory.CreateDirectory(fileupload);
             string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
@@ -75,16 +99,20 @@ namespace {{cookiecutter.project_name}}
                 RequestPath = "/apps",
                 ContentTypeProvider = provider
             });
-            //登录认证
+
+            //启用登录认证服务
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Account}/{action=Index}/{id?}");
-            });
+            //启用Swagger服务
+            app.UseSwagger();
+            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "{{cookiecutter.project_name}} api v1"));
+
+            //启用Mvc服务
+            app.UseMvc(routes => routes.MapRoute(name: "default", template: "{controller=Account}/{action=Index}/{id?}"));
+
+            //启用WebSocket服务
             app.Map("/websocket/notice", BitNoticeService.Map);
+            
         }
 
     }

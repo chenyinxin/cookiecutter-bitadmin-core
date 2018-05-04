@@ -74,9 +74,6 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                if (!departmentId.HasValue)
-                    return Json(new { Code = 0, Msg = "" });
-
                 var model = dbContext.SysDepartment.Find(departmentId);
                 return Json(new { Code = 0, Data = model });
             }
@@ -101,28 +98,24 @@ namespace {{cookiecutter.project_name}}.Controllers
                 //}
 
                 List<SysDepartment> models = dbContext.SysDepartment.Where(x => x.DepartmentCode == departmentCode || x.DepartmentId == departmentId).ToList();
-                SysDepartment model = new SysDepartment();
 
                 //部门编号唯一性验证
                 if (models.FirstOrDefault(x => x.DepartmentId != departmentId && x.DepartmentCode == departmentCode) != null)
                     return Json(new { Code = 1, Msg = "部门编号已存在！" });
 
-                model = models.FirstOrDefault(x => x.DepartmentId == departmentId);
+                SysDepartment model = models.FirstOrDefault(x => x.DepartmentId == departmentId);
                 FormSuite formSuite = new FormSuite(this);
-                if (model != null)
+                if (model == null)
                 {
-                    //修改
-                    formSuite.ToModel(model);
-                }
-                else
-                {
-                    //新增
-                    model = new SysDepartment();
                     formSuite.ToModel(model);
                     model.DepartmentId = Guid.NewGuid();
                     model.CreateBy = SSOClient.UserId;
                     model.CreateTime = DateTime.Now;
                     dbContext.SysDepartment.Add(model);
+                }
+                else
+                {
+                    formSuite.ToModel(model);
                 }
                 model.ParentId = parentDepartmentId;
 
@@ -232,18 +225,17 @@ namespace {{cookiecutter.project_name}}.Controllers
 
                 model = models.FirstOrDefault(x => x.UserId == UserID);
                 FormSuite formSuite = new FormSuite(this);
-                if (model != null)
-                {
-                    //修改
-                    formSuite.ToModel(model);
-                }
-                else
+                if (model == null)
                 {
                     model = new SysUser();
                     formSuite.ToModel(model);
                     model.UserId = Guid.NewGuid();
                     model.UserPassword = EncryptHelper.MD5("123456");
                     dbContext.SysUser.Add(model);
+                }
+                else
+                {
+                    formSuite.ToModel(model);
                 }
                 model.UpdateBy = SSOClient.UserId;
                 dbContext.SaveChanges();
@@ -265,9 +257,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string sql = QuerySuite.DeleteSql(ids, "SysUser", "UserID");
-                var result = SqlHelper.ExecuteSql(sql);
-
+                var result = SqlHelper.ExecuteSql(QuerySuite.DeleteSql(ids, "SysUser", "userID"));
                 return Json(new { Code = 0, Msg = "删除成功" });
             }
             catch (Exception ex)
@@ -285,7 +275,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string sql = QuerySuite.SortSql(ids, "SysUser", "orderNo", "UserID");
+                string sql = QuerySuite.SortSql(ids, "SysUser", "orderNo", "userID");
                 var result = SqlHelper.ExecuteSql(sql);
 
                 return Json(new { Code = 0, Msg = "保存成功" });
@@ -299,7 +289,6 @@ namespace {{cookiecutter.project_name}}.Controllers
         #endregion
 
         #region 日志管理
-
         /// <summary>
         /// 获取日志数据
         /// </summary>
@@ -314,17 +303,12 @@ namespace {{cookiecutter.project_name}}.Controllers
                 querySuite.AddParam("userName", "like");
                 querySuite.AddParam("departmentName", "like");
                 querySuite.AddParam("title", "like");
-                querySuite.AddParam("Type", "like");
-                querySuite.AddParam("Description", "like");
+                querySuite.AddParam("type", "like");
+                querySuite.AddParam("description", "like");
 
                 DataSet ds = SqlHelper.Query(querySuite.QuerySql, querySuite.Params);
 
-                return Json(new
-                {
-                    Code = 0,
-                    Total = ds.Tables[0].Rows[0][0],
-                    Data = QuerySuite.ToDictionary(ds.Tables[1])
-                });
+                return Json(new { Code = 0, Total = ds.Tables[0].Rows[0][0], Data = QuerySuite.ToDictionary(ds.Tables[1]) });
             }
             catch (Exception ex)
             {
@@ -341,23 +325,21 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                using (DataContext context = new DataContext())
-                {
-                    SysLog model = new SysLog();
-                    var currentUser = SSOClient.User;
-                    model.UserId = currentUser.UserId;
-                    model.UserName = currentUser.UserName;
-                    model.UserCode = currentUser.UserCode;
-                    model.DepartmentName = SSOClient.Department.DepartmentFullName;
-                    //model.Ipaddress = Request.UserHostAddress;
-                    model.CreateTime = DateTime.Now;
-                    model.Type = Type;
-                    model.Description = Description;
-                    model.Title = title;
-                    context.Set<SysLog>().Add(model);
-                    context.SaveChanges();
-                    return Json(true);
-                }
+                SysLog model = new SysLog();
+                var currentUser = SSOClient.User;
+                model.UserId = currentUser.UserId;
+                model.UserName = currentUser.UserName;
+                model.UserCode = currentUser.UserCode;
+                model.DepartmentName = SSOClient.Department.DepartmentFullName;
+                model.IpAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+                model.CreateTime = DateTime.Now;
+                model.Type = Type;
+                model.Description = Description;
+                model.Title = title;
+                dbContext.Set<SysLog>().Add(model);
+                dbContext.SaveChanges();
+                return Json(true);
+
             }
             catch (Exception ex)
             {
@@ -377,7 +359,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                QuerySuite querySuite = new QuerySuite(this, "OrderNo asc");
+                QuerySuite querySuite = new QuerySuite(this, "orderNo asc");
 
                 querySuite.Select("select * from SysDictionary");
 
@@ -407,17 +389,15 @@ namespace {{cookiecutter.project_name}}.Controllers
                 SysDictionary model = dbContext.SysDictionary.FirstOrDefault(s => s.Type == Type && s.Member == Member);
 
                 FormSuite formSuite = new FormSuite(this);
-                if (model != null)
+                if (model == null)
                 {
-                    //修改
-                    formSuite.ToModel(model);
-                }
-                else
-                {
-                    //新增
                     model = new SysDictionary();
                     formSuite.ToModel(model);
                     dbContext.SysDictionary.Add(model);
+                }
+                else
+                {
+                    formSuite.ToModel(model);
                 }
                 dbContext.SaveChanges();
                 return Json(new { Code = 0, Msg = "保存成功" });
@@ -437,11 +417,9 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                using (DataContext context = new DataContext())
-                {
-                    SysDictionary model = context.Set<SysDictionary>().FirstOrDefault(s => s.Type == Type && s.Member == Member);
-                    return Json(new { Code = 0, Data = model });
-                }
+                var model = dbContext.Set<SysDictionary>().FirstOrDefault(s => s.Type == Type && s.Member == Member);
+                return Json(new { Code = 0, Data = model });
+
             }
             catch (Exception ex)
             {
@@ -458,8 +436,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string sql = QuerySuite.DeleteSql(IDs, "SysDictionary", "Type", "Member");
-                var result = SqlHelper.ExecuteSql(sql);
+                var result = SqlHelper.ExecuteSql(QuerySuite.DeleteSql(IDs, "SysDictionary", "type", "member"));
 
                 return Json(new { Code = 0, Msg = "删除成功" });
             }
@@ -476,7 +453,6 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 var list = dbContext.SysDictionary.Where(x => x.Type == type).OrderBy(x => x.OrderNo).ToList();
-
                 return Json(new { Code = 0, Data = list });
             }
             catch (Exception ex)
@@ -769,11 +745,9 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                using (DataContext context = new DataContext())
-                {
-                    var model = context.Set<SysRole>().ToList();
+                    var model = dbContext.Set<SysRole>().ToList();
                     return Json(new { Code = 0, Data = model });
-                }
+                
             }
             catch (Exception ex)
             {
@@ -791,11 +765,9 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                using (DataContext context = new DataContext())
-                {
-                    var model = context.Set<SysRole>().FirstOrDefault(a => a.Id == id);
+                    var model = dbContext.Set<SysRole>().FirstOrDefault(a => a.Id == id);
                     return Json(new { Code = 0, Data = model });
-                }
+               
             }
             catch (Exception ex)
             {
@@ -808,31 +780,29 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 保存角色
         /// </summary>
         /// <returns></returns>
-        public JsonResult SaveRoleData(Guid? id)
+        public JsonResult SaveRoleData(Guid? id, string RoleName)
         {
             try
             {
-                using (DataContext context = new DataContext())
+                SysRole model = dbContext.SysRole.FirstOrDefault(a => a.RoleName == RoleName && a.Id != id);
+                if (model != null)
+                    return Json(new { Code = 1, Msg = "角色名称已经存在，请重新输入！" });
+
+                model = dbContext.SysRole.FirstOrDefault(a => a.Id == id);
+                if (model == null)
                 {
-                    string RoleName = Request.Form["RoleName"].FirstOrDefault();
-                    SysRole model = context.SysRole.FirstOrDefault(a => a.RoleName == RoleName && a.Id != id);
-                    if (model != null)
-                        return Json(new { Code = 1, Msg = "角色名称已经存在，请重新输入！" });
-                    model = context.SysRole.FirstOrDefault(a => a.Id == id);
-                    if (model == null)
-                    {
-                        model = new SysRole();
-                        model.Id = Guid.NewGuid();
-                        model.RoleName = RoleName;
-                        context.Set<SysRole>().Add(model);
-                    }
-                    else
-                    {
-                        model.RoleName = RoleName;
-                    }
-                    context.SaveChanges();
-                    return Json(new { Code = 0, Msg = "保存成功！" });
+                    model = new SysRole();
+                    model.Id = Guid.NewGuid();
+                    model.RoleName = RoleName;
+                    dbContext.Set<SysRole>().Add(model);
                 }
+                else
+                {
+                    model.RoleName = RoleName;
+                }
+                dbContext.SaveChanges();
+                return Json(new { Code = 0, Msg = "保存成功！" });
+
             }
             catch (Exception ex)
             {
@@ -844,19 +814,16 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <summary>
         /// 删除角色
         /// </summary>
-        /// <param name="RoleID"></param>
+        /// <param name="roleID"></param>
         /// <returns></returns>
-        public JsonResult DelRoleData(Guid RoleID)
+        public JsonResult DelRoleData(Guid roleID)
         {
             try
             {
-                using (DataContext context = new DataContext())
-                {
-                    var model = context.SysRole.FirstOrDefault(a => a.Id == RoleID);
-                    context.Set<SysRole>().Remove(model);
-                    context.SaveChanges();
-                    return Json(new { Code = 0, Msg = "删除成功！" });
-                }
+                var model = dbContext.SysRole.FirstOrDefault(a => a.Id == roleID);
+                dbContext.Set<SysRole>().Remove(model);
+                dbContext.SaveChanges();
+                return Json(new { Code = 0, Msg = "删除成功！" });
             }
             catch (Exception ex)
             {
@@ -1020,7 +987,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 保存页面权限设置
         /// </summary>
         /// <returns></returns>
-        public JsonResult saveRoleModuleData(Guid? roleId, Guid? modulePageId, string operationSign, Guid? parentId)
+        public JsonResult SaveRoleModuleData(Guid? roleId, Guid? modulePageId, string operationSign, Guid? parentId)
         {
             try
             {
@@ -1120,19 +1087,14 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 获取页面操作数据
         /// </summary>
         /// <returns></returns>
-        public JsonResult QueryOperationData()
+        public JsonResult QueryOperationData(int offset,int limit)
         {
             try
             {
-                int offset = Convert.ToInt32(Request.Form["offset"].FirstOrDefault());
-                int limit = Convert.ToInt32(Request.Form["limit"].FirstOrDefault());
-                using (DataContext context = new DataContext())
-                {
-                    //查所有符合条件的数据
-                    var list = context.Set<SysOperation>().OrderBy(a => a.OrderNo).ToList();
-                    var displaylist = list.OrderBy(a => a.OrderNo).Skip(offset).Take(limit).ToList();//对数据分页
-                    return Json(new { Code = 0, Total = list.Count(), Data = displaylist });
-                }
+                var list = dbContext.Set<SysOperation>().OrderBy(a => a.OrderNo).ToList();
+                var displaylist = list.OrderBy(a => a.OrderNo).Skip(offset).Take(limit).ToList();
+                return Json(new { Code = 0, Total = list.Count(), Data = displaylist });
+
             }
             catch (Exception ex)
             {
@@ -1145,43 +1107,34 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 保存页面操作(新增、修改)
         /// </summary>
         /// <returns></returns>
-        public JsonResult SaveOperationData()
+        public JsonResult SaveOperationData(Guid? id,string operationSign)
         {
             try
             {
-                using (DataContext context = new DataContext())
+                //标识唯一性验证
+                var smodel = dbContext.Set<SysOperation>().FirstOrDefault(so => so.OperationSign == operationSign && so.Id != id);
+                if (smodel != null)
+                    return Json(new { Code = 1, Msg = "该标识已存在！" });
+
+                SysOperation model = dbContext.Set<SysOperation>().FirstOrDefault(so => so.Id == id);
+                if (model == null)
                 {
-                    string id = Request.Form["id"].FirstOrDefault();
-                    Guid guid = Guid.NewGuid();
-                    if (!string.IsNullOrEmpty(id))
-                        guid = Guid.Parse(id);
-                    string operationSign = Request.Form["operationSign"].FirstOrDefault();
-                    //标识唯一性验证
-                    var smodel = context.Set<SysOperation>().FirstOrDefault(so => so.OperationSign == operationSign && so.Id != guid);
-                    if (smodel != null)
-                    {
-                        return Json(new { Code = 1, Msg = "该标识已存在！" });
-                    }
-                    SysOperation model = context.Set<SysOperation>().FirstOrDefault(so => so.Id == guid);
-                    //根据Id找实体对象 为空则为添加
-                    if (model == null)
-                    {
-                        model = new SysOperation();
-                    }
-                    //将当前表单转化为 实体对象
+                    model = new SysOperation();
                     FormSuite.SetFormToModel<SysOperation>(model, this.Request.Form);
-                    //Id为空 
-                    if (string.IsNullOrEmpty(id))
-                    {
-                        model.Id = guid;
-                        model.CreateBy = Convert.ToString(SSOClient.UserId);
-                        model.CreateTime = DateTime.Now;
-                        model.OrderNo = SqlHelper.GetMaxID("OrderNo", "SysOperation");
-                        context.Set<SysOperation>().Add(model);
-                    }
-                    context.SaveChanges();
-                    return Json(new { Code = 0, Msg = "保存成功！" });
+                    model.Id = Guid.NewGuid();
+                    model.CreateBy = Convert.ToString(SSOClient.UserId);
+                    model.CreateTime = DateTime.Now;
+                    model.OrderNo = SqlHelper.GetMaxID("OrderNo", "SysOperation");
+                    dbContext.Set<SysOperation>().Add(model);
                 }
+                else
+                {
+                    FormSuite.SetFormToModel<SysOperation>(model, this.Request.Form);
+                }
+
+                dbContext.SaveChanges();
+                return Json(new { Code = 0, Msg = "保存成功！" });
+
             }
             catch (Exception ex)
             {
@@ -1198,11 +1151,8 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                using (DataContext context = new DataContext())
-                {
-                    var model = context.Set<SysOperation>().FirstOrDefault(so => so.Id == id);
-                    return Json(new { Code = 0, Data = model });
-                }
+                var model = dbContext.Set<SysOperation>().FirstOrDefault(so => so.Id == id);
+                return Json(new { Code = 0, Data = model });
             }
             catch (Exception ex)
             {
@@ -1219,9 +1169,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string UIDs = IDs.Replace(",", "','");
-                var result = SqlHelper.ExecuteSql("Delete [SysOperation] WHERE id in('" + UIDs + "')");
-                //返回受影响的行数 大于0则操作成功
+                var result = SqlHelper.ExecuteSql(QuerySuite.DeleteSql(IDs, "SysOperation", "id"));
                 return Json(new { Code = 0, Msg = "删除成功！" });
             }
             catch (Exception ex)

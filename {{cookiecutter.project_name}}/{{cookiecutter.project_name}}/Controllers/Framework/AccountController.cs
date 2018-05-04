@@ -24,51 +24,6 @@ namespace {{cookiecutter.project_name}}.Controllers
     public class AccountController : Controller
     {
         DataContext dbContext = new DataContext();
-        private IMemoryCache _memoryCache;
-        public AccountController(IMemoryCache memoryCache)
-        {
-            _memoryCache = memoryCache;
-        }
-        public JsonResult SetCookies()
-        {
-            try
-            {
-                var val = new Random().Next();
-                Response.Cookies.Append("random", val.ToString());
-                HttpContext.Session.Set("random", val);
-                return Json(new { Code = 0, Msg = val });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-        public JsonResult GetCookies()
-        {
-            try
-            {
-
-                return Json(new { Code = 0, Msg = Request.Cookies["random"] });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-        public JsonResult GetSession()
-        {
-            try
-            {
-                return Json(new { Code = 0, Msg = HttpContextCore.Current.Session.Get<string>("random") });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
         public ActionResult Index()
         {
             return Redirect("/pages/account/login.html");
@@ -230,6 +185,24 @@ namespace {{cookiecutter.project_name}}.Controllers
 
                 SSOClient.SignIn(user.UserId);
                 return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        public JsonResult FaceLogin(string account, string imgStr)
+        {
+            try
+            {
+                if (!SSOClient.Validate(account, out SysUser user))
+                    return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
+                if (!FaceHelper.Verify(account, imgStr))
+                    return Json(new { Code = 1, Msg = "验证不通过！" });
+                SSOClient.SignIn(user.UserId);
+                return Json(new { Code = 0,Msg="登录成功！" });
             }
             catch (Exception ex)
             {
