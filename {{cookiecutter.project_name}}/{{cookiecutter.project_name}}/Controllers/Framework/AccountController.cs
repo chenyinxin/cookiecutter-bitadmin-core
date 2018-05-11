@@ -28,7 +28,6 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             return Redirect("/pages/account/login.html");
         }
-        [HttpGet]
         public JsonResult IsLogin()
         {
             return Json(Convert.ToString(SSOClient.IsLogin).ToLower());
@@ -37,8 +36,8 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string code = VerificationCode.CreateCode(4);
-                Bitmap image = VerificationCode.CreateImage(code);
+                string code = VerifyHelper.CreateCode(4);
+                Bitmap image = VerifyHelper.CreateImage(code);
                 MemoryStream ms = new MemoryStream();
                 image.Save(ms, ImageFormat.Png);
                 byte[] bytes = ms.GetBuffer();
@@ -147,7 +146,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (!SSOClient.Validate(account,  out SysUser user))
                     return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
 
-                string code = VerificationCode.CreateNumber(4);
+                string code = Helpers.VerifyHelper.CreateNumber(4);
                 SMSService.Send(user.Mobile, code);
                 dbContext.SysSmsCode.Add(new SysSmsCode()
                 {

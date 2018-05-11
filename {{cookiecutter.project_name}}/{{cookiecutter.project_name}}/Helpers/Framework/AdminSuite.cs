@@ -3,6 +3,7 @@
  ***********************/
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,17 +19,19 @@ namespace {{cookiecutter.project_name}}.Helpers
 
     /// <summary>
     /// 查询套件封装,与前端querySuite组件对应。
-    /// 说明：项目根据需要扩展
+    /// 说明：项目根据需要扩展(需要重构，支持mssql,mysql,oracle)
     /// </summary>
     public class QuerySuite
     {
-        Controller _controller;
-        
-        string _select = string.Empty;
-        Dictionary<string, string> _filter = new Dictionary<string, string>();
-        List<SqlParameter> _params = new List<SqlParameter>();
+        string _dbtype = "mssql";        //mysql,oracle
 
-        string _ordertype, _orderby;
+        string _select, _ordertype, _orderby;
+        Dictionary<string, string> _filter = new Dictionary<string, string>();
+
+        List<SqlParameter> _sqlParams = new List<SqlParameter>();
+        List<MySqlParameter> _mysqlParams = new List<MySqlParameter>();
+
+        Controller _controller;
 
         /// <summary>
         /// 查询套件封装,与前端querySuite组件对应。
@@ -36,6 +39,15 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="controller"></param>
         /// <param name="defaultOrder">默认排序字段名称</param>
         public QuerySuite(Controller controller, string defaultOrder)
+        {
+            Init(controller, defaultOrder);
+        }
+        public QuerySuite(Controller controller, string defaultOrder,string dbtype)
+        {
+            _dbtype = dbtype;
+            Init(controller, defaultOrder);
+        }
+        private void Init(Controller controller, string defaultOrder)
         {
             if (string.IsNullOrEmpty(defaultOrder))
                 throw new Exception("参数 [defaultOrder,默认排序字段] 不能为空");
@@ -51,13 +63,16 @@ namespace {{cookiecutter.project_name}}.Helpers
                 _orderby = defaultOrder;
                 _ordertype = "asc";
             }
+
+            //添加前端传回的列筛选条件
+            AddParam(_controller.HttpContext.Request.Form["column"].FirstOrDefault(), "like", _controller.HttpContext.Request.Form["condition"].FirstOrDefault());
         }
-        public string OrderBy=> _controller.HttpContext.Request.Form["orderby"].FirstOrDefault() ?? _orderby;
-        public string OrderType=> _controller.HttpContext.Request.Form["ordertype"].FirstOrDefault() ?? _ordertype;
-        public int Offset=> Convert.ToInt32(_controller.HttpContext.Request.Form["offset"].FirstOrDefault() ?? "0");
-        public int Limit=> Convert.ToInt32(_controller.HttpContext.Request.Form["limit"].FirstOrDefault() ?? "10");
-        public int StartRow=> Offset + 1;
-        public int EndRow => Offset + Limit;
+        private string OrderBy => _controller.HttpContext.Request.Form["orderby"].FirstOrDefault() ?? _orderby;
+        private string OrderType => _controller.HttpContext.Request.Form["ordertype"].FirstOrDefault() ?? _ordertype;
+        private int Offset => Convert.ToInt32(_controller.HttpContext.Request.Form["offset"].FirstOrDefault() ?? "0");
+        private int Limit => Convert.ToInt32(_controller.HttpContext.Request.Form["limit"].FirstOrDefault() ?? "10");
+        private int StartRow => Offset + 1;
+        private int EndRow => Offset + Limit;
 
         public void Select(string select)
         {
@@ -65,9 +80,9 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public void AddParam(string sql, SqlParameter para)
         {
-            if (_params.FindAll(x => x.ParameterName == para.ParameterName).Count() > 0) return;
+            if (_sqlParams.FindAll(x => x.ParameterName == para.ParameterName).Count() > 0) return;
             _filter[para.ParameterName] = sql;
-            _params.Add(para);
+            _sqlParams.Add(para);
         }
         /// <summary>
         /// 添加查询条件
@@ -82,21 +97,21 @@ namespace {{cookiecutter.project_name}}.Helpers
 
             //条件已经存在
             string parameter = "@" + filed.Replace(".", "");
-            if (_params.FindAll(x => x.ParameterName == parameter).Count() > 0) return;
+            if (_sqlParams.FindAll(x => x.ParameterName == parameter).Count() > 0) return;
 
             string reqfiled = filed.IndexOf(".") > 0 ? filed.Split('.')[1] : filed;
             object value = _controller.HttpContext.Request.Form[reqfiled].FirstOrDefault();
             bool hasValue = !string.IsNullOrEmpty(Convert.ToString(value));
-            bool hasPara = para.Length > 0 && !string.IsNullOrEmpty(Convert.ToString(para[0]));
+            bool hasParam = para.Length > 0 && !string.IsNullOrEmpty(Convert.ToString(para[0]));
 
             switch (type)
             {
                 case "like":
-                    if (hasPara | hasValue)
+                    if (hasParam | hasValue)
                     {
-                        value = hasPara ? para[0] : value;
+                        value = hasParam ? para[0] : value;
                         _filter[parameter] = string.Format(" and {0} {1} '%'+{2}+'%' ", filed, type, parameter);
-                        _params.Add(new SqlParameter(parameter, value));
+                        _sqlParams.Add(new SqlParameter(parameter, value));
                     }
                     break;
                 case "=":
@@ -104,11 +119,11 @@ namespace {{cookiecutter.project_name}}.Helpers
                 case ">=":
                 case "<":
                 case "<=":
-                    if (hasPara | hasValue)
+                    if (hasParam | hasValue)
                     {
-                        value = hasPara ? para[0] : value;
+                        value = hasParam ? para[0] : value;
                         _filter[parameter] = string.Format(" and {0} {1} {2} ", filed, type, parameter);
-                        _params.Add(new SqlParameter(parameter, value));
+                        _sqlParams.Add(new SqlParameter(parameter, value));
                     }
                     break;
                 case "between":
@@ -121,66 +136,51 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
         }
 
-
-        bool isAdd = false;
         public string SqlString
         {
             get
             {
-                if (!isAdd)
+                //分页之前的总查询
+                switch (_dbtype)
                 {
-                    AddParam(_controller.HttpContext.Request.Form["column"].FirstOrDefault(), "like", _controller.HttpContext.Request.Form["condition"].FirstOrDefault());
-                    isAdd = true;
+                    case "mssql":
+                        Regex regex = new Regex(_select.Trim().Substring(0, 6));
+                        string selectSql = regex.Replace(_select, "select row_number()over (order by {0} {1}) rowNumber,", 1);
+                        if (!_select.Contains("where")) selectSql += " where 1=1 ";
+
+                        StringBuilder _sbSql = new StringBuilder();
+                        _sbSql.AppendFormat(selectSql, OrderBy, OrderType);
+                        foreach (var e in _filter)
+                        {
+                            _sbSql.AppendLine(e.Value);
+                        }
+                        return _sbSql.ToString();
+                    case "mysql":
+                        return "";
+                    case "oracle":
+                        return "";
+                    default:
+                        return "";
                 }
-
-                StringBuilder _sql = new StringBuilder();
-                var sel = _select.Trim().Substring(0, 6);
-                Regex regex = new Regex(sel);
-                string selectSql = regex.Replace(_select, "select row_number()over (order by {0} {1}) rowNumber,", 1);
-                if (!_select.Contains("where")) selectSql += " where 1=1 ";
-                _sql.AppendFormat(selectSql, OrderBy, OrderType);
-
-                foreach (var e in _filter)
-                {
-                    _sql.AppendLine(e.Value);
-                }
-
-                return _sql.ToString();
             }
         }
-        public SqlParameter[] Params { get { return _params.ToArray(); } }
+        public SqlParameter[] Params { get { return _sqlParams.ToArray(); } }
 
-        /// <summary>
-        /// 返回【总数】【数据】
-        /// </summary>
         public string QuerySql
         {
             get
             {
-                return string.Format(@"select count(1) from ({0}) t ;
-                                       select * from ({0}) t where rowNumber between {1} and {2} ",
-                                              SqlString, StartRow, EndRow);
-            }
-        }
-        /// <summary>
-        /// 返回【总数】
-        /// </summary>
-        public string QuerySqlTotal
-        {
-            get
-            {
-                return string.Format(@"select count(1) from ({0}) t ", SqlString);
-            }
-        }
-        /// <summary>
-        /// 返回【数据】
-        /// </summary>
-        public string QuerySqlTable
-        {
-            get
-            {
-                return string.Format(@"select * from ({0}) t where RowNumber between {1} and {2} ",
-                                              SqlString, StartRow, EndRow);
+                switch (_dbtype)
+                {
+                    case "mssql":
+                        return string.Format(@"select count(1) from ({0}) t ;select * from ({0}) t where rowNumber between {1} and {2} ",SqlString, StartRow, EndRow);
+                    case "mysql":
+                        return "";
+                    case "oracle":
+                        return "";
+                    default:
+                        return "";
+                }
             }
         }
         public string ExportSql { get { return SqlString; } }
@@ -202,7 +202,7 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
             return string.Join(";", list.ToArray());
         }
-        public static string SortSql(string ids, string table,string order, params string[] keys)
+        public static string SortSql(string ids, string table, string order, params string[] keys)
         {
             List<string> list = new List<string>();
             foreach (string primary in ids.Split(','))
@@ -235,7 +235,8 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
             return dicList;
         }
-        public static List<Dictionary<string, object>> ToDictionary(DataTable data, string parentKey, string primaryKey, string propertyName = "children") {
+        public static List<Dictionary<string, object>> ToDictionary(DataTable data, string parentKey, string primaryKey, string propertyName = "children")
+        {
             return ToDictionary(data, parentKey, "", primaryKey, propertyName);
         }
         public static List<Dictionary<string, object>> ToDictionary(DataTable data, string parentKey, string parentValue, string primaryKey, string propertyName)
@@ -265,60 +266,23 @@ namespace {{cookiecutter.project_name}}.Helpers
 
     #region FormSuite
 
-    public class FormSuite
+    public static class FormSuite
     {
-        Controller _controller;
-        public FormSuite(Controller controller)
-        {
-            _controller = controller;
-        }
-
-        public bool HasValue(string key)
-        {
-            return !string.IsNullOrEmpty(_controller.HttpContext.Request.Form[key].FirstOrDefault());
-        }
-        public string Value(string key)
-        {
-            return _controller.HttpContext.Request.Form[key].FirstOrDefault();
-        }
-        //public T Value<T>(string key)
-        //{
-        //    Type t = T.GetType();
-        //    return ChangeType(_controller.Request[key], );
-        //}
-        public string FirstSql(string table, params string[] keys)
-        {
-            List<string> filter = new List<string>();
-            for (int i = 0; i < keys.Length; i++)
-            {
-                var key = keys[i];
-                var value = _controller.HttpContext.Request.Form[key].FirstOrDefault();
-                filter.Add(string.Format("{0}='{1}'", key, value));
-            }
-            return string.Format(" select * from {0} where {1} ", table, string.Join(" and ", filter.ToArray()));
-        }
-        public void ToModel<T>(T t) where T : class, new()
-        {
-            SetFormToModel(t, _controller.Request.Form);
-        }
-
         /// <summary> 
-        /// 将表单赋予对对象 
+        /// 将表单值赋予对象
         /// </summary> 
         /// <param name="t">实体对象</param> 
-        /// <param name="form">表单集合</param> 
-        /// <param name="Updateby">最后更新时间</param>
-        public static void SetFormToModel<T>(T t, IFormCollection form)
+        public static void ToModel<T>(this Controller controller, T t)
         {
             Type type = t.GetType();
             PropertyInfo[] pi = type.GetProperties();
             foreach (PropertyInfo p in pi)
             {
-                if (!string.IsNullOrEmpty(form[p.Name].FirstOrDefault()))
+                if (!string.IsNullOrEmpty(controller.Request.Form[p.Name].FirstOrDefault()))
                 {
-                    p.SetValue(t, ChangeType(form[p.Name].FirstOrDefault(), (Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType)), null);
+                    p.SetValue(t, ChangeType(controller.Request.Form[p.Name].FirstOrDefault(), (Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType)), null);
                 }
-                else if (form[p.Name].FirstOrDefault() != null)
+                else if (controller.Request.Form[p.Name].FirstOrDefault() != null)
                 {
                     p.SetValue(t, null);
                 }

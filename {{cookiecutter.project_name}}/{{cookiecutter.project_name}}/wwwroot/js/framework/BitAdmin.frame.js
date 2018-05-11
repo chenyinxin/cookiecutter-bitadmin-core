@@ -18,6 +18,9 @@ $.extend(BitAdmin,
             if (exists) {
                 $("#tab_a_" + options.tabName).click();
             } else {
+                var pageUrl = BitPage.GetRedirect(options);
+                if (pageUrl == undefined) return;
+
                 var li = $('<li id="tab_li_' + options.tabName + '"></li>');
                 var a = $('<a href="#tab_content_' + options.tabName + '" data-toggle="tab" id="tab_a_' + options.tabName + '">' + options.tabTitle + '  </a>');
 
@@ -29,7 +32,6 @@ $.extend(BitAdmin,
                 a.append(spanRefresh).append(spanClose);
                 $("#" + options.tabMainName).append(li.append(a));
 
-                var pageUrl = BitPage.GetRedirect(options);
                 var tabIframe = $('<iframe id="iframe_' + options.tabName + '" style="height:' + this.getIframeHeight() + ' ; width: 100%;" src="' + pageUrl + '" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>');
 
                 var tabDiv = $('<div id="tab_content_' + options.tabName + '" role="tabpanel" class="tab-pane" id="' + options.tabName + '"></div>');

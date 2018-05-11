@@ -104,10 +104,10 @@ namespace {{cookiecutter.project_name}}.Controllers
                     return Json(new { Code = 1, Msg = "部门编号已存在！" });
 
                 SysDepartment model = models.FirstOrDefault(x => x.DepartmentId == departmentId);
-                FormSuite formSuite = new FormSuite(this);
                 if (model == null)
                 {
-                    formSuite.ToModel(model);
+                    model = new SysDepartment();
+                    this.ToModel(model);
                     model.DepartmentId = Guid.NewGuid();
                     model.CreateBy = SSOClient.UserId;
                     model.CreateTime = DateTime.Now;
@@ -115,7 +115,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 }
                 else
                 {
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                 }
                 model.ParentId = parentDepartmentId;
 
@@ -224,18 +224,17 @@ namespace {{cookiecutter.project_name}}.Controllers
                     return Json(new { Code = 1, Msg = "用户标识已经存在！" });
 
                 model = models.FirstOrDefault(x => x.UserId == UserID);
-                FormSuite formSuite = new FormSuite(this);
                 if (model == null)
                 {
                     model = new SysUser();
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                     model.UserId = Guid.NewGuid();
                     model.UserPassword = EncryptHelper.MD5("123456");
                     dbContext.SysUser.Add(model);
                 }
                 else
                 {
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                 }
                 model.UpdateBy = SSOClient.UserId;
                 dbContext.SaveChanges();
@@ -387,17 +386,16 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 SysDictionary model = dbContext.SysDictionary.FirstOrDefault(s => s.Type == Type && s.Member == Member);
-
-                FormSuite formSuite = new FormSuite(this);
+                
                 if (model == null)
                 {
                     model = new SysDictionary();
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                     dbContext.SysDictionary.Add(model);
                 }
                 else
                 {
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                 }
                 dbContext.SaveChanges();
                 return Json(new { Code = 0, Msg = "保存成功" });
@@ -529,17 +527,16 @@ namespace {{cookiecutter.project_name}}.Controllers
                     return Json(new { Code = 1, Msg = "模块名称已经存在，请重新输入！" });
 
                 model = dbContext.SysModule.FirstOrDefault(a => a.ModuleId == ModuleID);
-                FormSuite formSuite = new FormSuite(this);
                 if (model != null)
                 {
                     //修改
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                 }
                 else
                 {
                     //新增
                     model = new SysModule();
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                     ModuleID = Guid.NewGuid();
                     model.ModuleId = ModuleID.Value;
                     int OrderNo = (int)SqlHelper.GetSingle(@"select ISNULL(MAX(OrderNo),0) from SysModule 
@@ -603,17 +600,16 @@ namespace {{cookiecutter.project_name}}.Controllers
                     return Json(new { Code = 1, Msg = "页面标识已经存在，请重新输入！" });
 
                 model = models.FirstOrDefault(x => x.Id == id);
-                FormSuite formSuite = new FormSuite(this);
                 if (model != null)
                 {
                     //修改
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                 }
                 else
                 {
                     //新增
                     model = new SysModulePage();
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                     id = Guid.NewGuid();
                     model.Id = id.Value;
                     int OrderNo = (int)SqlHelper.GetSingle(@"select ISNULL(MAX(OrderNo),0) from (
@@ -1120,7 +1116,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (model == null)
                 {
                     model = new SysOperation();
-                    FormSuite.SetFormToModel<SysOperation>(model, this.Request.Form);
+                    this.ToModel(model);
                     model.Id = Guid.NewGuid();
                     model.CreateBy = Convert.ToString(SSOClient.UserId);
                     model.CreateTime = DateTime.Now;
@@ -1129,7 +1125,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 }
                 else
                 {
-                    FormSuite.SetFormToModel<SysOperation>(model, this.Request.Form);
+                    this.ToModel(model);
                 }
 
                 dbContext.SaveChanges();

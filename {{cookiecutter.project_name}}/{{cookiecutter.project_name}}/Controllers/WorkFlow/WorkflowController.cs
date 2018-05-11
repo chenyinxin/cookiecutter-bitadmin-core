@@ -118,26 +118,23 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 List<FlowMain> models = dbContext.FlowMain.Where(x => x.Id == Id || x.Code == Code).ToList();
-                FlowMain model = null;
 
                 //部门编号唯一性验证
                 if (models.FirstOrDefault(x => x.Id != Id && x.Code == Code) != null)
                     return Json(new { Code = 1, Msg = "流程标识已经存在，请重新输入！" });
 
-                model = models.FirstOrDefault(x => x.Id == Id);
-                FormSuite formSuite = new FormSuite(this);
+                FlowMain model = models.FirstOrDefault(x => x.Id == Id);
                 if (model != null)
                 {
                     //修改
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                 }
                 else
                 {
                     //新增
                     model = new FlowMain();
-                    formSuite.ToModel(model);
-                    Id = Guid.NewGuid();
-                    model.Id = Id.Value;
+                    this.ToModel(model);
+                    model.Id = Guid.NewGuid();
                     dbContext.FlowMain.Add(model);
                 }
                 dbContext.SaveChanges();

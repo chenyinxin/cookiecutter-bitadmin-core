@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.Text;
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Services;
@@ -19,7 +18,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace {{cookiecutter.project_name}}
 {
@@ -34,34 +32,33 @@ namespace {{cookiecutter.project_name}}
         
         public void ConfigureServices(IServiceCollection services)
         {
-            //使用Session缓存（Memory，Redis二选一）
-            services.AddDistributedMemoryCache();
+            //使用HttpContext单例
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //使用Session缓存（默认Memory，Redis二选一）
             //services.AddDistributedRedisCache(option => option.Configuration = RedisHelper.connectionString);
             services.AddSession();
-
-            //注册HttpContext单例
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //使用登录认证
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => options.TicketDataFormat = new TicketDataFormat<AuthenticationTicket>());
 
-            //使用Swagger服务
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "{{cookiecutter.project_name}} api v1"
-                });
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
-                options.IncludeXmlComments(xmlPath);
-            });
-
             //使用Mvc服务
             services.AddMvc();
+
+            //使用Swagger服务
+            //services.AddSwaggerGen(options =>
+            //{
+            //    options.SwaggerDoc("v1", new Info
+            //    {
+            //        Version = "v1",
+            //        Title = "{{cookiecutter.project_name}} api v1"
+            //    });
+            //    var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetEntryAssembly().GetName().Name}.xml");
+            //    options.IncludeXmlComments(xmlPath);
+            //});
         }
-        
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger, IServiceProvider svc)
         {
             if (env.IsDevelopment())
@@ -69,10 +66,8 @@ namespace {{cookiecutter.project_name}}
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            //使用Session缓存
-            app.UseSession();
 
-            //使用配置
+            //启用配置
             HttpContextCore.Configuration = this.Configuration;
             HttpContextCore.ServiceProvider = svc;
             HttpContextCore.HostingEnvironment = env;
@@ -80,15 +75,18 @@ namespace {{cookiecutter.project_name}}
             //添加编码支持
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+
             //添加安卓安装包mine
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".apk"] = "application/vnd.android.package-archive";
 
-            //启用静态文件（uploadfiles:附件目录;apps:apk下载目录）
+            //启用静态文件（uploadfiles:附件目录；apps:apk下载目录；prototyping原型数据文件）
             string fileupload = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploadfiles");
             if (!Directory.Exists(fileupload)) Directory.CreateDirectory(fileupload);
             string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
             if (!Directory.Exists(apps)) Directory.CreateDirectory(apps);
+            string prototyping = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prototyping");
+            if (!Directory.Exists(prototyping)) Directory.CreateDirectory(prototyping);
             app.UseStaticFiles().UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(fileupload),
@@ -100,19 +98,21 @@ namespace {{cookiecutter.project_name}}
                 ContentTypeProvider = provider
             });
 
+            //启用Session缓存
+            app.UseSession();
+
             //启用登录认证服务
             app.UseAuthentication();
-
-            //启用Swagger服务
-            app.UseSwagger();
-            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "{{cookiecutter.project_name}} api v1"));
 
             //启用Mvc服务
             app.UseMvc(routes => routes.MapRoute(name: "default", template: "{controller=Account}/{action=Index}/{id?}"));
 
             //启用WebSocket服务
             app.Map("/websocket/notice", BitNoticeService.Map);
-            
+
+            //启用Swagger服务
+            //app.UseSwagger();
+            //app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "{{cookiecutter.project_name}} api v1"));
         }
 
     }

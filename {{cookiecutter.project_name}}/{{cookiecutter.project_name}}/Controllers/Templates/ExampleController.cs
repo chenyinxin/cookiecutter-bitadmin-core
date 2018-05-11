@@ -72,17 +72,16 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 Example model = dbContext.Example.FirstOrDefault(s => s.Id ==ID);
 
-                FormSuite formSuite = new FormSuite(this);
                 if (model != null)
                 {
                     //修改
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                 }
                 else
                 {
                     //新增
                     model = new Example();
-                    formSuite.ToModel(model);
+                    this.ToModel(model);
                     model.Id = Guid.NewGuid();
                     model.CreateTime = DateTime.Now;
                     dbContext.Example.Add(model);

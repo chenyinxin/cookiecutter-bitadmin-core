@@ -65,13 +65,7 @@ namespace {{cookiecutter.project_name}}.Helpers
             HttpContextCore.Current.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContextCore.Current.Session.Clear();
         }
-        public static Guid UserId
-        {
-            get
-            {
-                return User.UserId;
-            }
-        }
+
         public static SysUser User
         {
             get
@@ -101,12 +95,8 @@ namespace {{cookiecutter.project_name}}.Helpers
                 return department;
             }
         }
-        public static IEnumerable<Claim> Roles
-        {
-            get
-            {
-                return (HttpContextCore.Current.User.Identity as ClaimsIdentity).FindAll(x => x.Type == ClaimTypes.Role);
-            }
-        }
+
+        public static Guid UserId => User.UserId;
+        public static IEnumerable<Claim> Roles => (HttpContextCore.Current.User.Identity as ClaimsIdentity).FindAll(x => x.Type == ClaimTypes.Role);
     }
 }

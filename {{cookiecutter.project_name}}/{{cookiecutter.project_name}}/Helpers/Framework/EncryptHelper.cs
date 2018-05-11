@@ -11,6 +11,9 @@ namespace {{cookiecutter.project_name}}.Helpers
     {
         private static string DESKey = "bitadmin";
         private static string AESKey = "U2FsdGVkX1+eqQdPOTGglxIH9bFcwlFj";
+
+        #region ========MD5加密========
+
         public static string MD5(string text)
         {
             byte[] result = Encoding.Default.GetBytes(text);
@@ -18,8 +21,44 @@ namespace {{cookiecutter.project_name}}.Helpers
             byte[] output = md5.ComputeHash(result);
             return BitConverter.ToString(output).Replace("-", "");
         }
+        #endregion
 
-        #region ========DES加密========
+        #region ========SHA1加密========
+        /// <summary>  
+        /// SHA1 加密，返回大写字符串  
+        /// </summary>  
+        /// <param name="content">需要加密字符串</param>  
+        /// <returns>返回40位UTF8 大写</returns>  
+        public static string SHA1(string content)
+        {
+            return SHA1(content, Encoding.UTF8);
+        }
+        /// <summary>  
+        /// SHA1 加密，返回大写字符串  
+        /// </summary>  
+        /// <param name="content">需要加密字符串</param>  
+        /// <param name="encode">指定加密编码</param>  
+        /// <returns>返回40位大写字符串</returns>  
+        public static string SHA1(string content, Encoding encode)
+        {
+            try
+            {
+                SHA1 sha1 = new SHA1CryptoServiceProvider();
+                byte[] bytes_in = encode.GetBytes(content);
+                byte[] bytes_out = sha1.ComputeHash(bytes_in);
+                sha1.Dispose();
+                string result = BitConverter.ToString(bytes_out);
+                result = result.Replace("-", "");
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("SHA1加密出错：" + ex.Message);
+            }
+        }
+        #endregion
+
+        #region ========DES加解密========
 
         /// <summary>
         /// 加密
@@ -30,6 +69,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         {
             return DESEncrypt(Text, DESKey);
         }
+
         /// <summary> 
         /// 加密数据 
         /// </summary> 
@@ -54,11 +94,7 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
             return ret.ToString();
         }
-
-        #endregion
-
-        #region ========DES解密========
-
+        
         /// <summary>
         /// 解密
         /// </summary>
@@ -97,9 +133,7 @@ namespace {{cookiecutter.project_name}}.Helpers
 
         #endregion
 
-
-        #region ========AES加密========
-
+        #region ========AES加解密========
         /// <summary>
         /// AES加密
         /// </summary>
@@ -134,11 +168,7 @@ namespace {{cookiecutter.project_name}}.Helpers
             string encrypt = AESEncrypt(plainStr);
             return returnNull ? encrypt : (encrypt ?? String.Empty);
         }
-
-        #endregion
-
-        #region ========AES解密========
-
+        
         /// <summary>
         /// AES解密
         /// </summary>
@@ -173,37 +203,5 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         #endregion
 
-        /// <summary>  
-        /// SHA1 加密，返回大写字符串  
-        /// </summary>  
-        /// <param name="content">需要加密字符串</param>  
-        /// <returns>返回40位UTF8 大写</returns>  
-        public static string SHA1(string content)
-        {
-            return SHA1(content, Encoding.UTF8);
-        }
-        /// <summary>  
-        /// SHA1 加密，返回大写字符串  
-        /// </summary>  
-        /// <param name="content">需要加密字符串</param>  
-        /// <param name="encode">指定加密编码</param>  
-        /// <returns>返回40位大写字符串</returns>  
-        public static string SHA1(string content, Encoding encode)
-        {
-            try
-            {
-                SHA1 sha1 = new SHA1CryptoServiceProvider();
-                byte[] bytes_in = encode.GetBytes(content);
-                byte[] bytes_out = sha1.ComputeHash(bytes_in);
-                sha1.Dispose();
-                string result = BitConverter.ToString(bytes_out);
-                result = result.Replace("-", "");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("SHA1加密出错：" + ex.Message);
-            }
-        }
     }    
 }
