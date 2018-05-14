@@ -7,12 +7,12 @@ namespace {{cookiecutter.project_name}}.Helpers
 {
     public sealed class RedisHelper
     {
-        public static string connectionString { get { return HttpContextCore.Configuration["ConnectionStrings:Redis"]; } }
+        public static string ConnectionString { get { return HttpContextCore.Configuration["ConnectionStrings:Redis"]; } }
 
         public static IDatabase redis { get; set; }
         static RedisHelper()
         {
-            redis = ConnectionMultiplexer.Connect(connectionString).GetDatabase();
+            redis = ConnectionMultiplexer.Connect(ConnectionString).GetDatabase();
         }
 
         /// <summary>

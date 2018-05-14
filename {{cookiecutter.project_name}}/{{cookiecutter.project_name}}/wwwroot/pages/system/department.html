@@ -1,4 +1,5 @@
-﻿<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
+﻿
+<link href="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet" />
 
 <div class="row">
     <div class="col-md-4">
@@ -7,7 +8,7 @@
                 <div class="panel-heading">
                     组织架构导航
                 </div>
-                <div id="DPTree" data-url="../../system/GetAllDPData" data-text="departmentName" data-nodes="children"></div>
+                <div id="DPTree" data-url="../../system/GetDepartmentTree" data-text="departmentName"></div>
             </div>
         </div>
     </div>
@@ -43,8 +44,8 @@
                 <!-- 列表-->
                 <div class="querySuite-table"
                      data-key="departmentId"
-                     data-query-url="../../system/GetDepartmentData"
-                     data-delete-url="../../system/DelDepartment">
+                     data-query-url="../../system/QueryDepartmentData"
+                     data-delete-url="../../system/DeleteDepartment">
                     <table>
                         <thead>
                             <tr>
@@ -102,8 +103,7 @@
     </div><!-- /.modal -->
 </div>
 
-
-<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script src="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
 <script src="../../lib/framework/js/jquery.ui.widget.js"></script>
 <script src="../../lib/framework/js/jquery.iframe-transport.js"></script>
 <script src="../../lib/framework/js/jquery.fileupload.js"></script>
@@ -144,6 +144,6 @@
                 $("#parentId").val('');
                 querySuite.query();
             })
-            .load();        
+            .load();
     });
 </script>

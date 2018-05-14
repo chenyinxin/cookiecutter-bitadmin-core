@@ -307,7 +307,7 @@ $.fn.bitTree = function (option) {
         url: null,
         checkbox: false,
         text: "text",
-        nodes: "nodes",
+        nodes: "children",
         expandIcon: 'glyphicon glyphicon-chevron-right',    //展开图标
         collapseIcon: 'glyphicon glyphicon-chevron-down',   //合并图标
         onNodeSelected: function (event, node) { },
@@ -628,16 +628,20 @@ $.fn.treeTable = function (option) {
 
     var treeColumn = 0;
     var _option = {
-        queryUrl: _table.attr("data-query-url"),
-        deleteUrl: _table.attr("data-delete-url"),
-        key: _table.attr("data-key"),
-        parentKey: _table.attr("data-parent"),
-        childrenKey: _table.attr("data-children"),
+        key: "id",
+        parentKey: "parentId",
+        childrenKey: "children",
         treeGrid: null,
         query: null,
         delete: null
     };
-    _option = $.extend(_option, option);
+    _option = $.extend(_option, option, {
+        queryUrl: _table.attr("data-query-url"),
+        deleteUrl: _table.attr("data-delete-url"),
+        key: _table.attr("data-key"),
+        parentKey: _table.attr("data-parent"),
+        childrenKey: _table.attr("data-children")
+    });
 
     _option.delete = function () {
         var ckList = _tree.find('.SelectRow:checked');

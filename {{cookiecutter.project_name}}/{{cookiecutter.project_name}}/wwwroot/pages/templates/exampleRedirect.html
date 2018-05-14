@@ -27,7 +27,7 @@
         </div>
         <!-- 列表-->
         <div class="querySuite-table" data-order-by="exampleName" data-order-type="asc"
-             data-key="id"
+             data-key="exampleId"
              data-query-url="../../Example/QueryExample"
              data-delete-url="../../Example/DeleteExample"
              data-add-url="exampleRedirectEdit">
@@ -58,7 +58,7 @@
             .columns["option"].format(function (val, data) {
                 var span = $('<span class="btn btn-link">修改</span>');
                 span.bind('click', function () {
-                    BitPage.Redirect("/Templates/ExampleRedirectEdit", { id: data.id }, "CompleteRedirect");
+                    BitPage.Redirect("/Templates/ExampleRedirectEdit", { exampleId: data.exampleId }, "ExampleRedirect");
 
                 });
                 return span;
@@ -69,7 +69,7 @@
             .query();
 
         $("#Add").click(function () {
-            BitPage.Redirect("/Templates/ExampleRedirectEdit", { id: '' }, "CompleteRedirect");
+            BitPage.Redirect("/Templates/ExampleRedirectEdit", { exampleId: '' }, "ExampleRedirect");
         });
     });
 </script>

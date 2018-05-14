@@ -11,9 +11,9 @@
             </button>
         </div>
         <!-- 列表-->
-        <div class="querySuite-table" 
+        <div class="querySuite-table"
              data-parent="parentId" data-children="child"
-             data-key="id"
+             data-key="exampleId"
              data-query-url="../../Example/QueryExampleTree"
              data-delete-url="../../Example/DeleteExample">
             <table>
@@ -45,7 +45,7 @@
                         <tr>
                             <th>示例名称：</th>
                             <td>
-                                <input type="hidden" name="id" />
+                                <input type="hidden" name="exampleId" />
                                 <input name="exampleName" type="text" class="form-control required" placeholder="示例名称" />
                             </td>
                             <th>普通文本：</th>
@@ -149,7 +149,7 @@
     </div><!-- /.modal -->
 </div>
 <script src="../../lib/framework/js/jquery.jedate.js"></script>
-<script src="../../lib/framework/js/jquery.treegrid.js"></script>
+<script src="../../lib/jquery-treegrid/js/jquery.treegrid.min.js"></script>
 <script type="text/javascript">
     $(function () {
 
@@ -164,14 +164,14 @@
                 var span = $("<span></span>");
                 var updateSpan = $('<span class="btn btn-link">修改</span>');
                 updateSpan.bind('click', function () {
-                 addPageSuite.load({ id: data.id });
+                    addPageSuite.load({ id: data.exampleId });
                 });
                 span.append(updateSpan);
                 return span;
             },
         });
 
-            //表单套件初始化
+        //表单套件初始化
         var addPageSuite = $("#addPage").formSuite()
             .edit(function (e) {//点击编辑：加载数据后
                 linkageSelectFalse.wrapper.find('select:first').change();
@@ -185,12 +185,12 @@
                 linkageSelectTrue.wrapper.find('select').attr('data-actualval', '');
                 linkageSelectTrue.wrapper.find('select:first').change();
             })
-             .submit(function () {
-                 treetable.query();
-             });
+            .submit(function () {
+                treetable.query();
+            });
 
-          
 
-        });
+
+    });
 
 </script>

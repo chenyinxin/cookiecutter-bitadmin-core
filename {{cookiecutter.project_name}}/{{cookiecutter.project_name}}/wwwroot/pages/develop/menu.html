@@ -1,5 +1,5 @@
 ﻿
-<link rel="stylesheet" href="../../lib/framework/css/jquery.treegrid.css" />
+<link href="../../lib/jquery-treegrid/css/jquery.treegrid.css" rel="stylesheet" />
 <div class="box">
     <div class="box-body querySuite-wrapper">
         <!-- 按钮 查询 导入 -->
@@ -19,10 +19,10 @@
         </div>
         <!-- 列表-->
         <div class="querySuite-table"
-             data-parent="parentId" data-children="child"
+             data-parent="parentId"
              data-key="id"
-             data-query-url="../../system/QueryMeunsData"
-             data-delete-url="../../system/DeleteMeunsData">
+             data-query-url="../../develop/QueryMeunsData"
+             data-delete-url="../../develop/DeleteMeunsData">
             <table>
                 <thead>
                     <tr>
@@ -48,8 +48,8 @@
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="模块"
-                      data-save-url="../../system/SaveModuleData"
-                      data-load-url="../../system/LoadModuleData">
+                      data-save-url="../../develop/SaveModuleData"
+                      data-load-url="../../develop/LoadModuleData">
                     <table>
                         <tr>
                             <th>模块名称：</th>
@@ -99,8 +99,8 @@
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="菜单页面"
-                      data-save-url="../../system/SaveMeunsData"
-                      data-load-url="../../system/LoadMeunsData">
+                      data-save-url="../../develop/SaveMeunsData"
+                      data-load-url="../../develop/LoadMeunsData">
                     <table>
                         <tr>
                             <th>页面名称：</th>
@@ -192,7 +192,7 @@
     </div><!-- /.modal -->
 </div>
 
-<script src="../../lib/framework/js/jquery.treegrid.js"></script>
+<script src="../../lib/jquery-treegrid/js/jquery.treegrid.min.js"></script>
 <script type="text/javascript">
     $(function () {
         var treetable = $(".querySuite-wrapper").treeTable({
@@ -236,7 +236,7 @@
             $("#td_Operation").find("p").remove();
             $.ajax({
                 type: "post",
-                url: "../../system/GetPageOperationData",
+                url: "../../develop/GetPageOperationData",
                 datatype: "json",
                 data: { id: id },
                 success: function (result) {
@@ -281,7 +281,7 @@
             var pageID = $("#ckOperationAll").attr("value");
             $.ajax({
                 type: "post",
-                url: "../../system/SavePageOperationData",
+                url: "../../develop/SavePageOperationData",
                 datatype: "json",
                 async: false,
                 data: { operationSign: DataList.toString(), PageID: pageID },

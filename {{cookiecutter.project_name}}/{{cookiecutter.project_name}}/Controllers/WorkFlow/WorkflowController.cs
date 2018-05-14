@@ -44,9 +44,7 @@ namespace {{cookiecutter.project_name}}.Controllers
          * 发起按钮：0
          * 关闭按钮：100
          * 
-         * 4.流程环节类型
-         * 开始环节：1
-         * 结束环节：100
+         * 4.流程环节类型（开始环节：1 ；结束环节：100；）
          * 
          * 5.后续步骤启动方式[auto,select]
          * 自动运行：auto
@@ -67,12 +65,11 @@ namespace {{cookiecutter.project_name}}.Controllers
         WorkflowContext dbContext = new WorkflowContext();
 
         #region 流程配置管理
-
         /// <summary>
         /// 获取流程主表列表数据
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetFlowMainList()
+        public ActionResult QueryFlowMainData()
         {
             try
             {
@@ -89,13 +86,10 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-        public ActionResult LoadFlowMain(Guid? Id)
+        public ActionResult LoadFlowMainData(Guid? Id)
         {
             try
             {
-                if (!Id.HasValue)
-                    return Json(new { Code = 0, Msg = "" });
-
                 var model = dbContext.FlowMain.Find(Id.Value);
 
                 return Json(new { Code = 0, Data = model });
@@ -113,7 +107,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <param name="id">流程主表主件</param>
         /// <param name="ApplicationID"></param>
         /// <returns></returns>
-        public ActionResult NewOrEidtFlowMain(Guid? Id, string Code)
+        public ActionResult SaveFlowMainData(Guid? Id, string Code)
         {
             try
             {
@@ -124,18 +118,16 @@ namespace {{cookiecutter.project_name}}.Controllers
                     return Json(new { Code = 1, Msg = "流程标识已经存在，请重新输入！" });
 
                 FlowMain model = models.FirstOrDefault(x => x.Id == Id);
-                if (model != null)
+                if (model == null)
                 {
-                    //修改
-                    this.ToModel(model);
-                }
-                else
-                {
-                    //新增
                     model = new FlowMain();
                     this.ToModel(model);
                     model.Id = Guid.NewGuid();
                     dbContext.FlowMain.Add(model);
+                }
+                else
+                {
+                    this.ToModel(model);
                 }
                 dbContext.SaveChanges();
 
@@ -153,7 +145,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// </summary>
         /// <param name="id">流程主表主件</param>
         /// <returns></returns>
-        public JsonResult DelFlowMain(string IDs)
+        public JsonResult DeleteFlowMainData(string IDs)
         {
             try
             {
@@ -192,36 +184,36 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 if (string.IsNullOrEmpty(mainId))
-                    return Json(new { Code = 0, Msg = "" });
+                    return Json(new { Code = 0, Msg = "参数非法！" });
 
-                List<StepAndPath> sapList = null;
-                if (!string.IsNullOrWhiteSpace(mainId))
+                var resultSteps = dbContext.Set<FlowStep>().Where(o => o.MainId.ToLower() == mainId.ToLower()).ToList();
+                var resultPaths = dbContext.Set<FlowStepPath>().Where(o => o.MainId.ToLower() == mainId.ToLower()).ToList();
+                if (resultSteps.Count == 0)
                 {
-                    //获取该流程主表所关联的所有步骤
-                    List<FlowStep> fsList = dbContext.Set<FlowStep>().Where(o => o.MainId.ToLower() == mainId.ToLower()).ToList();
-                    if (fsList != null && fsList.Count > 0)
-                    {
-                        //获取步骤表数据里的 “配置界面的元素信息”字段，转换为 StepAndPath 类，输出到页面
-                        foreach (FlowStep s in fsList)
-                        {
-                            if (!string.IsNullOrWhiteSpace(s.DeployInfo))
-                            {
-                                //json字符串转为类
-                                StepAndPath sap = JsonConvert.DeserializeObject<StepAndPath>(s.DeployInfo);
-
-                                if (sap != null && !string.IsNullOrWhiteSpace(sap.id))
-                                {
-                                    if (sapList == null)
-                                    {
-                                        sapList = new List<StepAndPath>();
-                                    }
-                                    sapList.Add(sap);
-                                }
-                            }
-                        }
-                    }
+                    FlowStep start = new FlowStep() { MainId = mainId, StepName = "开始步骤", StepStatus = 1, StepId = Guid.NewGuid(), LinkCode = "0", Style = "left:200px;top:50px;;color:#0e76a8;" };
+                    FlowStep end = new FlowStep() { MainId = mainId, StepName = "结束步骤", StepStatus = 100, StepId = Guid.NewGuid(), LinkCode = "100", Style = "left:200px;top:600px;color:#0e76a8;" };
+                    resultSteps.Add(start);
+                    resultSteps.Add(end);
                 }
-                return Json(new { Code = 0, Data = sapList });
+                else
+                {
+                }
+                return Json(new { Code = 0, Steps = resultSteps, Paths = resultPaths });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public ActionResult NewDefaultStep(string mainId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(mainId))
+                    return Json(new { Code = 0, Msg = "参数非法！" });
+
+                return Json(new { Code = 0, Data = new FlowStep() { MainId = mainId, StepId = Guid.NewGuid(), StepName = "新增步骤", AuditNorm = "Roles", AuditNormRead = "Roles", StepStatus = 10, RunMode = "auto" } });
             }
             catch (Exception ex)
             {
@@ -240,7 +232,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 var result = dbContext.SysRole.Select(a => new
                 {
-                    Id = a.Id,
+                    a.Id,
                     Name = a.RoleName
                 });
                 return Json(new { Code = 0, Data = result });
@@ -275,121 +267,38 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
 
         /// <summary>
-        /// 获取流程
-        /// </summary>
-        /// <returns></returns>
-        public virtual ActionResult GetFlowConfigs()
-        {
-            try
-            {
-                var configs = dbContext.FlowMain.ToList();
-                return Json(new { Code = 0, Data = configs });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
-        /// <summary>
         /// 保存流程的步骤与关联
         /// </summary>
         /// <param name="stepList">流程步骤与关联的对象数组</param>
         /// <returns></returns>
-        public ActionResult SaveStepAndPath(List<StepAndPath> stepList)
+        public ActionResult SaveStepAndPath(List<FlowStep> stepList, List<FlowStepPath> pathList)
         {
             try
             {
                 if (stepList == null || stepList.Count == 0 || string.IsNullOrWhiteSpace(stepList[0].MainId))
                 {
-                    return Json(new { Code = 0, Msg = "保存成功" });
+                    return Json(new { Code = 0, Msg = "非法参数" });
                 }
 
                 string mainId = stepList[0].MainId.ToLower();
-                //获取该流传已有的所有关联，先删除
-                List<FlowStepPath> fspList = dbContext.FlowStepPath.Where(o => o.MainId.ToLower() == mainId).ToList();
-                if (fspList != null && fspList.Count > 0)
-                {
-                    foreach (FlowStepPath sp in fspList)
-                    {
-                        dbContext.FlowStepPath.Remove(sp);
-                    }
-                }
-                //获取该流传已有的所有关联，先删除
-                List<FlowStep> fsList = dbContext.FlowStep.Where(o => o.MainId.ToLower() == mainId).ToList();
-                if (fsList != null && fsList.Count > 0)
-                {
-                    foreach (FlowStep s in fsList)
-                    {
-                        dbContext.FlowStep.Remove(s);
-                    }
-                }
+
+                //删除旧数据
+                var spList = dbContext.FlowStepPath.Where(o => o.MainId.ToLower() == mainId).ToList();
+                dbContext.FlowStepPath.RemoveRange(spList);
+                var stlist = dbContext.FlowStep.Where(o => o.MainId.ToLower() == mainId).ToList();
+                dbContext.FlowStep.RemoveRange(stlist);
                 dbContext.SaveChanges();
-                foreach (StepAndPath sap in stepList)
+
+                //添加新数据
+                foreach (var step in stepList)
                 {
-                    //给null的process_to属性赋空值
-                    if (string.IsNullOrWhiteSpace(sap.process_to))
-                    {
-                        sap.process_to = "";
-                    }
-                    FlowStep fs = new FlowStep
-                        {
-                            Id = Guid.Parse(sap.id),
-                            MainId = sap.MainId,
-                            AuditId = sap.AuditId,
-                            AuditNorm = sap.AuditNorm,
-                            AuditLinkCode = sap.RelationStepKey,
-                            Auditors = sap.Auditors,
-                            DeployInfo =JsonConvert.SerializeObject(sap), //把类转为json字符串
-                            Description = sap.Description,
-                            StepName = sap.StepName,
-                            StepStatus = sap.StepStatus,
-                            LinkCode = sap.LinkCode,
-                            RunMode = sap.RunMode,
-                            Function = sap.Function,
-                            ShowTabIndex = sap.ShowTabIndex,
-                            Circularize = sap.Circularize,
-                            ReminderTimeout = sap.ReminderTimeout,
-                            SmsTemplateToDo = sap.SMSTemplateToDo,
-                            SmsTemplateRead = sap.SMSTemplateRead,
-                            AuditIdRead = sap.AuditIdRead,
-                            AuditNormRead = sap.AuditNormRead
-                        };
-                    dbContext.FlowStep.Add(fs);
-                    //获取该步骤的所有下步骤
-                    if (!string.IsNullOrWhiteSpace(sap.process_to) && !string.IsNullOrWhiteSpace(sap.conditions))
-                    {
-                        string[] pList = sap.process_to.Split(',');
-                        string[] cList = sap.conditions.Split(',');
-                        //把步骤关联加入数据表
-                        foreach (string p in pList)
-                        {
-                            foreach (string c in cList)
-                            {
-                                string[] condi = c.Split(':');
-                                if (condi.Length > 1 && condi[0].ToLower() == p.ToLower() && !string.IsNullOrWhiteSpace(condi[1]))
-                                {
-                                    Guid nextId;
-                                    if (!string.IsNullOrWhiteSpace(p) && Guid.TryParse(p, out nextId))
-                                    {
-                                        FlowStepPath fsp = new FlowStepPath
-                                        {
-                                            Id = Guid.NewGuid(),
-                                            MainId = sap.MainId,
-                                            UpStep = sap.id,
-                                            NextStep = nextId.ToString(),
-                                            Description = "",
-                                            Condition = int.Parse(condi[1]),
-                                            Expression = condi[3],
-                                            BtnName = condi[2]
-                                        };
-                                        dbContext.FlowStepPath.Add(fsp);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    dbContext.FlowStep.Add(step);
+                }
+                foreach (var path in pathList)
+                {
+                    path.Id = Guid.NewGuid();
+                    path.MainId = mainId;
+                    dbContext.FlowStepPath.Add(path);
                 }
                 dbContext.SaveChanges();
                 return Json(new { Code = 0, Msg = "保存成功" });
@@ -425,12 +334,10 @@ namespace {{cookiecutter.project_name}}.Controllers
                 list.Add(new SqlParameter("@Code", mainCode));
                 list.Add(new SqlParameter("@linkCode", linkCode));
                 SqlParameter[] sqlParam = list.ToArray();
-                string strSql = @"select t2.runMode from FlowMain as t1
-                                left join FlowStep as t2 on t1.Id=t2.mainId
+                string strSql = @"select t2.runMode from FlowMain as t1 left join FlowStep as t2 on t1.Id=t2.mainId
                                 where t1.Code=@Code and t2.linkCode=@linkCode ";
                 string runMode = Convert.ToString(SqlHelper.GetSingle(strSql, sqlParam));
                 bool nowIsAgainHandleStep = false;
-                //if (Data.RunMode == "auto")
                 if (!string.IsNullOrEmpty(taskUserId))
                 {
                     list = new List<SqlParameter>();
@@ -438,11 +345,11 @@ namespace {{cookiecutter.project_name}}.Controllers
                     sqlParam = list.ToArray();
                     strSql = @"select COUNT(1) from FlowBillsRecordUser as t1 
                             left join FlowBillsRecord as t2 on t1.BillsRecordId=t2.Id
-                            left join FlowBillsRecord as t3 on t2.BillsId=t3.BillsId and t3.NextStep=t1.stepId
+                            left join FlowBillsRecord as t3 on t2.BillsId=t3.BillsId and t3.NextStepId=t1.stepId
                             where t1.Id=@taskUserId";
                     nowIsAgainHandleStep = Convert.ToInt32(SqlHelper.GetSingle(strSql, sqlParam)) > 1;
                 }
-                return Json(new { Code = 0, Data = new { runMode = runMode, NowIsAgainHandleStep = nowIsAgainHandleStep } });
+                return Json(new { Code = 0, Data = new { runMode, NowIsAgainHandleStep = nowIsAgainHandleStep } });
             }
             catch (Exception ex)
             {
@@ -497,17 +404,17 @@ namespace {{cookiecutter.project_name}}.Controllers
                 list.Add(new SqlParameter("@linkCode", linkCode));
                 list.Add(new SqlParameter("@condition", condition));
                 SqlParameter[] sqlParam = list.ToArray();
-                string strSql = @"select t1.Id as 'mainId',t1.Code as 'mainCode',t1.Name as 'mainName',t4.Id as 'stepId',t4.stepName,t4.linkCode,t4.stepStatus,t3.expression,t4.circularize
+                string strSql = @"select t1.Id as 'mainId',t1.Code as 'mainCode',t1.Name as 'mainName',t4.stepId as 'stepId',t4.stepName,t4.linkCode,t4.stepStatus,t3.expression,t4.circularize
                 from FlowMain as t1 
                 left join FlowStep as t2 on t1.Id=t2.mainId
-                left join FlowStepPath as t3 on t2.Id=t3.UpStep
-                left join FlowStep as t4 on t3.NextStep=t4.Id
+                left join FlowStepPath as t3 on t2.stepId=t3.startStepId
+                left join FlowStep as t4 on t3.stopStepId=t4.stepId
                 where t1.Code=@Code and t2.linkCode=@linkCode and t3.condition=@condition ";
                 var nextSteps = dbContext.GetNextStepOutParam.FromSql(strSql, sqlParam).ToList();
                 List<GetNextStepOutParam> Data = new List<GetNextStepOutParam>();
                 foreach (GetNextStepOutParam item in nextSteps)
                 {
-                    if (!string.IsNullOrEmpty(item.expression) && !RunJScript(item.expression, expression))
+                    if (!string.IsNullOrEmpty(item.Expression) && !RunJScript(item.Expression, expression))
                     {
                         continue;
                     }
@@ -534,7 +441,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 DataTable Data = null;
                 int Total = 0;
                 DataSet ds = null;
-                FlowStep oModel = dbContext.FlowStep.FirstOrDefault(t => t.Id == stepId);
+                FlowStep oModel = dbContext.FlowStep.FirstOrDefault(t => t.StepId == stepId);
                 if (oModel.StepStatus == 100)
                 {
                     Data = new DataTable();
@@ -575,17 +482,17 @@ namespace {{cookiecutter.project_name}}.Controllers
                             Data = ds.Tables[1];
                             Total = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
                             break;
-                        case "OUDetail":
+                        case "OULeader":
                             ds = GetStepUsersByOUDetail(AuditId, PageIndex, PageSize, stepId);
                             Data = ds.Tables[1];
                             Total = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
                             break;
-                        case "ParentOUDetail":
+                        case "ParentOULeader":
                             ds = GetStepUsersByParentOUDetail(AuditId, PageIndex, PageSize, stepId);
                             Data = ds.Tables[1];
                             Total = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
                             break;
-                        case "startuser":
+                        case "Starter":
                             ds = GetStepUsersByStartuser(taskUserId, PageIndex, PageSize, stepId);
                             Data = ds.Tables[1];
                             Total = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
@@ -646,7 +553,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
 
         /// <summary>
-        /// 获取审批环节处理人   参与者：OUDetail    本级领导
+        /// 获取审批环节处理人   参与者：OULeader    本级领导
         /// </summary>
         public DataSet GetStepUsersByOUDetail(string userId, int PageIndex, int PageSize, Guid stepId)
         {
@@ -668,7 +575,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
 
         /// <summary>
-        /// 获取审批环节处理人   参与者：ParentOUDetail    上级领导
+        /// 获取审批环节处理人   参与者：ParentOULeader    上级领导
         /// </summary>
         public DataSet GetStepUsersByParentOUDetail(string userId, int PageIndex, int PageSize, Guid stepId)
         {
@@ -792,8 +699,8 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_blr.StartTime = DateTime.Now;
                 flow_blr.State = "end";
                 flow_blr.Type = 0;
-                flow_blr.UpStep = "0";//上一环节
-                flow_blr.NextStep = dbContext.Set<FlowStep>().Where(t => t.StepStatus == 1 && t.MainId == flow_Main.Id.ToString()).FirstOrDefault().Id.ToString();//当前环节
+                flow_blr.PrevStepId = "0";//上一环节
+                flow_blr.NextStepId = dbContext.Set<FlowStep>().Where(t => t.StepStatus == 1 && t.MainId == flow_Main.Id.ToString()).FirstOrDefault().StepId.ToString();//当前环节
                 flow_blr.UserId = Convert.ToString(SSOClient.UserId);//当前环节处理人
                 flow_blr.EndTime = DateTime.Now;
                 flow_blr.Description = description;
@@ -816,7 +723,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_bru.Opinion = description;
                 flow_bru.RunTime = DateTime.Now;
                 flow_bru.StartTime = DateTime.Now;
-                flow_bru.StepId = flow_blr.NextStep;//当前环节
+                flow_bru.StepId = flow_blr.PrevStepId;//当前环节
                 flow_bru.Type = 1;
                 flow_bru.UserId = flow_blr.UserId;
                 dbContext.Set<FlowBillsRecordUser>().Add(flow_bru);
@@ -828,12 +735,12 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_blrOne.StartTime = flow_blr.EndTime;
                 flow_blrOne.State = "run";
                 flow_blrOne.Type = 0;
-                flow_blrOne.UpBillsRecordId = flow_blr.Id.ToString();
-                flow_blrOne.UpStep = flow_blr.NextStep;//上一环节
+                flow_blrOne.PrevBillsRecordId = flow_blr.Id.ToString();
+                flow_blrOne.PrevStepId = flow_blr.NextStepId;//上一环节
                 foreach (SelectNextStep nextStep in nextStepList_To)
                 {
                     FlowStep nextStepItem = dbContext.FlowStep.Find(Guid.Parse(nextStep.StepId));
-                    flow_blrOne.NextStep = nextStep.StepId;//当前步骤
+                    flow_blrOne.NextStepId = nextStep.StepId;//当前步骤
                     flow_blrOne.Batch = 0;
                     dbContext.Set<FlowBillsRecord>().Add(flow_blrOne);
                     //流程任务待办表     发起步骤之后的第一步骤处理人 添加信息
@@ -849,7 +756,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                         flow_bruOne.State = "ToDo";
                         flow_bruOne.RunTime = flow_bruOne.CreateTime;
                         flow_bruOne.StartTime = flow_bruOne.CreateTime;
-                        flow_bruOne.StepId = flow_blrOne.NextStep;//当前环节
+                        flow_bruOne.StepId = flow_blrOne.NextStepId;//当前环节
                         flow_bruOne.UserId = nextStepUser.UserId;
                         dbContext.Set<FlowBillsRecordUser>().Add(flow_bruOne);
                         ////添加代办短信
@@ -872,7 +779,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                             flow_bruOne.State = "ToRead";
                             flow_bruOne.RunTime = flow_bruOne.CreateTime;
                             flow_bruOne.StartTime = flow_bruOne.CreateTime;
-                            flow_bruOne.StepId = flow_blrOne.NextStep;//当前环节
+                            flow_bruOne.StepId = flow_blrOne.NextStepId;//当前环节
                             flow_bruOne.UserId = nextStepCirculanizeUser.UserId;
                             dbContext.Set<FlowBillsRecordUser>().Add(flow_bruOne);
                             ////添加代阅短信
@@ -937,12 +844,12 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_br.State = "end";
                 flow_br.AuditDate = DateTime.Now;
 
-                
+
                 int billsRecordCount = dbContext.Set<FlowBillsRecord>().Where(t => t.BillsId == flow_br.BillsId && t.State == "run").Count();//流程审批分支个数
                 //下一任务开始
                 foreach (SelectNextStep nextStep in nextStepList_To)
                 {
-                    FlowStep nextStepItem = dbContext.Set<FlowStep>().Where(t => t.Id.ToString() == nextStep.StepId).FirstOrDefault();
+                    FlowStep nextStepItem = dbContext.Set<FlowStep>().Where(t => t.StepId.ToString() == nextStep.StepId).FirstOrDefault();
                     FlowBillsRecord flow_blrOne = new FlowBillsRecord();
                     flow_blrOne.Id = Guid.NewGuid();
                     flow_blrOne.BillsId = flow_br.BillsId;
@@ -950,10 +857,10 @@ namespace {{cookiecutter.project_name}}.Controllers
                     flow_blrOne.StartTime = DateTime.Now;
                     flow_blrOne.State = "run";
                     flow_blrOne.Type = 0;
-                    flow_blrOne.UpStep = flow_br.NextStep;//上一环节
-                    flow_blrOne.NextStep = nextStep.StepId;//当前步骤
+                    flow_blrOne.PrevStepId = flow_br.NextStepId;//上一环节
+                    flow_blrOne.NextStepId = nextStep.StepId;//当前步骤
                     flow_blrOne.Batch = 0;
-                    flow_blrOne.UpBillsRecordId = flow_br.Id.ToString();
+                    flow_blrOne.PrevBillsRecordId = flow_br.Id.ToString();
                     if (nextStepItem.StepStatus == 100)
                     {
                         //结束环节 任务结束
@@ -983,7 +890,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                             flow_bruOne.State = "ToDo";
                             flow_bruOne.RunTime = DateTime.Now;
                             flow_bruOne.StartTime = DateTime.Now;
-                            flow_bruOne.StepId = flow_blrOne.NextStep;//当前环节
+                            flow_bruOne.StepId = flow_blrOne.NextStepId;//当前环节
                             flow_bruOne.UserId = nextStepUser.UserId;
                             dbContext.Set<FlowBillsRecordUser>().Add(flow_bruOne);
                             if (nextStepItem.StepStatus == 100)
@@ -1021,7 +928,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                 flow_bruOne.State = "ToRead";
                                 flow_bruOne.RunTime = DateTime.Now;
                                 flow_bruOne.StartTime = DateTime.Now;
-                                flow_bruOne.StepId = flow_blrOne.NextStep;//当前环节
+                                flow_bruOne.StepId = flow_blrOne.NextStepId;//当前环节
                                 flow_bruOne.UserId = nextStepCirculanizeUser.UserId;
                                 dbContext.Set<FlowBillsRecordUser>().Add(flow_bruOne);
                                 //添加代阅短信
@@ -1062,7 +969,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                 from FlowBills as t1
                                 left join FlowBillsRecord as t2 on t1.Id=t2.BillsId
                                 left join FlowBillsRecordUser as t3 on t2.Id=t3.BillsRecordId
-                                left join FlowStep as t4 on t2.NextStep=t4.Id
+                                left join FlowStep as t4 on t2.NextStepId=t4.Id
                                 left join SysUser as t5 on t3.userId=t5.UserID
                                 where t1.Id=@BillId
                                 order by isnull(t3.startTime,t2.endTime) asc";
@@ -1201,16 +1108,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_bruNew.UserId = userId;
                 dbContext.Set<FlowBillsRecordUser>().Add(flow_bruNew);
                 dbContext.SaveChanges();
-
-                //添加代办短信
-                //DataRow dr = SqlHelper.Query(@"select t4.SMSTemplateToDo,t2.WorkOrderCode,t2.WorkOrderName,t2.BillsCode,t3.Name,t3.Code 'mainCode',t4.StepName from FlowBillsRecord t1
-                //                            join FlowBills t2 on t1.BillsId=t2.Id
-                //                            join FlowMain t3 on t2.MainId=t3.Id
-                //                            join FlowStep t4 on t1.NextStep=t4.Id
-                //                            where t1.Id='" + flow_bru.BillsRecordId + "'").Tables[0].Rows[0];
-                //AddSms(Convert.ToString(dr["SMSTemplateToDo"]), flow_bruNew.Id.ToString(), Convert.ToString(dr["WorkOrderCode"]), Convert.ToString(dr["WorkOrderName"])
-                //    , Convert.ToString(dr["Name"]), Convert.ToString(dr["StepName"]), flow_bruNew.StartTime, flow_bruNew.userId);
-
+                
                 //添加Portal已办
                 //AddPendEndJob(Convert.ToString(dr["mainCode"]), Convert.ToString(dr["BillsCode"]), flow_bru.Id.ToString(), "Done", flow_bru.EndTime.Value);
                 //添加Portal待办
@@ -1244,12 +1142,6 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_bru.DisplayState = "ToRead";
                 flow_bru.EndTime = DateTime.Now;
                 dbContext.SaveChanges();
-                //添加Portal已阅
-                //DataRow dr = SqlHelper.Query(@"select t2.BillsCode,t3.Name,t3.Code 'mainCode' from FlowBillsRecord t1
-                //                            join FlowBills t2 on t1.BillsId=t2.Id
-                //                            join FlowMain t3 on t2.MainId=t3.Id
-                //                            where t1.Id='" + flow_bru.BillsRecordId + "'").Tables[0].Rows[0];
-                //AddPendEndJob(Convert.ToString(dr["mainCode"]), Convert.ToString(dr["BillsCode"]), flow_bru.Id.ToString(), "ReadEnd", flow_bru.EndTime.Value);
 
                 return Json(new { Code = 0, Msg = "阅读成功" });
             }
@@ -1277,7 +1169,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                     left join FlowBillsRecord as BR on BR.BillsId=Bills.Id 
                                     left join FlowBillsRecordUser as BRU on BRU.BillsRecordId=BR.Id
                                     left join FlowMain as Main on Main.Id=Bills.mainId 
-                                    left join FlowStep as Step on BR.NextStep=Step.Id
+                                    left join FlowStep as Step on BR.NextStepId=Step.StepId
                                     left join SysUser as UR on UR.UserID=BRU.userId");
 
                 if (string.IsNullOrEmpty(name))
@@ -1376,7 +1268,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 string Day = DateTime.Now.ToString("yyyyMMdd");
 
-                int Index =(int)SqlHelper.GetSingle("select ISNULL(MAX([Index]),0)+1 from FlowOrderCodes where pinyin=@pinyin and Day='" + Day + "'", new SqlParameter("@pinyin", pinyin));
+                int Index = (int)SqlHelper.GetSingle("select ISNULL(MAX([Index]),0)+1 from FlowOrderCodes where pinyin=@pinyin and Day='" + Day + "'", new SqlParameter("@pinyin", pinyin));
 
                 FlowOrderCodes addModel = new FlowOrderCodes();
                 addModel.Pinyin = pinyin;
@@ -1396,110 +1288,16 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
         #endregion
 
-        ///// <summary>
-        ///// 添加发送短信
-        ///// </summary>
-        //private void AddSms(string SMSTemplate, string RelationCode, string WorkOrderCode, string WorkOrderName, string FlowName, string StepName, Nullable<DateTime> StartTime, string ToUserId)
-        //{
-        //    if (string.IsNullOrEmpty(SMSTemplate))
-        //        return;
-
-        //    SysUser userItem = dbContext.SysUsers.Find(Guid.Parse(ToUserId));
-
-        //    SysSmsSend sms = new SysSmsSend();
-        //    sms.RelationCode = RelationCode;
-
-        //    Dictionary<string, string> dics = new Dictionary<string, string>();
-        //    dics.Add("$WorkOrderCode$", WorkOrderCode);
-        //    dics.Add("$WorkOrderName$", WorkOrderName);
-        //    dics.Add("$FlowName$", FlowName);
-        //    dics.Add("$StepName$", StepName);
-        //    dics.Add("$UserName$", SSOClient.User.UserName);
-        //    dics.Add("$UserCode$", SSOClient.User.UserCode);
-        //    dics.Add("$StartTime$", string.Format("{0:yyyy-MM-dd hh:mm:ss}", StartTime));
-        //    sms.Content = ReplaceList(SMSTemplate, dics);
-        //    sms.Type = "Flow";
-        //    sms.State = 0;
-        //    sms.CreateTime = DateTime.Now;
-        //    sms.SendUser = SSOClient.User.UserCode;
-        //    sms.SendMobile = SSOClient.User.Mobile;
-        //    sms.ToUser = userItem.UserCode;
-        //    sms.ToMobile = userItem.Mobile;
-        //    dbContext.SysSmsSends.Add(sms);
-        //    dbContext.SaveChanges();
-        //}
-
-        ///// <summary>
-        ///// 添加Portal待办待阅、已办已阅
-        ///// </summary>
-        //private void AddPendingJob(string mainCode, string orderId, string taskUserId, string PendingType, string Owner, string ParentOwner, string JobName, DateTime IssuedTime)
-        //{
-        //    PendingJob model = new PendingJob();
-        //    model.BillsRecordUserID = taskUserId;
-        //    model.PendingType = PendingType;
-        //    model.Owner = Owner;
-        //    model.ParentOwner = ParentOwner;
-        //    model.JobName = JobName;
-        //    model.URL = GetPortalUrl(mainCode, orderId, PendingType, taskUserId);
-        //    model.IssuedTime = IssuedTime;
-        //    model.State = 0;
-        //    model.Msg = null;
-        //    model.ActionType = 1;
-        //    model.PendingJobID = null;
-        //    switch (PendingType)
-        //    {
-        //        case "ToDo":
-        //            model.JobType = "待办";
-        //            break;
-        //        case "ToRead":
-        //            model.JobType = "待阅";
-        //            break;
-        //    }
-        //    dbContext.PendingJobs.Add(model);
-        //    dbContext.SaveChanges();
-        //}
-
-        ///// <summary>
-        ///// 添加Portal已办已阅
-        ///// </summary>
-        //private void AddPendEndJob(string mainCode, string orderId, string taskUserId, string PendingType, DateTime IssuedTime)
-        //{
-        //    PendingJob model = new PendingJob();
-        //    model.BillsRecordUserID = taskUserId;
-        //    model.PendingType = PendingType;
-        //    model.Owner = null;
-        //    model.ParentOwner = null;
-        //    model.JobName = null;
-        //    model.URL = GetPortalUrl(mainCode, orderId, PendingType, taskUserId);
-        //    model.IssuedTime = IssuedTime;
-        //    model.State = 0;
-        //    model.Msg = null;
-        //    model.ActionType = 3;
-        //    var pendingJob = dbContext.PendingJobs.FirstOrDefault(t => t.BillsRecordUserID == taskUserId);
-        //    if (pendingJob != null)
-        //        model.PendingJobID = pendingJob.ID;
-        //    switch (PendingType)
-        //    {
-        //        case "Done":
-        //            model.JobType = "已办";
-        //            break;
-        //        case "ReadEnd":
-        //            model.JobType = "已阅";
-        //            break;
-        //    }
-        //    dbContext.PendingJobs.Add(model);
-        //    dbContext.SaveChanges();
-        //}
         #endregion
 
         #region Helper
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="expression">@a=3&&@a=5||@b=x</param>
-            /// <param name="parameters">[{@a:3},{@b:5}]</param>
-            /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expression">@a=3&&@a=5||@b=x</param>
+        /// <param name="parameters">[{@a:3},{@b:5}]</param>
+        /// <returns></returns>
         private bool RunJScript(string expression, List<DataParameter> parameters)
         {
             expression = expression.Replace("‘", "'").Replace("’", "'");
@@ -1519,139 +1317,16 @@ namespace {{cookiecutter.project_name}}.Controllers
                 match = match.NextMatch();
                 IsSuccess = true;
             }
-            var jsEngine = new MsieJsEngine();            
+            var jsEngine = new MsieJsEngine();
             return IsSuccess ? jsEngine.Evaluate<bool>(expression) : false;
-        }
-        // 字符串替换
-        private string ReplaceList(string strVal, Dictionary<string, string> dics)
-        {
-            foreach (var dic in dics)
-                strVal = strVal.Replace(dic.Key, dic.Value);
-
-            return strVal;
-        }
-        private string GetPortalUrl(string mainCode, string orderId, string state, string taskUserId)
-        {
-            string PortalUrl = null;
-            switch (mainCode)
-            {
-                case "999":
-                    PortalUrl = GetRedirect("/WorkflowExample/ExampleTab", orderId, state, taskUserId);
-                    break;
-            }
-            return PortalUrl;
         }
         private string GetRedirect(string url, string orderId, string state, string taskUserId)
         {
             return "../../Pages/Shared/LayoutFlowAprove.html?page=" + WebUtility.HtmlEncode(url + "?orderId=" + orderId + "&state=" + state + "&taskUserId=" + taskUserId) + "&sign=whitelist";
         }
         #endregion
-
-        public bool SaveFirstStepUser1()
-        {
-            try
-            {
-                return true;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return false;
-            }
-        }
     }
 
-
-    public class StepAndPath
-    {
-        //步骤主键
-        public string id { get; set; }
-        //步骤名
-        public string StepName { get; set; }
-        //步骤名
-        public string process_name { get; set; }
-        //步骤参数
-        public string conditions { get; set; }
-        //下步骤号
-        public string process_to { get; set; }
-        //审核类型
-        public string AuditNorm { get; set; }
-        //样式
-        public string style { get; set; }
-        //审核人
-        public string AuditId { get; set; }
-        //步骤状态
-        public int StepStatus { get; set; }
-        //备注
-        public string Description { get; set; }
-        public string RelationStepKey { get; set; }
-        //额定审核人数
-        public int Auditors { get; set; }
-        //主表主键
-        public string MainId { get; set; }
-
-        private string _OpenChoices = "open";
-
-        public string OpenChoices
-        {
-            get { return _OpenChoices; }
-            set { _OpenChoices = value; }
-        }
-
-        private string _Power = "readonly";
-
-        public string Power
-        {
-            get { return _Power; }
-            set { _Power = value; }
-        }
-
-        private string _RunMode = "auto";
-
-        public string RunMode
-        {
-            get { return _RunMode; }
-            set { _RunMode = value; }
-        }
-
-
-        private string _JoinMode = "select";
-
-        public string JoinMode
-        {
-            get { return _JoinMode; }
-            set { _JoinMode = value; }
-        }
-
-        private string _ExamineMode = "onlyone";
-
-        public string ExamineMode
-        {
-            get { return _ExamineMode; }
-            set { _ExamineMode = value; }
-        }
-
-        public string Percentage { get; set; }
-
-        public string Function { get; set; }
-
-        //黎泽金
-        public string LinkCode { get; set; }
-        public string ShowTabIndex { get; set; }
-
-        public string Circularize { get; set; }
-        public Nullable<Int64> ReminderTimeout { get; set; }
-        public string SMSTemplateToDo { get; set; }
-        public string SMSTemplateRead { get; set; }
-        //审核类型
-        public string AuditNormRead { get; set; }
-        //审核人
-        public string AuditIdRead { get; set; }
-    }
-    public class PostParam
-    {
-        public List<StepAndPath> stepList { get; set; }
-    }
     public class DataParameter
     {
         public string Key { get; set; }
@@ -1660,14 +1335,14 @@ namespace {{cookiecutter.project_name}}.Controllers
     public class GetNextStepOutParam
     {
         public Guid MainId { get; set; }
-        public string mainCode { get; set; }
+        public string MainCode { get; set; }
         public string MainName { get; set; }
         [Key]
         public Guid StepId { get; set; }
         public string StepName { get; set; }
         public string LinkCode { get; set; }
         public int StepStatus { get; set; }
-        public string expression { get; set; }
+        public string Expression { get; set; }
         public string Circularize { get; set; }
     }
     public class SelectNextStep
@@ -1697,11 +1372,9 @@ namespace {{cookiecutter.project_name}}.Controllers
         public DbSet<GetNextStepOutParam> GetNextStepOutParam { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);            
+            base.OnModelCreating(builder);
 
-            builder.Entity<GetNextStepOutParam>()
-                .HasKey(x => new { x.StepId });
-
+            builder.Entity<GetNextStepOutParam>().HasKey(x => new { x.StepId });
         }
 
     }

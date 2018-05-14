@@ -565,8 +565,6 @@ $.fn.querySuite = function (option) {
         export: null,           //导出当前查询条件的数据
         exportUrl: null,
         refresh: null,          //刷新当前页的数据
-        queryOrderType: null,
-        queryOrderBy: null,
         columnsKey: [],            //要显示的列集合
         key: null,          //主键，组合主键用(，)隔开
         pageIndex: 1,           //当前显示页数
@@ -575,8 +573,13 @@ $.fn.querySuite = function (option) {
     $.extend(_option, option);
 
     _option.queryUrl = _table.attr("data-query-url");
-    _option.queryOrderBy = _table.attr("data-order-by");
-    _option.queryOrderType = _table.attr("data-order-type");
+
+    var orderby = _table.attr("data-order-by");
+    if (orderby != undefined) {
+        var arr = orderby.split(" ");
+        _option.queryOrderBy = arr[0];
+        _option.queryOrderType = arr.length == 2 ? arr[1] : "";
+    }
 
     _option.deleteUrl = _table.attr("data-delete-url");
     _option.sortUrl = _table.attr("data-sort-url");
@@ -678,6 +681,7 @@ $.fn.querySuite = function (option) {
                 formatter: formatters
             }, _option);
             _zkTable.updata(_option.GetData().data);
+            if (_option.sortUrl != undefined && _option.sortUrl != "") _option.sortable();
             return _option;
         }
     }

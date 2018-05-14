@@ -4,6 +4,12 @@
   "dependencies": {
     "bootstrap": "v3.3.7",
     "font-awesome": "Font-Awesome#v4.7.0",
-    "code-prettify": "2015-12-04"
+    "code-prettify": "2015-12-04",
+    "jquery-ui": "1.12.1",
+    "jquery-validation": "jquery-validate#1.17.0",
+    "jquery-validation-unobtrusive": "v3.2.9",
+    "jquery-form": "jquery-form-plugin#v4.2.2",
+    "bootstrap-treeview": "v1.2.0",
+    "jquery-treegrid": "0.3.0"
   }
 }

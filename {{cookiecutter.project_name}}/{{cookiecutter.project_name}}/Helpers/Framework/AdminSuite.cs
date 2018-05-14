@@ -19,7 +19,11 @@ namespace {{cookiecutter.project_name}}.Helpers
 
     /// <summary>
     /// 查询套件封装,与前端querySuite组件对应。
-    /// 说明：项目根据需要扩展(需要重构，支持mssql,mysql,oracle)
+    /// 说明：项目根据需要扩展。
+    /// 
+    /// 需要重构：
+    /// 重构1、支持mssql,mysql,oracle；
+    /// 重构2、ToDictionary转换Key的大小写与Api默认一致，这样数据库就可以用大写，与类一致。
     /// </summary>
     public class QuerySuite
     {
@@ -229,7 +233,7 @@ namespace {{cookiecutter.project_name}}.Helpers
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 foreach (DataColumn dc in dt.Columns)
                 {
-                    dic[dc.ColumnName] = dr[dc.ColumnName] == DBNull.Value ? "" : dr[dc.ColumnName];
+                    dic[FormatKey(dc.ColumnName)] = dr[dc.ColumnName] == DBNull.Value ? "" : dr[dc.ColumnName];
                 }
                 dicList.Add(dic);
             }
@@ -245,20 +249,65 @@ namespace {{cookiecutter.project_name}}.Helpers
 
             DataRow[] rows = data.Select(string.Format("{0}='{1}'", parentKey, parentValue));
             if (string.IsNullOrEmpty(parentValue))
-                rows = data.Select(string.Format("{0} is null", parentKey));
+                rows = data.Select(string.Format("{0} is null or {0}='' ", parentKey));
             foreach (DataRow dr in rows)
             {
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 foreach (DataColumn dc in data.Columns)
                 {
-                    dic[dc.ColumnName] = dr[dc.ColumnName] == DBNull.Value ? "" : dr[dc.ColumnName];
+                    dic[FormatKey(dc.ColumnName)] = dr[dc.ColumnName] == DBNull.Value ? "" : dr[dc.ColumnName];
                 }
-                dic[propertyName] = ToDictionary(data, parentKey, Convert.ToString(dr[primaryKey]), primaryKey, propertyName);
+                dic[FormatKey(propertyName)] = ToDictionary(data, parentKey, Convert.ToString(dr[primaryKey]), primaryKey, propertyName);
                 dicList.Add(dic);
             }
-            if (dicList.Count == 0)
-                return null;
             return dicList;
+        }
+        public static List<Dictionary<string, object>> ToDictionary<T>(List<T> data, string parentKey, string primaryKey, string propertyName = "children")
+        {
+            return ToDictionary(data, parentKey, "", primaryKey, propertyName);
+        }
+        public static List<Dictionary<string, object>> ToDictionary<T>(List<T> data, string parentKey, string parentValue, string primaryKey, string propertyName)
+        {
+            List<Dictionary<string, object>> dicList = new List<Dictionary<string, object>>();
+
+            var list = data.FindAll(x => {
+                var xplist = x.GetType().GetProperties();
+                foreach (var p in xplist)
+                {
+                    if (p.Name.ToLower() == parentKey.ToLower()) 
+                        return Convert.ToString(p.GetValue(x)) == Convert.ToString(parentValue);
+                }
+                return false;
+            });
+            foreach (var dr in list)
+            {
+                var plist = dr.GetType().GetProperties();
+                PropertyInfo pkey = null;
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                foreach (var p in plist)
+                {
+                    dic[FormatKey(p.Name)] = p.GetValue(dr);
+                    if (p.Name.ToLower() == primaryKey.ToLower()) pkey = p;
+                }
+                dic[FormatKey(propertyName)] = ToDictionary(data, parentKey, Convert.ToString(pkey.GetValue(dr)), primaryKey, propertyName);
+                dicList.Add(dic);
+            }
+            return dicList;
+        }
+        private static string FormatKey(string msg)
+        {
+            int lastUpper = 0;
+            char[] msgArr = msg.ToCharArray();
+
+            for (int i = 0; i < msgArr.Length; i++)
+            {
+                bool isUpper = (msgArr[i] >= 'A' && msgArr[i] <= 'Z');
+                if (isUpper && lastUpper == i - 1)
+                    msgArr[i] = msgArr[i].ToString().ToLower()[0];
+                if (isUpper) lastUpper = i;
+            }
+            if (msgArr.Length > 0) msgArr[0] = msgArr[0].ToString().ToLower()[0];
+            return new StringBuilder().Append(msgArr).ToString();
         }
     }
 

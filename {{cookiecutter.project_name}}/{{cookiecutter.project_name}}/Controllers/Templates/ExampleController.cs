@@ -24,10 +24,9 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 QuerySuite querySuite = new QuerySuite(this, "CreateTime asc");
-
-                querySuite.Select("select * from Example");
+                querySuite.Select("select * from GeneralExample");
                
-                querySuite.AddParam("ExampleName", "like");
+                querySuite.AddParam("exampleName", "like");
 
                 DataSet ds = SqlHelper.Query(querySuite.QuerySql, querySuite.Params);
 
@@ -41,20 +40,16 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
 
         //加载
-        public JsonResult LoadExample(Guid? ID)
+        public JsonResult LoadExample(Guid? exampleId)
         {
             try
-            {
-         
-                if (!ID.HasValue)
-                    return Json(new { Code = 0, Msg = "" });
-             
-                 string sql = @"select e.*,s.userName,p.departmentName from Example e 
+            {             
+                 string sql = @"select e.*,s.userName,p.departmentName from GeneralExample e 
                                  left join SysUser s on e.ExampleUser=s.UserID 
                                  left join SysDepartment p on e.Department=p.DepartmentID 
-                                 where e.ID=@ID";
+                                 where e.exampleId=@exampleId";
                 
-                 DataTable dt = SqlHelper.Query(sql, new SqlParameter("@ID", ID)).Tables[0];
+                 DataTable dt = SqlHelper.Query(sql, new SqlParameter("@exampleId", exampleId)).Tables[0];
                  return Json(new { Code = 0, Data = QuerySuite.ToDictionary(dt).FirstOrDefault() });
                 
             }
@@ -66,11 +61,11 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
 
         //保存
-        public JsonResult SaveExample(Guid? ID)
+        public JsonResult SaveExample(Guid? exampleId)
         {
             try
             {
-                Example model = dbContext.Example.FirstOrDefault(s => s.Id ==ID);
+                GeneralExample model = dbContext.GeneralExample.FirstOrDefault(s => s.ExampleId == exampleId);
 
                 if (model != null)
                 {
@@ -80,11 +75,11 @@ namespace {{cookiecutter.project_name}}.Controllers
                 else
                 {
                     //新增
-                    model = new Example();
+                    model = new GeneralExample();
                     this.ToModel(model);
-                    model.Id = Guid.NewGuid();
+                    model.ExampleId = Guid.NewGuid();
                     model.CreateTime = DateTime.Now;
-                    dbContext.Example.Add(model);
+                    dbContext.GeneralExample.Add(model);
                 }
                 dbContext.SaveChanges();
                 return Json(new { Code = 0, Msg = "保存成功" ,Data=model});
@@ -101,7 +96,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string sql = QuerySuite.DeleteSql(IDs, "Example", "ID");
+                string sql = QuerySuite.DeleteSql(IDs, "GeneralExample", "exampleId");
                 var result = SqlHelper.ExecuteSql(sql);
 
                 return Json(new { Code = 0, Msg = "删除成功" });
@@ -132,7 +127,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string sql = @"select *,dbo.fn_GetDepartmentFullName(DepartmentID) FullName from SysDepartment order by DepartmentCode ";
+                string sql = @"select * from SysDepartment order by DepartmentCode ";
                 DataTable dt = SqlHelper.Query(sql).Tables[0];
 
                 var result = QuerySuite.ToDictionary(dt, "ParentID", "DepartmentID");
@@ -150,10 +145,10 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string sql = @"select * from Example";
+                string sql = @"select * from GeneralExample";
                 DataTable dt = SqlHelper.Query(sql).Tables[0];
 
-                var result = QuerySuite.ToDictionary(dt, "ParentID", "", "ID", "child");
+                var result = QuerySuite.ToDictionary(dt, "parentID", "", "exampleId", "child");
                 return Json(new { Code = 0, Total = result.Count, Data = result });
 
             }
@@ -168,14 +163,11 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                if (!ID.HasValue)
-                    return Json(new { Code = 0, Msg = "" });
-
-                string sql = @" select e.*,Parent.exampleName as parentName,s.userName as userName, p.DepartmentName as departmentName from Example e 
-                            left join Example Parent on e.ParentID=Parent.ID
+                string sql = @" select e.*,Parent.exampleName as parentName,s.userName as userName, p.DepartmentName as departmentName from GeneralExample e 
+                            left join GeneralExample Parent on e.ParentID=Parent.exampleId
                             left join SysUser s on e.ExampleUser=s.UserID 
                             left join SysDepartment p on e.Department=p.DepartmentID 
-                            where e.ID=@ID";
+                            where e.exampleId=@ID";
 
                 DataTable dt = SqlHelper.Query(sql, new SqlParameter("@ID", ID)).Tables[0];
                 return Json(new { Code = 0, Data = QuerySuite.ToDictionary(dt).FirstOrDefault() });

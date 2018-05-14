@@ -53,10 +53,6 @@
                         <span class="glyphicon glyphicon-cog"></span>
                         设置角色权限
                     </button>
-                    <button class="btn btn-default" action="query" id="btnQueryPower">
-                        <span class="glyphicon glyphicon-search"></span>
-                        查看角色权限
-                    </button>
                 </div>
                 <!-- 列表-->
                 <div class="querySuite-table"
@@ -85,7 +81,7 @@
             <div class="modal-body">
                 <form data-title="角色"
                       data-save-url="../../system/SaveRoleData"
-                      data-load-url="../../system/LoadRoleEdit"
+                      data-load-url="../../system/LoadRoleData"
                       id="form" method="post">
                     <table class="InfoTable">
                         <tr>
@@ -148,143 +144,137 @@
     </div><!-- /.modal -->
 </div>
 
-<script src="../../lib/framework/js/jquery.treegrid.js"></script>
 <script type="text/javascript">
-        var querySuite;
-        $(function () {
-            //查询套件初始化
-            querySuite = $(".querySuite-user").querySuite().query();
+    var querySuite;
+    $(function () {
+        //查询套件初始化
+        querySuite = $(".querySuite-user").querySuite().query();
 
-            //表单套件初始化
-            var formSuite = $("#AddRole").formSuite()
-                .submit(function () {
-                    getRoleData();
-                });
-
-            //加载角色组
-            function getRoleData() {
-                $("#roleList").html('');
-                $.ajax({
-                    url: '../../system/GetRoleData',
-                    type: 'post',
-                    cache: false,
-                    success: function (result) {
-                        if (result.code == 1) {
-                            alert(result.msg);
-                            return false;
-                        }
-                        $.each(result.data, function (i, d) {
-                            var li = $('<li class="list-group-item">' + d.roleName + '</li>');
-                            if (i == 0) {
-                                li.addClass("active");
-                                $("#roleId").val(d.id);
-                                $("#roleName").val(d.roleName);
-                                querySuite.query();
-                            }
-                            li.bind("click", function () {
-                                $(this).parent().find('.active').removeClass("active");
-                                $(this).addClass("active");
-                                $("#roleId").val(d.id);
-                                $("#roleName").val(d.roleName);
-                                querySuite.query();
-                            });
-                            $("#roleList").append(li);
-                        });
-                    }
-                });
-            }
-
-            //修改角色组
-            $("#btnRoleUpdate").click(function () {
-                formSuite.load({ id: $("#roleId").val() });
+        //表单套件初始化
+        var formSuite = $("#AddRole").formSuite()
+            .submit(function () {
+                getRoleData();
             });
 
-            //删除角色组
-            $("#btnRoleDel").click(function () {
-                if (confirm("您确定要删除所选内容吗？")) {
-                    $.ajax({
-                        type: "get",
-                        url: '../../system/DelRoleData',
-                        datatype: "json",
-                        data: {
-                            roleId: $("#roleId").val()
-                        },
-                        success: function (result) {
-                            alert(result.msg);
-                            if (result.code == 0) {
-                                getRoleData();
-                            }
+        //加载角色组
+        function getRoleData() {
+            $("#roleList").html('');
+            $.ajax({
+                url: '../../system/GetRoleData',
+                type: 'post',
+                cache: false,
+                success: function (result) {
+                    if (result.code == 1) {
+                        alert(result.msg);
+                        return false;
+                    }
+                    $.each(result.data, function (i, d) {
+                        var li = $('<li class="list-group-item">' + d.roleName + '</li>');
+                        if (i == 0) {
+                            li.addClass("active");
+                            $("#roleId").val(d.id);
+                            $("#roleName").val(d.roleName);
+                            querySuite.query();
                         }
+                        li.bind("click", function () {
+                            $(this).parent().find('.active').removeClass("active");
+                            $(this).addClass("active");
+                            $("#roleId").val(d.id);
+                            $("#roleName").val(d.roleName);
+                            querySuite.query();
+                        });
+                        $("#roleList").append(li);
                     });
                 }
             });
+        }
 
-            //设置角色用户
-            $("#btnAddUser").click(function () {
-                $.showLoading();
+        //修改角色组
+        $("#btnRoleUpdate").click(function () {
+            formSuite.load({ id: $("#roleId").val() });
+        });
+
+        //删除角色组
+        $("#btnRoleDel").click(function () {
+            if (confirm("您确定要删除所选内容吗？")) {
                 $.ajax({
-                    url: '../../system/LoadRoleUserEdit',
-                    type: 'post',
-                    cache: false,
-                    async: true,
+                    type: "get",
+                    url: '../../system/DeleteRoleData',
+                    datatype: "json",
                     data: {
                         roleId: $("#roleId").val()
                     },
                     success: function (result) {
-                        var userID = "";
-                        if (result.data != "") {
-                            $.each(result.data, function (i, d) {
-                                if (userID != "")
-                                    userID += ",";
-                                userID += d.userId;
-                            });
+                        alert(result.msg);
+                        if (result.code == 0) {
+                            getRoleData();
                         }
-                        $("#UserInfo").val(userID);
-                        if ($("#departmentSelectPicker").length == 0)
-                            $("body").append('<div id="departmentSelectPicker"></div>');
-                        var _data = {
-                            text: "",
-                            value: "#UserInfo",
-                            callback:'saveRoleUser',
-                            single:'false'
-                        }
-                        $("#departmentSelectPicker").attr("data-param", JSON.stringify(_data));
-                        $("#departmentSelectPicker").load("../../pages/picker/userpicker.html");
-                        $.hideLoading();
                     }
                 });
-
-            });
-
-            //设置角色权限
-            $("#btnAddRole").click(function () {
-                BitPage.Redirect("system/roleOperate", { isQuery: "", roleId: $("#roleId").val(), roleName: $("#roleName").val() }, "Role");
-            });
-
-            //查看角色权限
-            $("#btnQueryPower").click(function () {
-                BitPage.Redirect("system/roleOperate", { isQuery: "disabled", roleId: $("#roleId").val(), roleName: $("#roleName").val() }, "Role");
-            });
-            getRoleData();
+            }
         });
 
-        //将用户保存到角色组下（选择用户后回调函数）
-        function saveRoleUser() {
+        //设置角色用户
+        $("#btnAddUser").click(function () {
             $.showLoading();
             $.ajax({
-                url: '../../system/SaveRoleUserData',
+                url: '../../system/LoadRoleUserEdit',
                 type: 'post',
                 cache: false,
                 async: true,
                 data: {
-                    roleId: $("#roleId").val(),
-                    userId: $("#UserInfo").val()
+                    roleId: $("#roleId").val()
                 },
                 success: function (result) {
-                    if (result)
-                        querySuite.query();
+                    var userID = "";
+                    if (result.data != "") {
+                        $.each(result.data, function (i, d) {
+                            if (userID != "")
+                                userID += ",";
+                            userID += d.userId;
+                        });
+                    }
+                    $("#UserInfo").val(userID);
+                    if ($("#departmentSelectPicker").length == 0)
+                        $("body").append('<div id="departmentSelectPicker"></div>');
+                    var _data = {
+                        text: "",
+                        value: "#UserInfo",
+                        callback: 'saveRoleUser',
+                        single: 'false'
+                    }
+                    $("#departmentSelectPicker").attr("data-param", JSON.stringify(_data));
+                    $("#departmentSelectPicker").load("../../pages/picker/userpicker.html");
                     $.hideLoading();
                 }
             });
-        }
+
+        });
+
+        //设置角色权限
+        $("#btnAddRole").click(function () {
+            BitPage.Redirect("system/roleOperate", { isQuery: "", roleId: $("#roleId").val(), roleName: $("#roleName").val() }, "Role");
+        });
+        getRoleData();
+    });
+
+    //将用户保存到角色组下（选择用户后回调函数）
+    function saveRoleUser() {
+        $.showLoading();
+        $.ajax({
+            url: '../../system/SaveRoleUserData',
+            type: 'post',
+            cache: false,
+            async: true,
+            data: {
+                roleId: $("#roleId").val(),
+                userId: $("#UserInfo").val()
+            },
+            success: function (result) {
+                if (result.code == 0)
+                    querySuite.query();
+                $.hideLoading();
+            }
+        });
+    }
 </script>

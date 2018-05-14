@@ -49,8 +49,8 @@
     <script src="../../lib/jquery/dist/jquery.min.js"></script>
     <script src="../../lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <!--组件引用-->
-    <script type="text/javascript" src="../../lib/framework/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="../../lib/framework/js/jquery.form.min.js"></script>
+    <script src="../../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../../lib/jquery-form/dist/jquery.form.min.js"></script>
     <!--框架引用-->
     <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
     <script type="text/javascript">
@@ -71,12 +71,12 @@
                 $.showLoading();
                 $.ajax({
                     url: "../../account/binduser",
-                    data: { account: account, password: password, openId: openId},
+                    data: { account: account, password: password, openId: openId },
                     datatype: "json",
                     type: "post",
                     success: function (result) {
                         if (result.code == 0) {
-                                window.location.href = "../../pages/home/index.html";
+                            window.location.href = "../../pages/home/index.html";
                         } else {
                             $("#spanmsg").text(result.msg);
                             $("#txtPassword").val('');

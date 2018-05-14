@@ -11,7 +11,7 @@
                     <tr>
                         <th>示例名称：</th>
                         <td>
-                            <input type="hidden" name="id" />
+                            <input type="hidden" name="exampleId" />
                             <input name="exampleName" type="text" class="form-control required" placeholder="示例名称" />
                         </td>
                         <th>普通文本：</th>
@@ -116,13 +116,11 @@
    
     $(function () {
         var url = BitPage.GetQueryString("page");
-        var id = BitPage.GetQueryString('id', url);
+        var exampleId = BitPage.GetQueryString('exampleId', url);
 
-        var linkageSelectTrue = $("#linkageSelectTrue").linkageSelect().change(function (e) {
-        });
+        var linkageSelectTrue = $("#linkageSelectTrue").linkageSelect().change(function (e) {});
         //同步
-        var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) {     
-        });       
+        var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) {});       
 
         //表单套件初始化
         var formSuite = $("#exampleModal").generalForm()
@@ -136,7 +134,7 @@
             .controls["selectChange"].change(function (a) {
                 debugger
             })
-            .load({ "id": id });
+            .load({ "exampleId": exampleId });
 
         //radio回调事件
         $("body").on("change", "#myModal :radio[name=exampleRadio]", function () { })
@@ -146,11 +144,11 @@
 
         $("#save").click(function () {
             formSuite.submit();
-            BitPage.Redirect("/Templates/ExampleRedirect", null, "CompleteRedirect");
+            BitPage.Redirect("/Templates/ExampleRedirect", null, "ExampleRedirect");
         })
         $("#close").click(function () {
 
-            BitPage.Redirect("/Templates/ExampleRedirect", null, "CompleteRedirect");
+            BitPage.Redirect("/Templates/ExampleRedirect", null, "ExampleRedirect");
         });
        
     });

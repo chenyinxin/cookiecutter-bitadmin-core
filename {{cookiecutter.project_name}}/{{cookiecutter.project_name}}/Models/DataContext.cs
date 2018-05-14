@@ -7,7 +7,6 @@ namespace {{cookiecutter.project_name}}.Models
 {
     public partial class DataContext : DbContext
     {
-        public virtual DbSet<Example> Example { get; set; }
         public virtual DbSet<FlowBills> FlowBills { get; set; }
         public virtual DbSet<FlowBillsRecord> FlowBillsRecord { get; set; }
         public virtual DbSet<FlowBillsRecordUser> FlowBillsRecordUser { get; set; }
@@ -38,117 +37,14 @@ namespace {{cookiecutter.project_name}}.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(SqlHelper.connectionString);
+                optionsBuilder.UseSqlServer(SqlHelper.ConnectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Example>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.AutoComSelect)
-                    .HasColumnName("autoComSelect")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.AutoComSelectText)
-                    .HasColumnName("autoComSelectText")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.AutoComplete)
-                    .HasColumnName("autoComplete")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Department)
-                    .HasColumnName("department")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.ExampleCheckbox)
-                    .HasColumnName("exampleCheckbox")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExampleName)
-                    .HasColumnName("exampleName")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExamplePhone)
-                    .HasColumnName("examplePhone")
-                    .HasMaxLength(13)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExampleRadio)
-                    .HasColumnName("exampleRadio")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExampleSelect)
-                    .HasColumnName("exampleSelect")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExampleText)
-                    .HasColumnName("exampleText")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExampleTime)
-                    .HasColumnName("exampleTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.ExampleUser)
-                    .HasColumnName("exampleUser")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.LinkageSelectA)
-                    .HasColumnName("linkageSelectA")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LinkageSelectB)
-                    .HasColumnName("linkageSelectB")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LinkageSelectC)
-                    .HasColumnName("linkageSelectC")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LinkageSelectD)
-                    .HasColumnName("linkageSelectD")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LinkageSelectE)
-                    .HasColumnName("linkageSelectE")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LinkageSelectF)
-                    .HasColumnName("linkageSelectF")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.ParentId).HasColumnName("parentId");
-            });
-
             modelBuilder.Entity<FlowBills>(entity =>
             {
-                entity.HasIndex(e => e.BillsCode)
-                    .HasName("IX_FlowBills_BillsCode");
-
-                entity.HasIndex(e => e.MainId)
-                    .HasName("IX_FlowBills_MainId");
-
-                entity.HasIndex(e => e.ParentId)
-                    .HasName("IX_ParentId");
-
-                entity.HasIndex(e => e.StepId)
-                    .HasName("IX_FlowBills_StepId");
-
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .ValueGeneratedNever();
@@ -157,13 +53,17 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("billsCode")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.BillsType).HasMaxLength(500);
+                entity.Property(e => e.BillsType)
+                    .HasColumnName("billsType")
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.CreateTime)
                     .HasColumnName("createTime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Description).HasMaxLength(1000);
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(1000);
 
                 entity.Property(e => e.MainId)
                     .HasColumnName("mainId")
@@ -187,38 +87,19 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("updateTime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.WorkOrderCode).HasMaxLength(500);
+                entity.Property(e => e.Version).HasColumnName("version");
+
+                entity.Property(e => e.WorkOrderCode)
+                    .HasColumnName("workOrderCode")
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.WorkOrderName)
                     .HasColumnName("workOrderName")
                     .HasMaxLength(2000);
-
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK_dbo.FlowBills_dbo.FlowBills_ParentId");
             });
 
             modelBuilder.Entity<FlowBillsRecord>(entity =>
             {
-                entity.HasIndex(e => e.BillsId)
-                    .HasName("IX_FlowBillsRecord_BillsId");
-
-                entity.HasIndex(e => e.Condition)
-                    .HasName("IX_FlowBillsRecord_Condition");
-
-                entity.HasIndex(e => e.NextStep)
-                    .HasName("IX_FlowBillsRecord_NextStep");
-
-                entity.HasIndex(e => e.Sort)
-                    .HasName("IX_FlowBillsRecord_Sort");
-
-                entity.HasIndex(e => e.UpStep)
-                    .HasName("IX_FlowBillsRecord_UpStep");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_FlowBillsRecord_UserId");
-
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .ValueGeneratedNever();
@@ -245,8 +126,16 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("endTime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.NextStep)
-                    .HasColumnName("nextStep")
+                entity.Property(e => e.NextStepId)
+                    .HasColumnName("nextStepId")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PrevBillsRecordId)
+                    .HasColumnName("prevBillsRecordId")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PrevStepId)
+                    .HasColumnName("prevStepId")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Sort).HasColumnName("sort");
@@ -261,14 +150,6 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.Type).HasColumnName("type");
 
-                entity.Property(e => e.UpBillsRecordId)
-                    .HasColumnName("upBillsRecordId")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UpStep)
-                    .HasColumnName("upStep")
-                    .HasMaxLength(50);
-
                 entity.Property(e => e.UserId)
                     .HasColumnName("userId")
                     .HasMaxLength(50);
@@ -276,20 +157,12 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.HasOne(d => d.Bills)
                     .WithMany(p => p.FlowBillsRecord)
                     .HasForeignKey(d => d.BillsId)
-                    .HasConstraintName("FK_dbo.FlowBillsRecord_dbo.FlowBills_BillsId");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FlowBillsRecord_FlowBills");
             });
 
             modelBuilder.Entity<FlowBillsRecordUser>(entity =>
             {
-                entity.HasIndex(e => e.BillsRecordId)
-                    .HasName("IX_BillsRecordId");
-
-                entity.HasIndex(e => e.BillsRecordOutId)
-                    .HasName("IX_BillsRecordOutId");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_UserId");
-
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .ValueGeneratedNever();
@@ -355,29 +228,27 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.HasOne(d => d.BillsRecord)
                     .WithMany(p => p.FlowBillsRecordUser)
                     .HasForeignKey(d => d.BillsRecordId)
-                    .HasConstraintName("FK_dbo.FlowBillsRecordUser_dbo.FlowBillsRecord_BillsRecordId");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FlowBillsRecordUser_FlowBillsRecord");
             });
 
             modelBuilder.Entity<FlowMain>(entity =>
             {
-                entity.HasIndex(e => e.Code)
-                    .HasName("IX_FlowMain_Code");
-
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Code)
                     .HasColumnName("code")
-                    .HasMaxLength(1023);
+                    .HasMaxLength(1024);
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
-                    .HasMaxLength(1000);
+                    .HasMaxLength(1024);
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
-                    .HasMaxLength(200);
+                    .HasMaxLength(256);
             });
 
             modelBuilder.Entity<FlowOrderCodes>(entity =>
@@ -404,18 +275,15 @@ namespace {{cookiecutter.project_name}}.Models
 
             modelBuilder.Entity<FlowStep>(entity =>
             {
-                entity.HasIndex(e => e.AuditId)
-                    .HasName("IX_FlowStep_AuditId");
+                entity.HasKey(e => e.StepId);
 
-                entity.HasIndex(e => e.MainId)
-                    .HasName("IX_FlowStep_MainId");
-
-                entity.HasIndex(e => e.StepStatus)
-                    .HasName("IX_FlowStep_StepStatus");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
+                entity.Property(e => e.StepId)
+                    .HasColumnName("stepId")
                     .ValueGeneratedNever();
+
+                entity.Property(e => e.Agency)
+                    .HasColumnName("agency")
+                    .HasMaxLength(32);
 
                 entity.Property(e => e.AuditId)
                     .HasColumnName("auditId")
@@ -425,10 +293,6 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("auditIdRead")
                     .HasMaxLength(256);
 
-                entity.Property(e => e.AuditLinkCode)
-                    .HasColumnName("auditLinkCode")
-                    .HasMaxLength(128);
-
                 entity.Property(e => e.AuditNorm)
                     .HasColumnName("auditNorm")
                     .HasMaxLength(128);
@@ -437,30 +301,12 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("auditNormRead")
                     .HasMaxLength(128);
 
-                entity.Property(e => e.Auditors).HasColumnName("auditors");
-
                 entity.Property(e => e.Circularize)
                     .HasColumnName("circularize")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.DeployInfo)
-                    .HasColumnName("deployInfo")
-                    .HasMaxLength(4000);
+                    .HasMaxLength(32);
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.ExamineMode)
-                    .HasColumnName("examineMode")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.Function)
-                    .HasColumnName("function")
-                    .HasMaxLength(1000);
-
-                entity.Property(e => e.JoinMode)
-                    .HasColumnName("joinMode")
                     .HasMaxLength(4000);
 
                 entity.Property(e => e.LinkCode)
@@ -470,20 +316,6 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.Property(e => e.MainId)
                     .HasColumnName("mainId")
                     .HasMaxLength(64);
-
-                entity.Property(e => e.OpenChoices)
-                    .HasColumnName("openChoices")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.Percentage).HasColumnName("percentage");
-
-                entity.Property(e => e.Power)
-                    .HasColumnName("power")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.RelationStepKey)
-                    .HasColumnName("relationStepKey")
-                    .HasMaxLength(4000);
 
                 entity.Property(e => e.ReminderTimeout).HasColumnName("reminderTimeout");
 
@@ -505,32 +337,20 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.StepName)
                     .HasColumnName("stepName")
-                    .HasMaxLength(256);
+                    .HasMaxLength(64);
 
                 entity.Property(e => e.StepStatus).HasColumnName("stepStatus");
+
+                entity.Property(e => e.Style)
+                    .HasColumnName("style")
+                    .HasMaxLength(512);
             });
 
             modelBuilder.Entity<FlowStepPath>(entity =>
             {
-                entity.HasIndex(e => e.Condition)
-                    .HasName("IX_FlowStepPath_Condition");
-
-                entity.HasIndex(e => e.MainId)
-                    .HasName("IX_FlowStepPath_MainId");
-
-                entity.HasIndex(e => e.NextStep)
-                    .HasName("IX_FlowStepPath_NextStep");
-
-                entity.HasIndex(e => e.UpStep)
-                    .HasName("IX_FlowStepPath_UpStep");
-
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .ValueGeneratedNever();
-
-                entity.Property(e => e.BtnName)
-                    .HasColumnName("btnName")
-                    .HasMaxLength(4000);
 
                 entity.Property(e => e.Condition).HasColumnName("condition");
 
@@ -540,18 +360,22 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.Expression)
                     .HasColumnName("expression")
-                    .HasMaxLength(1024);
+                    .HasMaxLength(512);
 
                 entity.Property(e => e.MainId)
                     .HasColumnName("mainId")
                     .HasMaxLength(64);
 
-                entity.Property(e => e.NextStep)
-                    .HasColumnName("nextStep")
+                entity.Property(e => e.Nikename)
+                    .HasColumnName("nikename")
+                    .HasMaxLength(512);
+
+                entity.Property(e => e.StartStepId)
+                    .HasColumnName("startStepId")
                     .HasMaxLength(64);
 
-                entity.Property(e => e.UpStep)
-                    .HasColumnName("upStep")
+                entity.Property(e => e.StopStepId)
+                    .HasColumnName("stopStepId")
                     .HasMaxLength(64);
             });
 
@@ -562,6 +386,22 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.Property(e => e.ExampleId)
                     .HasColumnName("exampleId")
                     .ValueGeneratedNever();
+
+                entity.Property(e => e.AutoComSelect)
+                    .HasColumnName("autoComSelect")
+                    .HasMaxLength(4000);
+
+                entity.Property(e => e.AutoComSelectText)
+                    .HasColumnName("autoComSelectText")
+                    .HasMaxLength(4000);
+
+                entity.Property(e => e.AutoComplete)
+                    .HasColumnName("autoComplete")
+                    .HasMaxLength(4000);
+
+                entity.Property(e => e.CreateTime)
+                    .HasColumnName("createTime")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.DateTimePicker)
                     .HasColumnName("dateTimePicker")
@@ -579,12 +419,69 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("dateTimePickerYYMM")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.Department)
+                    .HasColumnName("department")
+                    .HasMaxLength(4000);
+
                 entity.Property(e => e.EmailText)
                     .HasColumnName("emailText")
                     .HasMaxLength(64);
 
+                entity.Property(e => e.ExampleCheckbox)
+                    .HasColumnName("exampleCheckbox")
+                    .HasMaxLength(256);
+
                 entity.Property(e => e.ExampleName)
                     .HasColumnName("exampleName")
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.ExamplePhone)
+                    .HasColumnName("examplePhone")
+                    .HasMaxLength(16)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ExampleRadio)
+                    .HasColumnName("exampleRadio")
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.ExampleSelect)
+                    .HasColumnName("exampleSelect")
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.ExampleText)
+                    .HasColumnName("exampleText")
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.ExampleTime)
+                    .HasColumnName("exampleTime")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ExampleUser)
+                    .HasColumnName("exampleUser")
+                    .HasMaxLength(4000);
+
+                entity.Property(e => e.LinkageSelectA)
+                    .HasColumnName("linkageSelectA")
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectB)
+                    .HasColumnName("linkageSelectB")
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectC)
+                    .HasColumnName("linkageSelectC")
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectD)
+                    .HasColumnName("linkageSelectD")
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectE)
+                    .HasColumnName("linkageSelectE")
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectF)
+                    .HasColumnName("linkageSelectF")
                     .HasMaxLength(64);
 
                 entity.Property(e => e.MobileText)
@@ -594,6 +491,8 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.Property(e => e.OuPicker)
                     .HasColumnName("ouPicker")
                     .HasMaxLength(64);
+
+                entity.Property(e => e.ParentId).HasColumnName("parentId");
 
                 entity.Property(e => e.PlainDecimal).HasColumnName("plainDecimal");
 
@@ -931,13 +830,17 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.HasKey(e => e.ServerIp);
 
                 entity.Property(e => e.ServerIp)
-                    .HasColumnName("ServerIP")
+                    .HasColumnName("serverIP")
                     .HasMaxLength(128)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+                entity.Property(e => e.CreateTime)
+                    .HasColumnName("createTime")
+                    .HasColumnType("datetime");
 
-                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
+                entity.Property(e => e.UpdateTime)
+                    .HasColumnName("updateTime")
+                    .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysSmsCode>(entity =>

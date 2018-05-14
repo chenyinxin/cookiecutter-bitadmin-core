@@ -121,8 +121,8 @@
     <script src="../../lib/jquery/dist/jquery.min.js"></script>
     <script src="../../lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <!--组件引用-->
-    <script type="text/javascript" src="../../lib/framework/js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="../../lib/framework/js/jquery.form.min.js"></script>
+    <script src="../../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../../lib/jquery-form/dist/jquery.form.min.js"></script>
     <!--框架引用-->
     <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
 
@@ -138,6 +138,7 @@
                 //window.location.href = "http://www.example.com/login.html"; //外部登录时启用
             }, "login");
 
+            //账号密码登录
             $("#verifyCodeImage").click(function () {
                 $(this).attr("src", "../../account/verifycode?_" + Math.random());
             });
@@ -242,7 +243,7 @@
                 }
             }
 
-            //人脸登录
+            //人脸识别登录（人脸识别建议作为二次登录），本处需要重构。
             $(".nav-tabs").click(function () {
                 if ($("#t3").hasClass("active"))
                     faceTrack.stop();//暂停
@@ -304,9 +305,7 @@
                                     }
                                 });
                             }, 1000);
-                        } else {
-                            //console.log("冷却中");
-                        }
+                        } else { }
                     }
                 });
             }

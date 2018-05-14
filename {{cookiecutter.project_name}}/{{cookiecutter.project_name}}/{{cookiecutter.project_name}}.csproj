@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Baidu.AI" Version="3.4.0" />
     <PackageReference Include="BitAdminCore.ALL" Version="1.0.3" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
   </ItemGroup>
 

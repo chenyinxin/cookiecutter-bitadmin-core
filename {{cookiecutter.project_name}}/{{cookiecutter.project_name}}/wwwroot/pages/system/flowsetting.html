@@ -26,8 +26,8 @@
         <!-- 列表-->
         <div class="querySuite-table" data-order-by="Code" data-order-type="ASC"
              data-key="id"
-             data-query-url="../../Workflow/GetFlowMainList"
-             data-delete-url="../../Workflow/DelFlowMain">
+             data-query-url="../../workflow/QueryFlowMainData"
+             data-delete-url="../../workflow/DeleteFlowMainData">
             <table>
                 <thead>
                     <tr>
@@ -50,8 +50,8 @@
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="流程信息"
-                      data-save-url="../../Workflow/NewOrEidtFlowMain"
-                      data-load-url="../../Workflow/LoadFlowMain">
+                      data-save-url="../../workflow/SaveFlowMainData"
+                      data-load-url="../../workflow/LoadFlowMainData">
                     <input type="hidden" name="id" />
                     <table>
                         <tr>
@@ -95,7 +95,7 @@
             .columns["option"].format(function (val, data) {
                 var span = $('<span class="btn btn-link">配置流程</span>');
                 span.bind('click', function () {
-                    window.open("../Workflow/flowdesign.html?fm=" + data.id, 'newwindow', 'height=' + (window.screen.availHeight - 70) + 'px,width=' + (window.screen.availWidth - 15) + 'px,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=yes, status=no');
+                    window.open("../system/flowdesign.html?fm=" + data.id, 'newwindow', 'height=' + (window.screen.availHeight - 70) + 'px,width=' + (window.screen.availWidth - 15) + 'px,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=yes, status=no');
                 });
                 return span;
             })

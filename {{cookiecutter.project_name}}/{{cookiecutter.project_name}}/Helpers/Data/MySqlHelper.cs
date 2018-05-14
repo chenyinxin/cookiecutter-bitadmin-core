@@ -10,7 +10,7 @@ namespace {{cookiecutter.project_name}}.Helpers
     public class MySqlHelper
     {
 
-        public static string connectionString { get { return HttpContextCore.Configuration["ConnectionStrings:MySql"]; } }
+        public static string ConnectionString { get { return HttpContextCore.Configuration["ConnectionStrings:MySql"]; } }
 
         #region 执行查询语句，返回MySqlDataReader
         /// <summary>
@@ -20,7 +20,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static MySqlDataReader ExecuteReader(string sqlString)
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlConnection connection = new MySqlConnection(ConnectionString);
             MySqlCommand cmd = new MySqlCommand(sqlString, connection);
             MySqlDataReader myReader = null;
             try
@@ -54,7 +54,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static MySqlDataReader ExecuteReader(string sqlString, params MySqlParameter[] cmdParms)
         {
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlConnection connection = new MySqlConnection(ConnectionString);
             MySqlCommand cmd = new MySqlCommand();
             MySqlDataReader myReader = null;
             try
@@ -88,7 +88,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static int ExecuteSql(string sql)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
@@ -122,7 +122,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static int ExecuteSql(string sqlString, params MySqlParameter[] cmdParms)
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
                 {
@@ -155,7 +155,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static DataSet GetDataSet(string sql)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
             {
                 DataSet ds = new DataSet();
                 try
@@ -186,7 +186,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static DataSet GetDataSet(string sqlString, params MySqlParameter[] cmdParms)
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 MySqlCommand cmd = new MySqlCommand();
                 PrepareCommand(cmd, connection, null, sqlString, cmdParms);
@@ -222,7 +222,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static object GetSingle(string sqlString, params MySqlParameter[] cmdParms)
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 using (MySqlCommand cmd = new MySqlCommand())
                 {
@@ -263,7 +263,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>DataSet</returns>
         public static DataSet RunProcedureForDataSet(string storedProcName, IDataParameter[] parameters)
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
                 DataSet dataSet = new DataSet();
                 connection.Open();

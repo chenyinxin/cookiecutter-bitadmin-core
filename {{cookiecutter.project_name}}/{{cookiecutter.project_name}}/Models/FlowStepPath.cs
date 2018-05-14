@@ -7,11 +7,11 @@ namespace {{cookiecutter.project_name}}.Models
     {
         public Guid Id { get; set; }
         public string MainId { get; set; }
-        public string UpStep { get; set; }
-        public string NextStep { get; set; }
+        public string StartStepId { get; set; }
+        public string StopStepId { get; set; }
+        public string Nikename { get; set; }
         public int Condition { get; set; }
         public string Expression { get; set; }
         public string Description { get; set; }
-        public string BtnName { get; set; }
     }
 }

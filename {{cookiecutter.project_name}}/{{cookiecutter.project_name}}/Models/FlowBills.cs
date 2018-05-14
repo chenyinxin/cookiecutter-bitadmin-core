@@ -8,7 +8,6 @@ namespace {{cookiecutter.project_name}}.Models
         public FlowBills()
         {
             FlowBillsRecord = new HashSet<FlowBillsRecord>();
-            InverseParent = new HashSet<FlowBills>();
         }
 
         public Guid Id { get; set; }
@@ -27,8 +26,6 @@ namespace {{cookiecutter.project_name}}.Models
         public string BillsType { get; set; }
         public string WorkOrderCode { get; set; }
 
-        public FlowBills Parent { get; set; }
         public ICollection<FlowBillsRecord> FlowBillsRecord { get; set; }
-        public ICollection<FlowBills> InverseParent { get; set; }
     }
 }

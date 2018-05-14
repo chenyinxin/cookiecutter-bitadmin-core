@@ -289,16 +289,6 @@ $.fn.pagination = function (option) {
     return _option;
 }
 
-//数组 扩展操作
-//Array.prototype.remove = function (data) {
-//    this.splice($.inArray(data, this), 1);
-//    return this;
-//}
-//Array.prototype.removeAll = function () {
-//    this.splice(0, this.length);
-//    return this;
-//}
-
 var array = {
     remove: function (list, item) {
         list.splice($.inArray(item, list), 1);

@@ -1,18 +1,6 @@
-﻿<div class="box">
+﻿
+<div class="box">
     <div class="box-body querySuite-wrapper">
-        <!-- 条件搜索 -->
-        <div class="querySuite-filter">
-            <table>
-                <tr>
-                    <th>字典分类:</th>
-                    <td><input type="text" name="type" class="form-control"></td>
-                    <th>字典成员：</th>
-                    <td><input type="text" name="member" class="form-control"></td>
-                    <th>成员名称：</th>
-                    <td><input type="text" name="memberName" class="form-control"></td>
-                </tr>
-            </table>
-        </div>
         <!-- 按钮 查询 导入 -->
         <div class="querySuite-button">
             <button class="btn btn-default" action="query">
@@ -26,23 +14,24 @@
             </button>
         </div>
         <!-- 列表-->
-        <div class="querySuite-table" data-sort-name="OrderNo" data-sort-order="desc"
-             data-key="type,member"
-             data-query-url="../../system/QueryDictionary"
-             data-delete-url="../../system/DeleteDictionary">
+        <div class="querySuite-table" data-sort-name="logTime" data-sort-order="desc"
+             data-key="id"
+             data-query-url="../../develop/QueryOperationData"
+             data-delete-url="../../develop/DeleteOperationData"
+             data-sort-url="../../develop/SortOperationData">
             <table>
                 <thead>
                     <tr>
                         <th style="width:30px;"><input type="checkbox" /></th>
-                        <th data-field="type" data-format="edit">字典分类</th>
-                        <th data-field="member">字典成员</th>
-                        <th data-field="memberName">成员名称</th>
+                        <th data-field="operationSign" data-format="edit">标识</th>
+                        <th data-field="operationName">名称</th>
+                        <th data-field="orderNo">排序</th>
                     </tr>
                 </thead>
             </table>
         </div>
         <!-- 分页 -->
-        <div class="querySuite-paging" data-page-size="10"></div>
+        <div class="querySuite-paging"></div>
     </div>
 </div>
 <!-- 模态框（Modal）编辑数据字典信息 -->
@@ -50,45 +39,28 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form data-title="数据字典"
-                      data-save-url="../../system/SaveDictionary"
-                      data-load-url="../../system/LoadDictionary">
+                <form data-title="页面操作"
+                      data-save-url="../../develop/SaveOperationData"
+                      data-load-url="../../develop/LoadOperationData">
                     <table>
                         <tr>
-                            <th>字典分类：</th>
+                            <th>标识：</th>
                             <td>
-                                <input name="type" id="Type" class="form-control required" />
+                                <input type="hidden" name="id" />
+                                <input type="text" name="operationSign" required class="form-control" />
                             </td>
                         </tr>
                         <tr>
-                            <th>字典成员：</th>
+                            <th>名称：</th>
                             <td>
-                                <input type="text" id="Member" name="member" class="form-control required">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>成员名称：</th>
-                            <td>
-                                <input type="text" name="memberName" class="form-control required">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>描述：</th>
-                            <td>
-                                <input type="text" name="describe" class="form-control">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>排序：</th>
-                            <td>
-                                <input type="text" name="orderNo" class="form-control required number">
+                                <input type="text" name="operationName" required class="form-control" />
                             </td>
                         </tr>
                     </table>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" action="save">
+                <button type="button" class="btn btn-primary" id="btnSave" action="save">
                     <span class="glyphicon glyphicon-saved"></span> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -98,10 +70,11 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+
 <script type="text/javascript">
     $(function () {
         //查询套件初始化
-        var querySuite = $(".querySuite-wrapper").querySuite().query();
+        var querySuite = $(".querySuite-wrapper").querySuite().sortable(function (ids) { querySuite.query(); }).query();
 
         //表单套件初始化
         var formSuite = $("#myModal").formSuite()
@@ -117,5 +90,6 @@
                 querySuite.query();
             });
     });
+
 
 </script>

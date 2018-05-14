@@ -13,12 +13,12 @@ namespace {{cookiecutter.project_name}}.Helpers
 {
     public sealed class MongoDBHelper
     {
-        public static string connectionString { get { return HttpContextCore.Configuration["ConnectionStrings:MongoDB"]; } }
+        public static string ConnectionString { get { return HttpContextCore.Configuration["ConnectionStrings:MongoDB"]; } }
 
         public static IMongoDatabase MongoDB;
         static MongoDBHelper()
         {
-            MongoDB = new MongoClient(connectionString).GetDatabase("{{cookiecutter.project_name}}");
+            MongoDB = new MongoClient(ConnectionString).GetDatabase("{{cookiecutter.project_name}}");
         }  
         public static void InsertOne(string key, BsonDocument doc)
         {

@@ -11,7 +11,7 @@ namespace {{cookiecutter.project_name}}.Helpers
 {
     public abstract class SqlHelper
     {
-        public static string connectionString { get { return HttpContextCore.Configuration["ConnectionStrings:DataContext"]; } }
+        public static string ConnectionString { get { return HttpContextCore.Configuration["ConnectionStrings:DataContext"]; } }
 
         #region 公用方法
         /// <summary>
@@ -151,7 +151,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>影响的记录数</returns>
         public static int ExecuteSql(string SQLString)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQLString, connection))
                 {
@@ -198,7 +198,7 @@ namespace {{cookiecutter.project_name}}.Helpers
 
         public static int ExecuteSqlByTime(string SQLString, int Times)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQLString, connection))
                 {
@@ -225,7 +225,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="SQLStringList">多条SQL语句</param>		
         public static int ExecuteSqlTran(List<String> SQLStringList)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();
@@ -266,7 +266,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>影响的记录数</returns>
         public static int ExecuteSql(string SQLString, string content)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(SQLString, connection);
                 System.Data.SqlClient.SqlParameter myParameter = new System.Data.SqlClient.SqlParameter("@content", SqlDbType.NText);
@@ -297,7 +297,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>影响的记录数</returns>
         public static object ExecuteSqlGet(string SQLString, string content)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(SQLString, connection);
                 System.Data.SqlClient.SqlParameter myParameter = new System.Data.SqlClient.SqlParameter("@content", SqlDbType.NText);
@@ -335,7 +335,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>影响的记录数</returns>
         public static int ExecuteSqlInsertImg(string strSQL, byte[] fs)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(strSQL, connection);
                 System.Data.SqlClient.SqlParameter myParameter = new System.Data.SqlClient.SqlParameter("@fs", SqlDbType.Image);
@@ -366,7 +366,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>查询结果（object）</returns>
         public static object GetSingle(string SQLString)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQLString, connection))
                 {
@@ -393,7 +393,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static object GetSingle(string SQLString, int Times)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(SQLString, connection))
                 {
@@ -426,7 +426,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>SqlDataReader</returns>
         public static SqlDataReader ExecuteReader(string strSQL)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand(strSQL, connection);
             try
             {
@@ -448,7 +448,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         public static DataSet Query(string SQLString)
         {
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 DataSet ds = new DataSet();
                 try
@@ -467,7 +467,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static DataSet Query(string SQLString, int Times)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 DataSet ds = new DataSet();
                 try
@@ -521,7 +521,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>影响的记录数</returns>
         public static int ExecuteSql(string SQLString, params SqlParameter[] cmdParms)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
@@ -572,7 +572,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="SQLStringList">SQL语句的哈希表（key为sql语句，value是该语句的SqlParameter[]）</param>
         public static void ExecuteSqlTran(Hashtable SQLStringList)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
                 using (SqlTransaction trans = conn.BeginTransaction())
@@ -606,7 +606,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="SQLStringList">SQL语句的字典Dictionary（key为sql语句，value是该语句的SqlParameter[]）</param>
         public static void ExecuteSqlTran(Dictionary<string,SqlParameter[]> SQLStringList)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
                 using (SqlTransaction trans = conn.BeginTransaction())
@@ -638,9 +638,9 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// 执行多条SQL语句，实现数据库事务。
         /// </summary>
         /// <param name="SQLStringList">SQL语句的字典Dictionary（key为随机生成，没有用到，，value是字典Dictionary（key为sql语句，value是该语句的SqlParameter[]））</param>
-        public static void ExecuteSqlTran(Dictionary<object,Dictionary<string, SqlParameter[]>> DicSQLStringList)
+        public static void ExecuteSqlTran(Dictionary<object,Dictionary<string, SqlParameter[]>> execSqlList)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
                 using (SqlTransaction trans = conn.BeginTransaction())
@@ -648,14 +648,12 @@ namespace {{cookiecutter.project_name}}.Helpers
                     SqlCommand cmd = new SqlCommand();
                     try
                     {
-                        foreach (var SQLStringList in DicSQLStringList)
+                        foreach (var execSql in execSqlList)
                         {
                             //循环
-                            foreach (KeyValuePair<string, SqlParameter[]> kv in SQLStringList.Value)
+                            foreach (KeyValuePair<string, SqlParameter[]> kv in execSql.Value)
                             {
-                                string cmdText = kv.Key.ToString();
-                                SqlParameter[] cmdParms = (SqlParameter[])kv.Value;
-                                PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
+                                PrepareCommand(cmd, conn, trans, kv.Key, kv.Value);
                                 int val = cmd.ExecuteNonQuery();
                                 cmd.Parameters.Clear();
                             }
@@ -677,7 +675,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="SQLStringList">SQL语句的哈希表（key为sql语句，value是该语句的SqlParameter[]）</param>
         public static void ExecuteSqlTranWithIndentity(Hashtable SQLStringList)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
                 using (SqlTransaction trans = conn.BeginTransaction())
@@ -726,7 +724,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>查询结果（object）</returns>
         public static object GetSingle(string SQLString, params SqlParameter[] cmdParms)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
@@ -792,7 +790,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>SqlDataReader</returns>
         public static SqlDataReader ExecuteReader(string SQLString, params SqlParameter[] cmdParms)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand cmd = new SqlCommand();
             try
             {
@@ -820,7 +818,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>DataSet</returns>
         public static DataSet Query(string SQLString, params SqlParameter[] cmdParms)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 PrepareCommand(cmd, connection, null, SQLString, cmdParms);
@@ -907,7 +905,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>SqlDataReader</returns>
         public static SqlDataReader RunProcedure(string storedProcName, IDataParameter[] parameters)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             SqlDataReader returnReader;
             connection.Open();
             SqlCommand command = BuildQueryCommand(connection, storedProcName, parameters);
@@ -927,7 +925,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns>DataSet</returns>
         public static DataSet RunProcedure(string storedProcName, IDataParameter[] parameters, string tableName)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 DataSet dataSet = new DataSet();
                 connection.Open();
@@ -940,7 +938,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static DataSet RunProcedure(string storedProcName, IDataParameter[] parameters, string tableName, int Times)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 DataSet dataSet = new DataSet();
                 connection.Open();
@@ -991,7 +989,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static int RunProcedure(string storedProcName, IDataParameter[] parameters, out int rowsAffected)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 int result;
                 connection.Open();

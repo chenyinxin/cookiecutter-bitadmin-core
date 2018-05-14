@@ -4,9 +4,9 @@
         padding: 0;
     }
 </style>
-<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
+<link href="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet" />
 
-<div class="modal fade" id="Module_module" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="top: 30px">
+<div class="modal fade" id="pickerModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="top: 30px">
     <div class="modal-dialog" style="width:400px;overflow-y:auto;">
         <div class="modal-content">
             <div class="panel panel-default" style="margin-bottom: 0; width:100%;">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel-body">
-                        <div id="Module_Tree" data-url="../../picker/getModuleTreeData" data-text="moduleName" data-nodes="children" style="height:300px; overflow-y:auto"></div>
+                        <div id="moduleTree" data-url="../../picker/getModuleTreeData" data-text="moduleName" style="height:300px; overflow-y:auto"></div>
                     </div>
                 </div>
             </div>
@@ -34,20 +34,20 @@
     </div><!-- /.modal -->
 </div>
 
-<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script src="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
 <script type="text/javascript">
-    $("#Module_module").modal('hide');//防止重复点击
-    $("#Module_module").modal('show');
-    var param = JSON.parse($("#Module_module").parent().attr("data-param"));
+    $("#pickerModal").modal('hide');//防止重复点击
+    $("#pickerModal").modal('show');
+    var param = JSON.parse($("#pickerModal").parent().attr("data-param"));
     var valueInput = param.value;
     var textInput = param.text;
-    
-    $("#Module_module #Module_Tree").bitTree({
+
+    $("#pickerModal #moduleTree").bitTree({
         onNodeSelected: function (event, node) {
-            $(valueInput).val(node.moduleID);
+            $(valueInput).val(node.moduleId);
             $(textInput).val(node.moduleName);
             $(textInput).change();
-            $("#Module_module").modal('hide');
+            $("#pickerModal").modal('hide');
         }
     }).load();
 

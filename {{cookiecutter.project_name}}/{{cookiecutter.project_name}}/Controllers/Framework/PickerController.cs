@@ -153,16 +153,16 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// </summary>
         /// <param name="DepID"></param>
         /// <returns></returns>
-        public JsonResult GetUserData(string userType, string DepID, string userName)
+        public JsonResult GetUserData(string userType, string departmentId, string userName)
         {
             try
             {
                 List<SqlParameter> list = new List<SqlParameter>();
                 string sql = "select userId,userName from SysUser where 1=1 ";
-                if (!string.IsNullOrEmpty(DepID) && string.IsNullOrEmpty(userName))//管理人员
+                if (!string.IsNullOrEmpty(departmentId) && string.IsNullOrEmpty(userName))//管理人员
                 {
                     sql += " and departmentId=@departmentId ";
-                    list.Add(new SqlParameter("@departmentId", DepID));
+                    list.Add(new SqlParameter("@departmentId", departmentId));
                 }
                 if (!string.IsNullOrEmpty(userName))
                 {
@@ -170,8 +170,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                     list.Add(new SqlParameter("@userName", string.Format("%{0}%", userName)));
                 }
                 sql += " order by userName desc ";
-                SqlParameter[] param = list.ToArray();
-                DataTable dt = SqlHelper.Query(sql, param).Tables[0];
+                DataTable dt = SqlHelper.Query(sql, list.ToArray()).Tables[0];
                 return Json(new { Code = 0, Data = QuerySuite.ToDictionary(dt) });
             }
             catch (Exception ex)

@@ -36,8 +36,8 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string code = VerifyHelper.CreateCode(4);
-                Bitmap image = VerifyHelper.CreateImage(code);
+                var code = VerifyHelper.CreateCode(4);
+                var image = VerifyHelper.CreateImage(code);
                 MemoryStream ms = new MemoryStream();
                 image.Save(ms, ImageFormat.Png);
                 byte[] bytes = ms.GetBuffer();
@@ -116,7 +116,6 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
 
-
         public JsonResult Login(string account, string password,string verifyCode)
         {
             try
@@ -146,7 +145,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (!SSOClient.Validate(account,  out SysUser user))
                     return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
 
-                string code = Helpers.VerifyHelper.CreateNumber(4);
+                string code = VerifyHelper.CreateNumber(4);
                 SMSService.Send(user.Mobile, code);
                 dbContext.SysSmsCode.Add(new SysSmsCode()
                 {
@@ -317,20 +316,17 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                using (DataContext dbcontext = new DataContext())
+                var userModel = dbContext.SysUser.FirstOrDefault(t => t.UserId.Equals(SSOClient.UserId));
+                if (userModel.UserPassword != EncryptHelper.MD5(OldPwd))
                 {
-                    var userModel = dbcontext.SysUser.FirstOrDefault(t => t.UserId.Equals(SSOClient.UserId));
-                    if (userModel.UserPassword != EncryptHelper.MD5(OldPwd))
-                    {
-                        return Json(new { Code = 1, Msg = "原密码不正确" });
-                    }
-                    userModel.UserPassword = EncryptHelper.MD5(NewPwd);
-                    if (dbcontext.SaveChanges() < 0)
-                    {
-                        return Json(new { Code = 1, Msg = "修改密码失败，请联系管理员" });
-                    }
-                    return Json(new { Code = 0, Msg = "修改密码成功" });
+                    return Json(new { Code = 1, Msg = "原密码不正确" });
                 }
+                userModel.UserPassword = EncryptHelper.MD5(NewPwd);
+                if (dbContext.SaveChanges() < 0)
+                {
+                    return Json(new { Code = 1, Msg = "修改密码失败，请联系管理员" });
+                }
+                return Json(new { Code = 0, Msg = "修改密码成功" });
             }
             catch (Exception ex)
             {
@@ -341,45 +337,25 @@ namespace {{cookiecutter.project_name}}.Controllers
 
 
         #region 系统加载菜单
-
         [BitAuthorize]
         public JsonResult GetMenus()
         {
             try
             {
-                DataContext dbContext = new DataContext();
-
-
-                //                string sql = string.Format(@"select * from (SELECT  ModuleID AS id, parentId, ModuleName AS Name,'' as Url,ModuleIcon as Icon,0 AS [Type],OrderNo
-                //                           FROM SysModule module 
-                //                           UNION
-                //                           SELECT  id, ModuleID AS parentId, PageName AS Name,PageUrl as Url,PageIcon as Icon, 1 AS [Type],OrderNo
-                //                           FROM SysModulePage) t order by OrderNo asc");
-
-
-                string rolesTxt = string.Empty;
-                var roleList = SSOClient.Roles;
-                List<string> roles = new List<string>();
-                foreach (var role in roleList)
-                    roles.Add(role.Value);
-
-                rolesTxt = roles.Count == 0 ? " and 1=2 " : " and t2.roleId in ('" + string.Join("','", roles) + "') ";
-                string sql = string.Format(@"--合并数据源 生成临时表
+                var roles = SSOClient.Roles.Select(x => x.Value).ToList();
+                string rolesTxt = roles.Count == 0 ? " and 1=2 " : " and t2.roleId in ('" + string.Join("','", roles) + "') ";
+                string sql = string.Format(@"
                             select * into #ModulePage from (SELECT  moduleID AS id, parentId, moduleName, '' pageSign , moduleName AS name,'' as url,moduleIcon as icon,0 AS [type],[description],orderNo
                             FROM SysModule module
                             UNION
                             SELECT  id, p.moduleId AS parentId,moduleName,pageSign, pageName AS name,pageUrl as url,pageIcon as icon, 1 AS [type],p.[description],p.orderNo
                             FROM SysModulePage p left join SysModule m on p.ModuleID=m.ModuleID) t 
-                            --根据角色权限 获取菜单
-                            select distinct t1.* from #ModulePage as t1
-                            join SysRoleOperatePower as t2 on t1.id=t2.ModulePageID
-                            where 1=1 {0}
-                            order by OrderNo asc
-                            --删除临时表
-                            drop table #ModulePage", rolesTxt);
+                            --获取菜单
+                            select distinct t1.* from #ModulePage as t1 join SysRoleOperatePower as t2 on t1.id=t2.ModulePageID
+                            where 1=1 {0} order by OrderNo asc", rolesTxt);
 
-                DataSet ds = SqlHelper.Query(sql); ;
-                return Json(new { Code = 0, Data = QuerySuite.ToDictionary(ds.Tables[0], "parentId", "id") });
+                var dt = SqlHelper.Query(sql).Tables[0];
+                return Json(new { Code = 0, Data = QuerySuite.ToDictionary(dt, "parentId", "id") });
             }
             catch (Exception ex)
             {
@@ -401,50 +377,30 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 Dictionary<string, object> result = new Dictionary<string, object>();
+                result["Operation"] = false;
+
                 if (string.IsNullOrEmpty(sign))
-                {
-                    result.Add("Operation", false);
                     return Json(new { Code = 0, Data = result });
-                }
-                string sql = string.Format(@"select m.moduleName,p.pageName,p.description
-                                            from SysModule m join SysModulePage p on m.moduleId=p.moduleId 
-                                             where p.pageSign='{0}' ", sign);
-                DataTable dt = SqlHelper.Query(sql).Tables[0];
+
+                if (SSOClient.Roles.Count() == 0)
+                    return Json(new { Code = 0, Data = result });
+
+                string sql = string.Format(@"select count(0) from SysModule m join SysModulePage p on m.moduleId=p.moduleId where p.pageSign='{0}' ", sign);
+                if ((int)SqlHelper.GetSingle(sql) == 0)
+                    return Json(new { Code = 0, Data = result });
+
+                var roles = SSOClient.Roles.Select(x => x.Value).ToList();
+                string rolesTxt = "'" + string.Join("','", roles) + "'";
+                sql = string.Format(@"select distinct r.OperationSign from SysModulePage p join SysRoleOperatePower r on p.id = r.ModulePageID where p.PageSign='{0}' and r.roleId in ({1}) group by r.OperationSign", sign, rolesTxt);
+                var dt = SqlHelper.Query(sql).Tables[0];
                 if (dt.Rows.Count == 0)
-                {
-                    result.Add("Operation", false);
                     return Json(new { Code = 0, Data = result });
-                }
 
-                string rolesTxt = string.Empty;
-                var roleList = SSOClient.Roles.ToList();
-                if (roleList == null && roleList.Count == 0)
-                {
-                    result.Add("Operation", false);
-                    return Json(new { Code = 0, Data = result });
-                }
-
-                List<string> roles = new List<string>();
-                foreach (var role in roleList)
-                    roles.Add(role.Value);
-                rolesTxt = "'" + string.Join("','", roles) + "'";
-                sql = string.Format(@"select r.OperationSign from  SysModulePage p join SysRoleOperatePower r on p.id = r.ModulePageID where p.PageSign='{0}' and r.roleId in ({1}) group by r.OperationSign", sign, rolesTxt);
-                dt = SqlHelper.Query(sql).Tables[0];
-                if (dt == null || dt.Rows.Count == 0)
-                {
-                    result.Add("Operation", false);
-                    return Json(new { Code = 0, Data = result });
-                }
-
-                string opSign = "";
+                List<string> signs = new List<string>();
                 foreach (DataRow dr in dt.Rows)
-                {
-                    string code = Convert.ToString(dr["OperationSign"]);
-                    if (!opSign.Contains(code))
-                        opSign += "," + code;
-                }
-                result.Add("Operation", opSign.Trim(','));
+                    signs.Add(Convert.ToString(dr["OperationSign"]));
 
+                result["Operation"] = string.Join("','", signs);
                 return Json(new { Code = 0, Data = result });
             }
             catch (Exception ex)

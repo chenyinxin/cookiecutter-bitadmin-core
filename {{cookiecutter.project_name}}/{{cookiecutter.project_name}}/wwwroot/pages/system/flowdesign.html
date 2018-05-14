@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+    <title>流程设计器</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link href="../../css/workflow/workflow.css" rel="stylesheet" />
+    <link href="../../css/workflow/flowdesign.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <!-- fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="pull-right">
+                    <button class="btn btn-info" type="button" id="leipi_save">保存设计</button>
+                    <button class="btn btn-danger" type="button" id="leipi_clear">清空连接</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>消息提示</h3>
+        </div>
+        <div class="modal-body">
+            <p>提示内容</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">我知道了</button>
+        </div>
+    </div>
+
+    <div id="lineModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>迁移条件</h3>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="input_condition_d" class="control-label">显示名称:</label>
+                    <input type="text" class="form-control" value="" id="input_condition_d">
+                </div>
+                <div class="form-group">
+                    <label for="input_condition" class="control-label">步骤结果:</label>
+                    <input type="text" class="form-control" value="" id="input_condition">
+                </div>
+                <div class="form-group">
+                    <label for="condition_expression" class="control-label">表达式:</label>
+                    <textarea class="form-control" id="condition_expression"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="delLine()">删除连线</button>
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="saveCondition()">保存修改</button>
+        </div>
+    </div>
+
+    <!-- attributeModal -->
+    <div id="attributeModal" class="modal hide fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">流程设计器</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="flow_id" value="0" id="step_MainId" />
+                    <input type="hidden" name="process_id" value="0" id="step_Id" />
+                    <div class="tab-content">
+                        <div class="form-inline tab-pane active" id="attrBasic">
+                            <div class="form-group">
+                                <label for="step_StepName">步骤名称：</label>
+                                <input type="text" class="form-control" id="step_StepName" placeholder="步骤名称">
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <div class="radio">
+                                    <label>步骤类型：</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="step_StepStatus" value="1">起始步骤
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="step_StepStatus" value="10">一般步骤
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="step_StepStatus" value="100">结束步骤
+                                    </label>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>功能：</label>
+                                    <label class="checkbox-inline">
+                                        <input name="step_Agency" type="checkbox" value="Agency" />转交
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input name="step_Circularize" type="checkbox" value="Circularize" />传阅
+                                    </label>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <div class="radio">
+                                    <label>后续步骤启动方式：</label>
+                                    <label class="radio-inline">
+                                        <input name="step_runmode" type="radio" checked="checked" value="auto" /><span>自动运行</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input name="step_runmode" type="radio" value="select" /><span>基于选择</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_LinkCode">环节标识(第1或2或3...环节)：</label>
+                                <input type="text" class="form-control" id="step_LinkCode" placeholder="环节标识(第1或2或3...环节)">
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_ShowTabIndex">要显示的Tab页(第1,2,3...Tab页)：</label>
+                                <input type="text" class="form-control" id="step_ShowTabIndex" placeholder="要显示的Tab页(第1,2,3...Tab页)">
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_ReminderTimeout">环节时限（分钟）：</label>
+                                <input type="text" class="form-control" id="step_ReminderTimeout" placeholder="环节时限（分钟）">
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_AuditNorm">待办参与者范围：</label>
+                                <select name="child_id" id="step_AuditNorm" onchange="AuditNormChange()">
+                                    <option value="Users">--指定用户--</option>
+                                    <option value="Roles">--指定角色--</option>
+                                    <option value="OULeader">--本级领导--</option>
+                                    <option value="ParentOULeader">--上级领导--</option>
+                                    <option value="Starter">--发起人--</option>
+                                    <option value="all">--全部人--</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group" id="div_AuditId">
+                                <label>待办参与者：</label>
+                                <select id="step_AuditId"></select>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_AuditNormRead">代阅参与者范围：</label>
+                                <select id="step_AuditNormRead" onchange="AuditNormReadChange()">
+                                    <option value="Users">--指定用户--</option>
+                                    <option value="Roles">--指定角色--</option>
+                                    <option value="OULeader">--本级领导--</option>
+                                    <option value="ParentOULeader">--上级领导--</option>
+                                    <option value="Starter">--发起人--</option>
+                                    <option value="all">--全部人--</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group" id="div_AuditIdRead">
+                                <label>代阅参与者：</label>
+                                <select id="step_AuditIdRead"></select>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_SMSTemplateToDo">
+                                    待办短信模版（工单编号：$WorkOrderCode$、工单名称：$WorkOrderName$、流程名称：$FlowName$、环节名称：$StepName$、提交人名称：$UserName$、提交人帐号：$UserCode$、提交时间：$StartTime$）：
+                                </label>
+                                <br />
+                                <textarea class="form-control" rows="5" style="width:90%" id="step_SMSTemplateToDo" placeholder="代办短信模版..."></textarea>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_SMSTemplateRead">
+                                    待阅短信模版（工单编号：$WorkOrderCode$、工单名称：$WorkOrderName$、流程名称：$FlowName$、环节名称：$StepName$、提交人名称：$UserName$、提交人帐号：$UserCode$、提交时间：$StartTime$）：
+                                </label>
+                                <br />
+                                <textarea class="form-control" rows="5" style="width:90%" id="step_SMSTemplateRead" placeholder="代阅短信模版..."></textarea>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="step_Description">备注：</label>
+                                <input type="text" class="form-control" id="step_Description" placeholder="备注">
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <a href="#" onclick="stepSave();" class="btn btn-default" data-dismiss="modal" aria-hidden="true">确定保存</a>
+                        <a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">取消</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--contextMenu-->
+    <div id="processMenu" style="display:none;">
+        <ul>
+            <li id="pmAttribute"><i class="icon-cog"></i>&nbsp;<span class="_label">属性</span></li>
+            <li id="pmDelete"><i class="icon-trash"></i>&nbsp;<span class="_label">删除</span></li>
+        </ul>
+    </div>
+    <div id="canvasMenu" style="display:none;">
+        <ul>
+            <li id="cmSave"><i class="icon-ok"></i>&nbsp;<span class="_label">保存设计</span></li>
+            <li id="cmAdd"><i class="icon-plus"></i>&nbsp;<span class="_label">添加步骤</span></li>
+            <li id="cmRefresh"><i class="icon-refresh"></i>&nbsp;<span class="_label">刷新 F5</span></li>
+        </ul>
+    </div>
+    <div class="container mini-layout" id="flowdesign_canvas"></div>
+    <div class="navbar navbar-fixed-bottom" style="color:gray;text-align:right;padding-right:10px">
+        空白区域右键可添加步骤；步骤双击可修改属性；步骤内星星图标可以拖拉出连线；双击连线可修改参数。<br />
+        每个流程必须有且仅有一个起始步骤和结束步骤；起始、结束步骤不会显示在单据当前流程状态，不需要配置审核人。<br />
+        除了起始、结束步骤，每个步骤都必须至少有一条流程输入箭头线和流程流出箭头线。
+    </div>
+
+
+    <script src="../../js/workflow/jquery-1.7.2.min.js"></script>
+    <script src="../../js/workflow/workflow.js"></script>
+    <script src="../../js/workflow/bootstrap.js"></script>
+    <script src="../../js/workflow/jquery-ui-1.9.2-min.js"></script>
+    <script src="../../js/workflow/jquery.jsPlumb-1.3.16-all-min.js"></script>
+    <script src="../../js/workflow/jquery.contextmenu.r2.js"></script>
+    <script src="../../js/workflow/leipi.flowdesign.v3.js"></script>
+
+    <script type="text/javascript">
+        var flowId = workflow.GetQueryString("fm");
+
+        //审核类型下拉框事件
+        function AuditNormChange() {
+            $("#step_AuditId option").remove();
+            switch ($("#step_AuditNorm").val()) {
+                case "Users":
+                    $("#div_AuditId").show();
+                    GetUserAll("");
+                    break;
+                case "Roles":
+                    $("#div_AuditId").show();
+                    GetRoleAll("");
+                    break;
+                case "OULeader":
+                case "ParentOULeader":
+                case "Starter":
+                case "all":
+                    $("#div_AuditId").hide();
+            }
+        }
+
+        //待阅 审核类型下拉框事件
+        function AuditNormReadChange() {
+            $("#step_AuditIdRead option").remove();
+            switch ($("#step_AuditNormRead").val()) {
+                case "Users":
+                    GetUserAll("Read");
+                    $("#div_AuditIdRead").show();
+                    break;
+                case "Roles":
+                    GetRoleAll("Read");
+                    $("#div_AuditIdRead").show();
+                    break;
+                case "OULeader":
+                case "ParentOULeader":
+                case "Starter":
+                case "all":
+                    $("#div_AuditIdRead").hide();
+            }
+        }
+
+        //获取所有用户列表，绑定到下拉框
+        function GetUserAll(type) {
+            $.get("../../Workflow/GetUserAll", {}, function (result) {
+                if (result != null && result.code == 0) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $("#step_AuditId" + type).append("<option value='" + result.data[i].id + "'>" + result.data[i].name + "</option>");
+                    }
+                }
+            });
+        }
+
+        //获取所有角色列表，绑定到下拉框
+        function GetRoleAll(type) {
+            $.get('../../Workflow/GetRoleAll', {}, function (result) {
+                if (result != null && result.code == 0) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $("#step_AuditId" + type).append("<option value='" + result.data[i].id + "'>" + result.data[i].name + "</option>");
+                    }
+                }
+            });
+        }
+
+        $(function () {
+            var conditionNum = null, lineC = null;
+            //消息提示
+            mAlert = function (messages, s) {
+                if (!messages) messages = "";
+                if (!s) s = 2000;
+                $('#alertModal').find(".modal-body").html(messages);
+                $('#alertModal').modal('toggle');
+                setTimeout(function () { $('#alertModal').modal("hide") }, s);
+            }
+
+            //线条修改框
+            lineCondition = function (c) {
+                debugger;
+                conditionNum = null;
+                lineC = c;
+                $("#leipi_process_info input[type=hidden]").each(function (i) {
+                    var processVal = $(this).val().split(",");
+                    if (processVal.length == 2 && conditionNum == null) {
+                        if (("window" + processVal[0]) == c.sourceId && ("window" + processVal[1]) == c.targetId) {
+                            var data = $(this).data("data");
+                            $("#input_condition_d").val(data.nikename);
+                            $("#input_condition").val(data.condition);
+                            $("#condition_expression").val(data.expression);
+                            conditionNum = this;
+                        }
+                    }
+                });
+
+                $("#lineModal").modal('toggle');
+            }
+            //保存修改的线条 condition值
+            saveCondition = function () {
+                debugger;
+                if (conditionNum != null) {
+                    var data = $(conditionNum).data("data");
+                    data.nikename = $("#input_condition_d").val();
+                    data.condition = $("#input_condition").val();
+                    data.expression = $("#condition_expression").val();
+                }
+            }
+            //删除线条
+            delLine = function () {
+                debugger;
+                if (lineC != null) {
+                    jsPlumb.detach(lineC);
+                    lineC = null;
+                }
+            }
+
+            //属性设置(移除数据，防止缓存)
+            $("#attributeModal").on("hidden", function () { $(this).removeData("modal"); });
+
+            ModalOpen = function (activeId) {
+                var stepDiv = $("#window" + activeId);
+                var step = stepDiv.data("data");
+
+                $("#step_Id").val(step.stepId);
+                
+                $("#step_StepName").val(step.stepName);
+                $("input[name='step_StepStatus'][value='" + step.stepStatus + "']").attr('checked', 'true');
+
+                $("input[name='step_Agency']").attr("checked", $("input[name='step_Agency']").val() == step.agency);
+                $("input[name='step_Circularize']").attr("checked", $("input[name='step_Circularize']").val() == step.circularize);
+
+                $("input[name='step_runmode'][value='" + step.runMode + "']").attr("checked", 'true');
+                $("#step_LinkCode").val(step.linkCode);
+                $("#step_ShowTabIndex").val(step.showTabIndex);
+                $("#step_ReminderTimeout").val(step.reminderTimeout);
+
+                $("#step_AuditNorm").val(step.auditNorm);
+                AuditNormChange();
+                $("#step_AuditId").val(step.auditId);
+                $("#step_AuditNormRead").val(step.auditNormRead);
+                AuditNormReadChange();
+                $("#step_AuditIdRead").val(step.auditIdRead);
+                $("#step_SMSTemplateToDo").val(step.smsTemplateToDo);
+                $("#step_SMSTemplateRead").val(step.smsTemplateRead);
+                $("#step_Description").val(step.description);
+
+                $("#attributeModal").modal({});
+                $("#attributeModal").on('shown');
+            }
+
+            stepSave = function () {
+                var stepDiv = $("#window" + $("#step_Id").val());
+                var step = stepDiv.data("data");
+
+                step.stepName = $("#step_StepName").val();
+                step.stepStatus = $("input[name='step_StepStatus']:checked").val();
+
+                step.agency = $("input[name='step_Agency']:checked").val() || "";
+                step.circularize = $("input[name='step_Circularize']:checked").val() || "";
+
+                step.runMode = $("input[name='step_runmode']:checked").val();
+                step.linkCode = $("#step_LinkCode").val();
+                step.showTabIndex = $("#step_ShowTabIndex").val();
+                step.reminderTimeout = $("#step_ReminderTimeout").val();
+
+                step.auditNorm = $("#step_AuditNorm").val();
+                step.auditId = $("#step_AuditId").val();
+                step.auditNormRead = $("#step_AuditNormRead").val();
+                step.auditIdRead = $("#step_AuditIdRead").val();
+                step.smsTemplateToDo = $("#step_SMSTemplateToDo").val();
+                step.smsTemplateRead = $("#step_SMSTemplateRead").val();
+                step.description = $("#step_Description").val();
+
+                stepDiv.find(".p_stepName").html($("#step_StepName").val());
+            }
+
+            var _canvas = null;
+            $.get("../../workflow/GetStepAndPath", { mainId: flowId }, function (result) {
+                var processData = { total: result.steps.length, steps: result.steps, paths: result.paths };
+
+                /*创建流程设计器*/
+                _canvas = $("#flowdesign_canvas").Flowdesign({
+                    processData: processData,
+                    canvasMenus: {
+                        "cmAdd": function (t) {
+                            //新增步骤，从后台生成默认属性，减少代码量。
+                            var mLeft = $("#jqContextMenu").css("left"), mTop = $("#jqContextMenu").css("top");
+                            $.get("../../workflow/NewDefaultStep", { mainId: flowId }, function (result) {
+                                result.data.style = "left:" + mLeft + ";top:" + mTop + ";color:#0e76a8;";
+                                _canvas.addProcess(result.data);
+                            });
+                        },
+                        "cmSave": function (t) {
+                            var result = _canvas.getProcessInfo();
+                            $.post("../../Workflow/SaveStepAndPath", { stepList: result.steps, pathList: result.paths }, function (result) {
+                                alert(result.msg);
+                            });
+                        },
+                        "cmRefresh": function (t) {location.reload();}
+                    },
+                    processMenus: {
+                        "pmDelete": function (t) {
+                            if (confirm("你确定删除步骤吗？")) {
+                                var activeId = _canvas.getActiveId();//右键当前的ID
+                                _canvas.delProcess(activeId);
+
+                                var result = _canvas.getProcessInfo();
+                                $.post("../../Workflow/SaveStepAndPath", { stepList: result.steps, pathList: result.paths }, function (result) {
+                                    location.reload();
+                                });
+                            }
+                        },
+                        "pmAttribute": function (t) {
+                            var activeId = _canvas.getActiveId();//右键当前的ID
+                            ModalOpen(activeId);
+                        }
+                    },
+                    fnRepeat: function () {
+                        mAlert("步骤连接重复了，请重新连接");
+
+                    },
+                    fnClick: function () {
+                        //var activeId = _canvas.getActiveId();
+                        //mAlert("查看步骤信息 " + activeId);
+                    },
+                    fnDbClick: function () {
+                        var activeId = _canvas.getActiveId();//右键当前的ID
+                        ModalOpen(activeId);
+                    }
+                });
+            });
+
+            /*保存*/
+            $("#leipi_save").bind('click', function () {
+                var result = _canvas.getProcessInfo();
+                $.post("../../Workflow/SaveStepAndPath", { stepList: result.steps, pathList: result.paths }, function (result) {
+                    alert(result.msg);
+                });
+            });
+            /*清除*/
+            $("#leipi_clear").bind('click', function () { _canvas.clear(); });
+        });
+    </script>
+</body>
+</html>

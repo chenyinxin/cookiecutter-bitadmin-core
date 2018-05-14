@@ -1,5 +1,5 @@
 ﻿
-<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
+<link href="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet" />
 <style type="text/css">
     .modal .panel-body {
         padding: 0;
@@ -39,7 +39,7 @@
                     组织架构导航
                 </div>
                 <div class="panel-body" style="height:400px">
-                    <div id="departmentTree" data-url="../../picker/GetDepData" data-text="departmentName" data-nodes="children"></div>
+                    <div id="departmentTree" data-url="../../picker/GetDepData" data-text="departmentName"></div>
                 </div>
             </div>
             <div class="panel panel-default" style="width:250px; float:left">
@@ -81,7 +81,7 @@
 </div>
 
 <script src="../../lib/framework/js/multiselect.min.js"></script>
-<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script src="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
 <script type="text/javascript">
     $("#UserSelection").modal('hide');//防止重复点击
     $("#UserSelection").modal('show');
@@ -89,7 +89,7 @@
     var valueInput = param.value;
     var textInput = param.text;
     var single = param.single;
-    
+
     $('#UserSelect').multiselect({
         single: single,
         right: "#UserSelected",
@@ -141,7 +141,7 @@
         .load();
 
     //选择部门加载用户信息
-    function bindUserInfo(id) {
+    function bindUserInfo(departmentId) {
         $("#UserSelect").find("option").remove();
         $.ajax({
             url: '../../picker/GetUserData',
@@ -150,7 +150,7 @@
             async: true,
             data: {
                 userType: $("#picker_UserType").val(),
-                DepID: id,
+                departmentId: departmentId,
                 userName: $("#UserPickeUserName").val()
             },
             success: function (result) {
@@ -176,7 +176,7 @@
         data: { userId: $(valueInput).val() },
         success: function (result) {
             $.each(result.data, function (i, d) {
-                $("#UserSelected").append('<option value="' + d.UserID + '">' + d.userName + '</option>');
+                $("#UserSelected").append('<option value="' + d.userId + '">' + d.userName + '</option>');
             });
         }
     });

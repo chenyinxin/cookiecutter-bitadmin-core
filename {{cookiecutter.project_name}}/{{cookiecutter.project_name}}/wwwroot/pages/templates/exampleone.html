@@ -30,7 +30,7 @@
         </div>
         <!-- 列表-->
         <div class="querySuite-table" data-sort-name="orderNo" data-sort-order="desc"
-             data-key="id"
+             data-key="exampleId"
              data-query-url="../../Example/QueryExample"
              data-delete-url="../../Example/DeleteExample">
             <table>
@@ -39,7 +39,6 @@
                         <th style="width:30px;"><input type="checkbox" /></th>
                         <th data-field="exampleName" data-format="edit">示例名称</th>
                         <th data-field="createTime" data-format="time|yyyy-MM-dd HH:mm:ss">创建时间</th>
-                        <th data-field="option">操作</th>
                     </tr>
                 </thead>
             </table>
@@ -60,7 +59,7 @@
                         <tr>
                             <th>示例名称：</th>
                             <td>
-                                <input type="hidden" name="id" />
+                                <input type="hidden" name="exampleId" />
                                 <input name="exampleName" type="text" class="form-control required" placeholder="示例名称" />
                             </td>
                             <th>普通文本：</th>
@@ -214,16 +213,7 @@
         });
 
         //查询套件初始化
-        var querySuite = $(".querySuite-wrapper").querySuite()
-            .columns["option"].format(function (val, data) {
-                var span = $('<span class="btn btn-link">修改</span>');
-                span.bind('click', function () {
-                    BitPage.Redirect("/Templates/ExampleRedirectEdit", { id: data.id }, "CompleteRedirect");
-
-                });
-                return span;
-            })
-            .query();
+        var querySuite = $(".querySuite-wrapper").querySuite().query();
 
         //表单套件初始化
         var formSuite = $("#myModal").formSuite()
@@ -249,12 +239,12 @@
 
                 linkageSelectTrue.wrapper.find('select:first').change();
 
-                fileUpload.query(e.data.id);
+                fileUpload.query(e.data.exampleId);
             })
             .submit(function (result) {//点击保存：数据保存成功后
                 querySuite.query();
                 debugger
-                fileUpload.save(result.data.id);
+                fileUpload.save(result.data.exampleId);
             }).controls["radioChange"].change(function (e) {
                 debugger
             });

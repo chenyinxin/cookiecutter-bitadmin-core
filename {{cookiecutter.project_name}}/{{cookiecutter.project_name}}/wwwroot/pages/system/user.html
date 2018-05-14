@@ -1,4 +1,5 @@
-﻿<link href="../../lib/framework/css/bootstrap-treeview.min.css" rel="stylesheet" />
+﻿
+<link href="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet" />
 
 <div class="row">
     <div class="col-md-4">
@@ -7,7 +8,7 @@
                 <div class="panel-heading">
                     组织架构
                 </div>
-                <div id="DPTree" data-url="../../system/GetAllDPData" data-text="departmentName" data-nodes="children"></div>
+                <div id="departmentTree" data-url="../../system/GetDepartmentTree" data-text="departmentName"></div>
             </div>
         </div>
     </div>
@@ -21,9 +22,7 @@
                             <th>姓名:</th>
                             <td><input type="text" name="userName" class="form-control" /></td>
                             <th></th>
-                            <td>
-                                <input type="hidden" id="parentId" name="parentId" />
-                            </td>
+                            <td><input type="hidden" id="parentId" name="parentId" /></td>
                         </tr>
                     </table>
                 </div>
@@ -32,7 +31,7 @@
                     <button class="btn btn-default" action="query">
                         <span class="glyphicon glyphicon-search"></span> 查询
                     </button>
-                    <button class="btn btn-default" action="add" action-modal="formSuiteModal">
+                    <button class="btn btn-default" action="add" action-modal="formSuite">
                         <span class="glyphicon glyphicon-plus-sign"></span> 添加
                     </button>
                     <button class="btn btn-danger" action="delete">
@@ -44,8 +43,8 @@
                      data-key="userId"
                      data-order-by="orderNo"
                      data-query-url="../../system/QueryUserData"
-                     data-delete-url="../../system/DeleteUser"
-                     data-sort-url="../../system/sortUser">
+                     data-delete-url="../../system/DeleteUserData"
+                     data-sort-url="../../system/SortUserData">
                     <table>
                         <thead>
                             <tr>
@@ -65,13 +64,13 @@
     </div>
 </div>
 <!-- 模态框（Modal）编辑数据字典信息 -->
-<div id="formSuiteModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+<div id="formSuite" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="用户信息"
-                      data-save-url="../../system/SaveUser"
-                      data-load-url="../../system/LoadUser">
+                      data-save-url="../../system/SaveUserData"
+                      data-load-url="../../system/LoadUserData">
                     <table>
                         <tr>
                             <th>工号：</th>
@@ -116,25 +115,23 @@
     </div><!-- /.modal -->
 </div>
 
-<script src="../../lib/framework/js/bootstrap-treeview.min.js"></script>
+<script src="../../lib/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
 <script type="text/javascript">
     $(function () {
-
         //查询套件初始化
-        var querySuite = $("#querySuite").querySuite().sortable(function (ids) { console.log(ids); });
+        var querySuite = $("#querySuite").querySuite();
 
         //表单套件初始化
-        var formSuite = $("#formSuiteModal").formSuite()
+        var formSuite = $("#formSuite").formSuite()
             .submit(function () {
                 querySuite.query();
             });
 
         //加载组织架构
-        var ouTree = $("#DPTree").bitTree()
+        var ouTree = $("#departmentTree").bitTree()
             .load(function (result) {
                 if (result.data && result.data.length > 0) {
-                    $('#DPTree > ul >li:eq(0)').click();
-                    querySuite.query();
+                    $('#departmentTree > ul >li:eq(0)').click();
                 }
             })
             .select(function (event, data) {

@@ -1,57 +1,23 @@
-﻿
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Example](
-	[id] [uniqueidentifier] NOT NULL,
-	[exampleName] [varchar](256) NULL,
-	[exampleText] [varchar](256) NULL,
-	[exampleRadio] [varchar](256) NULL,
-	[exampleCheckbox] [varchar](256) NULL,
-	[exampleSelect] [varchar](256) NULL,
-	[examplePhone] [varchar](256) NULL,
-	[exampleTime] [datetime] NULL,
-	[exampleUser] [nvarchar](max) NULL,
-	[department] [nvarchar](max) NULL,
-	[autoComplete] [nvarchar](max) NULL,
-	[autoComSelectText] [nvarchar](max) NULL,
-	[autoComSelect] [nvarchar](max) NULL,
-	[linkageSelectA] [nvarchar](32) NULL,
-	[linkageSelectB] [nvarchar](32) NULL,
-	[linkageSelectC] [nvarchar](32) NULL,
-	[createTime] [datetime] NULL,
-	[linkageSelectD] [nvarchar](32) NULL,
-	[linkageSelectE] [nvarchar](32) NULL,
-	[linkageSelectF] [nvarchar](32) NULL,
-	[parentId] [uniqueidentifier] NULL,
- CONSTRAINT [PK_Example] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-SET ANSI_NULLS ON
+﻿SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowBills](
 	[id] [uniqueidentifier] NOT NULL,
 	[parentId] [uniqueidentifier] NULL,
-	[workOrderName] [nvarchar](max) NULL,
+	[workOrderName] [nvarchar](2000) NULL,
 	[billsCode] [nvarchar](255) NULL,
-	[mainId] [nvarchar](64) NULL,
-	[stepId] [nvarchar](64) NULL,
+	[mainId] [nvarchar](50) NULL,
+	[stepId] [nvarchar](50) NULL,
 	[sort] [int] NOT NULL,
-	[state] [nvarchar](64) NULL,
+	[state] [nvarchar](50) NULL,
 	[submitUser] [uniqueidentifier] NOT NULL,
 	[createTime] [datetime] NOT NULL,
 	[updateTime] [datetime] NULL,
-	[Description] [nvarchar](1024) NULL,
-	[Version] [int] NULL,
-	[BillsType] [nvarchar](1024) NULL,
-	[WorkOrderCode] [nvarchar](1024) NULL,
+	[description] [nvarchar](1000) NULL,
+	[version] [int] NULL,
+	[billsType] [nvarchar](500) NULL,
+	[workOrderCode] [nvarchar](500) NULL,
  CONSTRAINT [PK_dbo.FlowBills] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -66,20 +32,20 @@ GO
 CREATE TABLE [dbo].[FlowBillsRecord](
 	[id] [uniqueidentifier] NOT NULL,
 	[billsId] [uniqueidentifier] NOT NULL,
-	[upStep] [nvarchar](50) NULL,
-	[nextStep] [nvarchar](50) NULL,
+	[prevStepId] [nvarchar](50) NULL,
+	[nextStepId] [nvarchar](50) NULL,
 	[userId] [nvarchar](50) NULL,
 	[auditDate] [datetime] NULL,
 	[sort] [int] NOT NULL,
 	[condition] [int] NOT NULL,
-	[state] [nvarchar](max) NULL,
+	[state] [nvarchar](4000) NULL,
 	[startTime] [datetime] NULL,
 	[endTime] [datetime] NULL,
-	[choice] [nvarchar](max) NULL,
+	[choice] [nvarchar](4000) NULL,
 	[type] [int] NOT NULL,
-	[description] [nvarchar](1024) NULL,
+	[description] [nvarchar](1000) NULL,
 	[batch] [int] NULL,
-	[upBillsRecordId] [nvarchar](50) NULL,
+	[prevBillsRecordId] [nvarchar](50) NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecord] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -100,15 +66,15 @@ CREATE TABLE [dbo].[FlowBillsRecordUser](
 	[startTime] [datetime] NULL,
 	[endTime] [datetime] NULL,
 	[type] [int] NOT NULL,
-	[state] [nvarchar](max) NULL,
-	[condition] [nvarchar](max) NULL,
-	[stepId] [nvarchar](max) NULL,
-	[choice] [nvarchar](max) NULL,
-	[opinion] [nvarchar](max) NULL,
-	[displayState] [nvarchar](max) NULL,
+	[state] [nvarchar](4000) NULL,
+	[condition] [nvarchar](4000) NULL,
+	[stepId] [nvarchar](4000) NULL,
+	[choice] [nvarchar](4000) NULL,
+	[opinion] [nvarchar](4000) NULL,
+	[displayState] [nvarchar](4000) NULL,
 	[runTime] [datetime] NULL,
 	[portalToDoId] [int] NULL,
-	[smsId] [nvarchar](max) NULL,
+	[smsId] [nvarchar](4000) NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecordUser] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -154,35 +120,27 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowStep](
-	[id] [uniqueidentifier] NOT NULL,
+	[stepId] [uniqueidentifier] NOT NULL,
 	[mainId] [nvarchar](64) NULL,
-	[stepName] [nvarchar](256) NULL,
+	[stepName] [nvarchar](64) NULL,
+	[stepStatus] [int] NOT NULL,
+	[agency] [nvarchar](32) NULL,
+	[circularize] [nvarchar](32) NULL,
+	[runMode] [nvarchar](4000) NULL,
+	[linkCode] [nvarchar](128) NULL,
+	[showTabIndex] [nvarchar](4000) NULL,
+	[reminderTimeout] [bigint] NULL,
 	[auditNorm] [nvarchar](128) NULL,
 	[auditId] [nvarchar](256) NULL,
-	[auditors] [int] NOT NULL,
-	[stepStatus] [int] NOT NULL,
-	[description] [nvarchar](max) NULL,
-	[deployInfo] [nvarchar](max) NULL,
-	[openChoices] [nvarchar](max) NULL,
-	[power] [nvarchar](max) NULL,
-	[runMode] [nvarchar](max) NULL,
-	[joinMode] [nvarchar](max) NULL,
-	[examineMode] [nvarchar](max) NULL,
-	[relationStepKey] [nvarchar](max) NULL,
-	[percentage] [int] NOT NULL,
-	[function] [nvarchar](1024) NULL,
-	[linkCode] [nvarchar](128) NULL,
-	[auditLinkCode] [nvarchar](128) NULL,
-	[showTabIndex] [nvarchar](max) NULL,
-	[circularize] [nvarchar](max) NULL,
-	[reminderTimeout] [bigint] NULL,
-	[smsTemplateToDo] [nvarchar](max) NULL,
-	[smsTemplateRead] [nvarchar](max) NULL,
 	[auditNormRead] [nvarchar](128) NULL,
 	[auditIdRead] [nvarchar](256) NULL,
+	[smsTemplateToDo] [nvarchar](4000) NULL,
+	[smsTemplateRead] [nvarchar](4000) NULL,
+	[description] [nvarchar](4000) NULL,
+	[style] [nvarchar](512) NULL,
  CONSTRAINT [PK_dbo.FlowStep] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[stepId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -194,12 +152,12 @@ GO
 CREATE TABLE [dbo].[FlowStepPath](
 	[id] [uniqueidentifier] NOT NULL,
 	[mainId] [nvarchar](64) NULL,
-	[upStep] [nvarchar](64) NULL,
-	[nextStep] [nvarchar](64) NULL,
+	[startStepId] [nvarchar](64) NULL,
+	[stopStepId] [nvarchar](64) NULL,
+	[nikename] [nvarchar](512) NULL,
 	[condition] [int] NOT NULL,
-	[expression] [nvarchar](1024) NULL,
+	[expression] [nvarchar](512) NULL,
 	[description] [nvarchar](1024) NULL,
-	[btnName] [nvarchar](max) NULL,
  CONSTRAINT [PK_dbo.FlowStepPath] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -211,6 +169,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 CREATE TABLE [dbo].[GeneralExample](
 	[exampleId] [uniqueidentifier] NOT NULL,
 	[exampleName] [nvarchar](64) NULL,
@@ -227,12 +186,32 @@ CREATE TABLE [dbo].[GeneralExample](
 	[dateTimePickerFormatter] [datetime] NULL,
 	[userPicker] [nvarchar](64) NULL,
 	[ouPicker] [nvarchar](64) NULL,
+	[exampleText] [nvarchar](256) NULL,
+	[exampleRadio] [nvarchar](256) NULL,
+	[exampleCheckbox] [nvarchar](256) NULL,
+	[exampleSelect] [nvarchar](256) NULL,
+	[examplePhone] [varchar](16) NULL,
+	[exampleTime] [datetime] NULL,
+	[exampleUser] [nvarchar](4000) NULL,
+	[department] [nvarchar](4000) NULL,
+	[autoComplete] [nvarchar](4000) NULL,
+	[autoComSelectText] [nvarchar](4000) NULL,
+	[autoComSelect] [nvarchar](4000) NULL,
+	[linkageSelectA] [nvarchar](64) NULL,
+	[linkageSelectB] [nvarchar](64) NULL,
+	[linkageSelectC] [nvarchar](64) NULL,
+	[createTime] [datetime] NULL,
+	[linkageSelectD] [nvarchar](64) NULL,
+	[linkageSelectE] [nvarchar](64) NULL,
+	[linkageSelectF] [nvarchar](64) NULL,
+	[parentId] [uniqueidentifier] NULL,
  CONSTRAINT [PK_GeneralExample] PRIMARY KEY CLUSTERED 
 (
 	[exampleId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -309,7 +288,7 @@ CREATE TABLE [dbo].[SysLeader](
 	[userCode] [nvarchar](512) NULL,
 	[pos] [nvarchar](2048) NULL,
 	[sequence] [nvarchar](2048) NULL,
- CONSTRAINT [PK_dbo.DGLeader] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Leader] PRIMARY KEY CLUSTERED 
 (
 	[leaderId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -369,7 +348,7 @@ CREATE TABLE [dbo].[SysModulePage](
 	[pageUrl] [nvarchar](512) NULL,
 	[description] [nvarchar](2048) NULL,
 	[orderNo] [int] NULL,
- CONSTRAINT [PK__SysModulePage] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_SysModulePage] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -555,22 +534,15 @@ CREATE TABLE [dbo].[SysSmsCode](
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[FlowBills]  WITH CHECK ADD  CONSTRAINT [FK_dbo.FlowBills_dbo.FlowBills_ParentId] FOREIGN KEY([parentId])
+ALTER TABLE [dbo].[FlowBillsRecord]  WITH CHECK ADD  CONSTRAINT [FK_FlowBillsRecord_FlowBills] FOREIGN KEY([billsId])
 REFERENCES [dbo].[FlowBills] ([id])
 GO
-ALTER TABLE [dbo].[FlowBills] CHECK CONSTRAINT [FK_dbo.FlowBills_dbo.FlowBills_ParentId]
+ALTER TABLE [dbo].[FlowBillsRecord] CHECK CONSTRAINT [FK_FlowBillsRecord_FlowBills]
 GO
-ALTER TABLE [dbo].[FlowBillsRecord]  WITH CHECK ADD  CONSTRAINT [FK_dbo.FlowBillsRecord_dbo.FlowBills_BillsId] FOREIGN KEY([billsId])
-REFERENCES [dbo].[FlowBills] ([id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[FlowBillsRecord] CHECK CONSTRAINT [FK_dbo.FlowBillsRecord_dbo.FlowBills_BillsId]
-GO
-ALTER TABLE [dbo].[FlowBillsRecordUser]  WITH CHECK ADD  CONSTRAINT [FK_dbo.FlowBillsRecordUser_dbo.FlowBillsRecord_BillsRecordId] FOREIGN KEY([billsRecordId])
+ALTER TABLE [dbo].[FlowBillsRecordUser]  WITH CHECK ADD  CONSTRAINT [FK_FlowBillsRecordUser_FlowBillsRecord] FOREIGN KEY([billsRecordId])
 REFERENCES [dbo].[FlowBillsRecord] ([id])
-ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[FlowBillsRecordUser] CHECK CONSTRAINT [FK_dbo.FlowBillsRecordUser_dbo.FlowBillsRecord_BillsRecordId]
+ALTER TABLE [dbo].[FlowBillsRecordUser] CHECK CONSTRAINT [FK_FlowBillsRecordUser_FlowBillsRecord]
 GO
 
 
@@ -616,107 +588,3 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-
--- =============================================
--- Author:		陈银鑫
--- Create date: 2016-12-09 10:53:30 
--- Description:	获取部门全称
--- =============================================
-CREATE FUNCTION [dbo].[fn_GetDepartmentFullName]
-(
-	-- Add the parameters for the function here
-	@DepartmentID uniqueidentifier
-)
-RETURNS nvarchar(1024)
-AS
-BEGIN
-	-- Declare the return variable here
-	DECLARE @fullName nvarchar(1024);
-
-	-- Add the T-SQL statements to compute the return value here
-	with OUInfo
-	as
-	(
-	select DepartmentID, cast( DepartmentName as nvarchar(1024)) as OUFullName,ParentID from SysDepartment where  DepartmentID=@DepartmentID
-	union all
-	select Data.DepartmentID, cast( ( Data.DepartmentName + '→' + tmp.OUFullName ) as nvarchar(1024) ) as OUFullName ,Data.ParentID
-	from SysDepartment Data
-	inner join OUInfo tmp on Data.DepartmentID = tmp.ParentID
-	)
-	select top 1 @fullName=OUFullName from OUInfo where ParentID is null;
-
-	-- Return the result of the function
-	RETURN @fullName
-
-END
-
-
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-CREATE FUNCTION [dbo].[fn_GetDepartmentsByID]
-(	
-	-- Add the parameters for the function here
-	@DepartmentID uniqueidentifier
-)
-RETURNS TABLE 
-AS
-
-RETURN 
-(
-    with Departments
-	as
-	(
-	select DepartmentID,ParentID from SysDepartment where  DepartmentID=@DepartmentID
-	union all
-	select Data.DepartmentID,Data.ParentID
-	from SysDepartment Data
-	inner join Departments tmp on Data.ParentID = tmp.DepartmentID
-	)
-	-- Add the SELECT statement with parameter references here
-	SELECT DepartmentID from Departments 
-)
-
-
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	获取所有父级模块ID
--- =============================================
-CREATE FUNCTION [dbo].[fn_GetModuleParentID]
-(	
-	-- Add the parameters for the function here
-	@ModulePageID uniqueidentifier
-)
-RETURNS TABLE 
-AS
-RETURN 
-(	
-    with Departments
-	as
-	(
-	select ModuleID,ParentID from SysModule where  ModuleID=@ModulePageID
-	union all
-	select Data.ModuleID,Data.ParentID
-	from SysModule Data
-	inner join Departments tmp on Data.ModuleID = tmp.ParentID
-	)
-	-- Add the SELECT statement with parameter references here
-	SELECT ModuleID from Departments 
-)
-
-
-GO

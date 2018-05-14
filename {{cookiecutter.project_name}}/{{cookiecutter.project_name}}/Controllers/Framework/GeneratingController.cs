@@ -47,7 +47,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                 {0}
                                 order by d.name,a.colorder", where);
 
-                SqlDataAdapter sda = new SqlDataAdapter(strSql, SqlHelper.connectionString);
+                SqlDataAdapter sda = new SqlDataAdapter(strSql, SqlHelper.ConnectionString);
                 DataTable dt = new DataTable();
                 sda.Fill(dt);
                 string[] extable = new string[] { "Example","FlowBills", "FlowBillsRecord", "FlowBillsRecordUser", "FlowMain", "FlowOrderCodes", "FlowStep", "FlowStepPath", "GeneralExample",
