@@ -63,7 +63,7 @@ var BitPage = {
     },
     LoadContent: function () {
         var pageUrl = BitPage.GetQueryString("page").split("?")[0];
-        pageUrl = pageUrl.indexOf('.') > -1 ? pageUrl : pageUrl + '.html';
+        pageUrl = pageUrl.replace('../', '').indexOf('.') > -1 ? pageUrl : pageUrl + '.html';
         $("section.content").load("../" + pageUrl);
         var sign = BitPage.GetQueryString("sign");
         BitAdmin.InitRight(sign);           //初始化操作权限
@@ -100,7 +100,7 @@ var BitPage = {
         });
         param = param.replace('&', '?');
         var pageUrl = '';
-        var urlArr = options.tabUrl.split('.');
+        var urlArr = options.tabUrl.replace('../', '').split('.');
         var suffix = urlArr[urlArr.length - 1].toLocaleLowerCase();
         if (suffix == '_blank') {
             var el = document.createElement("a");
@@ -118,7 +118,7 @@ var BitPage = {
             var layout = "layout.html";
             if (urlArr.length > 1)
                 layout = suffix + ".html";
-            pageUrl = "../../pages/shared/" + layout + "?page=" + encodeURIComponent(options.tabUrl.split('.')[0] + param) + "&sign=" + options.tabSign;
+            pageUrl = "../../pages/shared/" + layout + "?page=" + encodeURIComponent(options.tabUrl.replace("." + urlArr[urlArr.length - 1], '') + param) + "&sign=" + options.tabSign;
         }
         return pageUrl;
     },

@@ -15,7 +15,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="isColumnWritten">DataTable的列名是否要导入</param>  
         /// <param name="sheetName">要导入的excel的sheet的名称</param>  
         /// <returns>导入数据行数(包含列名那一行)</returns>  
-        public int DataTableToExcel(DataTable data, string fileName, string sheetName, bool isColumnWritten)
+        public static int DataTableToExcel(DataTable data, string fileName, string sheetName, bool isColumnWritten)
         {
             int i = 0;
             int j = 0;
@@ -67,7 +67,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="sheetName">excel工作薄sheet的名称</param>  
         /// <param name="isFirstRowColumn">第一行是否是DataTable的列名</param>  
         /// <returns>返回的DataTable</returns>  
-        public static DataTable ExcelToDataTable(string fileName, string sheetName, bool isFirstRowColumn)
+        public static DataTable ExcelToDataTable(string fileName, string sheetName, bool firstRowHead = true)
         {
             IWorkbook workbook = null;
             ISheet sheet = null;
@@ -96,7 +96,7 @@ namespace {{cookiecutter.project_name}}.Helpers
                 IRow firstRow = sheet.GetRow(0);
                 int cellCount = firstRow.LastCellNum; //一行最后一个cell的编号 即总的列数  
 
-                if (isFirstRowColumn)
+                if (firstRowHead)
                 {
                     for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
                     {

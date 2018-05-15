@@ -10,7 +10,6 @@
                     <td><input type="text" name="c2" class="form-control" /></td>
                     <th>列一:</th>
                     <td><input type="text" name="c3" class="form-control" /></td>
-                    <td><input type="hidden" name="sign" value="prototypingexample" /></td>
                 </tr>
             </table>
         </div>
@@ -19,7 +18,7 @@
             <button class="btn btn-default" action="query">
                 <span class="glyphicon glyphicon-search"></span> 查询
             </button>
-            <button class="btn btn-default" action="add" action-modal="myModal">
+            <button class="btn btn-default" action="add" action-modal="formSuiteOne">
                 <span class="glyphicon glyphicon-plus-sign"></span> 添加
             </button>
             <button class="btn btn-danger" action="delete">
@@ -28,7 +27,7 @@
         </div>
         <!-- 列表 操作 -->
         <div class="querySuite-table"
-             data-key="c1,sign"
+             data-key="module,page,key"
              data-query-url="../../prototyping/query"
              data-delete-url="../../prototyping/delete">
             <table>
@@ -57,45 +56,45 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form data-title="模型名称"
+                <form data-title=""
                       data-save-url="../../prototyping/save"
                       data-load-url="../../prototyping/load">
                     <table>
                         <tr>
                             <th>列一：</th>
-                            <td><input type="text" name="c1" required class="form-control" /></td>
+                            <td><input type="text" name="c1" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列二：</th>
-                            <td><input type="text" name="c2" required class="form-control" /></td>
+                            <td><input type="text" name="c2" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列三：</th>
-                            <td><input type="text" name="c3" required class="form-control" /></td>
+                            <td><input type="text" name="c3" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列四：</th>
-                            <td><input type="text" name="c4" required class="form-control" /></td>
+                            <td><input type="text" name="c4" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列五：</th>
-                            <td><input type="text" name="c5" required class="form-control" /></td>
+                            <td><input type="text" name="c5" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列六：</th>
-                            <td><input type="text" name="c6" required class="form-control" /></td>
+                            <td><input type="text" name="c6" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列七：</th>
-                            <td><input type="text" name="c7" required class="form-control" /></td>
+                            <td><input type="text" name="c7" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列八：</th>
-                            <td><input type="text" name="c8" required class="form-control" /></td>
+                            <td><input type="text" name="c8" class="form-control" /></td>
                         </tr>
                         <tr>
                             <th>列九：</th>
-                            <td><input type="text" name="c9" required class="form-control" /></td>
+                            <td><input type="text" name="c9" class="form-control" /></td>
                         </tr>
                     </table>
                 </form>
@@ -114,6 +113,11 @@
 
 <script type="text/javascript">
     $(function () {
+        var pageUrl = BitPage.GetQueryString("page").split("?")[0];
+        var pageArr = pageUrl.split('/');
+        $(".querySuite-filter table").first("td")
+            .append('<input type="hidden" name="module" value="' + pageArr[pageArr.length - 2] + '" />')
+            .append('<input type="hidden" name="page" value="' + pageArr[pageArr.length - 1] + '" />');
         var querySuite = $("#querySuiteOne").querySuite().query();
         var formSuite = $("#formSuiteOne").formSuite();
     });

@@ -121,7 +121,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowStep](
 	[stepId] [uniqueidentifier] NOT NULL,
-	[mainId] [nvarchar](64) NULL,
+	[mainId] [uniqueidentifier] NULL,
 	[stepName] [nvarchar](64) NULL,
 	[stepStatus] [int] NOT NULL,
 	[agency] [nvarchar](32) NULL,
@@ -151,9 +151,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowStepPath](
 	[id] [uniqueidentifier] NOT NULL,
-	[mainId] [nvarchar](64) NULL,
-	[startStepId] [nvarchar](64) NULL,
-	[stopStepId] [nvarchar](64) NULL,
+	[mainId] [uniqueidentifier] NULL,
+	[startStepId] [uniqueidentifier] NULL,
+	[stopStepId] [uniqueidentifier] NULL,
 	[nikename] [nvarchar](512) NULL,
 	[condition] [int] NOT NULL,
 	[expression] [nvarchar](512) NULL,
@@ -550,7 +550,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
 
 -- =============================================
 -- Author:		黎泽金

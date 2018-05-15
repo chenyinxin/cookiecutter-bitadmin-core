@@ -62,8 +62,19 @@
     /*设置隐藏域保存关系信息*/
     var aConnections = [];
     var setConnections = function (conn, remove) {
-        debugger;
-        if (!remove) aConnections.push(conn);
+        if (!remove) {
+            aConnections.push(conn);
+            conn.startStepId = $('#' + conn.sourceId).data("data").stepId;
+            conn.stopStepId = $('#' + conn.targetId).data("data").stepId;
+            $.each(defaults.processData.paths, function (i, item) {
+                if (item.startStepId == conn.startStepId && item.stopStepId == conn.stopStepId)
+                    conn.data = item;
+            });
+            if (conn.data == undefined) {
+                conn.data = { nikename: "同意", condition: 1, expression: "" };
+                conn.newline = true;
+            }
+        }
         else {
             var idx = -1;
             for (var i = 0; i < aConnections.length; i++) {
@@ -73,43 +84,18 @@
             }
             if (idx != -1) aConnections.splice(idx, 1);
         }
-        if (aConnections.length > 0) {
-            $('#leipi_process_info').html('');
-            for (var j = 0; j < aConnections.length; j++) {
-                var from = $('#' + aConnections[j].sourceId).data("data").stepId;
-                var target = $('#' + aConnections[j].targetId).data("data").stepId;
-                var conditions = $('#' + aConnections[j].sourceId).attr('conditions');
-                var condition = 1;
-                var condition_d = "";
-                var expression = "";
-                if (typeof (conditions) != "undefined" && conditions != null) {
-                    var cs = conditions.split(",");
-                    for (var i = 0; i < cs.length; i++) {
-                        var cOne = cs[i].split(":");
-                        if (cOne != null && cOne.length > 1 && cOne[0] == target) {
-                            condition = cOne[1];
-                        }
-                        if (cOne != null && cOne.length > 2 && cOne[0] == target) {
-                            condition_d = cOne[2];
-                        }
-                        if (cOne != null && cOne.length > 3 && cOne[0] == target) {
-                            expression = cOne[3];
-                        }
-                    }
-                }
-                var path = $("<input type='hidden' value=\"" + from + "," + target + "\" >").data("data", {});
-                $('#leipi_process_info').append(path);
 
-            }
-        } else {
-            $('#leipi_process_info').html('');
+        $('#leipi_process_info').html('');
+        for (var j = 0; j < aConnections.length; j++) {
+            var path = $("<input type='hidden' value=\"" + aConnections[j].startStepId + "," + aConnections[j].stopStepId + "\" >").data("data", aConnections[j].data);
+            $('#leipi_process_info').append(path);
         }
+        if (conn.newline) lineCondition(conn);
         jsPlumb.repaintEverything();//重画
     };
 
     /*Flowdesign 命名纯粹为了美观，而不是 formDesign */
     $.fn.Flowdesign = function (options) {
-        debugger;
         var _canvas = $(this);
         //右键步骤的步骤号
         _canvas.append('<input type="hidden" id="leipi_active_id" value="0"/><input type="hidden" id="leipi_copy_id" value="0"/>');
@@ -154,14 +140,13 @@
 
         $.each(processData.steps, function (i, item) {
             var nodeDiv = document.createElement('div');
-            var nodeId = "window" + item.stepId;
             var badge = 'badge-inverse', icon = 'icon-star';
             if (item.stepStatus == 1 || item.stepStatus == 100)//第一步
             {
                 badge = 'badge-info';
                 icon = item.stepStatus == 1 ? "icon-play" : "icon-stop";
             }
-            $(nodeDiv).attr("id", nodeId)
+            $(nodeDiv).attr("id", "window" + item.stepId)
                 .data("data", item)
                 .attr("style", item.style)
                 .addClass("process-step btn btn-small")
@@ -198,7 +183,7 @@
 
         //绑定添加连接操作。画线-input text值  拒绝重复连接
         jsPlumb.bind("jsPlumbConnection", function (info) {
-            setConnections(info.connection)
+            setConnections(info.connection);
         });
         //绑定删除connection事件
         jsPlumb.bind("jsPlumbConnectionDetached", function (info) {
@@ -219,15 +204,13 @@
             paintStyle: { fillStyle: "#ec912a", radius: 1 },
             hoverPaintStyle: this.connectorHoverStyle,
             beforeDrop: function (params) {
-                console.log(params);
                 if (params.sourceId == params.targetId) return false;/*不能链接自己*/
+                var canlink = true;
                 $('#leipi_process_info').find('input').each(function (i) {
                     var str = $('#' + params.sourceId).data("data").stepId + ',' + $('#' + params.targetId).data("data").stepId;
-                    if (str == $(this).val()) {
-                        return false;
-                    }
+                    if (str == $(this).val()) { canlink = false; }
                 });
-                return true;
+                return canlink;
             }
         });
 
@@ -237,7 +220,6 @@
                     source: "window" + item.startStepId,
                     target: "window" + item.stopStepId
                 });
-                return;
             });
         }
         _canvas_design();
@@ -246,12 +228,9 @@
 
         var Flowdesign = {
             addProcess: function (item) {
-                debugger;
                 //添加步骤
                 var nodeDiv = document.createElement('div');
-                var nodeId = "window" + item.stepId;
-
-                $(nodeDiv).attr("id", nodeId)
+                $(nodeDiv).attr("id", "window" + item.stepId)
                     .data("data", item)
                     .attr("style", item.style)
                     .addClass("process-step btn btn-small")

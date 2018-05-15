@@ -91,7 +91,6 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 var model = dbContext.FlowMain.Find(Id.Value);
-
                 return Json(new { Code = 0, Data = model });
             }
             catch (Exception ex)
@@ -149,22 +148,13 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                Dictionary<string, SqlParameter[]> dicsql = new Dictionary<string, SqlParameter[]>();
-                string delTxt = string.Empty;
-                int i = 0;
                 foreach (string id in IDs.Split(','))
                 {
-                    string paramName = "@ID" + i++;
-                    SqlParameter[] sqlpara = new SqlParameter[] { new SqlParameter(paramName, id) };
-
-                    delTxt = "delete FlowMain where Id = " + paramName;
-                    dicsql.Add(delTxt, sqlpara);
-                    delTxt = "delete FlowStep where mainId = " + paramName;
-                    dicsql.Add(delTxt, sqlpara);
-                    delTxt = "delete FlowStepPath where mainId = " + paramName;
-                    dicsql.Add(delTxt, sqlpara);
+                    dbContext.FlowStepPath.RemoveRange(dbContext.FlowStepPath.Where(x => x.MainId == Guid.Parse(id)));
+                    dbContext.FlowStep.RemoveRange(dbContext.FlowStep.Where(x => x.MainId == Guid.Parse(id)));
+                    dbContext.FlowMain.RemoveRange(dbContext.FlowMain.Where(x => x.Id == Guid.Parse(id)));
+                    dbContext.SaveChanges();
                 }
-                SqlHelper.ExecuteSqlTran(dicsql);
                 return Json(new { Code = 0, Msg = "删除成功！" });
             }
             catch (Exception ex)
@@ -179,15 +169,15 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// </summary>
         /// <param name="mainId">流程主表主键</param>
         /// <returns></returns>
-        public ActionResult GetStepAndPath(string mainId)
+        public ActionResult GetStepAndPath(Guid? mainId)
         {
             try
             {
-                if (string.IsNullOrEmpty(mainId))
+                if (!mainId.HasValue)
                     return Json(new { Code = 0, Msg = "参数非法！" });
 
-                var resultSteps = dbContext.Set<FlowStep>().Where(o => o.MainId.ToLower() == mainId.ToLower()).ToList();
-                var resultPaths = dbContext.Set<FlowStepPath>().Where(o => o.MainId.ToLower() == mainId.ToLower()).ToList();
+                var resultSteps = dbContext.Set<FlowStep>().Where(o => o.MainId == mainId).ToList();
+                var resultPaths = dbContext.Set<FlowStepPath>().Where(o => o.MainId == mainId).ToList();
                 if (resultSteps.Count == 0)
                 {
                     FlowStep start = new FlowStep() { MainId = mainId, StepName = "开始步骤", StepStatus = 1, StepId = Guid.NewGuid(), LinkCode = "0", Style = "left:200px;top:50px;;color:#0e76a8;" };
@@ -206,11 +196,11 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-        public ActionResult NewDefaultStep(string mainId)
+        public ActionResult NewDefaultStep(Guid? mainId)
         {
             try
             {
-                if (string.IsNullOrEmpty(mainId))
+                if (!mainId.HasValue)
                     return Json(new { Code = 0, Msg = "参数非法！" });
 
                 return Json(new { Code = 0, Data = new FlowStep() { MainId = mainId, StepId = Guid.NewGuid(), StepName = "新增步骤", AuditNorm = "Roles", AuditNormRead = "Roles", StepStatus = 10, RunMode = "auto" } });
@@ -275,17 +265,17 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                if (stepList == null || stepList.Count == 0 || string.IsNullOrWhiteSpace(stepList[0].MainId))
+                if (stepList == null || stepList.Count == 0 || !stepList[0].MainId.HasValue)
                 {
                     return Json(new { Code = 0, Msg = "非法参数" });
                 }
 
-                string mainId = stepList[0].MainId.ToLower();
+                Guid? mainId = stepList[0].MainId;
 
                 //删除旧数据
-                var spList = dbContext.FlowStepPath.Where(o => o.MainId.ToLower() == mainId).ToList();
+                var spList = dbContext.FlowStepPath.Where(o => o.MainId == mainId).ToList();
                 dbContext.FlowStepPath.RemoveRange(spList);
-                var stlist = dbContext.FlowStep.Where(o => o.MainId.ToLower() == mainId).ToList();
+                var stlist = dbContext.FlowStep.Where(o => o.MainId == mainId).ToList();
                 dbContext.FlowStep.RemoveRange(stlist);
                 dbContext.SaveChanges();
 
@@ -365,7 +355,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         private string GetStepLinkCodeByBillsReUserId(string billsRecordUserId)
         {
             string strSql = @"select t2.linkCode from FlowBillsRecordUser as t1
-                            left join FlowStep as t2 on t1.stepId=t2.Id
+                            left join FlowStep as t2 on t1.stepId=t2.stepId
                             where t1.Id=@billsRecordUserId ";
             return Convert.ToString(SqlHelper.GetSingle(strSql, new SqlParameter("@billsRecordUserId", billsRecordUserId)));
         }
@@ -648,7 +638,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             list.Add(new SqlParameter("@taskUserId", taskUserId));
             string strSql = string.Format(@"select t3.userId,t4.userName,t4.userCode,'{1}' stepId from FlowBillsRecordUser as t1 
                                         left join FlowBillsRecord as t2 on t1.BillsRecordId=t2.Id
-                                        left join FlowBillsRecordUser as t3 on t2.UpBillsRecordId=T3.BillsRecordId and t3.state='{0}'
+                                        left join FlowBillsRecordUser as t3 on t2.prevBillsRecordId=T3.BillsRecordId and t3.state='{0}'
                                         left join SysUser as t4 on t3.userId=t4.UserID
                                         where t1.Id=@taskUserId"
                                         , "Done", stepId);
@@ -676,14 +666,14 @@ namespace {{cookiecutter.project_name}}.Controllers
                 //流程主表  添加信息
                 FlowBills flow_bl = new FlowBills();
                 flow_bl.Id = Guid.NewGuid();
-                flow_bl.MainId = flow_Main.Id.ToString();
+                flow_bl.MainId = flow_Main.Id;
                 flow_bl.ParentId = parentId;
                 flow_bl.Version = 1;
                 flow_bl.UpdateTime = DateTime.Now;
                 flow_bl.SubmitUser = SSOClient.UserId;
                 flow_bl.State = "run";
                 flow_bl.Sort = 1;
-                flow_bl.StepId = "";
+                flow_bl.StepId = null;
                 flow_bl.Description = description;
                 flow_bl.CreateTime = DateTime.Now;
                 flow_bl.BillsCode = billsCode;
@@ -699,9 +689,9 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_blr.StartTime = DateTime.Now;
                 flow_blr.State = "end";
                 flow_blr.Type = 0;
-                flow_blr.PrevStepId = "0";//上一环节
-                flow_blr.NextStepId = dbContext.Set<FlowStep>().Where(t => t.StepStatus == 1 && t.MainId == flow_Main.Id.ToString()).FirstOrDefault().StepId.ToString();//当前环节
-                flow_blr.UserId = Convert.ToString(SSOClient.UserId);//当前环节处理人
+                flow_blr.PrevStepId = null;//上一环节
+                flow_blr.NextStepId = dbContext.Set<FlowStep>().Where(t => t.StepStatus == 1 && t.MainId == flow_Main.Id).FirstOrDefault().StepId;//当前环节
+                flow_blr.UserId = SSOClient.UserId;//当前环节处理人
                 flow_blr.EndTime = DateTime.Now;
                 flow_blr.Description = description;
                 flow_blr.Condition = 1;
@@ -713,7 +703,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 FlowBillsRecordUser flow_bru = new FlowBillsRecordUser();
                 flow_bru.Id = Guid.NewGuid();
                 flow_bru.BillsRecordId = flow_blr.Id;
-                flow_bru.BillsRecordOutId = flow_blr.Id.ToString();
+                flow_bru.BillsRecordOutId = flow_blr.Id;
                 flow_bru.Choice = "1";
                 flow_bru.Condition = "1";
                 flow_bru.CreateTime = DateTime.Now;
@@ -735,11 +725,11 @@ namespace {{cookiecutter.project_name}}.Controllers
                 flow_blrOne.StartTime = flow_blr.EndTime;
                 flow_blrOne.State = "run";
                 flow_blrOne.Type = 0;
-                flow_blrOne.PrevBillsRecordId = flow_blr.Id.ToString();
+                flow_blrOne.PrevBillsRecordId = flow_blr.Id;
                 flow_blrOne.PrevStepId = flow_blr.NextStepId;//上一环节
                 foreach (SelectNextStep nextStep in nextStepList_To)
                 {
-                    FlowStep nextStepItem = dbContext.FlowStep.Find(Guid.Parse(nextStep.StepId));
+                    FlowStep nextStepItem = dbContext.FlowStep.Find(nextStep.StepId);
                     flow_blrOne.NextStepId = nextStep.StepId;//当前步骤
                     flow_blrOne.Batch = 0;
                     dbContext.Set<FlowBillsRecord>().Add(flow_blrOne);
@@ -750,7 +740,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                         FlowBillsRecordUser flow_bruOne = new FlowBillsRecordUser();
                         flow_bruOne.Id = Guid.NewGuid();
                         flow_bruOne.BillsRecordId = flow_blrOne.Id;
-                        flow_bruOne.BillsRecordOutId = flow_blrOne.Id.ToString();
+                        flow_bruOne.BillsRecordOutId = flow_blrOne.Id;
                         flow_bruOne.CreateTime = DateTime.Now.AddSeconds(0.1);
                         flow_bruOne.DisplayState = "ToDo";
                         flow_bruOne.State = "ToDo";
@@ -773,7 +763,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                             FlowBillsRecordUser flow_bruOne = new FlowBillsRecordUser();
                             flow_bruOne.Id = Guid.NewGuid();
                             flow_bruOne.BillsRecordId = flow_blrOne.Id;
-                            flow_bruOne.BillsRecordOutId = flow_blrOne.Id.ToString();
+                            flow_bruOne.BillsRecordOutId = flow_blrOne.Id;
                             flow_bruOne.CreateTime = DateTime.Now.AddSeconds(0.1);
                             flow_bruOne.DisplayState = "ToRead";
                             flow_bruOne.State = "ToRead";
@@ -809,9 +799,9 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 FlowBillsRecordUser flow_bru = dbContext.Set<FlowBillsRecordUser>().Where(t => t.Id == taskUserId).FirstOrDefault();
-                FlowBillsRecord flow_br = dbContext.FlowBillsRecord.Find(Guid.Parse(flow_bru.BillsRecordOutId));
+                FlowBillsRecord flow_br = dbContext.FlowBillsRecord.Find(flow_bru.BillsRecordOutId);
                 FlowBills flow_bl = dbContext.FlowBills.Find(flow_br.BillsId);
-                FlowMain flow_Main = dbContext.FlowMain.Find(Guid.Parse(flow_bl.MainId));
+                FlowMain flow_Main = dbContext.FlowMain.Find(flow_bl.MainId);
                 //当前待办结束
                 flow_bru.Choice = Agree.ToString();
                 flow_bru.Condition = Agree.ToString();
@@ -849,7 +839,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 //下一任务开始
                 foreach (SelectNextStep nextStep in nextStepList_To)
                 {
-                    FlowStep nextStepItem = dbContext.Set<FlowStep>().Where(t => t.StepId.ToString() == nextStep.StepId).FirstOrDefault();
+                    FlowStep nextStepItem = dbContext.Set<FlowStep>().Where(t => t.StepId == nextStep.StepId).FirstOrDefault();
                     FlowBillsRecord flow_blrOne = new FlowBillsRecord();
                     flow_blrOne.Id = Guid.NewGuid();
                     flow_blrOne.BillsId = flow_br.BillsId;
@@ -860,11 +850,11 @@ namespace {{cookiecutter.project_name}}.Controllers
                     flow_blrOne.PrevStepId = flow_br.NextStepId;//上一环节
                     flow_blrOne.NextStepId = nextStep.StepId;//当前步骤
                     flow_blrOne.Batch = 0;
-                    flow_blrOne.PrevBillsRecordId = flow_br.Id.ToString();
+                    flow_blrOne.PrevBillsRecordId = flow_br.Id;
                     if (nextStepItem.StepStatus == 100)
                     {
                         //结束环节 任务结束
-                        flow_blrOne.UserId = Convert.ToString(SSOClient.UserId);//当前环节处理人
+                        flow_blrOne.UserId = SSOClient.UserId;//当前环节处理人
                         flow_blrOne.EndTime = DateTime.Now;
                         flow_blrOne.Description = "";
                         flow_blrOne.Condition = 1;
@@ -884,7 +874,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                             FlowBillsRecordUser flow_bruOne = new FlowBillsRecordUser();
                             flow_bruOne.Id = Guid.NewGuid();
                             flow_bruOne.BillsRecordId = flow_blrOne.Id;
-                            flow_bruOne.BillsRecordOutId = flow_blrOne.Id.ToString();
+                            flow_bruOne.BillsRecordOutId = flow_blrOne.Id;
                             flow_bruOne.CreateTime = DateTime.Now;
                             flow_bruOne.DisplayState = "ToDo";
                             flow_bruOne.State = "ToDo";
@@ -903,7 +893,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                 flow_bruOne.Type = 1;
                                 flow_bruOne.DisplayState = "Done";
                                 flow_bruOne.State = "Done";
-                                flow_bruOne.UserId = Convert.ToString(SSOClient.UserId);
+                                flow_bruOne.UserId = SSOClient.UserId;
                             }
                             //添加代办短信
                             //AddSms(nextStepItem.SMSTemplateToDo, flow_bruOne.Id.ToString(), flow_bl.WorkOrderCode, flow_bl.WorkOrderName, flow_Main.Name, nextStepItem.StepName, flow_bruOne.StartTime, flow_bruOne.UserId);
@@ -922,7 +912,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                 FlowBillsRecordUser flow_bruOne = new FlowBillsRecordUser();
                                 flow_bruOne.Id = Guid.NewGuid();
                                 flow_bruOne.BillsRecordId = flow_blrOne.Id;
-                                flow_bruOne.BillsRecordOutId = flow_blrOne.Id.ToString();
+                                flow_bruOne.BillsRecordOutId = flow_blrOne.Id;
                                 flow_bruOne.CreateTime = DateTime.Now;
                                 flow_bruOne.DisplayState = "ToRead";
                                 flow_bruOne.State = "ToRead";
@@ -969,7 +959,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                 from FlowBills as t1
                                 left join FlowBillsRecord as t2 on t1.Id=t2.BillsId
                                 left join FlowBillsRecordUser as t3 on t2.Id=t3.BillsRecordId
-                                left join FlowStep as t4 on t2.NextStepId=t4.Id
+                                left join FlowStep as t4 on t2.NextStepId=t4.StepId
                                 left join SysUser as t5 on t3.userId=t5.UserID
                                 where t1.Id=@BillId
                                 order by isnull(t3.startTime,t2.endTime) asc";
@@ -1007,13 +997,13 @@ namespace {{cookiecutter.project_name}}.Controllers
                     //审批
                     List<SqlParameter> list = new List<SqlParameter>();
                     string strSql = string.Format(@"select '{0}' 'btnName',{1} 'condition' from FlowBillsRecordUser as t1 
-                        left join FlowStep as t2 on t1.StepId=t2.Id
-                        where t1.Id=@taskUserId and t2.[Function]='Agency'
+                        left join FlowStep as t2 on t1.StepId=t2.stepId
+                        where t1.id=@taskUserId and t2.Agency='Agency'
                         union
-                        select t2.BtnName,t2.condition from FlowBillsRecordUser as t1
-                        left join FlowStepPath as t2 on t1.stepId=t2.UpStep
+                        select t2.nikename,t2.condition from FlowBillsRecordUser as t1
+                        left join FlowStepPath as t2 on t1.stepId=t2.startStepId
                         where t1.Id=@taskUserId
-                        group by t2.BtnName,t2.condition
+                        group by t2.nikename,t2.condition
                         order by condition", "转交", 50);
                     list.Add(new SqlParameter("@taskUserId", taskUserId));
                     data = SqlHelper.Query(strSql, list.ToArray()).Tables[0];
@@ -1081,7 +1071,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// </summary>
         /// <param name="ActivityID"></param>
         /// <returns></returns>
-        public ActionResult TransferNextStep(Guid taskUserId, string description, string userId)
+        public ActionResult TransferNextStep(Guid? taskUserId, string description, Guid? userId)
         {
             try
             {
@@ -1217,8 +1207,8 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (!taskUserId.HasValue)
                     return Json(new { Code = 1, Msg = "代办Id不允许为空，请联系管理员" });
 
-                string strSql = @"select t3.stepName,t3.id 'stepId',t3.linkCode,t3.showTabIndex,t2.Id 'currentStepId' from FlowBillsRecordUser t1
-                                left join FlowStep t2 on t1.stepId=t2.Id
+                string strSql = @"select t3.stepName,t3.stepId 'stepId',t3.linkCode,t3.showTabIndex,t2.stepId 'currentStepId' from FlowBillsRecordUser t1
+                                left join FlowStep t2 on t1.stepId=t2.stepId
                                 left join FlowStep t3 on t2.mainId=t3.mainId
                                 where t1.Id=@taskUserId and t3.linkCode<>'100'";
                 DataSet ds = SqlHelper.Query(strSql, new SqlParameter("@taskUserId", taskUserId));
@@ -1240,7 +1230,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 string strSql = @"select COUNT(1) from FlowBillsRecordUser as t1 
-                                join FlowStep as t2 on t1.stepId=t2.Id
+                                join FlowStep as t2 on t1.stepId=t2.stepId
                                 where t1.Id=@taskUserId and t1.state='ToDo' and t2.linkCode=@linkCode and t1.UserId=@userId";
                 List<SqlParameter> paramlist = new List<SqlParameter>();
                 paramlist.Add(new SqlParameter("@taskUserId", taskUserId));
@@ -1350,7 +1340,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <summary>
         /// 环节Id
         /// </summary>
-        public string StepId { get; set; }
+        public Guid? StepId { get; set; }
         /// <summary>
         /// 环节名称
         /// </summary>
@@ -1362,10 +1352,10 @@ namespace {{cookiecutter.project_name}}.Controllers
     }
     public class SelectNextStepUser
     {
-        public string UserId { get; set; }
+        public Guid? UserId { get; set; }
         public string UserName { get; set; }
         public string UserCode { get; set; }
-        public string StepId { get; set; }
+        public Guid? StepId { get; set; }
     }
     public class WorkflowContext : DataContext
     {

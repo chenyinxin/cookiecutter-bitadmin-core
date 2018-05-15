@@ -211,7 +211,6 @@
 
         //发起、提交、回退 确定
         $('#FlowHandleModal [name=SaveData]').click(function () {
-            debugger;
             _options.nextStepList_ToEx = array.removeAll(_options.nextStepList_ToEx);
             $.each(_options.nextStepList_To, function (index, value) {
                 if (value.processType == _options.processType) {
@@ -626,9 +625,9 @@
                                 var checked = _options.checkuserTransfer == value.UserId ? 'checked' : '';
                                 var span = $('<tr>' +
                                                 '<td style="width:auto;"><input type="radio" name="TransferGroup" ' + checked + ' /></td>' +
-                                                '<td style="width:auto;">' + value.UserCode + '</td>' +
-                                                '<td style="width:auto;">' + value.UserName + '</td>' +
-                                                '<td style="width:auto;">' + (value.Mobile || '') + '</td>' +
+                                                '<td style="width:auto;">' + value.userCode + '</td>' +
+                                                '<td style="width:auto;">' + value.userName + '</td>' +
+                                                '<td style="width:auto;">' + (value.mobile || '') + '</td>' +
                                             '</tr>');
                                 span.find('input[type=radio]').bind('click', function () {
                                     _options.checkTransfer(value);
@@ -779,9 +778,7 @@
                     _options.StepUserRemove(data);
                 });
                 $('#FlowHandleModal #stepUserList_To').append(span);
-                debugger;
                 $.each(_options.nextStepList_To, function (index, value) {
-                    debugger;
                     if (value.stepId == _options.selectNextStep) {
                         value.userCount = value.userCount + 1;
                         return false;
@@ -865,7 +862,6 @@
         }
         //添加环节传阅人
         _options.CirculationUserAdd = function (data) {
-            debugger;
             var isAdd = true;
             $.each(_options.circulationUserList_To, function (index, value) {
                 if (value.userId == data.userId && value.stepId == _options.selectNextStep) {

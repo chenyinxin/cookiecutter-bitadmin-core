@@ -63,11 +63,9 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
-                    .HasMaxLength(1000);
+                    .HasMaxLength(1024);
 
-                entity.Property(e => e.MainId)
-                    .HasColumnName("mainId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.MainId).HasColumnName("mainId");
 
                 entity.Property(e => e.ParentId).HasColumnName("parentId");
 
@@ -77,9 +75,7 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("state")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.StepId)
-                    .HasColumnName("stepId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.StepId).HasColumnName("stepId");
 
                 entity.Property(e => e.SubmitUser).HasColumnName("submitUser");
 
@@ -126,17 +122,11 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("endTime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.NextStepId)
-                    .HasColumnName("nextStepId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.NextStepId).HasColumnName("nextStepId");
 
-                entity.Property(e => e.PrevBillsRecordId)
-                    .HasColumnName("prevBillsRecordId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.PrevBillsRecordId).HasColumnName("prevBillsRecordId");
 
-                entity.Property(e => e.PrevStepId)
-                    .HasColumnName("prevStepId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.PrevStepId).HasColumnName("prevStepId");
 
                 entity.Property(e => e.Sort).HasColumnName("sort");
 
@@ -150,9 +140,7 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.Type).HasColumnName("type");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("userId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.HasOne(d => d.Bills)
                     .WithMany(p => p.FlowBillsRecord)
@@ -169,9 +157,7 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.BillsRecordId).HasColumnName("billsRecordId");
 
-                entity.Property(e => e.BillsRecordOutId)
-                    .HasColumnName("billsRecordOutId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.BillsRecordOutId).HasColumnName("billsRecordOutId");
 
                 entity.Property(e => e.Choice)
                     .HasColumnName("choice")
@@ -197,15 +183,9 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("opinion")
                     .HasMaxLength(4000);
 
-                entity.Property(e => e.PortalToDoId).HasColumnName("portalToDoId");
-
                 entity.Property(e => e.RunTime)
                     .HasColumnName("runTime")
                     .HasColumnType("datetime");
-
-                entity.Property(e => e.SmsId)
-                    .HasColumnName("smsId")
-                    .HasMaxLength(4000);
 
                 entity.Property(e => e.StartTime)
                     .HasColumnName("startTime")
@@ -215,15 +195,11 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("state")
                     .HasMaxLength(4000);
 
-                entity.Property(e => e.StepId)
-                    .HasColumnName("stepId")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.StepId).HasColumnName("stepId");
 
                 entity.Property(e => e.Type).HasColumnName("type");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("userId")
-                    .HasMaxLength(50);
+                entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.HasOne(d => d.BillsRecord)
                     .WithMany(p => p.FlowBillsRecordUser)
@@ -313,9 +289,7 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("linkCode")
                     .HasMaxLength(128);
 
-                entity.Property(e => e.MainId)
-                    .HasColumnName("mainId")
-                    .HasMaxLength(64);
+                entity.Property(e => e.MainId).HasColumnName("mainId");
 
                 entity.Property(e => e.ReminderTimeout).HasColumnName("reminderTimeout");
 
@@ -344,6 +318,11 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.Property(e => e.Style)
                     .HasColumnName("style")
                     .HasMaxLength(512);
+
+                entity.HasOne(d => d.Main)
+                    .WithMany(p => p.FlowStep)
+                    .HasForeignKey(d => d.MainId)
+                    .HasConstraintName("FK_FlowStep_FlowMain");
             });
 
             modelBuilder.Entity<FlowStepPath>(entity =>
@@ -362,21 +341,20 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("expression")
                     .HasMaxLength(512);
 
-                entity.Property(e => e.MainId)
-                    .HasColumnName("mainId")
-                    .HasMaxLength(64);
+                entity.Property(e => e.MainId).HasColumnName("mainId");
 
                 entity.Property(e => e.Nikename)
                     .HasColumnName("nikename")
                     .HasMaxLength(512);
 
-                entity.Property(e => e.StartStepId)
-                    .HasColumnName("startStepId")
-                    .HasMaxLength(64);
+                entity.Property(e => e.StartStepId).HasColumnName("startStepId");
 
-                entity.Property(e => e.StopStepId)
-                    .HasColumnName("stopStepId")
-                    .HasMaxLength(64);
+                entity.Property(e => e.StopStepId).HasColumnName("stopStepId");
+
+                entity.HasOne(d => d.Main)
+                    .WithMany(p => p.FlowStepPath)
+                    .HasForeignKey(d => d.MainId)
+                    .HasConstraintName("FK_FlowStepPath_FlowMain");
             });
 
             modelBuilder.Entity<GeneralExample>(entity =>

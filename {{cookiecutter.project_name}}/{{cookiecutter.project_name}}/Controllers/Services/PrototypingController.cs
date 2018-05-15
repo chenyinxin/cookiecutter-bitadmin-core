@@ -2,6 +2,7 @@ using {{cookiecutter.project_name}}.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,32 +11,33 @@ using System.Threading.Tasks;
 namespace {{cookiecutter.project_name}}.Controllers
 {
     /// <summary>
-    /// 快速原型数据（数据放Prototyping文件夹）
+    /// 快速原型数据（数据放prototyping文件夹）
     /// </summary>
     public class PrototypingController: Controller
     {
-        string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Prototyping");
-        public JsonResult Query(string sign)
+        string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prototyping");
+        public JsonResult Query(string module,string page)
         {
             try
             {
-                List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
-                string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Prototyping", sign + ".txt");
-                var lines = System.IO.File.ReadAllLines(file, Encoding.GetEncoding("gb2312"));
-                for (int i = 1; i < lines.Length; i++)
+                string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prototyping", module + ".xlsx");
+                DataTable dt = ExcelHelper.ExcelToDataTable(file, page);
+                dt.Columns.Add("module");
+                dt.Columns.Add("page");
+                dt.Columns.Add("key");
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    string line = lines[i];
-                    Dictionary<string, string> row = new Dictionary<string, string>();
-                    var items = line.Split("\t");
-                    foreach (var val in items)
-                    {
-                        row["c" + (row.Count + 1)] = val;
-                    }
-                    row["sign"] = sign;
-                    result.Add(row);
+                    DataRow row = dt.Rows[i];
+                    row["module"] = module;
+                    row["page"] = page;
+                    row["key"] = Convert.ToString(row[0]) + i;
                 }
-
-                return Json(new { Code = 0, Total = result.Count, Data = result });
+                if (dt.Rows.Count > 2)
+                {
+                    dt.Rows.RemoveAt(0);
+                    dt.Rows.RemoveAt(0);
+                }
+                return Json(new { Code = 0, Total = dt.Rows.Count, Data = QuerySuite.ToDictionary(dt) });
             }
             catch (Exception ex)
             {
@@ -49,27 +51,23 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 加载页面操作数据
         /// </summary>
         /// <returns></returns>
-        public JsonResult Load(string sign,string c1)
+        public JsonResult Load(string module, string page, string key)
         {
             try
             {
-                string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Prototyping", sign + ".txt");
-                var lines = System.IO.File.ReadAllLines(file, Encoding.GetEncoding("gb2312"));
-                Dictionary<string, string> row = new Dictionary<string, string>();
-
-                foreach (var line in lines)
+                string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prototyping", module + ".xlsx");
+                DataTable dt = ExcelHelper.ExcelToDataTable(file, page);
+                dt.Columns.Add("module");
+                dt.Columns.Add("page");
+                dt.Columns.Add("key");
+                for (int i=0;i<dt.Rows.Count;i++)
                 {
-                    var items = line.Split("\t");
-                    if (items[0] != c1)
-                        continue;
-
-                    foreach (var val in items)
-                    {
-                        row["c" + (row.Count + 1)] = val;
-                    }
+                    DataRow row = dt.Rows[i];
+                    row["module"] = module;
+                    row["page"] = page;
+                    row["key"] = Convert.ToString(row[0]) + i;
                 }
-                row["sign"] = sign;
-                return Json(new { Code = 0, Data = row });
+                return Json(new { Code = 0, Total = dt.Rows.Count, Data = QuerySuite.ToDictionary(dt, "key='" + key + "'")[0] });
             }
             catch (Exception ex)
             {
@@ -116,7 +114,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Prototyping");
+                string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prototyping");
                 foreach (var file in Directory.GetFiles(folder))
                 {
                     if (!file.ToLower().EndsWith(".txt")) continue;

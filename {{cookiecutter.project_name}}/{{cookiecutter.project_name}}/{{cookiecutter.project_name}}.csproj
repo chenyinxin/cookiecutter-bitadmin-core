@@ -162,4 +162,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\IOT\" />
+    <Folder Include="Helpers\WebApi\" />
+  </ItemGroup>
+
 </Project>

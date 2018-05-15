@@ -225,10 +225,10 @@ namespace {{cookiecutter.project_name}}.Helpers
             return string.Join(";", list.ToArray());
         }
 
-        public static List<Dictionary<string, object>> ToDictionary(DataTable dt)
+        public static List<Dictionary<string, object>> ToDictionary(DataTable dt, string filter = "")
         {
             List<Dictionary<string, object>> dicList = new List<Dictionary<string, object>>();
-            foreach (DataRow dr in dt.Rows)
+            foreach (DataRow dr in dt.Select(filter))
             {
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 foreach (DataColumn dc in dt.Columns)

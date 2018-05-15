@@ -6,7 +6,7 @@ namespace {{cookiecutter.project_name}}.Models
     public partial class FlowStep
     {
         public Guid StepId { get; set; }
-        public string MainId { get; set; }
+        public Guid? MainId { get; set; }
         public string StepName { get; set; }
         public int StepStatus { get; set; }
         public string Agency { get; set; }
@@ -23,5 +23,7 @@ namespace {{cookiecutter.project_name}}.Models
         public string SmsTemplateRead { get; set; }
         public string Description { get; set; }
         public string Style { get; set; }
+
+        public FlowMain Main { get; set; }
     }
 }
