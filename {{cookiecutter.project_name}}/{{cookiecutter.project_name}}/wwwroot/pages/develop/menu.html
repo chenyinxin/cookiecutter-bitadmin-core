@@ -30,9 +30,9 @@
                         <th data-field="name">页面名称</th>
                         <th data-field="pageSign">页面标识</th>
                         <th data-field="url">页面URL</th>
-                        <th data-field="type" data-formatter="typeFormatter" style="text-align:center">类型</th>
+                        <th data-field="type" data-format="typeFormatter" style="text-align:center">类型</th>
                         <th data-field="orderNo" style="text-align:center">排序</th>
-                        <th data-formatter="operationFormatter" style="text-align:center">操作</th>
+                        <th data-format="operationFormatter" style="text-align:center">操作</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -245,9 +245,7 @@
                         return false;
                     }
                     $.each(result.data, function (i, d) {
-                        var checked = "";
-                        if (d.PageID != null && d.PageID != "")
-                            checked = "checked";
+                        var checked = (d.pageId != null && d.pageId != "") ? "checked":"";
                         $("#td_Operation").append('<p style="float: left;padding:2px 10px;"><input type="checkbox" name="Operation" value="' + d.operationSign + '" ' + checked + '/>' + d.operationName + '</p>');
                     });
                     $("#ckOperationAll").attr("value", id);

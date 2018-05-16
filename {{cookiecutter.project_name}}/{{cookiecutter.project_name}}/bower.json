@@ -10,6 +10,11 @@
     "jquery-validation-unobtrusive": "v3.2.9",
     "jquery-form": "jquery-form-plugin#v4.2.2",
     "bootstrap-treeview": "v1.2.0",
-    "jquery-treegrid": "0.3.0"
+    "jquery-treegrid": "0.3.0",
+    "admin-lte": "adminlte#v2.4.3"
+  },
+  "resolutions": {
+    "jquery": "^3.2.1",
+    "jquery-ui": "1.12.1"
   }
 }

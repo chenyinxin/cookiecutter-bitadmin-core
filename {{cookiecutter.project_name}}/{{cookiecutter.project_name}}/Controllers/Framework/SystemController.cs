@@ -565,7 +565,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 SqlParameter[] param ={new SqlParameter("@roleId",roleId)};
 
                 DataTable dt = SqlHelper.Query(sql, param).Tables[0];
-                var result = QuerySuite.ToDictionary(dt, "parentId", "", "id", "child");
+                var result = QuerySuite.ToDictionary(dt, "parentId", "id");
                 return Json(new { Code = 0, Total = result.Count, Data = result });
 
             }
@@ -586,77 +586,27 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 Dictionary<object, Dictionary<string, SqlParameter[]>> execSqlStringList = new Dictionary<object, Dictionary<string, SqlParameter[]>>();
                 Dictionary<string, SqlParameter[]> dic = new Dictionary<string, SqlParameter[]>();
-                string sqlDel = "delete SysRoleOperatePower where roleId=@roleId and ModulePageID=@ModulePageID ";
-                SqlParameter[] param ={new SqlParameter("@roleId", roleId),
-                                       new SqlParameter("@ModulePageID",modulePageId)};
-                dic.Add(sqlDel, param);
-                execSqlStringList.Add(Guid.NewGuid(), dic);
-                //获取页面所有父级模块
-                DataTable pdt = SqlHelper.Query(@"     
-                    with modules as	(
-	                select ModuleID,ParentID from SysModule where ModuleID=@parentId
-	                union all
-	                select m.ModuleID,m.ParentID from SysModule m inner join modules on m.ModuleID = modules.ParentID)
-	                select ModuleID from modules ", new SqlParameter("@parentId", parentId)).Tables[0];
-                //判断同一模块中其它页面的是否配置了权限
-                int ParentCount = Convert.ToInt32(SqlHelper.GetSingle("select count(1) from SysRoleOperatePower where roleId=@roleId and ModuleParentID=@ModuleParentID ",
-                                            new SqlParameter("@roleId", roleId),
-                                            new SqlParameter("@ModuleParentID", parentId)));
-                if (ParentCount < 2 && string.IsNullOrEmpty(operationSign))//如果同一模块中其它页面都没权限，且本页面取消所有权限，则删除本页面所有父级模块权限
-                {
-                    Dictionary<string, SqlParameter[]> dicDel = new Dictionary<string, SqlParameter[]>();
-                    string sqlDelete = "delete SysRoleOperatePower where roleId=@roleId and ModulePageID=@ModulePageID ";
-                    SqlParameter[] Deleteparam ={
-                                        new SqlParameter("@roleId", roleId),
-                                        new SqlParameter("@ModulePageID",parentId)
-                                    };
-                    dicDel.Add(sqlDelete, Deleteparam);
-                    execSqlStringList.Add(Guid.NewGuid(), dicDel);
-                    foreach (DataRow dr in pdt.Rows)
-                    {
-                        dicDel = new Dictionary<string, SqlParameter[]>();
-                        sqlDelete = "delete SysRoleOperatePower where roleId=@roleId and ModulePageID=@ModulePageID ";
-                        SqlParameter[] Deleteparam1 ={
-                                        new SqlParameter("@roleId", roleId),
-                                        new SqlParameter("@ModulePageID",dr["ModuleID"])};
-                        dicDel.Add(sqlDelete, Deleteparam1);
-                        execSqlStringList.Add(Guid.NewGuid(), dicDel);
-                    }
-                }
+                //先删除
+                dbContext.SysRoleOperatePower.RemoveRange(dbContext.SysRoleOperatePower.Where(x => x.RoleId == roleId && x.ModulePageId == modulePageId));
+                //再添加
                 if (!string.IsNullOrEmpty(operationSign))
                 {
-                    Dictionary<string, SqlParameter[]> dicinsert = new Dictionary<string, SqlParameter[]>();
-                    string sqlinser = @"INSERT INTO [dbo].[SysRoleOperatePower] ([id],[roleId],[ModulePageID],[operationSign],[ModuleParentID])
-                                                 VALUES (newid(),@roleId,@ModulePageID,@operationSign,@ModuleParentID)";
-                    SqlParameter[] paraminser ={
-                                        new SqlParameter("@roleId", roleId),
-                                        new SqlParameter("@ModulePageID",modulePageId),
-                                        new SqlParameter("@operationSign",operationSign),
-                                        new SqlParameter("@ModuleParentID",parentId)
-                                    };
-                    dicinsert.Add(sqlinser, paraminser);
-                    execSqlStringList.Add(Guid.NewGuid(), dicinsert);
-
-                    foreach (DataRow dr in pdt.Rows)
-                    {
-                        dicinsert = new Dictionary<string, SqlParameter[]>();
-                        sqlinser = @"if (select COUNT(1)from [dbo].[SysRoleOperatePower] where [roleId]=@roleId and ModulePageID=@ModulePageID)=0
-                                        begin
-                                        INSERT INTO [dbo].[SysRoleOperatePower] ([id],[roleId],[ModulePageID],[operationSign])
-                                            VALUES (newid(),@roleId,@ModulePageID,@operationSign)
-                                        end ";
-                        SqlParameter[] para1 ={
-                                        new SqlParameter("@roleId", roleId),
-                                        new SqlParameter("@ModulePageID",dr["ModuleID"]),
-                                        new SqlParameter("@operationSign","query")};
-                        dicinsert.Add(sqlinser, para1);
-                        execSqlStringList.Add(Guid.NewGuid(), dicinsert);
-                    }
+                    dbContext.SysRoleOperatePower.Add(new SysRoleOperatePower() { Id = Guid.NewGuid(), RoleId = roleId, ModulePageId = modulePageId, ModuleParentId = parentId, OperationSign = operationSign });
                 }
-
-                SqlHelper.ExecuteSqlTran(execSqlStringList);
+                dbContext.SaveChanges();
+                //处理父节点（子节点有父节点无，则添加；反之则删除；其它则不变。）
+                if (dbContext.SysRoleOperatePower.Count(x => x.RoleId == roleId && x.ModuleParentId == parentId) > 0 
+                    && dbContext.SysRoleOperatePower.Count(x => x.RoleId == roleId && x.ModulePageId == parentId) == 0)
+                {
+                    dbContext.SysRoleOperatePower.Add(new SysRoleOperatePower() { Id = Guid.NewGuid(), RoleId = roleId, ModulePageId = parentId, OperationSign = "query" });
+                }
+                if (dbContext.SysRoleOperatePower.Count(x => x.RoleId == roleId && x.ModuleParentId == parentId) == 0
+                    && dbContext.SysRoleOperatePower.Count(x => x.RoleId == roleId && x.ModulePageId == parentId) > 0)
+                {
+                    dbContext.SysRoleOperatePower.RemoveRange(dbContext.SysRoleOperatePower.Where(x => x.RoleId == roleId && x.ModulePageId == parentId));
+                }
+                dbContext.SaveChanges();
                 return Json(new { Code = 0, Msg = "保存成功！" });
-
             }
             catch (Exception ex)
             {

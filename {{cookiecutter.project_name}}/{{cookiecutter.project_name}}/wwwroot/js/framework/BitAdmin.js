@@ -183,7 +183,6 @@ var time = {
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
-
 }
 var guid = {
 	/*
@@ -200,7 +199,12 @@ var guid = {
             }
         }
         return temp;
-    }
+    },
+    //验证字符串是否Guid格式。
+    validate: function (value) {
+        return value != null && guid.regex.test(value);
+    },
+    regex : new RegExp("^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$")
 }
 
 var array = {

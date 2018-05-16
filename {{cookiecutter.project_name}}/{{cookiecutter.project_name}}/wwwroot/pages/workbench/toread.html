@@ -1,6 +1,4 @@
 ﻿
-<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
-
 <div class="box">
     <div id="exampleQuery" class="box-body querySuite-wrapper">
         <!-- 条件搜索 -->
@@ -17,13 +15,13 @@
                     <td><input type="text" name="stepName" class="form-control"></td>
                     <th>待阅开始时间：</th>
                     <td>
-                        <div data-control="dataPicker" data-formatter="yyyy-MM-dd">
+                        <div data-control="datePicker" data-format="yyyy-MM-dd">
                             <input type="text" name="startDate" class="form-control" />
                         </div>
                     </td>
                     <th>至</th>
                     <td>
-                        <div data-control="dataPicker" data-formatter="yyyy-MM-dd">
+                        <div data-control="datePicker" data-format="yyyy-MM-dd">
                             <input type="text" name="endDate" class="form-control" />
                         </div>
                     </td>
@@ -59,7 +57,6 @@
     </div>
 </div>
 
-<script src="../../lib/framework/js/jquery.jedate.js"></script>
 <script type="text/javascript">
     $(function () {
         //查询套件初始化

@@ -1,4 +1,4 @@
-﻿<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
+﻿
 <div class="box">
     <div class="box-body querySuite-wrapper">
         <!-- 按钮 查询 导入 -->
@@ -12,7 +12,7 @@
         </div>
         <!-- 列表-->
         <div class="querySuite-table"
-             data-parent="parentId" data-children="child"
+             data-parent="parentId"
              data-key="exampleId"
              data-query-url="../../Example/QueryExampleTree"
              data-delete-url="../../Example/DeleteExample">
@@ -23,7 +23,7 @@
                         <th data-field="exampleName">示例名称</th>
                         <th data-field="exampleText">普通文本</th>
                         <th data-field="examplePhone">手机</th>
-                        <th data-formatter="operationFormatter" style="text-align:center">操作</th>
+                        <th data-format="operationFormatter" style="text-align:center">操作</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -148,7 +148,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-<script src="../../lib/framework/js/jquery.jedate.js"></script>
 <script src="../../lib/jquery-treegrid/js/jquery.treegrid.min.js"></script>
 <script type="text/javascript">
     $(function () {

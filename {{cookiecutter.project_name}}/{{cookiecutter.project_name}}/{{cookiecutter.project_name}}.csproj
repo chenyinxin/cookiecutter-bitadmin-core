@@ -10,150 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\images\qrcode\**" />
-    <Content Remove="wwwroot\images\qrcode\**" />
-    <EmbeddedResource Remove="wwwroot\images\qrcode\**" />
-    <None Remove="wwwroot\images\qrcode\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Baidu.AI" Version="3.4.0" />
     <PackageReference Include="BitAdminCore.ALL" Version="1.0.3" />
+    <PackageReference Include="BuildBundlerMinifier" Version="2.7.385" />
     <PackageReference Include="DotNetCore.NPOI" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\js\tracking\color_camera_gui.js" />
-    <None Include="wwwroot\js\tracking\dat.gui.min.js" />
-    <None Include="wwwroot\js\tracking\eye-min.js" />
-    <None Include="wwwroot\js\tracking\face-min.js" />
-    <None Include="wwwroot\js\tracking\mouth-min.js" />
-    <None Include="wwwroot\js\tracking\stats.min.js" />
-    <None Include="wwwroot\js\tracking\tracking-min.js" />
-    <None Include="wwwroot\lib\code-prettify\.gitignore" />
-    <None Include="wwwroot\lib\code-prettify\CHANGES.md" />
-    <None Include="wwwroot\lib\code-prettify\COPYING" />
-    <None Include="wwwroot\lib\code-prettify\distrib\prettify-small.tar.bz2" />
-    <None Include="wwwroot\lib\code-prettify\distrib\prettify-small.tgz" />
-    <None Include="wwwroot\lib\code-prettify\distrib\prettify-small.zip" />
-    <None Include="wwwroot\lib\code-prettify\docs\getting_started.md" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\combinePrefixPatterns.js" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\externs.js" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\extractSourceSpans.js" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\js_include.pl" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\numberLines.js" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\prettify.js" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\recombineTagsAndDecorations.js" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\regexpPrecederPatterns.pl" />
-    <None Include="wwwroot\lib\code-prettify\js-modules\run_prettify.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-aea.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-agc.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-apollo.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-basic.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-cbm.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-cl.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-clj.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-css.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-dart.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-el.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-erl.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-erlang.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-fs.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-go.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-hs.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-lasso.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-lassoscript.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-latex.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-lgt.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-lisp.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-ll.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-llvm.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-logtalk.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-ls.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-lsp.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-lua.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-matlab.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-ml.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-mumps.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-n.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-nemerle.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-pascal.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-proto.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-r.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-rd.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-rkt.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-rust.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-s.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-scala.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-scm.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-Splus.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-sql.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-ss.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-swift.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-tcl.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-tex.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-vb.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-vbs.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-vhd.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-vhdl.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-wiki.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-xq.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-xquery.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-yaml.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\lang-yml.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\prettify.js" />
-    <None Include="wwwroot\lib\code-prettify\loader\run_prettify.js" />
-    <None Include="wwwroot\lib\code-prettify\Makefile" />
-    <None Include="wwwroot\lib\code-prettify\README.md" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-apollo.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-basic.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-clj.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-css.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-dart.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-erlang.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-go.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-hs.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-lasso.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-lisp.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-llvm.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-logtalk.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-lua.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-matlab.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-ml.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-mumps.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-n.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-pascal.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-proto.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-r.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-rd.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-rust.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-scala.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-sql.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-swift.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-tcl.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-tex.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-vb.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-vhdl.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-wiki.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-xq.js" />
-    <None Include="wwwroot\lib\code-prettify\src\lang-yaml.js" />
-    <None Include="wwwroot\lib\code-prettify\src\prettify.js" />
-    <None Include="wwwroot\lib\code-prettify\src\run_prettify.js" />
-    <None Include="wwwroot\lib\code-prettify\tests\test_base.js" />
-    <None Include="wwwroot\lib\code-prettify\tests\test_in_node" />
-    <None Include="wwwroot\lib\code-prettify\tools\closure-compiler\amd-externs.js" />
-    <None Include="wwwroot\lib\code-prettify\tools\closure-compiler\compiler.jar" />
-    <None Include="wwwroot\lib\code-prettify\tools\closure-compiler\console-externs.js" />
-    <None Include="wwwroot\lib\code-prettify\tools\closure-compiler\COPYING" />
-    <None Include="wwwroot\lib\code-prettify\tools\closure-compiler\README" />
-    <None Include="wwwroot\lib\code-prettify\tools\lang-handler-aliases.sh" />
-    <None Include="wwwroot\lib\code-prettify\tools\yui-compressor\README" />
-    <None Include="wwwroot\lib\code-prettify\tools\yui-compressor\yuicompressor-2.4.4.jar" />
   </ItemGroup>
 
   <ItemGroup>

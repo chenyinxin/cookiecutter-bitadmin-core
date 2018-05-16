@@ -1,6 +1,4 @@
 ﻿
-<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
-
 <div class="box">
     <div id="exampleQuery" class="box-body querySuite-wrapper">
         <!-- 条件搜索 -->
@@ -13,7 +11,7 @@
                     <td><input type="text" name="plainText" class="form-control" placeholder="普通文本(=)"></td>
                     <th>日期时间：</th>
                     <td>
-                        <div data-control="dataPicker" data-formatter="yyyy-MM-dd HH:mm:ss">
+                        <div data-control="datePicker" data-format="yyyy-MM-dd HH:mm:ss">
                             <input type="text" name="dateTimePicker" class="form-control" placeholder="日期时间" />
                         </div>
                     </td>
@@ -67,9 +65,7 @@
     </div>
 </div>
 
-
-<script src="../../lib/framework/js/jquery.jedate.js"></script>
-<script src="../../js/workflow/workflow.js"></script>
+<script src="../../js/framework/bitadmin-workflow.js"></script>
 
 <script type="text/javascript">
     $(function () {

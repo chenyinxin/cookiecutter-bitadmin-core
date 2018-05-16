@@ -148,7 +148,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 string sql = @"select * from GeneralExample";
                 DataTable dt = SqlHelper.Query(sql).Tables[0];
 
-                var result = QuerySuite.ToDictionary(dt, "parentID", "", "exampleId", "child");
+                var result = QuerySuite.ToDictionary(dt, "parentID", "exampleId");
                 return Json(new { Code = 0, Total = result.Count, Data = result });
 
             }

@@ -1,6 +1,4 @@
 ﻿
-<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
-
 <div id="exampleModal" class="formSuite-wrapper"
      data-submit-close="false">
     <div class="modal-content">
@@ -22,19 +20,19 @@
                     <tr>
                         <th>电话号码：</th>
                         <td>
-                            <input type="text" name="mobileText" class="form-control" placeholder="电话号码" >
+                            <input type="text" name="mobileText" class="form-control" placeholder="电话号码">
                         </td>
                         <th>日期时间：</th>
                         <td>
-                            <div data-control="datePicker" data-format="yyyy-MM-dd HH:mm:ss" >
-                                <input type="text" name="dateTimePicker" class="form-control" placeholder="日期时间"  />
+                            <div data-control="datePicker" data-format="yyyy-MM-dd HH:mm:ss">
+                                <input type="text" name="dateTimePicker" class="form-control" placeholder="日期时间" />
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>用户：</th>
                         <td>
-                            <div class="input-group" data-control="picker" data-control-type="UserPicker"  data-param="single:true"   >
+                            <div class="input-group" data-control="picker" data-control-type="UserPicker" data-param="single:true">
                                 <input type="text" name="userName" class="form-control" placeholder="用户" />
                                 <input type="hidden" name="userPicker" />
                             </div>
@@ -63,10 +61,7 @@
     </div>
 </div>
 
-
-
-<script src="../../lib/framework/js/jquery.jedate.js"></script>
-<script src="../../js/workflow/workflow.js"></script>
+<script src="../../js/framework/bitadmin-workflow.js"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -134,5 +129,5 @@
 
             });
     });
-   
+
 </script>

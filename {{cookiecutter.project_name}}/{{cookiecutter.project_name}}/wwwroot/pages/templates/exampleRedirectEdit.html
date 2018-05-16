@@ -1,4 +1,4 @@
-﻿<link href="../../lib/framework/css/jedate.css" rel="stylesheet" />
+﻿
 <style>
 </style>
 <div id="exampleModal" class="formSuite-wrapper"
@@ -103,24 +103,23 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary notHide" id="save">
-                 <span class="glyphicon glyphicon-saved"></span> 保存
+                <span class="glyphicon glyphicon-saved"></span> 保存
             </button>
             <button class="btn btn-default notHide" id="close">
-                 <span class="glyphicon glyphicon-remove"></span>关闭
+                <span class="glyphicon glyphicon-remove"></span>关闭
             </button>
         </div>
     </div>
 </div>
-<script src="../../lib/framework/js/jquery.jedate.js"></script>
 <script type="text/javascript">
-   
+
     $(function () {
         var url = BitPage.GetQueryString("page");
         var exampleId = BitPage.GetQueryString('exampleId', url);
 
-        var linkageSelectTrue = $("#linkageSelectTrue").linkageSelect().change(function (e) {});
+        var linkageSelectTrue = $("#linkageSelectTrue").linkageSelect().change(function (e) { });
         //同步
-        var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) {});       
+        var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) { });
 
         //表单套件初始化
         var formSuite = $("#exampleModal").generalForm()
@@ -150,9 +149,9 @@
 
             BitPage.Redirect("/Templates/ExampleRedirect", null, "ExampleRedirect");
         });
-       
+
     });
 
-    
+
 
 </script>

@@ -89,30 +89,23 @@ GO
 INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'bd9f3eba-d177-4d73-ad37-ef5fefc044d0', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'FlowSetting', N'流程配置', N'fa-user-circle', N'/system/flowsetting', NULL, 5)
 GO
 INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'63661fc7-7fba-4f64-be39-fb34021f2242', N'20256a37-fead-4d11-8052-f0df33738c3b', N'WorkflowExample', N'流程示例', NULL, N'/workflowexample/example', N'流程功能实现', 4)
+
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'f9d0015c-5143-4a67-9935-019906751f6a', N'e2041824-a541-478d-977a-51935c2fa74a', N'delete')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'dac6a751-52c4-481a-a3e9-01d36b1a1298', N'92a37fab-14e5-4f99-818d-213e27079e68', N'query')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'66a8a698-23bb-4698-ae29-0222f63c3c9e', N'27e63604-61b1-4429-80b2-c9d623403182', N'query')
-GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'3ee9fc15-8298-463b-b3e1-0324c22c5a09', N'5246eaba-c184-46f0-bd78-37ac309fec39', N'delete')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'd39df24e-5455-4489-b85c-034ad116e4ad', N'94a9c1a1-45a8-4ec5-bf0d-764331878542', N'query')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'12f6f26e-5f68-4608-af12-087ee2c37d9c', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'save')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'b8d7c638-9bd2-43d7-b60e-0a0c93e7875d', N'b3818125-8874-4413-8b0e-da5627181ae9', N'query')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'1964452b-bb86-4580-af44-0f54029957c0', N'94a9c1a1-45a8-4ec5-bf0d-764331878542', N'add')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'851fa846-bd8d-40ef-9d0d-10425901e05c', N'bdfcb2eb-728c-48e0-b7a3-5e2f0810346a', N'query')
-GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'20a55951-aa60-498d-af62-18fd6f5f8b4d', N'7a90de2b-0663-4611-9c48-aea881cd4f9a', N'delete')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'88def3d1-0b7d-4aa5-bc3b-1d7573352ad7', N'a93a433d-85e7-4019-b7bf-e0f87429b7f4', N'query')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'faa0435c-e166-45ba-89f3-22eb285ddb3f', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'delete')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'2f14db59-d1b6-434e-be44-29262ac03cf4', N'e2041824-a541-478d-977a-51935c2fa74a', N'save')
 GO
@@ -138,19 +131,13 @@ INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'abcd
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'dfdfd61a-6273-469b-8d87-53173e917bf0', N'cfcdc86d-3546-4578-9e1a-b5c210cbf2f5', N'add')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'0b2d551c-4c03-4292-b216-55c266581b73', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'query')
-GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'c60e61af-436c-4a8e-b5cf-59c32b590eb3', N'63661fc7-7fba-4f64-be39-fb34021f2242', N'add')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'4afd81ad-8580-45cd-8fe2-651c9ba6944a', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'add')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'5d2981c7-e966-4d0c-93a9-67db861b2acc', N'193495e7-d975-4d54-99ea-06b205ecdfee', N'add')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'5d09ecb4-ba4f-4be4-bd47-6b91c39292c7', N'193495e7-d975-4d54-99ea-06b205ecdfee', N'query')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'bf396d7e-c0c4-4251-87e8-6f7ff57a3793', N'193495e7-d975-4d54-99ea-06b205ecdfee', N'save')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'e5b3c1a1-aea3-4c37-857d-6fbfdd74aabf', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'import')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'8610cf54-88f0-4503-a211-73fb321298f7', N'bd9f3eba-d177-4d73-ad37-ef5fefc044d0', N'save')
 GO
@@ -176,17 +163,11 @@ INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'95e8
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'71d0da3c-4f7f-4d57-895a-8b4a103ba1ab', N'5df0e325-9b8e-4d9f-81b4-abd8cd384ed7', N'query')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'003e752f-7d91-483b-b546-8fadc53c00f7', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'download')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'ef4915c7-bd87-4d6e-9b8d-906c6f48ff11', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'add')
-GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'8f07f590-1c78-491a-95ea-914c158e16e8', N'5246eaba-c184-46f0-bd78-37ac309fec39', N'add')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'87566bac-ea8c-4982-91ce-93401333b8e6', N'cfcdc86d-3546-4578-9e1a-b5c210cbf2f5', N'delete')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'4e1703b0-77d8-48bb-b2e5-97785408dacc', N'56461589-3ad7-4f92-8bc1-62b2473daa78', N'query')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'3efe7e3c-3598-49f4-96d7-a2942ac8290a', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'query')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'cd2c7e4c-4e9e-4199-aec6-a71a4437751e', N'69714b72-95ed-45c3-88f7-19a25b3f2e0c', N'query')
 GO
@@ -198,13 +179,9 @@ INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'1358
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'54e5a90a-f790-4167-93d0-b4b3b89f1fb1', N'63661fc7-7fba-4f64-be39-fb34021f2242', N'save')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'2fce2a51-cf4f-4e4b-974b-bab3ab57acbc', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'download')
-GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'6c6ee224-199d-403d-8306-bbe3e8385f6d', N'6e16c53c-53ee-4c13-b096-a44458901b2e', N'save')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'cb979c90-2889-4a16-a9ac-bcb08451619b', N'63661fc7-7fba-4f64-be39-fb34021f2242', N'query')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'78072739-f2ad-47d3-aaba-bccf1fac3f12', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'back')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'96b18cb4-88d4-4d2c-82de-bd35e5f1695d', N'b3818125-8874-4413-8b0e-da5627181ae9', N'add')
 GO
@@ -224,8 +201,6 @@ INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'ef9a
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'37e75426-ba62-4d09-ad4b-d479e1e52d11', N'92a37fab-14e5-4f99-818d-213e27079e68', N'add')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'675e0a09-7e59-4e65-ac12-d49faf086ae6', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'delete')
-GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'4c5912e9-028e-4eac-80c0-d6c6c71dc3f0', N'6e16c53c-53ee-4c13-b096-a44458901b2e', N'delete')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'fe1e8296-bd00-4d5f-ab8b-d80c2c119b96', N'63661fc7-7fba-4f64-be39-fb34021f2242', N'delete')
@@ -242,69 +217,53 @@ INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'd73e
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'b264ae8b-343a-48e6-90d1-e9464443be03', N'63661fc7-7fba-4f64-be39-fb34021f2242', N'export')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'e70b4703-1042-4afa-be2f-ea4d26959bc5', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'import')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'63ab25c6-a3c3-46dc-8033-eabf4044c2dc', N'a957e1b0-2545-4648-8c75-3e040ec5893a', N'export')
-GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'66be12ae-539c-40d1-9712-f0565b6c7d6c', N'7a90de2b-0663-4611-9c48-aea881cd4f9a', N'query')
-GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'd98a4041-81a0-4438-8b5b-f36c2aa58c4b', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'save')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'963cbb6b-2874-4747-af26-f5c71304b77d', N'a93a433d-85e7-4019-b7bf-e0f87429b7f4', N'delete')
 GO
 INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'09faf111-92c9-4aa5-9349-f91d40f63311', N'5246eaba-c184-46f0-bd78-37ac309fec39', N'save')
 GO
-INSERT [dbo].[SysPageOperation] ([id], [pageID], [operationSign]) VALUES (N'eb83bb87-8529-4b5d-bcfc-f9e60e89a32f', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'export')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'6d94d063-03cb-471b-84d5-03d7b471e3e3', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'5246eaba-c184-46f0-bd78-37ac309fec39', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'645a0958-0d03-4adb-a1db-019b4772c12a', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'5a4bd0dc-ed8b-42a0-9801-1040f71aa606', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'de63dd41-ec1a-4926-a5bc-0c47ea8503d8', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'7a90de2b-0663-4611-9c48-aea881cd4f9a', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'42395b55-bdde-41d6-809e-019b6162ac7d', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'b3818125-8874-4413-8b0e-da5627181ae9', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'768d6dad-2da1-46cf-a0f1-145aadabea1d', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'5a4bd0dc-ed8b-42a0-9801-1040f71aa606', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'a85fbd20-f382-4e49-b2fa-08920add3963', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'20256a37-fead-4d11-8052-f0df33738c3b', NULL, N'query')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'a90cd343-73d9-4aac-b020-14b54f474dab', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'a93a433d-85e7-4019-b7bf-e0f87429b7f4', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'0dd347f0-d9dd-4af4-a8cc-0cd0e08594e6', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'56461589-3ad7-4f92-8bc1-62b2473daa78', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'ac9c5eba-338e-4f2e-b3a5-14c8683b8355', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'4bee24e5-fa75-4573-8de6-e30597a10d16', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'a4cf72d4-2515-434a-bfdd-0e153dd24337', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'bd9f3eba-d177-4d73-ad37-ef5fefc044d0', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete,back')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'95f62b63-e3ba-4802-967a-16f82499dc7d', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'69714b72-95ed-45c3-88f7-19a25b3f2e0c', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'dc321206-2338-46e1-8cd7-353b382b2247', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'63661fc7-7fba-4f64-be39-fb34021f2242', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete,import,export,download,back')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'd88224f4-0c7e-433a-97e4-1701859d4666', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'20256a37-fead-4d11-8052-f0df33738c3b', NULL, N'query')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'b30cf2fc-0174-4b3d-94f8-354937e39db0', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'861eb706-f261-4b5e-85f0-dea5bf37848f', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
-GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'a909e265-c481-46dd-9d55-4c33418ace59', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'4bee24e5-fa75-4573-8de6-e30597a10d16', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'22952f4a-8939-4dfe-8353-43509d02319e', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'94a9c1a1-45a8-4ec5-bf0d-764331878542', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete')
 GO
 INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'692d0563-b53c-4c5f-b855-53a26331d014', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', NULL, N'query')
 GO
 INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'a5f90500-9384-4656-bd34-54035b396d45', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', NULL, N'query')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'e6d6e17f-7ec3-4fed-9cf9-5514d854b120', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'69714b72-95ed-45c3-88f7-19a25b3f2e0c', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'0be349db-0119-4fd1-a558-664da9f27f56', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'6e16c53c-53ee-4c13-b096-a44458901b2e', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'9ae66e1d-ce67-4462-8b45-6a80e62ce781', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'193495e7-d975-4d54-99ea-06b205ecdfee', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'b0aebc92-5849-4c0d-804e-85002eb306b0', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'861eb706-f261-4b5e-85f0-dea5bf37848f', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'7debfdb0-8816-460c-b36f-8ecdf84a1561', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'e2041824-a541-478d-977a-51935c2fa74a', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'ec009c70-9962-42f4-843c-8d71f109fe72', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'b3818125-8874-4413-8b0e-da5627181ae9', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'4d94ddfc-a117-425d-8df5-a749ecc89786', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'94a9c1a1-45a8-4ec5-bf0d-764331878542', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'e3378fed-e691-416d-ab58-a177f69d943b', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'cfcdc86d-3546-4578-9e1a-b5c210cbf2f5', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'a9b09202-cf07-442a-90b9-ade56a448632', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'5df0e325-9b8e-4d9f-81b4-abd8cd384ed7', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'cb28e63a-7bae-49e4-ae12-adc289dc4ba1', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'193495e7-d975-4d54-99ea-06b205ecdfee', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'b0463dc4-1705-4b9c-a76a-af778b5e8a9b', NULL, N'52ee24b7-c2ff-44d0-9fee-3897d609d554', NULL, N'query')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'177be348-812d-4d56-9a47-c7ee7e366478', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'5df0e325-9b8e-4d9f-81b4-abd8cd384ed7', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'f5a698a8-a734-40f9-9a76-baa08e1d24c2', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'1b435459-3e31-4e94-81d7-d9b4742f346a', NULL, N'query')
-GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'5620db15-421a-4b3f-8f47-c3bb51576c8e', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'6e16c53c-53ee-4c13-b096-a44458901b2e', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
-GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'229d5407-114f-4feb-b13f-c8d813cc0738', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'7a90de2b-0663-4611-9c48-aea881cd4f9a', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete')
-GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'0038fa03-06c6-49f4-a21a-ca2ce265e153', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'cfcdc86d-3546-4578-9e1a-b5c210cbf2f5', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete')
-GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'9e1155e5-e254-44de-87e9-cb5a49fa5122', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'5246eaba-c184-46f0-bd78-37ac309fec39', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
-GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'949ff2eb-ecc1-4d19-9d59-d3c82876f94f', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'a93a433d-85e7-4019-b7bf-e0f87429b7f4', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'928251dd-5620-4d4e-81e7-ce3d08c9763f', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'bd9f3eba-d177-4d73-ad37-ef5fefc044d0', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete,back')
 GO
 INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'e7c9042b-db34-4368-8dcc-d5b50f1ee53c', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'92a37fab-14e5-4f99-818d-213e27079e68', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete,back')
 GO
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'61b5b50a-bf7d-48a7-baa9-dc97d67a42fd', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'63661fc7-7fba-4f64-be39-fb34021f2242', N'20256a37-fead-4d11-8052-f0df33738c3b', N'query,add,save,delete,import,export,download,back')
+GO
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'800ac853-fbb9-4667-a2ea-deddb4a27b3b', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'e2041824-a541-478d-977a-51935c2fa74a', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'query,add,save,delete')
+GO
 INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'2f709875-7508-4e41-9827-dfe36bb0e87a', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', NULL, N'query')
 GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'bf4c80f2-8a7b-4374-a109-e2d02068dbb1', NULL, N'92a37fab-14e5-4f99-818d-213e27079e68', N'52ee24b7-c2ff-44d0-9fee-3897d609d554', N'query,add,save,delete,import,export,download')
-GO
-INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'ca098361-ab37-4b18-af9e-ef8e8b3d2ae0', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'b916ab03-f679-4b65-9131-b21d7a2ad108', N'1b435459-3e31-4e94-81d7-d9b4742f346a', N'query,add,save,delete,import,export,download')
+INSERT [dbo].[SysRoleOperatePower] ([id], [roleId], [modulePageId], [moduleParentId], [operationSign]) VALUES (N'68baa8fe-3c50-4b76-81c5-e403ab594ef6', N'3f9578c5-c0a2-4c7a-b0fd-c93fae47194b', N'56461589-3ad7-4f92-8bc1-62b2473daa78', N'b27cf48f-e85a-4cb2-afc6-cdefd75b3754', N'query')
 GO
