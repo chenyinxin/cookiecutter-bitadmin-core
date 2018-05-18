@@ -278,7 +278,6 @@ namespace {{cookiecutter.project_name}}.Controllers
 
         #endregion
 
-
         #region 页面操作
         /// <summary>
         /// 获取页面操作数据

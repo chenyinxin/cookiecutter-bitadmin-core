@@ -15,10 +15,10 @@ namespace {{cookiecutter.project_name}}.Helpers
     {
         public static string ConnectionString { get { return HttpContextCore.Configuration["ConnectionStrings:MongoDB"]; } }
 
-        public static IMongoDatabase MongoDB;
+        public static IMongoDatabase Connection;
         static MongoDBHelper()
         {
-            MongoDB = new MongoClient(ConnectionString).GetDatabase("{{cookiecutter.project_name}}");
+            Connection = new MongoClient(ConnectionString).GetDatabase("{{cookiecutter.project_name}}");
         }  
         public static void InsertOne(string key, BsonDocument doc)
         {
@@ -39,7 +39,7 @@ namespace {{cookiecutter.project_name}}.Helpers
 
         public static IMongoCollection<BsonDocument> GetCollection(string key)
         {
-            return MongoDB.GetCollection<BsonDocument>(key);
+            return Connection.GetCollection<BsonDocument>(key);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace {{cookiecutter.project_name}}.Helpers
     /// 
     /// 需要重构：
     /// 重构1、支持mssql,mysql,oracle；
-    /// 重构2、ToDictionary转换Key的大小写与Api默认一致，这样数据库就可以用大写，与类一致。
     /// </summary>
     public class QuerySuite
     {

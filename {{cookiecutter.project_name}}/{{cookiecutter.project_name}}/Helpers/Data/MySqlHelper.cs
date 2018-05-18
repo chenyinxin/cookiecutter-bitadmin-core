@@ -276,7 +276,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         #endregion
 
-        #region 构建 SqlCommand 对象
+        #region 构建SqlCommand 对象
         /// <summary>
         /// 构建 SqlCommand 对象(用来返回一个结果集，而不是一个整数值)
         /// </summary>

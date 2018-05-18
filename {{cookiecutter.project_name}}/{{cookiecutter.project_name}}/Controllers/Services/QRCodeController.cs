@@ -5,8 +5,8 @@ using {{cookiecutter.project_name}}.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using QRCoder;
 using System;
-using System.DrawingCore;
-using System.DrawingCore.Imaging;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace {{cookiecutter.project_name}}.Controllers

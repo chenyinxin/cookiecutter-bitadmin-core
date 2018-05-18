@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>绑定账号</title>
+    <meta name="description" content="BitAdminCore, Version 0.1, Alpha" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--基础引用-->
+    <link href="../../lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--框架引用-->
+    <link rel="stylesheet" href="../../css/framework/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../css/framework/BitAdmin.css" />
+    <style type="text/css">
+        .login-box-body, .form-control {
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <h3 class="login-box-msg">绑定账号</h3>
+            <div class="form-group has-feedback">
+                <input type="text" id="txtUserCode" class="form-control" placeholder="帐号/手机/邮箱" value="">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" id="txtPassword" class="form-control" placeholder="密码" value="">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <span id="spanmsg" style="color:red;"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8" style="padding-left: 15px;"></div>
+                <!-- /.col -->
+                <div class="col-xs-4" style="padding-right: 15px;">
+                    <button type="button" id="btnLogin" class="btn btn-primary btn-block ">登录</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!--基础引用-->
+    <script src="../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--组件引用-->
+    <script src="../../lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="../../lib/jquery-form/dist/jquery.form.min.js"></script>
+    <!--框架引用-->
+    <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnLogin").click(function () {
+                var spanmsg = $("#spanmsg");
+                var account = $("#txtUserCode").val();
+                if (account == "") {
+                    $("#spanmsg").text("请输入帐号/手机/邮箱");
+                    return;
+                }
+                var password = $("#txtPassword").val();
+                if (password == "") {
+                    $("#spanmsg").text("请输入登录密码");
+                    return;
+                }
+                var openId = BitPage.GetQueryString("openid");
+                $.showLoading();
+                $.ajax({
+                    url: "../../account/binduser",
+                    data: { account: account, password: password, openId: openId },
+                    datatype: "json",
+                    type: "post",
+                    success: function (result) {
+                        if (result.code == 0) {
+                            window.location.href = "../../pages/home/index.html";
+                        } else {
+                            $("#spanmsg").text(result.msg);
+                            $("#txtPassword").val('');
+                        }
+                        $.hideLoading();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -15,6 +15,8 @@ using System.DrawingCore;
 using System.DrawingCore.Imaging;
 using System.DrawingCore.Drawing2D;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
@@ -30,7 +32,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async System.Threading.Tasks.Task<JsonResult> Upload()
+        public async Task<JsonResult> Upload()
         {
             try
             {
@@ -293,7 +295,18 @@ where t1.RelationID=@RelationID order by t1.createTime asc";
                 LogHelper.SaveLog(ex);
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
-        }        
+        }
+
+
+        public ActionResult CKUpload()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            //result["140"] = "http://localhost:51671/uploadfiles/bitdao.png/w_140";
+            //result["220"] = "http://localhost:51671/uploadfiles/bitdao.png/w_220";
+            //result["300"] = "http://localhost:51671/uploadfiles/bitdao.png/w_300";
+            result["default"] = "http://localhost:51671/uploadfiles/bitdao.png";
+            return Json(result);
+        }
     }
 
     public static class ThumbnailHelper

@@ -9,10 +9,10 @@ namespace {{cookiecutter.project_name}}.Helpers
     {
         public static string ConnectionString { get { return HttpContextCore.Configuration["ConnectionStrings:Redis"]; } }
 
-        public static IDatabase redis { get; set; }
+        public static IDatabase Connection { get; set; }
         static RedisHelper()
         {
-            redis = ConnectionMultiplexer.Connect(ConnectionString).GetDatabase();
+            Connection = ConnectionMultiplexer.Connect(ConnectionString).GetDatabase();
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static bool SetValue(string key, string value)
         {
-            return redis.StringSet(key, value);
+            return Connection.StringSet(key, value);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static string GetValue(string key)
         {
-            return redis.StringGet(key);
+            return Connection.StringGet(key);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <returns></returns>
         public static bool DeleteKey(string key)
         {
-            return redis.KeyDelete(key);
+            return Connection.KeyDelete(key);
         }
     }
 }

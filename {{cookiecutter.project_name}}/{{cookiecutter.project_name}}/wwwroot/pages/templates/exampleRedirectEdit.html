@@ -16,7 +16,7 @@
                         </td>
                         <th>普通文本：</th>
                         <td>
-                            <input name="exampleText" type="text" class="form-control required" placeholder="普通文本">
+                            <input name="exampleText" type="text" class="form-control" placeholder="普通文本">
                         </td>
 
                     </tr>
@@ -42,7 +42,7 @@
                         </td>
                         <th>电话号码：</th>
                         <td>
-                            <input type="text" name="examplePhone" class="form-control phone required" placeholder="电话号码">
+                            <input type="text" name="examplePhone" class="form-control" placeholder="电话号码">
                         </td>
                     </tr>
                     <tr>
@@ -98,6 +98,11 @@
                             <input type="hidden" name="autoComSelect" />
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="4">
+                            <script id="repeatText" name="repeatText" type="text/plain"></script>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </div>
@@ -111,6 +116,10 @@
         </div>
     </div>
 </div>
+<script src="../../lib/ueditor/ueditor.config.js"></script>
+<script src="../../lib/ueditor/ueditor.all.min.js"></script>
+<script src="../../lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 <script type="text/javascript">
 
     $(function () {
@@ -121,19 +130,35 @@
         //同步
         var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) { });
 
+        var ue = UE.getEditor('repeatText');
+
         //表单套件初始化
         var formSuite = $("#exampleModal").generalForm()
-            .add(function () {//点击添加：初始化表单后
+            .add(function () {//点击添加：初始化表单后 
+                ue.ready(function () {
+                    ue.setContent("");
+                });
             })
             .edit(function (result) {//点击编辑：加载数据后
-                linkageSelectFalse.wrapper.find('select:first').change();
+                ue.ready(function () {
+                    ue.setContent(result.data.repeatText);
+                });
 
+                linkageSelectFalse.wrapper.find('select:first').change();
                 linkageSelectTrue.wrapper.find('select:first').change();
             })
             .controls["selectChange"].change(function (a) {
-                debugger
+
+            })
+            .submit(function (result) {
+                ue.ready(function () {
+                    console.log(result);
+                    console.log(ue.getContent());
+                });
             })
             .load({ "exampleId": exampleId });
+     
+
 
         //radio回调事件
         $("body").on("change", "#myModal :radio[name=exampleRadio]", function () { })
