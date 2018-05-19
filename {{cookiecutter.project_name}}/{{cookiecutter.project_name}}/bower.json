@@ -2,15 +2,6 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
-    "admin-lte": "adminlte#v2.4.3",
-    "bootstrap-treeview": "v1.2.0",
-    "code-prettify": "2015-12-04",
-    "jquery-form": "jquery-form-plugin#v4.2.2",
-    "jquery-treegrid": "0.3.0",
-    "jquery-validation": "jquery-validate#1.17.0",
-    "jquery-validation-unobtrusive": "v3.2.9"
-  },
-  "resolutions": {
-    "jquery": "^3.2.1"
+    "bitadmin-core": "^1.0.0"
   }
 }
