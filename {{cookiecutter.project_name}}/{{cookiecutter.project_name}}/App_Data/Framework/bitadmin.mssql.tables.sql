@@ -5,19 +5,19 @@ GO
 CREATE TABLE [dbo].[FlowBills](
 	[id] [uniqueidentifier] NOT NULL,
 	[parentId] [uniqueidentifier] NULL,
+	[mainId] [uniqueidentifier] NULL,
+	[stepId] [uniqueidentifier] NULL,
+	[billsType] [nvarchar](500) NULL,
+	[workOrderCode] [nvarchar](500) NULL,
 	[workOrderName] [nvarchar](2000) NULL,
 	[billsCode] [nvarchar](255) NULL,
-	[mainId] [nvarchar](50) NULL,
-	[stepId] [nvarchar](50) NULL,
 	[sort] [int] NOT NULL,
 	[state] [nvarchar](50) NULL,
 	[submitUser] [uniqueidentifier] NOT NULL,
 	[createTime] [datetime] NOT NULL,
 	[updateTime] [datetime] NULL,
-	[description] [nvarchar](1000) NULL,
+	[description] [nvarchar](1024) NULL,
 	[version] [int] NULL,
-	[billsType] [nvarchar](500) NULL,
-	[workOrderCode] [nvarchar](500) NULL,
  CONSTRAINT [PK_dbo.FlowBills] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -32,9 +32,10 @@ GO
 CREATE TABLE [dbo].[FlowBillsRecord](
 	[id] [uniqueidentifier] NOT NULL,
 	[billsId] [uniqueidentifier] NOT NULL,
-	[prevStepId] [nvarchar](50) NULL,
-	[nextStepId] [nvarchar](50) NULL,
-	[userId] [nvarchar](50) NULL,
+	[prevStepId] [uniqueidentifier] NULL,
+	[nextStepId] [uniqueidentifier] NULL,
+	[userId] [uniqueidentifier] NULL,
+	[prevBillsRecordId] [uniqueidentifier] NULL,
 	[auditDate] [datetime] NULL,
 	[sort] [int] NOT NULL,
 	[condition] [int] NOT NULL,
@@ -45,7 +46,6 @@ CREATE TABLE [dbo].[FlowBillsRecord](
 	[type] [int] NOT NULL,
 	[description] [nvarchar](1000) NULL,
 	[batch] [int] NULL,
-	[prevBillsRecordId] [nvarchar](50) NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecord] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -59,22 +59,20 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowBillsRecordUser](
 	[id] [uniqueidentifier] NOT NULL,
+	[stepId] [uniqueidentifier] NULL,
 	[billsRecordId] [uniqueidentifier] NOT NULL,
-	[billsRecordOutId] [nvarchar](50) NULL,
-	[userId] [nvarchar](50) NULL,
+	[billsRecordOutId] [uniqueidentifier] NULL,
+	[userId] [uniqueidentifier] NULL,
 	[createTime] [datetime] NULL,
 	[startTime] [datetime] NULL,
 	[endTime] [datetime] NULL,
 	[type] [int] NOT NULL,
 	[state] [nvarchar](4000) NULL,
 	[condition] [nvarchar](4000) NULL,
-	[stepId] [nvarchar](4000) NULL,
 	[choice] [nvarchar](4000) NULL,
 	[opinion] [nvarchar](4000) NULL,
 	[displayState] [nvarchar](4000) NULL,
 	[runTime] [datetime] NULL,
-	[portalToDoId] [int] NULL,
-	[smsId] [nvarchar](4000) NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecordUser] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
