@@ -583,6 +583,7 @@ $.fn.querySuite = function (option) {
 
     _option.deleteUrl = _table.attr("data-delete-url");
     _option.sortUrl = _table.attr("data-sort-url");
+    _option.importUrl = _table.attr("data-import-url");
     _option.exportUrl = _table.attr("data-export-url");
     _option.key = _table.attr("data-key");
 
@@ -591,31 +592,57 @@ $.fn.querySuite = function (option) {
         _option.pageSize = 10;
     _option.pageSize = parseInt(_option.pageSize);
 
+    //导入初始化
+    if ($("[action=import]").length > 0 && _option.importUrl) {
+        var importFile = $('<input style="display:none;" type="file" class="queryImport" />')
+        $("[action=import]").before(importFile).on("click", function () { $(".queryImport").click(); });
+        importFile.fileupload({
+            url: _option.importUrl,
+            autoUpload: true,
+            add: function (e, data) {
+                var fileName = data.files[0].name.toLowerCase();
+                var suffix = fileName.substring(fileName.lastIndexOf("."));
+                if (suffix != ".xlsx" && suffix != ".xls" && suffix != ".txt") {
+                    alert("文件类型错误，请选择 xls,xlsx,txt 类型文件!");
+                    return false;
+                }
+                data.submit();
+            },
+            success: function (result) {
+                if (result.code == 0) {
+                    if ($.isFunction(_importCallback)) { _importCallback(result); }
+                    else {
+                        alert(result.msg);
+                    }
+                } else {
+                    alert(result.msg);
+                }
+            },
+            error: function (msg) {
+                alert('数据文件导入失败，请稍后重试！');
+            }
+        });
+    }
+
     //查询条件行数，大于1行显示收缩
     if (_filter.find("tr").length > 1) {
         _filter.find("tr").addClass("tr_shrink").hide();
         _filter.find("tr:eq(0)").removeClass("tr_shrink").show();
         _filter.find("tr").append("<td></td>");
-        var expand = $('<button type="button" class="btn btn-link">\
-                               <span class="glyphicon glyphicon-zoom-in"></span> 高级查询\
-                            </button>');
-        expand.bind("click", function () {
-            _filter.find(".tr_shrink").animate({ height: 'toggle', opacity: 'toggle' }, "slow");
-            $(this).css("display", "none");
-            shrink.css("display", "block");
-        });
-        var shrink = $('<button type="button" class="btn btn-link">\
-                                <span class="glyphicon glyphicon-zoom-out"></span> 高级查询\
-                            </button>');
-        shrink.hide();
-        shrink.bind("click", function () {
-            _filter.find(".tr_shrink").animate({ height: 'toggle', opacity: 'toggle' }, "slow");
-            $(this).css("display", "none");
-            expand.css("display", "block");
-        });
-        var span = $("<span></span>");
-        span.append(expand).append(shrink);
-        _filter.find("tr:eq(0)").find("td:last").append(span);
+        var expand = $('<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-zoom-in"></span> 高级查询</button>')
+            .bind("click", function () {
+                _filter.find(".tr_shrink").animate({ height: 'toggle', opacity: 'toggle' }, "slow");
+                $(this).css("display", "none");
+                shrink.css("display", "block");
+            });
+        var shrink = $('<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-zoom-out"></span> 高级查询</button>')
+            .bind("click", function () {
+                _filter.find(".tr_shrink").animate({ height: 'toggle', opacity: 'toggle' }, "slow");
+                $(this).css("display", "none");
+                expand.css("display", "block");
+            }).hide();
+
+        _filter.find("tr:eq(0)").find("td:last").append($("<span></span>").append(expand).append(shrink));
     }
 
     var _zkFilter = _filter.zk_filter(_option);
@@ -778,13 +805,26 @@ $.fn.querySuite = function (option) {
         return _option;
     };
 
+    //导入
+    var _importCallback;
+    _option.import = function (param) {
+        if ($.isFunction(param)) { _importCallback = param; }
+        else {}
+        return _option;
+    };
+
+    //导出
     _option.export = function () {
         var data = {
             r: new Date().getTime()
         };
         var filter = _zkFilter.getfilters();
         $.extend(data, filter);
-        $.post(_option.exportUrl, data, function () { })
+        var form = $("<form></form>").attr("action", _option.exportUrl).attr("method", "post");
+        for (var name in data) {
+            form.append($("<input></input>").attr("type", "hidden").attr("name", name).attr("value", data[name]));
+        }
+        form.appendTo('body').submit().remove();
         return _option;
     };
     _option.getSelect = function () {

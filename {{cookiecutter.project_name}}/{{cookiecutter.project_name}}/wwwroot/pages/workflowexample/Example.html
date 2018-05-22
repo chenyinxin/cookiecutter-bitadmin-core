@@ -24,19 +24,19 @@
                 <span class="glyphicon glyphicon-search"></span> 查询
             </button>
             <button class="btn btn-default" action="add" id="workflowAdd">
-                <span class="glyphicon glyphicon-plus-sign"></span> 添加
+                <span class="glyphicon glyphicon-plus-sign"></span>添加
             </button>
             <button class="btn btn-default" action="import">
-                <span class="glyphicon glyphicon-export"></span> 导入
+                <span class="glyphicon glyphicon-export"></span>导入
             </button>
             <button class="btn btn-default" action="export">
-                <span class="glyphicon glyphicon-export"></span> 导出
+                <span class="glyphicon glyphicon-export"></span>导出
             </button>
             <button class="btn btn-default" action="other">
-                <span class="glyphicon glyphicon-export"></span> 其它
+                <span class="glyphicon glyphicon-export"></span>其它
             </button>
             <button class="btn btn-danger" action="delete">
-                <span class="glyphicon glyphicon-trash"></span> 删除
+                <span class="glyphicon glyphicon-trash"></span>删除
             </button>
         </div>
         <!-- 列表-->
@@ -44,6 +44,7 @@
              data-key="exampleId"
              data-query-url="../../WorkFlowTemp/QueryCompleteExample"
              data-delete-url="../../WorkFlowTemp/DeleteCompleteExample"
+             data-import-url="../../WorkFlowTemp/ImportCompleteExample"
              data-export-url="../../WorkFlowTemp/ExportCompleteExample"
              data-add-url="exampleEdit">
             <table>
@@ -66,8 +67,9 @@
 </div>
 
 <script src="../../js/framework/bitadmin-workflow.js"></script>
-
+<script src="../../js/lib/jquery.fileupload.js"></script>
 <script type="text/javascript">
+
     $(function () {
         //查询套件初始化
         var querySuite = $("#exampleQuery").querySuite()
@@ -79,9 +81,9 @@
                 });
                 return span;
             })
-            //.controls[""].change(function () {
-
-            //})
+            .import(function (result) {
+                console.log(result);
+            })
             .query();
 
         $("#workflowAdd").click(function () {

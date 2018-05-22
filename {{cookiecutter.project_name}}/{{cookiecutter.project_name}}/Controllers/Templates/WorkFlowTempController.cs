@@ -3,11 +3,18 @@
  ***********************/
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
@@ -41,7 +48,6 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
        
-        [HttpPost]
         public ActionResult LoadCompleteExample(Guid? ExampleID)
         {
             try
@@ -64,7 +70,6 @@ namespace {{cookiecutter.project_name}}.Controllers
 
             }
         }
-        [HttpPost]
         public ActionResult SaveCompleteExample(Guid? ExampleID)
         {
             try
@@ -94,7 +99,6 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-        [HttpGet]
         public ActionResult DeleteCompleteExample(string IDs)
         {
             try
@@ -110,8 +114,31 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-        [HttpPost]
-        public FileResult ExportCompleteExample()
+        public ActionResult ImportCompleteExample()
+        {
+            try
+            {
+                IFormFile file = Request.Form.Files[0];
+                string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, string.Format("import/{0:yyyyMMdd}/{1}", DateTime.Now, Guid.NewGuid()), file.FileName);
+                if (!Directory.Exists(Path.GetDirectoryName(fileName)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+
+                using (var stream = System.IO.File.Create(fileName))
+                    file.CopyTo(stream);
+
+                var dt = ExcelHelper.ExcelToDataTable(fileName, "");
+
+                //这里写入库代码
+
+                return Json(new { Code = 0, Msg = "导入成功", Data = QuerySuite.ToDictionary(dt) });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public ActionResult ExportCompleteExample()
         {
             try
             {
@@ -124,13 +151,18 @@ namespace {{cookiecutter.project_name}}.Controllers
 
                 DataSet ds = SqlHelper.Query(querySuite.ExportSql, querySuite.Params);
 
-                return null;
+                string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, string.Format("export/{0:yyyyMMdd}/{1}.xlsx", DateTime.Now, Guid.NewGuid()));
+                if (!Directory.Exists(Path.GetDirectoryName(fileName)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(fileName));
 
+                ExcelHelper.DataTableToExcel(ds.Tables[0], fileName, "导出Sheet");
+                FileStream fs = new FileStream(fileName, FileMode.Open);
+                return File(fs, "application/vnd.ms-excel", "export.xlsx");
             }
             catch (Exception ex)
             {
                 LogHelper.SaveLog(ex);
-                return null;
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
         #endregion
