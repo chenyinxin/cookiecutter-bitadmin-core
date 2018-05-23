@@ -1,6 +1,4 @@
-﻿
-<style>
-</style>
+﻿<!--BitAdmin2.0框架文件-->
 <div id="exampleModal" class="formSuite-wrapper"
      data-submit-close="false">
     <div class="modal-content">
@@ -100,7 +98,8 @@
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <script id="repeatText" name="repeatText" type="text/plain"></script>
+                            <script id="repeatText" name="repeatText" type="text/plain">
+                            </script>
                         </td>
                     </tr>
                 </table>
@@ -134,7 +133,7 @@
 
         //表单套件初始化
         var formSuite = $("#exampleModal").generalForm()
-            .add(function () {//点击添加：初始化表单后 
+            .add(function () {//点击添加：初始化表单后
                 ue.ready(function () {
                     ue.setContent("");
                 });
@@ -157,7 +156,7 @@
                 });
             })
             .load({ "exampleId": exampleId });
-     
+
 
 
         //radio回调事件

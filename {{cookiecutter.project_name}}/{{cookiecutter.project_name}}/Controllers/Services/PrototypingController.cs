@@ -1,12 +1,12 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using {{cookiecutter.project_name}}.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {

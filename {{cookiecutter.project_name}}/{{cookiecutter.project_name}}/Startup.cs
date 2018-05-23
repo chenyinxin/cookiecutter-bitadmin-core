@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using System;
 using System.IO;
 using System.Net;
@@ -50,6 +53,9 @@ namespace {{cookiecutter.project_name}}
             //UEditor富文本框后端扩展
             services.AddUEditorService();
 
+            //使用定时服务
+            services.AddTimedJob();
+
             //使用Swagger服务
             //services.AddSwaggerGen(options =>
             //{
@@ -91,8 +97,10 @@ namespace {{cookiecutter.project_name}}
             if (!Directory.Exists(apps)) Directory.CreateDirectory(apps);
             string prototyping = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prototyping");
             if (!Directory.Exists(prototyping)) Directory.CreateDirectory(prototyping);
-            string ueditor = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ueditor");
-            if (!Directory.Exists(ueditor)) Directory.CreateDirectory(ueditor);
+            string import = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "import");
+            if (!Directory.Exists(import)) Directory.CreateDirectory(import);
+            string export = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "export");
+            if (!Directory.Exists(export)) Directory.CreateDirectory(export);
             app.UseStaticFiles().UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(fileupload),
@@ -102,11 +110,6 @@ namespace {{cookiecutter.project_name}}
                 FileProvider = new PhysicalFileProvider(apps),
                 RequestPath = "/apps",
                 ContentTypeProvider = provider
-            }).UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(apps),
-                RequestPath = "/ueditor",
-                ContentTypeProvider = provider
             });
 
             //启用Session缓存
@@ -114,6 +117,10 @@ namespace {{cookiecutter.project_name}}
 
             //启用登录认证服务
             app.UseAuthentication();
+
+            //启用定时服务
+            app.RegisterTimedJob();
+            app.UseTimedJob();
 
             //启用Mvc服务
             app.UseMvc(routes => routes.MapRoute(name: "default", template: "{controller=Account}/{action=Index}/{id?}"));

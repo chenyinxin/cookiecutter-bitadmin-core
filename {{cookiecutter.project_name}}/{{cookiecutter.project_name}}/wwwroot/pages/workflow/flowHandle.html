@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿<!--BitAdmin2.0框架文件-->
+<style type="text/css">
     .table-centent th {
         background-color: white;
     }
@@ -624,11 +625,11 @@
                             $.each(result.data, function (index, value) {
                                 var checked = _options.checkuserTransfer == value.UserId ? 'checked' : '';
                                 var span = $('<tr>' +
-                                                '<td style="width:auto;"><input type="radio" name="TransferGroup" ' + checked + ' /></td>' +
-                                                '<td style="width:auto;">' + value.userCode + '</td>' +
-                                                '<td style="width:auto;">' + value.userName + '</td>' +
-                                                '<td style="width:auto;">' + (value.mobile || '') + '</td>' +
-                                            '</tr>');
+                                    '<td style="width:auto;"><input type="radio" name="TransferGroup" ' + checked + ' /></td>' +
+                                    '<td style="width:auto;">' + value.userCode + '</td>' +
+                                    '<td style="width:auto;">' + value.userName + '</td>' +
+                                    '<td style="width:auto;">' + (value.mobile || '') + '</td>' +
+                                    '</tr>');
                                 span.find('input[type=radio]').bind('click', function () {
                                     _options.checkTransfer(value);
                                 });
@@ -643,29 +644,29 @@
                                 }
                             });
                             break;
-                            //case 'Read':
-                            //    var _userlist = $('#FlowHandleModal #CirculationUserList');
-                            //    _userlist.html('');
-                            //    $.each(result.Data, function (index, value) {
-                            //        var span = $('<tr>' +
-                            //                        '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
-                            //                        '<td style="width:auto;">' + value.UserCode + '</td>' +
-                            //                        '<td style="width:auto;">' + value.UserName + '</td>' +
-                            //                    '</tr>');
-                            //        span.find('a').bind('click', function () {
-                            //            _options.CirculationUserAdd(value);
-                            //        });
-                            //        _userlist.append(span);
-                            //    });
-                            //    $('#CirculationUserListPage').pagination({
-                            //        pageIndex: PageIndex,
-                            //        pageSize: PageSize,
-                            //        totalContent: result.Total,
-                            //        loadCallback: function (PageIndex, PageSize) {
-                            //            _options.getUsers(key, PageIndex, PageSize, 'Read');
-                            //        }
-                            //    });
-                            //    break;
+                        //case 'Read':
+                        //    var _userlist = $('#FlowHandleModal #CirculationUserList');
+                        //    _userlist.html('');
+                        //    $.each(result.Data, function (index, value) {
+                        //        var span = $('<tr>' +
+                        //                        '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
+                        //                        '<td style="width:auto;">' + value.UserCode + '</td>' +
+                        //                        '<td style="width:auto;">' + value.UserName + '</td>' +
+                        //                    '</tr>');
+                        //        span.find('a').bind('click', function () {
+                        //            _options.CirculationUserAdd(value);
+                        //        });
+                        //        _userlist.append(span);
+                        //    });
+                        //    $('#CirculationUserListPage').pagination({
+                        //        pageIndex: PageIndex,
+                        //        pageSize: PageSize,
+                        //        totalContent: result.Total,
+                        //        loadCallback: function (PageIndex, PageSize) {
+                        //            _options.getUsers(key, PageIndex, PageSize, 'Read');
+                        //        }
+                        //    });
+                        //    break;
                     }
 
                 },
@@ -703,10 +704,10 @@
                         _userlist.html('');
                         $.each(result.data, function (index, value) {
                             var span = $('<tr>' +
-                                            '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
-                                            '<td style="width:auto;">' + value.userCode + '</td>' +
-                                            '<td style="width:auto;">' + value.userName + '</td>' +
-                                        '</tr>');
+                                '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
+                                '<td style="width:auto;">' + value.userCode + '</td>' +
+                                '<td style="width:auto;">' + value.userName + '</td>' +
+                                '</tr>');
                             span.find('a').bind('click', function () {
                                 _options.CirculationUserAdd(value);
                             });
@@ -727,10 +728,10 @@
                         _options.stepUserList = result.data;
                         $.each(result.data, function (index, value) {
                             var span = $('<tr>' +
-                                            '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
-                                            '<td style="width:auto;">' + value.userCode + '</td>' +
-                                            '<td style="width:auto;">' + value.userName + '</td>' +
-                                        '</tr>');
+                                '<td style="width:auto;"><a href="javascript:void(0);">添加</a></td>' +
+                                '<td style="width:auto;">' + value.userCode + '</td>' +
+                                '<td style="width:auto;">' + value.userName + '</td>' +
+                                '</tr>');
                             span.find('a').bind('click', function () {
                                 _options.StepUserAdd(value);
                             });
@@ -770,10 +771,10 @@
             if (isAdd) {
                 _options.stepUserList_To.push(data);
                 var span = $('<tr data-value="' + data.userId + '" data-stepId="' + data.stepId + '">' +
-                                '<td style="width:auto;"><a href="javascript:void(0);">移除</a></td>' +
+                    '<td style="width:auto;"><a href="javascript:void(0);">移除</a></td>' +
                     '<td style="width:auto;">' + data.userCode + '</td>' +
                     '<td style="width:auto;">' + data.userName + '</td>' +
-                            '</tr>');
+                    '</tr>');
                 span.find('a').bind('click', function () {
                     _options.StepUserRemove(data);
                 });
@@ -872,10 +873,10 @@
             if (isAdd) {
                 _options.circulationUserList_To.push(data);
                 var span = $('<tr data-value="' + data.userId + '" data-stepId="' + data.stepId + '">' +
-                               '<td style="width:auto;"><a href="javascript:void(0);" onclick="">移除</a></td>' +
+                    '<td style="width:auto;"><a href="javascript:void(0);" onclick="">移除</a></td>' +
                     '<td style="width:auto;">' + data.userCode + '</td>' +
                     '<td style="width:auto;">' + data.userName + '</td>' +
-                           '</tr>');
+                    '</tr>');
                 span.find('a').bind('click', function () {
                     _options.CirculationUserRemove(data);
                 });

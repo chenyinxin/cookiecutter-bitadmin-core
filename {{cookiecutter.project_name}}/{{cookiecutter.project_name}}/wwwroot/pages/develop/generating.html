@@ -1,4 +1,5 @@
-﻿<link href="../../lib/code-prettify/prettify.css" rel="stylesheet" />
+﻿<!--BitAdmin2.0框架文件-->
+<link href="../../lib/code-prettify/prettify.css" rel="stylesheet" />
 <div class="row">
     <div class="col-md-3">
         <button type="button" class="btn btn-default" id="showTable" style="width:100%;">显示/隐藏</button>
@@ -85,7 +86,7 @@
                             form += fieldtemplates.formtext.replace(/{title}/, row.label).replace(/{name}/, row.name);
                         });
                         key = key.substring(1);
-                        
+
                         //html
                         $.get("../../generating/htmltemplates", { name: item.name, title: item.remark }, function (resulttow) {
                             $("#thtml pre").empty();

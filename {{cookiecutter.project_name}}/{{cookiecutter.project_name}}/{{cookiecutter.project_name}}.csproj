@@ -11,8 +11,9 @@
 
   <ItemGroup>
     <PackageReference Include="BitAdminCore.ALL" Version="1.0.5" />
-    <PackageReference Include="BuildBundlerMinifier" Version="2.7.385" />
+    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="TimedJob" Version="2.0.0" />
     <PackageReference Include="UEditorForNetCore2" Version="1.0.0" />
   </ItemGroup>
 
@@ -29,7 +30,6 @@
   <ItemGroup>
     <Folder Include="Controllers\OpenSdk\" />
     <Folder Include="Helpers\IOT\" />
-    <Folder Include="Helpers\Video\" />
   </ItemGroup>
 
 </Project>

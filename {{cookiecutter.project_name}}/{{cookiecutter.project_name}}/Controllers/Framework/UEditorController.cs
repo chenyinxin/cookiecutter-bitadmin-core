@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

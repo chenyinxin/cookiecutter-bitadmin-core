@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<!--BitAdmin2.0框架文件-->
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,13 +17,14 @@
         .row {
             margin: 5px;
         }
-        .btn{
-            width:150px;
+
+        .btn {
+            width: 150px;
         }
     </style>
 </head>
 <body>
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="row">
             <h4>WebSocket本地推送：</h4>
             通过WebSocket方式推送本地消息到网页，可改造为聊天功能。
@@ -39,11 +41,22 @@
             <a href="javascript:pushIgetui();" class="btn btn-success">推送（个推平台）</a>
             <a href="javascript:bindClientId();" class="btn btn-danger" style="width:100px;">绑定clientId</a>
         </div>
+        <hr />
         <div class="row">
-            <h4>WebSocket在线连接：</h4>
+            <h4>定时服务列表：</h4>
+            <a href="javascript:timejob();" class="btn btn-success">刷新</a>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead><tr><th>服务ID</th><th>服务名称</th><th>定时信息</th><th>服务说明</th><th>状态</th><th>最后运行时间</th></tr></thead>
+                <tbody class="timejob"></tbody>
+            </table>
+        </div>
+        <div class="row">
+            <h4>WebSocket在线连接详细信息：</h4>
             <a href="javascript:online();" class="btn btn-success">刷新</a>
         </div>
-        <div class="row" id="online">
+        <div class="row">
             <table class="table">
                 <thead><tr><th>服务器</th><th>心跳时间</th></tr></thead>
                 <tbody class="server"></tbody>
@@ -56,7 +69,6 @@
         <div class="row">
         </div>
     </div>
-    <div class="col-md-6"></div>
     <script src="../../js/framework/BitAdmin.js"></script>
     <script>
         function pushWebSocket() {
@@ -88,7 +100,17 @@
                 });
             }); return false;
         }
-        online();
+        function timejob() {
+            $.get("../../Develop/QueryTimeJobs", function (result) {
+                var server = $(".timejob");
+                server.empty();
+                for (var name in result.data) {
+                    var job = result.data[name];
+                    server.append('<tr><td>' + job.id + '</td><td>' + job.name + '</td><td>' + job.invoke + '</td><td>' + job.remark + '</td><td>' + job.state + '</td><td>' + time.format(job.runtime, "yyyy-MM-dd HH:mm:ss") + '</td></tr>');
+                }
+            }); return false;
+        }
+        online(); timejob();
     </script>
 </body>
 </html>

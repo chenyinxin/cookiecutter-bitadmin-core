@@ -2,7 +2,6 @@
  * BitAdmin2.0框架文件
  * 主页页面功能
  ***********************/
-
 $.extend(BitAdmin,
     {
         //内容模式：tab,iframe,load

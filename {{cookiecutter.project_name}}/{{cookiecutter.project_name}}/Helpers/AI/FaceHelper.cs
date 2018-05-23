@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using Baidu.Aip.Face;
 using Newtonsoft.Json.Linq;
 using System;

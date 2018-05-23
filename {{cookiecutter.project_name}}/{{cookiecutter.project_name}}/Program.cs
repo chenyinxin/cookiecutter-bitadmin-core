@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 

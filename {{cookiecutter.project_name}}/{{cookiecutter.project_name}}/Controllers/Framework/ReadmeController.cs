@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -76,6 +79,24 @@ namespace {{cookiecutter.project_name}}.Controllers
                 };
                 await BitNoticeService.SendStringAsync(message);
                 return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public JsonResult CutVideo()
+        {
+            try
+            {
+                string inputFile = "inputFiles/source.mp4";
+                string outputFile = string.Format("outputFiles/{0}.mp4", DateTime.Now.ToString("yyyyMMddHHmmss"));
+                string img = VideoHelper.CreateImage("视频添加文字：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                string msg = VideoHelper.CutAndWater(inputFile, outputFile, img, "00:00:00", "00:00:15");
+
+                LogHelper.SaveLog("video", msg);
+                return Json(new { Code = 0, Msg = msg });
             }
             catch (Exception ex)
             {

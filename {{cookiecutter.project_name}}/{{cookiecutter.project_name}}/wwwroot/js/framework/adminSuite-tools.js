@@ -1,11 +1,7 @@
-/** =======================================
-* adminSuite.tools是基于adminSuite的扩展工具集。
-* @Author  chenyinxin
-* @Support <http://adminSuite.bitdao.cn>
-* @Email   <chenyinxin@qq.com>
-* @Version 1.0.0
-*/
-
+/***********************
+ * BitAdmin2.0框架文件
+ * 自定义控件
+ ***********************/
 $.fn.bitSelect = function () {
     var _wrapper = $(this);
     var url = _wrapper.attr("data-url");

@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Services;
 using Microsoft.AspNetCore.Mvc;

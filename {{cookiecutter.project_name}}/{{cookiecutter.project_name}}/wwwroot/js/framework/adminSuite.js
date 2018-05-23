@@ -1,13 +1,7 @@
-/** =======================================
-* adminSuite是基于jQuery，Bootstrap，Ajax，Json构建的管理模块开发套件。
-* 引用组件：jquery;jquery.form;jquery.validate;bootstrap
-*
-* @Author  chenyinxin
-* @Support <http://adminSuite.bitdao.cn>
-* @Email   <chenyinxin@qq.com>
-* @Version 1.0.0
-*/
-
+/***********************
+ * BitAdmin2.0框架文件
+ * 增删改查套件
+ ***********************/
 $.extend({
     adminSetup: function (option) {
         $.extend($.adminSetting, option)

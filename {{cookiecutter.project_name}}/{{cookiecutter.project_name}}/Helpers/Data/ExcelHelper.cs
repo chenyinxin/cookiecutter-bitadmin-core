@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -15,7 +18,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// <param name="isColumnWritten">DataTable的列名是否要导入</param>  
         /// <param name="sheetName">要导入的excel的sheet的名称</param>  
         /// <returns>导入数据行数(包含列名那一行)</returns>  
-        public static int DataTableToExcel(DataTable data, string fileName, string sheetName, bool isColumnWritten)
+        public static int DataTableToExcel(DataTable data, string fileName, string sheetName, bool isColumnWritten = true)
         {
             int i = 0;
             int j = 0;

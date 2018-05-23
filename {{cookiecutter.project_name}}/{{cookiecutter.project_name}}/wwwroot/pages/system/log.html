@@ -1,6 +1,6 @@
-﻿
+﻿<!--BitAdmin2.0框架文件-->
 <div class="box">
-    <div id="logManage" class="box-body querySuite-wrapper">
+    <div class="box-body querySuite-wrapper">
         <!-- 条件搜索 -->
         <div class="querySuite-filter">
             <table>
@@ -49,9 +49,8 @@
         <div class="querySuite-paging"></div>
     </div>
 </div>
-
 <script type="text/javascript">
     $(function () {
-        var querySuite = $("#logManage").querySuite().query();
+        var querySuite = $(".querySuite-wrapper").querySuite().query();
     });
 </script>

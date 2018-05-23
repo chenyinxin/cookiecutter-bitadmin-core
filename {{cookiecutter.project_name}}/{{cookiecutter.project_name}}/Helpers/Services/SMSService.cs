@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 using System;
 using System.Collections.Generic;
 using System.Linq;

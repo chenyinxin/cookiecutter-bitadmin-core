@@ -1,3 +1,6 @@
+/***********************
+ * BitAdmin2.0框架文件
+ ***********************/
 $.fn.upload = function (option) {
     var _this = $(this);
     _this.hide();
