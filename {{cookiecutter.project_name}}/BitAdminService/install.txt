@@ -1,0 +1,6 @@
+﻿
+
+sc create BitAdminService binPath= "E:\Git\BitAdminCore\BitAdminService\bin\Debug\BitAdminService.exe"
+
+
+sc delete BitAdminService

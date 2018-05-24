@@ -24,7 +24,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 {
                     Sender = "readme",
                     Receiver = SSOClient.UserId.ToString(),
-                    Content = "<h4 class=\"spop-title\">系统通知示例</h4><img src=\"../../qrcode/encode/user\" width=\"100\" height=\"100\" /><br />生成二维码",
+                    Content = "<h4 class=\"spop-title\">系统通知示例</h4><img src=\"../../qrcode/encode/user\" width=\"100\" height=\"100\" /><br />生成二维码；今天是" + DateTime.Now.WeekName(),
                     MessageType = "notice"
                 };
                 //仅是一个推送通知示例,顺带个二维码示例
