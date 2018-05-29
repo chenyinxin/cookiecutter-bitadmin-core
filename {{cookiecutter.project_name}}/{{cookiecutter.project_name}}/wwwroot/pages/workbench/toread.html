@@ -36,8 +36,6 @@
         </div>
         <!-- 列表-->
         <div class="querySuite-table"
-             data-order-by="BRU.endTime"
-             data-order-type="DESC"
              data-key="taskUserId"
              data-query-url="../../WorkFlow/GetWorkbenchList">
             <table>
@@ -61,22 +59,22 @@
     $(function () {
         //查询套件初始化
         var querySuite = $("#exampleQuery").querySuite()
-        .columns["workOrderName"].format(function (val, data) {
-            var span = $('<span class="btn btn-link">' + (val || '') + '</span>');
-            span.bind('click', function () {
-                switch (data.mainCode) {
-                    case "999":
-                        BitPage.Redirect("/WorkflowExample/ExampleTab", { orderId: data.billsCode, state: $('.querySuite-filter [name=state]').val(), taskUserId: data.taskUserId }, "WorkflowExample");
-                        break;
-                    case '':
-                        break;
-                }
-            });
-            return span;
-        })
-        .columns["userName"].format(function (val, data) {
-            return data.userName + "(" + data.userCode + ")";
-        })
-        .query();
+            .columns["workOrderName"].format(function (event, val, data) {
+                var span = $('<span class="btn btn-link">' + (val || '') + '</span>');
+                span.bind('click', function () {
+                    switch (data.mainCode) {
+                        case "999":
+                            BitPage.Redirect("/WorkflowExample/ExampleTab", { orderId: data.billsCode, state: $('.querySuite-filter [name=state]').val(), taskUserId: data.taskUserId }, "WorkflowExample");
+                            break;
+                        case '':
+                            break;
+                    }
+                });
+                $(this).append(span);
+            })
+            .columns["userName"].format(function (event,val, data) {
+                $(this).html(data.userName + "(" + data.userCode + ")");
+            })
+            .query();
     });
 </script>

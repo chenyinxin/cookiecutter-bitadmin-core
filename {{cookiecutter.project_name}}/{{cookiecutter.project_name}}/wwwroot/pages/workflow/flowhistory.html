@@ -44,12 +44,12 @@
         //查询套件初始化
         var querySuite = $("#flowHistoryBlock")
             .querySuite()
-            .columns["userName"].format(function (val, data) {
+            .columns["userName"].format(function (event, val, data) {
                 if (!data.userName)
-                    return '';
-                return (data.userName) || '' + "(" + (data.userCode || '') + ")";
+                    $(this).append("");
+                $(this).append((data.userName) || '' + "(" + (data.userCode || '') + ")");
             })
-            .columns["choice"].format(function (val, data) {
+            .columns["choice"].format(function (event,val, data) {
                 var result = '';
                 switch (data.choice) {
                     case '1':
@@ -76,7 +76,7 @@
                         result = '已阅';
                         break;
                 }
-                return result;
+                $(this).append(result);
             })
             .query();
     });

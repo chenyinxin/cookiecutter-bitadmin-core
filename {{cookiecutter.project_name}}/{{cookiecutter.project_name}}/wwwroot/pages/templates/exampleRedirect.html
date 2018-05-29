@@ -51,17 +51,13 @@
     $(function () {
         //查询套件初始化
         var querySuite = $("#exampleQuery").querySuite()
-            .columns["option"].format(function (val, data) {
+            .columns["option"].format(function (event,val, data) {
                 var span = $('<span class="btn btn-link">修改</span>');
                 span.bind('click', function () {
                     BitPage.Redirect("/Templates/ExampleRedirectEdit", { exampleId: data.exampleId }, "ExampleRedirect");
-
                 });
-                return span;
+                $(this).append(span);
             })
-            //.controls[""].change(function () {
-
-            //})
             .query();
 
         $("#Add").click(function () {

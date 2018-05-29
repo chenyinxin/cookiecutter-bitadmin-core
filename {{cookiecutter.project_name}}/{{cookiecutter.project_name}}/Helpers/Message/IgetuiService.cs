@@ -15,7 +15,7 @@ namespace {{cookiecutter.project_name}}.Services
     /// <summary>
     /// 个推平台消息推送
     /// </summary>
-    public class IgetuiNoticeService
+    public class IgetuiService
     {        
         private static String host = "http://sdk.open.api.igexin.com/apiex.htm";
         

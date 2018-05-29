@@ -29,6 +29,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 };
                 //仅是一个推送通知示例,顺带个二维码示例
                 await BitNoticeService.SendStringAsync(message);
+
                 return Json(new { Code = 0 });
             }
             catch (Exception ex)
@@ -42,8 +43,21 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 //string clientid = "cf6f30e351b39bce2978705e20db8578";
-                var msg = IgetuiNoticeService.Create("BitAdmin消息", "这是BitAdmin后台发送给用户【" + SSOClient.User.UserName + "】的消息", "", "", "");
-                IgetuiNoticeService.Push(SSOClient.UserId, msg);
+                var msg = IgetuiService.Create("BitAdmin消息", "这是BitAdmin后台发送给用户【" + SSOClient.User.UserName + "】的消息", "", "", "");
+                IgetuiService.Push(SSOClient.UserId, msg);
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public ActionResult NoticEmail(string email)
+        {
+            try
+            {
+                EmailService.SendMail("测试邮件", "文件html内容", email);
                 return Json(new { Code = 0 });
             }
             catch (Exception ex)

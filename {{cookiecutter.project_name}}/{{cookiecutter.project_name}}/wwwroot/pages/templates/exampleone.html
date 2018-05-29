@@ -37,9 +37,10 @@
                 <thead>
                     <tr>
                         <th style="width:30px;"><input type="checkbox" /></th>
-                        <th data-field="exampleName" data-format="edit">示例名称</th>
-                        <th data-field="exampleName">示例名称</th>
-                        <th data-field="createTime" data-format="time|yyyy-MM-dd HH:mm:ss">创建时间</th>
+                        <th data-field="exampleName" data-sort="true" data-filter="true" data-format="edit">示例名称</th>
+                        <th data-field="exampleText">普通文本</th>
+                        <th data-field="dateTimePicker" data-format="time|yyyy-MM-dd">创建时间</th>
+                        <th data-field="option">编辑</th>
                     </tr>
                 </thead>
             </table>
@@ -210,14 +211,19 @@
         });
 
         //查询套件初始化
-        var querySuite = $(".querySuite-wrapper").querySuite().query();
+        var querySuite = $(".querySuite-wrapper").querySuite()
+            .columns["option"].format(function (event, val, data) {
+                $(this).append($('<span class="btn btn-link">修改</span>')
+                    .click(function () {
+                        console.log(val);
+                        console.log(data);
+                    }));
+            })
+            .query();
 
         //表单套件初始化
         var formSuite = $("#myModal").formSuite()
             .add(function () {//点击添加：初始化表单后
-                $('#Type').attr('readonly', false);
-                $('#Member').attr('readonly', false);
-
                 linkageSelectFalse.wrapper.find('select').attr('data-actualval', '');
                 linkageSelectFalse.wrapper.find('select:first').change();
 
@@ -228,10 +234,6 @@
                 fileUpload2.clear();
             })
             .edit(function (e) {//点击编辑：加载数据后
-
-                $('#Type').attr('readonly', true);
-                $('#Member').attr('readonly', true);
-
                 linkageSelectFalse.wrapper.find('select:first').change();
 
                 linkageSelectTrue.wrapper.find('select:first').change();

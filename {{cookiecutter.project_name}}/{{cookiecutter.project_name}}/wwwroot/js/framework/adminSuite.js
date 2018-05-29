@@ -222,7 +222,7 @@ $.fn.zk_table = function (option, querySuite) {
         ///验证表头是否存在检索
         var columns = _option.Table.find("thead").find('th');
         $.each(columns, function (index, element) {
-            var key = $(this).attr('data-search');
+            var key = $(this).attr('data-filter');
             var field = $(this).attr('data-field');
             if (key == "true") {
                 var sch = $('<span class="glyphicon glyphicon-filter" style="top:3px;cursor: pointer;"></span>');
@@ -236,7 +236,7 @@ $.fn.zk_table = function (option, querySuite) {
         ///验证表头是否存在排序
         ///排序的状态===初始状态、、、升序、、、、降序
         $.each(columns, function (index, element) {
-            var key = $(this).attr('data-sortable');
+            var key = $(this).attr('data-sort');
             var field = $(this).attr('data-field');
             if (key == "true") {
                 var sch = $('<span class="querySuite-sortable glyphicon glyphicon-sort"></span>');
@@ -343,8 +343,8 @@ $.fn.zk_table = function (option, querySuite) {
                     if (isFormatter == undefined) {
                         td.html(node[key]);
                     } else {
-                        var html = isFormatter(node[key], node);
-                        td.append(html);
+                        td.bind("format", isFormatter);
+                        td.trigger("format", [node[key], node]);
                     }
                     var style = _option.Table.find("thead").find('th:eq(' + index_th + ')').attr('style');
                     if (style != undefined) {
@@ -836,12 +836,12 @@ $.fn.querySuite = function (option) {
 
         var format = $(d).attr("data-format");
         if (format != "undefined" && format != undefined) {
-            formatters[key] = function (val, data) {
+            formatters[key] = function (event,val, data) {
                 if (format.indexOf("time|") == 0 || format == "time") {
                     var para = format.split('|');
                     if (para.length == 2)
-                        return time.format(val, para[1]);
-                    return time.format(val, "yyyy-MM-dd hh:mm:ss");
+                        $(this).html(time.format(val, para[1]));
+                    $(this).html(time.format(val, "yyyy-MM-dd hh:mm:ss"));                    
                 }
                 else if (format.indexOf("edit|") == 0 || format == "edit") {
                     var span = $('<span class="btn btn-link">' + val + '</span>');
@@ -856,7 +856,7 @@ $.fn.querySuite = function (option) {
                         $.each(primarys, function (j, d) { param[d] = data[d]; })
                         loadform.attr("data-param", JSON.stringify(param)).click();
                     });
-                    return span;
+                    $(this).append(span);
                 }
             };
         }

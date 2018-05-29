@@ -176,12 +176,31 @@ var time = {
             "q+": Math.floor((date.getMonth() + 3) / 3), //季度    
             "f": date.getMilliseconds()             //毫秒    
         };
-        if (/(y+)/.test(fmt))
-            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, ("000" + date.getFullYear()).substr(("000" + date.getFullYear()).length - 4));
+        }
         for (var k in o)
             if (new RegExp("(" + k + ")").test(fmt))
                 fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
+    },
+    parse: function (timeString, fmt) {
+        var o = {
+            "yyyy": "0001",
+            "MM": "01",
+            "dd": "01",
+            "HH": "00",
+            "mm": "00",
+            "ss": "00",
+            "fff": "00"
+        }
+        for (var k in o) {
+            var idx = fmt.indexOf(k);
+            if (idx != -1) {
+                o[k] = timeString.substr(idx, k.length);
+            }
+        }
+        return new Date(o["yyyy"], o["MM"] - 1, o["dd"], o["HH"], o["mm"], o["ss"], o["fff"]);
     }
 }
 var guid = {

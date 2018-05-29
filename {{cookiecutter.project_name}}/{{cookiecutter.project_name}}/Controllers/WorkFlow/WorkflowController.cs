@@ -1153,14 +1153,14 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                QuerySuite querySuite = new QuerySuite(this, "BRU.endTime DESC");
-                querySuite.Select(@"select Bills.*, UR.userName,UR.userCode,Main.name,Step.stepName,BRU.startTime,BRU.Id as 'taskUserId',Main.Code as 'mainCode',BRU.endTime,Step.linkCode
+                QuerySuite querySuite = new QuerySuite(this, "ru.endTime desc");
+                querySuite.Select(@"select Bills.*, UR.userName,UR.userCode,Main.name,Step.stepName,ru.startTime,ru.Id as 'taskUserId',Main.Code as 'mainCode',ru.endTime,Step.linkCode
                                     from FlowBills as Bills
                                     left join FlowBillsRecord as BR on BR.BillsId=Bills.Id 
-                                    left join FlowBillsRecordUser as BRU on BRU.BillsRecordId=BR.Id
+                                    left join FlowBillsRecordUser as ru on ru.BillsRecordId=BR.Id
                                     left join FlowMain as Main on Main.Id=Bills.mainId 
                                     left join FlowStep as Step on BR.NextStepId=Step.StepId
-                                    left join SysUser as UR on UR.UserID=BRU.userId");
+                                    left join SysUser as UR on UR.UserID=ru.userId");
 
                 if (string.IsNullOrEmpty(name))
                 {
@@ -1172,9 +1172,9 @@ namespace {{cookiecutter.project_name}}.Controllers
                 }
                 string TimeField = "";
                 if (state == "ToDo" || state == "ToRead")
-                    TimeField = "BRU.startTime";
+                    TimeField = "ru.startTime";
                 else
-                    TimeField = "BRU.endTime";
+                    TimeField = "ru.endTime";
                 if (StartDate != null)
                 {
                     querySuite.AddParam(string.Format(" and {0} >= @StartDate ", TimeField), new SqlParameter("@StartDate", StartDate.Value));
@@ -1184,7 +1184,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                     querySuite.AddParam(string.Format(" and {0} <= @EndDate ", TimeField), new SqlParameter("@EndDate", EndDate.Value.AddDays(1)));
                 }
                 querySuite.AddParam(" and UR.UserID = @userId ", new SqlParameter("@userId", SSOClient.UserId));
-                querySuite.AddParam(" and BRU.state = @state ", new SqlParameter("@state", state));
+                querySuite.AddParam(" and ru.state = @state ", new SqlParameter("@state", state));
 
                 DataSet ds = SqlHelper.Query(querySuite.QuerySql, querySuite.Params);
                 return Json(new { Code = 0, Total = ds.Tables[0].Rows[0][0], Data = QuerySuite.ToDictionary(ds.Tables[1]) });

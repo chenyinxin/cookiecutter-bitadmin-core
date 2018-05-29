@@ -27,7 +27,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 string ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                BitNoticeService.ServerIps[ip] = DateTime.Now;
+                BitNoticeService.ServerIPAddress[ip] = DateTime.Now;
                 LogHelper.SaveLog("WebSocketsService", "WebSockets查询：" + ip);
                 return Json(new { Code = 0, Users = BitNoticeService.SocketUsers });
             }
@@ -85,7 +85,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                     }
                 }
 
-                return Json(new { Server = BitNoticeService.ServerIps, Sockets = sockets });
+                return Json(new { Server = BitNoticeService.ServerIPAddress, Sockets = sockets });
             }
             catch (Exception ex)
             {

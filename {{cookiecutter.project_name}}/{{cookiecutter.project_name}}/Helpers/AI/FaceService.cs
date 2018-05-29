@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace {{cookiecutter.project_name}}.Helpers
 {
-    public class FaceHelper
+    public class FaceService
     {
         /* 百度人脸识别API更换成3.0，人脸识别功能用不了啦。
          * 换种思路实现，本地用户存储“身份证”和“姓名”，然后与公安数据库进行对比。

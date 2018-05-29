@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\OpenSdk\" />
-    <Folder Include="Helpers\IOT\" />
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         /// </summary>
         static string ffmpeg = "E:\\Video\\ffmpeg\\bin\\ffmpeg.exe";
         /// <summary>
-        /// 工作目录，命令行使用基于工作目录的相对目录
+        /// 工作目录，入参为工作目录的相对路径。
         /// </summary>
         static string workingDirectory = "E:\\Video\\";
 

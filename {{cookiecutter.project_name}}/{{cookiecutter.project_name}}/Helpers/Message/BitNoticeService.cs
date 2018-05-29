@@ -19,9 +19,10 @@ using System.Threading.Tasks;
 
 namespace {{cookiecutter.project_name}}.Services
 {
-    /// <summary>
-    /// 基于WebSocket的消息推送服务
-    /// </summary>
+    /*
+     * 基于WebSocket的消息推送服务
+     * 分布式后台通讯端口1899，部署多台服务器时，需要能相互访问。
+     */
     public class BitNoticeService
     {
         public static int SocketCount => sockets.Count;
@@ -47,7 +48,7 @@ namespace {{cookiecutter.project_name}}.Services
                 if (user.Key != message.Receiver) continue;
                 foreach (var socket in user.Value)
                 {
-                    LogHelper.SaveLog("WebSockets", string.Format("发送消息：{0}:{1}:{2}:{3}", socket.IsRemote, socket.RemoteIp, socket.RemoteTime, JsonConvert.SerializeObject(message)));
+                    //LogHelper.SaveLog("WebSockets", string.Format("发送消息：{0}:{1}:{2}:{3}", socket.IsRemote, socket.RemoteIp, socket.RemoteTime, JsonConvert.SerializeObject(message)));
                     if (socket.IsRemote && !isLocal)
                     {//远程通道
                         try
@@ -55,7 +56,7 @@ namespace {{cookiecutter.project_name}}.Services
                             WebClient wc = new WebClient();
                             byte[] sendByte = Encoding.Default.GetBytes(JsonConvert.SerializeObject(message));
                             var url = string.Format("http://{0}:1899/BitService/SendWebSocketString", socket.RemoteIp);
-                            LogHelper.SaveLog("WebSockets", string.Format("发送远程消息：{0}", url));
+                            //LogHelper.SaveLog("WebSockets", string.Format("发送远程消息：{0}", url));
                             var result = wc.UploadData(url, sendByte);
                             var strResult = Encoding.Default.GetString(result);
                         }
@@ -70,7 +71,6 @@ namespace {{cookiecutter.project_name}}.Services
         }
         static Task SendStringAsync(WebSocket socket, string data, CancellationToken ct = default(CancellationToken))
         {
-            //LogHelper.SaveLog("socket", "send->" + data + ",count->" + sockets.Count);
             var buffer = Encoding.UTF8.GetBytes(data);
             var segment = new ArraySegment<byte>(buffer);
             return socket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
@@ -118,7 +118,6 @@ namespace {{cookiecutter.project_name}}.Services
             if (!sockets.ContainsKey(sid))
                 sockets.TryAdd(sid, new List<UserSocket>());
             sockets[sid].Add(new UserSocket() { HttpContext = context, WebSocket = currentSocket, IsRemote = false });
-            //LogHelper.SaveLog("WebSockets", "add:sid->" + sid + ",count->" + sockets[sid].Count);
 
             while (true)
             {
@@ -146,14 +145,14 @@ namespace {{cookiecutter.project_name}}.Services
 
             }
         }
+        static Timer timer, timer2;
         public static void Map(IApplicationBuilder app)
         {
             //清除无效(本地)连接(每30秒轮询服务)
-            Timer timer = new Timer(x =>
+            timer = new Timer(x =>
             {
                 foreach (var user in sockets)
                 {
-                    //LogHelper.SaveLog("WebSockets", "remtime:sid->" + user.Key + ",count->" + user.Value.Count);
                     List<UserSocket> rm = new List<UserSocket>();
                     user.Value.ForEach(socket =>
                     {
@@ -191,14 +190,14 @@ namespace {{cookiecutter.project_name}}.Services
             //查询所有非本地IP
            dbContext.SysServer.ToList().ForEach(x=> {
                if (!iplist.Contains(x.ServerIp))
-                   ServerIps[x.ServerIp] = DateTime.Now;
+                   ServerIPAddress[x.ServerIp] = DateTime.MinValue;
             });
-            LogHelper.SaveLog("WebSockets", "ServerIps:" + JsonConvert.SerializeObject(ServerIps));
+            //LogHelper.SaveLog("WebSockets", "ServerIps:" + JsonConvert.SerializeObject(ServerIPAddress));
 
             //轮询所有非本地IP
-            Timer timer2 = new Timer(x =>
+            timer2 = new Timer(x =>
             { 
-                foreach(var ip in ServerIps)
+                foreach(var ip in ServerIPAddress)
                 {
                     new Thread(new ThreadStart(delegate {
                         try 
@@ -206,9 +205,9 @@ namespace {{cookiecutter.project_name}}.Services
                             WebClient wc = new WebClient();
                             string result = wc.DownloadString(string.Format("http://{0}:1899/BitService/WebSockets", ip.Key));
                             var json = JObject.Parse(result);
-                            ServerIps[ip.Key] = DateTime.Now;
+                            ServerIPAddress[ip.Key] = DateTime.Now;
 
-                            LogHelper.SaveLog("WebSockets", "WebSocketsResult:" + result); 
+                            //LogHelper.SaveLog("WebSockets", "WebSocketsResult:" + result); 
 
                             var users = (JArray)json["users"];
                             foreach(var user in users)
@@ -228,7 +227,7 @@ namespace {{cookiecutter.project_name}}.Services
                 }
             }, null, 0, 30000);
         }
-        public static Dictionary<string, DateTime> ServerIps = new Dictionary<string, DateTime>();
+        public static Dictionary<string, DateTime> ServerIPAddress = new Dictionary<string, DateTime>();
     }
     public class UserSocket
     {

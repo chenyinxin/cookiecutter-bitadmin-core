@@ -14,6 +14,9 @@
     <script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
 
     <style>
+        h4{
+            font-weight:bold;
+        }
         .row {
             margin: 5px;
         }
@@ -24,27 +27,45 @@
     </style>
 </head>
 <body>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="row">
-            <h4>WebSocket本地推送：</h4>
-            通过WebSocket方式推送本地消息到网页，可改造为聊天功能。
+            <h4>推送电子邮件：</h4>
+            发送邮件到你自己的邮箱。
+        </div>
+        <div class="row">
+            <a href="javascript:sendEmail();" class="btn btn-success">发送电子邮件</a>
+        </div>
+        <div class="row">
+            <h4>推送WebSocket消息：</h4>
+            通过WebSocket方式推送消息到网页，可改造为聊天功能。
         </div>
         <div class="row">
             <a href="javascript:pushWebSocket();" class="btn btn-success">服务端推送</a>
             <a href="javascript:sendWebSocket();" class="btn btn-success">客户端发送</a>
         </div>
         <div class="row">
-            <h4>个推平台推送：</h4>
-            通过个推平台向手机客户端推送消息。先绑定当前用户的clientId。
+            <h4>推送个推平台消息：</h4>
+            通过个推平台向手机App推送消息。先绑定当前用户的clientId。
         </div>
         <div class="row">
-            <a href="javascript:pushIgetui();" class="btn btn-success">推送（个推平台）</a>
-            <a href="javascript:bindClientId();" class="btn btn-danger" style="width:100px;">绑定clientId</a>
+            <a href="javascript:bindClientId();" class="btn btn-primary">绑定clientId</a>
+            <a href="javascript:pushIgetui();" class="btn btn-success">推送个推消息</a>
         </div>
-        <hr />
+    </div>
+    <div class="col-md-6">
+
+        <div class="row">
+            <h4>生成二维码示例：</h4>
+            扫描可以下载框架安卓App。
+        </div>
+        <div class="row">
+            <img src="../../qrcode/encode?msg=http%3a%2f%2fbit.bitdao.cn%2fapps%2fBitAdminCore_1.0.3.apk" width="100" height="100" />
+        </div>
+    </div>
+    <div class="col-md-12">
         <div class="row">
             <h4>定时服务列表：</h4>
-            <a href="javascript:timejob();" class="btn btn-success">刷新</a>
+            <a href="javascript:timejob();" class="btn btn-success">刷新服务列表</a>
         </div>
         <div class="row">
             <table class="table">
@@ -54,7 +75,8 @@
         </div>
         <div class="row">
             <h4>WebSocket在线连接详细信息：</h4>
-            <a href="javascript:online();" class="btn btn-success">刷新</a>
+            提供WebSocket服务器信息，用户在线信息。<br />
+            <a href="javascript:online();" class="btn btn-success">刷新连接信息</a>
         </div>
         <div class="row">
             <table class="table">
@@ -69,6 +91,11 @@
         <div class="row">
         </div>
     </div>
+    <!--cnzz统计代码，可以移除，开始-->
+    <div style="display:none;">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1263497164'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1263497164%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+    <!--cnzz统计代码，可以移除，结束-->
     <script src="../../js/framework/BitAdmin.js"></script>
     <script>
         function pushWebSocket() {
@@ -76,6 +103,10 @@
         }
         function sendWebSocket() {
             window.parent.BitNoticeService.sendChat("5eeea4ce-71ab-4464-b72f-17f5163ee944", "随机数：" + Math.random());
+        }
+        function sendEmail() {
+            var email = window.prompt("请输入你的电子邮箱地址");
+            $.get("../../readme/noticEmail", { email: email }, function (result) { }); return false;
         }
         function pushIgetui() {
             $.get("../../readme/noticIgetui", function (result) { }); return false;

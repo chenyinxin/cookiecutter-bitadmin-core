@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
+    [BitAuthorize]
     public class DevelopController: Controller
     {
         DataContext dbContext = new DataContext();
@@ -505,7 +506,7 @@ namespace {{cookiecutter.project_name}}.Controllers
 
         #endregion
 
-
+        #region 定时服务
         public JsonResult QueryTimeJobs()
         {
             try
@@ -519,20 +520,20 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
 
-        public JsonResult SaveTimeJob(string id,string state)
+        public JsonResult SaveTimeJob(string id, string state)
         {
             try
             {
-                if(string.IsNullOrEmpty(id)||string.IsNullOrEmpty(state))
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(state))
                     return Json(new { Code = 1, Msg = "参数错误！" });
 
                 switch (state)
                 {
                     case "start":
-                        JobHelper.Start(id);break;
+                        JobHelper.Start(id); break;
                     case "stop":
                         JobHelper.Stop(id); break;
-                    default:break;
+                    default: break;
                 }
 
                 return Json(new { Code = 0, Msg = "操作成功", Total = JobHelper.Jobs.Count, Data = JobHelper.Jobs });
@@ -543,5 +544,6 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
+        #endregion
     }
 }
