@@ -28,7 +28,7 @@ namespace {{cookiecutter.project_name}}.Helpers
     {
         string _dbtype = "mssql";        //mysql,oracle
 
-        string _select, _ordertype, _orderby;
+        string _select, _orderby;
         Dictionary<string, string> _filter = new Dictionary<string, string>();
 
         List<SqlParameter> _sqlParams = new List<SqlParameter>();
@@ -56,22 +56,23 @@ namespace {{cookiecutter.project_name}}.Helpers
                 throw new Exception("参数 [defaultOrder,默认排序字段] 不能为空");
 
             _controller = controller;
-            if (defaultOrder.Contains(" "))
-            {
-                _orderby = defaultOrder.Split(' ')[0];
-                _ordertype = defaultOrder.Split(' ')[1];
-            }
-            else
-            {
-                _orderby = defaultOrder;
-                _ordertype = "asc";
-            }
+            _orderby = defaultOrder;
 
             //添加前端传回的列筛选条件
             AddParam(_controller.HttpContext.Request.Form["column"].FirstOrDefault(), "like", _controller.HttpContext.Request.Form["condition"].FirstOrDefault());
         }
-        private string OrderBy => _controller.HttpContext.Request.Form["orderby"].FirstOrDefault() ?? _orderby;
-        private string OrderType => _controller.HttpContext.Request.Form["ordertype"].FirstOrDefault() ?? _ordertype;
+        private string OrderBy
+        {
+            get
+            {
+                var fo1= _controller.HttpContext.Request.Form["orderby"].FirstOrDefault();
+                var fo2 = _controller.HttpContext.Request.Form["ordertype"].FirstOrDefault();
+                if (!string.IsNullOrEmpty(fo1))
+                    return string.Format("{0} {1}", fo1, fo2);
+                else
+                    return _orderby;
+            }
+        }
         private int Offset => Convert.ToInt32(_controller.HttpContext.Request.Form["offset"].FirstOrDefault() ?? "0");
         private int Limit => Convert.ToInt32(_controller.HttpContext.Request.Form["limit"].FirstOrDefault() ?? "10");
         private int StartRow => Offset + 1;
@@ -148,11 +149,11 @@ namespace {{cookiecutter.project_name}}.Helpers
                 {
                     case "mssql":
                         Regex regex = new Regex(_select.Trim().Substring(0, 6));
-                        string selectSql = regex.Replace(_select, "select row_number()over (order by {0} {1}) rowNumber,", 1);
+                        string selectSql = regex.Replace(_select, "select row_number()over (order by {0}) rowNumber,", 1);
                         if (!_select.Contains("where")) selectSql += " where 1=1 ";
 
                         StringBuilder _sbSql = new StringBuilder();
-                        _sbSql.AppendFormat(selectSql, OrderBy, OrderType);
+                        _sbSql.AppendFormat(selectSql, OrderBy);
                         foreach (var e in _filter)
                         {
                             _sbSql.AppendLine(e.Value);

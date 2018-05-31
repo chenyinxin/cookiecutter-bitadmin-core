@@ -37,7 +37,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         */
         string appid = "appid";
         string mch_id = "mch_id";
-        string key = "key";
+        //string key = "key";
         string secret = "secret";
 
         string ip = "8.8.8.8";

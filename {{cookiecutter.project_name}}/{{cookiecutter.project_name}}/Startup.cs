@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using UEditorNetCore;
@@ -30,6 +29,7 @@ namespace {{cookiecutter.project_name}}
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            HttpContextCore.Configuration = Configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -37,7 +37,7 @@ namespace {{cookiecutter.project_name}}
         public void ConfigureServices(IServiceCollection services)
         {
             //使用HttpContext单例
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //使用Session缓存（默认Memory，Redis二选一）
             //services.AddDistributedRedisCache(option => option.Configuration = RedisHelper.connectionString);
@@ -69,18 +69,16 @@ namespace {{cookiecutter.project_name}}
             //});
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger, IServiceProvider svc)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-
+            
             //启用配置
-            HttpContextCore.Configuration = this.Configuration;
-            HttpContextCore.ServiceProvider = svc;
-            HttpContextCore.HostingEnvironment = env;
+            HttpContextCore.ServiceProvider = app.ApplicationServices;
 
             //添加编码支持
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

@@ -13,7 +13,6 @@ namespace {{cookiecutter.project_name}}
     {
         public static IServiceProvider ServiceProvider { get; set; }
         public static IConfiguration Configuration { get; set; }
-        public static IHostingEnvironment HostingEnvironment { get; set; }
         public static HttpContext Current => ((IHttpContextAccessor)ServiceProvider.GetService(typeof(IHttpContextAccessor))).HttpContext;
 
         public static void Set<T>(this ISession session, string key, T value)

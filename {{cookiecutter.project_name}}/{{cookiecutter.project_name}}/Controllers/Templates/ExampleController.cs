@@ -24,7 +24,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                QuerySuite querySuite = new QuerySuite(this, "CreateTime asc");
+                QuerySuite querySuite = new QuerySuite(this, "exampleName desc,CreateTime asc");
                 querySuite.Select("select * from GeneralExample");
                
                 querySuite.AddParam("exampleName", "like");

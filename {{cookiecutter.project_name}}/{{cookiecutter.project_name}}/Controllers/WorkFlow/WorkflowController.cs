@@ -948,14 +948,12 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                DataTable Data = new DataTable();
                 string strSql = @"declare @BillId nvarchar(50)
                                 select @BillId=t2.BillsId from FlowBillsRecordUser t1
                                 left join FlowBillsRecord t2 on t1.BillsRecordId=t2.Id
                                 where t1.Id=@taskUserId
 
-                                select t4.stepName,t5.userName,t5.userCode,t3.choice,t3.Opinion as 'description',t3.state,t3.startTime,t3.endTime,
-                                dbo.fn_ComputationTimeDifference(t3.startTime,t3.endTime,'hh:mm:ss') 'Timespace'
+                                select t4.stepName,t5.userName,t5.userCode,t3.choice,t3.Opinion as 'description',t3.state,t3.startTime,t3.endTime
                                 from FlowBills as t1
                                 left join FlowBillsRecord as t2 on t1.Id=t2.BillsId
                                 left join FlowBillsRecordUser as t3 on t2.Id=t3.BillsRecordId
@@ -963,8 +961,19 @@ namespace {{cookiecutter.project_name}}.Controllers
                                 left join SysUser as t5 on t3.userId=t5.UserID
                                 where t1.Id=@BillId
                                 order by isnull(t3.startTime,t2.endTime) asc";
-                Data = SqlHelper.Query(strSql, new SqlParameter("@taskUserId", taskUserId)).Tables[0];
-                return Json(new { Code = 0, Total = 0, Data = QuerySuite.ToDictionary(Data) });
+                var dt = SqlHelper.Query(strSql, new SqlParameter("@taskUserId", taskUserId)).Tables[0];
+
+                dt.Columns.Add("Timespace");
+                foreach(DataRow dr in dt.Rows)
+                {
+                    if (dr["startTime"] == DBNull.Value || dr["endTime"] == DBNull.Value)
+                        continue;
+
+                    var ts = Convert.ToDateTime(dr["endTime"]) - Convert.ToDateTime(dr["startTime"]);
+                    dr["Timespace"] = string.Format("{0}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
+                }
+
+                return Json(new { Code = 0, Total = 0, Data = QuerySuite.ToDictionary(dt) });
             }
             catch (Exception ex)
             {
