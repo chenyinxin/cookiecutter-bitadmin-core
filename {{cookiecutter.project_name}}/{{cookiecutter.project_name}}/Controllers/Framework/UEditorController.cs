@@ -1,12 +1,8 @@
 /***********************
  * BitAdmin2.0框架文件
  ***********************/
+using {{cookiecutter.project_name}}.UEditor;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UEditorNetCore;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {

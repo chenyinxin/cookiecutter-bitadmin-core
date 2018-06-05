@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace {{cookiecutter.project_name}}.Services
+namespace {{cookiecutter.project_name}}.Helpers
 {
     /// <summary>
     /// 个推平台消息推送

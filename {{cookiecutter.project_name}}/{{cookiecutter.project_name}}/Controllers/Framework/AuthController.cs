@@ -21,6 +21,11 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.WebUtilities;
+using Senparc.Weixin.Work.AdvancedAPIs.OAuth2;
+using Senparc.Weixin.Work.AdvancedAPIs;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
+using Senparc.Weixin.MP;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
@@ -314,6 +319,73 @@ namespace {{cookiecutter.project_name}}.Controllers
         }
         #endregion
 
+
+        #region 微信公众号登录
+        public ActionResult WeixinGZHSignIn2(string code)
+        {
+            try
+            {
+                string openid = "";
+                OAuthAccessTokenResult result = OAuthApi.GetAccessToken("wx806943202a75a124", "d52257abea1018eec3a798005ba4f841", code);
+                if (result.errcode.ToString() == "请求成功")
+                {
+                    openid = result.openid;
+                }
+                else
+                {
+                    return Json(new { Code = 1, Msg = "获取信息失败:" + result.errmsg });
+                }
+
+                if (string.IsNullOrEmpty(code))
+                    return Json(new { code = 1, Msg = "参数错误" });
+
+                SysUserOpenId userOpenId = dbContext.Set<SysUserOpenId>().Where(x => x.OpenId == openid).FirstOrDefault();
+                if (userOpenId != null && userOpenId.UserId != Guid.Empty)
+                {
+                    SSOClient.SignIn(userOpenId.UserId.Value);
+                    return Redirect("/pages/home/weixin.html");
+                }
+                else
+                {
+                    return Redirect("/pages/account/bind.html?sign=wx&openid=" + openid);
+                }
+
+                //自动创建本地用户，适用面向公众网站，项目根据需要调整逻辑。
+                //url = string.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN", access_token, openid);
+                //json = wcl.DownloadString(url);
+                //JObject wxUser = JObject.Parse(json.Replace("\\", ""));//可用属性请查看官方接入文档(openid,nickname,sex,province,city,country,headimgurl,privilege[],unionid,errcode,errmsg)
+                //if (!string.IsNullOrEmpty((string)wxUser["errcode"]))
+                //    return Json(new { Code = 1, Msg = "获取信息失败" });
+
+                //SysUser user = new SysUser();
+                //user.UserId = Guid.NewGuid();
+                //user.UserName = (string)wxUser["nickname"];
+                //user.UserCode = Guid.NewGuid().ToString("N").Substring(20);
+                //user.DepartmentId = new Guid("2379788E-45F0-417B-A103-0B6440A9D55D");
+                //dbContext.SysUser.Add(user);
+
+                //var userOpenId = new SysUserOpenId();
+                //userOpenId.OpenId = openid;
+                //userOpenId.UserId = user.UserId;
+                //userOpenId.CreateTime = DateTime.Now;
+                //userOpenId.BindTime = DateTime.Now;
+                //dbContext.SysUserOpenId.Add(userOpenId);
+
+                //dbContext.SaveChanges();
+
+                //SSOClient.SignIn(userOpenId.UserId.Value);
+                //return Redirect("/pages/home/weixin.html");
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        #endregion
+
+
         #region 微信企业号登录
         public ActionResult WeixinQYHSignIn(string code)
         {
@@ -368,7 +440,63 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-        #endregion        
-         
+        #endregion
+
+        #region 微信企业号登录
+        public ActionResult WeixinQYHSignIn2(string code)
+        {
+            try
+            {
+                string userid = "";
+                string corpId = "wwa26d4508575b5fe9";
+                string secret = "cwcclxDJ0GMIlxsn2U_3kWQUPoiDupZOZMrKFqDDcnI";
+
+                if (string.IsNullOrEmpty(code))
+                    return Json(new { code = 1, Msg = "参数错误" });
+
+                WebClient wcl = new WebClient();
+                string url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}", corpId, secret);
+                string json = wcl.DownloadString(url);
+                JObject token = JObject.Parse(json.Replace("\\", ""));//可用属性请查看官方接入文档(access_token,expires_in,refresh_token,openid,scope,errcode,errmsg)
+
+                if ((int)token["errcode"] != 0)
+                    return Json(new { Code = 1, Msg = "获取信息失败" });
+
+                var access_token = (string)token["access_token"];
+
+                GetUserInfoResult result = OAuth2Api.GetUserId(access_token, code);
+                if (result.errcode.ToString() == "请求成功")
+                {
+                    userid = result.UserId;
+                }
+                else
+                {
+                    return Json(new { Code = 1, Msg = "获取信息失败:" + result.errmsg });
+                }
+
+                SysUser user = dbContext.Set<SysUser>().Where(x => x.UserCode == userid).FirstOrDefault();
+                if (user == null)
+                    return Json(new { Code = 1, Msg = userid + "不存在！" });
+
+                SSOClient.SignIn(user.UserId);
+                return Redirect("/pages/home/weixin.html");
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        #endregion
+
+
+        public ActionResult WeixinAddr(string type)
+        {
+            if (type == "GZH") //公众号
+                return Redirect(OAuthApi.GetAuthorizeUrl("wx806943202a75a124", "http%3A%2F%2Fbit.bitdao.cn%2Fauth%2Fweixingzhsignin", "1", OAuthScope.snsapi_base));
+            else
+                return Redirect(OAuth2Api.GetCode("wx806943202a75a124", "http%3A%2F%2Fbit.bitdao.cn%2Fauth%2Fweixinqyhsignin", "1", ""));
+        }
+
     }
 }

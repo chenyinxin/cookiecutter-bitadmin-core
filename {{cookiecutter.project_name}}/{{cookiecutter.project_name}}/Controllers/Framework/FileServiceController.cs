@@ -11,26 +11,29 @@ using System.Data.SqlClient;
 using {{cookiecutter.project_name}}.Models;
 using Microsoft.AspNetCore.Mvc;
 using {{cookiecutter.project_name}}.Helpers;
-using System.DrawingCore;
-using System.DrawingCore.Imaging;
-using System.DrawingCore.Drawing2D;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
+    /*
+     * 如果考虑性能，可以调整逻辑，直接存到文件服务器。
+     */
     public class FileServiceController : Controller
     {
-        //private static readonly int _downloadSize = 100 * 1024 * 1024;//分块下载，每次100M（web服务器下载到客户端）
-        //private static readonly int _uploadSize = 20 * 1024 * 1024;//分块上传，每次10M（web服务器上传到文件服务器）
-        //private static readonly int _sDownloadSize = 20 * 1024 * 1024;//分块上传，每次10M（文件服务器下载到web服务器）
         DataContext dbContext = new DataContext();
 
-        /// <summary>
-        /// 上传
-        /// </summary>
-        /// <returns></returns>
+        //为迎接未来，默认保存到文件服务器，要本地保存清空Url即可。
+        string FileServiceUrl = "http://localhost:54117/FileService/Upload";
+
         [HttpPost]
         public async Task<JsonResult> Upload()
         {
@@ -40,7 +43,7 @@ namespace {{cookiecutter.project_name}}.Controllers
 
                 Guid fileId = Guid.NewGuid();
                 DateTime nowDate = DateTime.Now;
-                string path = string.Format("/UploadFiles/{0:yyyyMMdd}/{1}", nowDate, fileId);
+                string path = string.Format("/uploadfiles/{0:yyyy/MMdd}/{1}", nowDate, fileId);
                 string url = string.Format("{0}/{1}", path, file.FileName);
                 // 服务器的存储全路径
                 string destFileName = MapPath(url); 
@@ -62,30 +65,64 @@ namespace {{cookiecutter.project_name}}.Controllers
                 fileData.CreateBy = "";
                 fileData.CreateByName = SSOClient.User.UserName;
                 fileData.CreateTime = nowDate;
-                using (var stream = System.IO.File.Create(destFileName))
+
+                string ThumbnailSizes = Request.Form["thumbnailSizes"].FirstOrDefault();
+                if (string.IsNullOrEmpty(FileServiceUrl))
                 {
-                    await file.CopyToAsync(stream);
-                }
-                // 图片文件扩展名验证正则表达式
-                Regex regexExtension = new Regex(@".*\.(jpg|jpeg|png|gif|bmp)");
-                if (regexExtension.IsMatch(destFileName.ToLower()))
-                {
-                    string ThumbnailSizes = Request.Form["thumbnailSizes"].FirstOrDefault();
-                    string[] ThumbnailSizeArr = new string[] { };
-                    //生成缩略图
-                    if (!string.IsNullOrEmpty(ThumbnailSizes) && (ThumbnailSizeArr = ThumbnailSizes.Split(';')).Length > 0)
+                    //保存本地
+                    using (var stream = System.IO.File.Create(destFileName))
                     {
-                        string[] fileNamesArr = new string[ThumbnailSizeArr.Length];
-                        for (int i = 0; i < ThumbnailSizeArr.Length; i++)
-                        {
-                            string size = ThumbnailSizeArr[i];
-                            string ThumbFileName = Path.GetFileNameWithoutExtension(url) + "_" + size + fileData.Suffix;
-                            string ThumbPath = url.Replace(Path.GetFileName(url), ThumbFileName);
-                            ThumbnailHelper.MakeThumbnail(Convert.ToInt32(size), MapPath(url), MapPath(ThumbPath));
-                            fileNamesArr[i] = ThumbFileName;
-                        }
-                        fileData.Names = string.Join("|", fileNamesArr);
+                        await file.CopyToAsync(stream);
                     }
+                    // 图片文件扩展名验证正则表达式
+                    Regex regexExtension = new Regex(@".*\.(jpg|jpeg|png|gif|bmp)");
+                    if (regexExtension.IsMatch(destFileName.ToLower()))
+                    {
+                        string[] ThumbnailSizeArr = new string[] { };
+                        //生成缩略图
+                        if (!string.IsNullOrEmpty(ThumbnailSizes) && (ThumbnailSizeArr = ThumbnailSizes.Split(';')).Length > 0)
+                        {
+                            string[] fileNamesArr = new string[ThumbnailSizeArr.Length];
+                            for (int i = 0; i < ThumbnailSizeArr.Length; i++)
+                            {
+                                string size = ThumbnailSizeArr[i];
+                                string ThumbFileName = Path.GetFileNameWithoutExtension(url) + "_" + size + fileData.Suffix;
+                                string ThumbPath = url.Replace(Path.GetFileName(url), ThumbFileName);
+                                ThumbnailHelper.MakeThumbnail(Convert.ToInt32(size), MapPath(url), MapPath(ThumbPath));
+                                fileNamesArr[i] = ThumbFileName;
+                            }
+                            fileData.Names = string.Join("|", fileNamesArr);
+                        }
+                    }
+                }
+                else
+                {
+                    //保存文件服务器
+                    HttpClient client = new HttpClient();
+                    MultipartFormDataContent form = new MultipartFormDataContent();
+                    
+                    byte[] uploadFileBytes = new byte[file.Length];
+                    file.OpenReadStream().Read(uploadFileBytes, 0, (int)file.Length);
+                    MemoryStream stream = new MemoryStream(uploadFileBytes);                    
+                    StreamContent fileContent = new StreamContent(stream);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+                    fileContent.Headers.ContentDisposition.FileName = url;
+                    form.Add(fileContent);
+
+                    StringContent thumbnailSizes = new StringContent(ThumbnailSizes);
+                    thumbnailSizes.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+                    thumbnailSizes.Headers.ContentDisposition.Name = "thumbnailSizes";
+                    form.Add(thumbnailSizes);
+
+                    HttpResponseMessage res = client.PostAsync(FileServiceUrl, form).Result;
+                    var json = res.Content.ReadAsStringAsync().Result;
+                    JObject result = JObject.Parse(json);
+
+                    fileData.Path = (string)result["data"]["path"];
+                    fileData.Names = (string)result["data"]["names"];
+                    fileData.Url = (string)result["data"]["url"];
+
                 }
                 return Json(new { Code = 0, Msg = "", Data = fileData });
             }
@@ -96,142 +133,27 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
 
-        /// <summary>
-        /// 下载
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public FileResult Download()
+        public ActionResult Download()
         {
             string fileURL = Request.Query["fileURL"];
-            string filePath = MapPath(fileURL);
-            string fileName = Path.GetFileName(fileURL);
-            return File(fileName, "application/octet-stream");
+
+            if (fileURL.StartsWith("http"))
+            {
+                return File(new WebClient().DownloadData(fileURL), "application/octet-stream", Path.GetFileName(fileURL));
+            }
+            else
+            {
+                string fileName = Path.GetFileName(fileURL);
+                FileStream fs = new FileStream(MapPath(fileURL), FileMode.Open);
+                return File(fs, "application/octet-stream", fileName);
+            }
         }
         private string MapPath(string url)
         {
             return AppDomain.CurrentDomain.BaseDirectory + url.Replace("/", "\\");
         }
-        #region 文件服务器（暂不实现）
 
-        //[HttpPost]
-        //public JsonResult FileServiceUpload()
-        //{
-        //    try
-        //    {
-        //        IFormFile file = Request.Form.Files[0];
-        //        FileService fileservice = new FileService();
-
-        //        int bufferSize = _uploadSize;
-        //        byte[] buffer = null;
-
-        //        long fileLength = file.InputStream.Length;//文件流的长度
-        //        int tempCount = 0;//当前已经读取的次数
-
-        //        UploadResult fileServiceResult = null;
-        //        string sffilePath = "";
-        //        SysAttachment fileData = new SysAttachment();
-
-        //        while (file.InputStream.Position < fileLength)
-        //        {
-        //            bool IsLast = false;
-        //            bufferSize = (int)Math.Min(fileLength - file.InputStream.Position, bufferSize);
-        //            buffer = new byte[bufferSize];
-        //            file.InputStream.Read(buffer, 0, bufferSize);
-
-        //            if (file.InputStream.Position == fileLength)
-        //            {
-        //                IsLast = true;
-        //            }
-
-        //            if (tempCount == 0)
-        //            {
-        //                fileServiceResult = fileservice.Upload("admin", "admin", buffer, Request.Form["thumbnailSizes"], file.FileName, IsLast, "Default", null);
-        //                if (fileServiceResult.Code == 1)
-        //                {
-        //                    return Json(new { Code = 1, Msg = fileServiceResult.Msg });
-        //                }
-        //                sffilePath = fileServiceResult.filePath;
-        //                var uri = new Uri(fileservice.Url);
-        //                string host = uri.AbsoluteUri.Replace(uri.AbsolutePath, "");
-        //                fileData.Id = fileServiceResult.Data.ID;
-        //                //fileDatas.RelationID = "";
-        //                fileData.Name = fileServiceResult.Data.Name;
-        //                fileData.Names = fileServiceResult.Data.Names;
-        //                fileData.Url = host + fileServiceResult.Data.URL;
-        //                fileData.Type = fileServiceResult.Data.Type;
-        //                fileData.Suffix = fileServiceResult.Data.Suffix;
-        //                fileData.Path = host + fileServiceResult.Data.Path;
-        //                fileData.Status = fileServiceResult.Data.Status;
-        //                fileData.Size = fileServiceResult.Data.Size;
-        //                fileData.CreateBy = fileServiceResult.Data.CreateBy;
-        //                fileData.CreateByName = SSOClient.User.UserName;
-        //                fileData.CreateTime = fileServiceResult.Data.CreateDate;
-        //            }
-        //            else
-        //            {
-        //                fileServiceResult = fileservice.Upload("admin", "admin", buffer, Request.Form["thumbnailSizes"], file.FileName, IsLast, "Default", sffilePath);
-        //                fileData.Names = fileServiceResult.Data.Names;
-        //                if (fileServiceResult.Code == 1)
-        //                {
-        //                    return Json(new { Code = 1, Msg = fileServiceResult.Msg });
-        //                }
-        //            }
-        //            tempCount++;
-        //        }
-
-        //        return Json(new { Code = 0, Msg = "", Data = fileData });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogHelper.SaveLog(ex);
-        //        return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-        //    }
-        //}
-
-        //[HttpGet]
-        //public void FileServiceDownload()
-        //{
-        //    FileService fileservice = new FileService();
-        //    string fileURL = Request.Query["fileURL"];
-        //    var uri = new Uri(fileservice.Url);
-        //    string filePath = fileURL.Replace(uri.AbsoluteUri.Replace(uri.AbsolutePath, ""), "");
-        //    string fileName = Path.GetFileName(filePath);
-
-        //    long Position = 0;
-        //    DownloadResult result = fileservice.Download("admin", "admin", filePath, _sDownloadSize, Position);
-        //    long totalLength = result.totalLength;
-
-        //    Response.ContentType = "application/octet-stream";
-        //    Response.Headers.Add("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileName));
-        //    Response.Headers.Add("Content-Length", totalLength.ToString());
-        //    if (totalLength == 0)
-        //    {
-        //        Response.End();
-        //    }
-        //    while (totalLength > 0 && Response.IsClientConnected)
-        //    {
-        //        if (Position != 0)
-        //        {
-        //            result = fileservice.Download("admin", "admin", filePath, _sDownloadSize, Position);
-        //        }
-
-        //        Response.OutputStream.Write(result.Data, 0, result.Data.Length);//写入到响应的输出流
-        //        Response.Flush();//刷新响应
-        //        totalLength = totalLength - result.Data.Length;
-        //        Position += result.Data.Length;
-        //    }
-
-        //    Response.Close();//文件传输完毕，关闭相应流
-        //}
-
-        #endregion
-
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        /// <param name="ExampleID"></param>
-        /// <returns></returns>
         [HttpPost]
         public ActionResult SaveData(string RelationID, List<SysAttachment> files)
         {
@@ -274,10 +196,6 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
 
-        /// <summary>
-        /// 加载数据
-        /// </summary>
-        /// <returns></returns>
         [HttpPost]
         public ActionResult QueryData()
         {
@@ -295,17 +213,6 @@ where t1.RelationID=@RelationID order by t1.createTime asc";
                 LogHelper.SaveLog(ex);
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
-        }
-
-
-        public ActionResult CKUpload()
-        {
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            //result["140"] = "http://localhost:51671/uploadfiles/bitdao.png/w_140";
-            //result["220"] = "http://localhost:51671/uploadfiles/bitdao.png/w_220";
-            //result["300"] = "http://localhost:51671/uploadfiles/bitdao.png/w_300";
-            result["default"] = "http://localhost:51671/uploadfiles/bitdao.png";
-            return Json(result);
         }
     }
 
@@ -356,10 +263,10 @@ where t1.RelationID=@RelationID order by t1.createTime asc";
                     graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
                     //清空画布并以透明背景色填充
-                    graphics.Clear(System.DrawingCore.Color.Transparent);
+                    graphics.Clear(Color.Transparent);
 
                     //在指定位置并且按指定大小绘制原图片的指定部分
-                    graphics.DrawImage(oriImage, new System.DrawingCore.Rectangle(0, 0, thumbWidth, thumbHeight), new System.DrawingCore.Rectangle(0, 0, oriWidth, oriHeight), GraphicsUnit.Pixel);
+                    graphics.DrawImage(oriImage, new Rectangle(0, 0, thumbWidth, thumbHeight), new Rectangle(0, 0, oriWidth, oriHeight), GraphicsUnit.Pixel);
                 }
             }
         }

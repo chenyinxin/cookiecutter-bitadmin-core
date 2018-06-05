@@ -311,7 +311,7 @@ $.fn.zk_table = function (option, querySuite) {
                 ///绑定全选按钮
                 if (_option.isSelect) {
                     var style = _option.Table.find("thead").find('th:eq(' + index_th + ')').attr('style');
-                    style = (style != undefined) ? "stype='" + style + "'" : "";
+                    style = (style != undefined) ? "style='" + style + "'" : "";
                     var inpt = $('<td ' + style + '><input class="SelectRow" type="checkbox"></td>');
 
                     index_th++;
@@ -841,7 +841,8 @@ $.fn.querySuite = function (option) {
                     var para = format.split('|');
                     if (para.length == 2)
                         $(this).html(time.format(val, para[1]));
-                    $(this).html(time.format(val, "yyyy-MM-dd hh:mm:ss"));                    
+                    else
+                        $(this).html(time.format(val, "yyyy-MM-dd hh:mm:ss"));                 
                 }
                 else if (format.indexOf("edit|") == 0 || format == "edit") {
                     var span = $('<span class="btn btn-link">' + val + '</span>');

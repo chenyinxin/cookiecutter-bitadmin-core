@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace {{cookiecutter.project_name}}.Services
+namespace {{cookiecutter.project_name}}.Helpers
 {
     /*
      * 基于WebSocket的消息推送服务

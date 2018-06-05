@@ -66,6 +66,32 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
+        public ActionResult NoticWeixinMP(string userCode)
+        {
+            try
+            {
+                WeixinMPService.SendText(userCode, "这是一个测试信息");
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+        public ActionResult NoticWeixinWork(string userCode)
+        {
+            try
+            {
+                WeixinWorkService.SendText("", userCode, "这是一个测试信息");
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
         public async Task<JsonResult> Apk()
         {
             try

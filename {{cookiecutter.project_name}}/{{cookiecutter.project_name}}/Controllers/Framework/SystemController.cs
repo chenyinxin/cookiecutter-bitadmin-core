@@ -292,7 +292,6 @@ namespace {{cookiecutter.project_name}}.Controllers
                 querySuite.AddParam("type", "like");
                 querySuite.AddParam("description", "like");
 
-                LogHelper.SaveLog("sql", querySuite.QuerySql);
                 DataSet ds = SqlHelper.Query(querySuite.QuerySql, querySuite.Params);
 
                 return Json(new { Code = 0, Total = ds.Tables[0].Rows[0][0], Data = QuerySuite.ToDictionary(ds.Tables[1]) });
@@ -313,6 +312,8 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 var currentUser = SSOClient.User;
+                //负载均衡环境下IP地址
+                string ip = Request.Headers["X-Forwarded-For"].FirstOrDefault();
 
                 SysLog model = new SysLog
                 {
@@ -320,7 +321,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                     UserName = currentUser.UserName,
                     UserCode = currentUser.UserCode,
                     DepartmentName = SSOClient.Department.DepartmentFullName,
-                    IpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
+                    IpAddress = string.IsNullOrEmpty(ip) ? HttpContext.Connection.RemoteIpAddress.ToString() : ip,
                     CreateTime = DateTime.Now,
                     Type = Type,
                     Description = Description,

@@ -6,7 +6,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using {{cookiecutter.project_name}}.Helpers;
-using {{cookiecutter.project_name}}.Services;
+using {{cookiecutter.project_name}}.UEditor;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +20,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using UEditorNetCore;
 
 namespace {{cookiecutter.project_name}}
 {
@@ -76,13 +75,12 @@ namespace {{cookiecutter.project_name}}
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            
+
             //启用配置
             HttpContextCore.ServiceProvider = app.ApplicationServices;
 
             //添加编码支持
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
 
             //添加安卓安装包mine
             var provider = new FileExtensionContentTypeProvider();
