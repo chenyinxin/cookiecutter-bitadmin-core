@@ -844,6 +844,15 @@ $.fn.querySuite = function (option) {
                     else
                         $(this).html(time.format(val, "yyyy-MM-dd hh:mm:ss"));                 
                 }
+                else if (format.indexOf("cut|") == 0 || format == "cut") {
+                    var para = format.split('|');
+                    if (para.length == 2) {
+                        $(this).attr("title", val);
+                        $(this).html(string.subString(val, para[1]));
+                    }
+                    else
+                        $(this).html(val);
+                }
                 else if (format.indexOf("edit|") == 0 || format == "edit") {
                     var span = $('<span class="btn btn-link">' + val + '</span>');
                     span.bind('click', function () {
@@ -1321,8 +1330,13 @@ $.fn.generalForm = function (option) {
         return _option;
     };
     _option.load = function (data) {
-       
-        if (data)
+
+        var val = "";
+        for (var key in data) {
+            val += data[key];
+        }
+
+        if (val != "")
             _option.edit(data);
         else
             _option.add();

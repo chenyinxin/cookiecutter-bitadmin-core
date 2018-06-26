@@ -104,12 +104,10 @@
                     <table>
                         <tr>
                             <th>页面名称：</th>
-                            <td colspan="3">
+                            <td>
                                 <input type="hidden" name="id" />
                                 <input type="text" name="pageName" required class="form-control" />
                             </td>
-                        </tr>
-                        <tr>
                             <th>所属模块：</th>
                             <td>
                                 <div class="input-group" data-control="picker" data-control-type="ModulePicker">
@@ -117,9 +115,15 @@
                                     <input type="hidden" name="moduleId" />
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
                             <th>唯一标识：</th>
                             <td>
                                 <input type="text" name="pageSign" required class="form-control" />
+                            </td>
+                            <th>页面图标：</th>
+                            <td>
+                                <input type="text" name="pageIcon" class="form-control" />
                             </td>
                         </tr>
                         <tr>
@@ -129,9 +133,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>页面图标：</th>
-                            <td colspan="3">
-                                <input type="text" name="pageIcon" class="form-control" />
+                            <td></td>
+                            <td colspan="3" style="font-size:9pt;">
+                                <b>通过tab打开：</b><br />
+                                （1）使用默认模板(layout.html)，格式：/system/log 对应 pages/system/log.html<br />
+                                （2）使用默认模板(layout.html)，格式：../news/system/log 对应 news/system/log.html<br />
+                                （3）使用自定义模板(xxx.html)。格式：/system/log.xxx 对应 pages/system/log.html<br />
+                                （4）不使用模板页加载。格式：pages/system/log.html 对应 pages/system/log.html<br />
+                                <b>打开新窗口： </b><br />
+                                （1）格式：http://bit.bitdao.cn/._blank 对应 http://bit.bitdao.cn/
                             </td>
                         </tr>
                         <tr>

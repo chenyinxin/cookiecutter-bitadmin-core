@@ -875,8 +875,24 @@ $.validator.addMethod("phone", function (value, element) {
 }, "请输入正确的手机号码");
 
 // 电话号码
-$.validator.addMethod("Telephone", function (value, element) {
+$.validator.addMethod("telephone", function (value, element) {
     var regMobile = /^\d{3}-\d{7,8}|\d{4}-\{7,8}$/;
     return this.optional(element) || regMobile.test(value);
 }, "请输入正确的电话号码");
+
+//时间比较验证
+$.validator.addMethod("starttime", function (value, element) {
+    var StartData = $("#" + $(element).attr('data-starttime')).val();
+    var EndData = value;
+    var reg = new RegExp('-', 'g');
+    StartData = StartData.replace(reg, '/');//正则替换
+    EndData = EndData.replace(reg, '/');
+    StartData = new Date(parseInt(Date.parse(StartData), 10));
+    EndData = new Date(parseInt(Date.parse(EndData), 10));
+    if (StartData > EndData) {
+        return false;
+    } else {
+        return true;
+    }
+}, "结束日期必须大于开始日期");
 /**********************************  验证扩展(基于jquery.validate) End    **********************************/

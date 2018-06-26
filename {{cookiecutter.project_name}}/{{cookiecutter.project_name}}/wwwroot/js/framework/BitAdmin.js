@@ -111,8 +111,9 @@ var BitPage = {
             document.body.removeChild(el);
             return;
         }
-        else if (suffix == 'null') {
-            pageUrl = options.tabUrl.replace("." + urlArr[urlArr.length - 1], '') + param;
+        else if (suffix == 'html') {
+            pageUrl = options.tabUrl + param;
+            //pageUrl = options.tabUrl.replace("." + urlArr[urlArr.length - 1], '') + param;
         }
         else {
             var layout = "layout.html";
@@ -149,7 +150,7 @@ var string = {
     },
     subString : function (val, len) {
         if (val.length > len) {
-            val = val.substr(0, len - 3) + '...';
+            val = val.substr(0, len) + '...';
         }
         return val;
     }

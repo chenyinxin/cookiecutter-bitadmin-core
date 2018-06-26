@@ -4,21 +4,11 @@
  ***********************/
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Models;
 using System.Net;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using {{cookiecutter.project_name}}.Services;
-using System.DrawingCore;
-using System.IO;
-using System.DrawingCore.Imaging;
-using Microsoft.Extensions.Caching.Memory;
-using System.Text;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.WebUtilities;
 using Senparc.Weixin.Work.AdvancedAPIs.OAuth2;
@@ -463,7 +453,6 @@ namespace {{cookiecutter.project_name}}.Controllers
                     return Json(new { Code = 1, Msg = "获取信息失败" });
 
                 var access_token = (string)token["access_token"];
-
                 GetUserInfoResult result = OAuth2Api.GetUserId(access_token, code);
                 if (result.errcode.ToString() == "请求成功")
                 {

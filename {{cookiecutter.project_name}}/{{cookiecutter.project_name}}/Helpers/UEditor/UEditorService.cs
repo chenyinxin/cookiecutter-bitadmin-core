@@ -11,9 +11,7 @@ namespace {{cookiecutter.project_name}}.UEditor
 
         public UEditorService(IHostingEnvironment env, UEditorActionCollection actions)
         {
-            Config.WebRootPath = env.WebRootPath;
-            //Config.WebRootPath = AppDomain.CurrentDomain.BaseDirectory;
-            
+            Config.WebRootPath = env.WebRootPath;            
             actionList = actions;
         }
 

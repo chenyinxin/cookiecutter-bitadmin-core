@@ -35,12 +35,12 @@ namespace {{cookiecutter.project_name}}.Controllers
         * key：商户支付密钥，参考开户邮件设置（必须配置）
         * secret：公众帐号secert（仅JSAPI支付的时候需要配置）
         */
-        string appid = "appid";
-        string mch_id = "mch_id";
-        //string key = "key";
-        string secret = "secret";
+        string appid = HttpContextCore.Configuration["AppSettings:wxAppid"].ToString();
+        string mch_id = HttpContextCore.Configuration["AppSettings:wxMch_id"].ToString();
+        string key = HttpContextCore.Configuration["AppSettings:wxMch_key"].ToString();
+        string secret = HttpContextCore.Configuration["AppSettings:wxSecret"].ToString();
 
-        string ip = "8.8.8.8";
+        string ip = HttpContextCore.Configuration["AppSettings:wxTerminalIP"].ToString();
 
         /// <summary>
         /// 扫码支付（模式一）
@@ -94,7 +94,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 官方文档：https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_1
         /// </summary>
         /// <returns></returns>
-        public ActionResult NativePayTow(string productId, string body, string attach, string goods_tag, string total_fee)
+        public ActionResult NativePayTow(string productId, string body, string attach, string goods_tag, string total_fee,string type)
         {
             try
             {
@@ -103,22 +103,32 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (string.IsNullOrEmpty(total_fee))
                     return Json(new { Code = 1, Msg = "金额不能为空！" });
 
+                string out_trade_no = PayHelper.Out_trade_no;
+
                 SortedDictionary<string, object> data = new SortedDictionary<string, object>
                 {
+                    { "notify_url", "notify_url" },
                     { "trade_type", "NATIVE" },                     //交易类型
-                    { "out_trade_no", PayHelper.Out_trade_no },     //随机字符串
+                    { "out_trade_no", out_trade_no },               //随机字符串
                     { "body", body },                               //商品描述
                     { "total_fee", total_fee },                     //总金额
                     { "goods_tag", goods_tag },
                     { "product_id", productId },
                     { "attach", attach },
                     { "time_start", DateTime.Now.ToString("yyyyMMddHHmmss") },
-                    { "time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss") }
+                    { "time_expire", DateTime.Now.AddHours(1).ToString("yyyyMMddHHmmss") }
                 };
 
-                var result = UnifiedOrder(data);                //统一下单
-                string url = result["code_url"].ToString();     //获得统一下单接口返回的二维码链接
-                return Json(new { Code = 0, Msg = url });
+                //统一下单
+                var result = UnifiedOrder(data);
+
+                if (result["return_code"].ToString() == "FAIL")
+                    return Json(new { Code = 1, Msg = result["return_msg"] });
+
+                //获得统一下单接口返回的二维码链接
+                string code_url = result["code_url"].ToString();
+
+                return Json(new { Code = 0, Msg = code_url, Data = code_url });
             }
             catch (Exception ex)
             {
@@ -246,10 +256,10 @@ namespace {{cookiecutter.project_name}}.Controllers
             string response = HttpService.Post(xml, url, false, 10);//调用HTTP通信接口提交数据
 
             //将xml格式的数据转化为对象以返回
-           var result = PayHelper.FromXml(response);
+            var result = PayHelper.FromXml(response);
 
 
-            if (result["return_code"].ToString() == "SUCCESS"&& result["result_code"].ToString() == "SUCCESS")
+            if (result["return_code"].ToString() == "SUCCESS" && result["result_code"].ToString() == "SUCCESS")
             {
                 //支付成功
                 if (result["trade_state"].ToString() == "SUCCESS")
@@ -348,7 +358,8 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <returns></returns>
         public SortedDictionary<string, object> JsApiPayOrder(string openid, int total_fee)
         {
-            //统一下单
+            //统一下单
+
             SortedDictionary<string, object> data = new SortedDictionary<string, object>
             {
                 { "body", "test" },
@@ -446,8 +457,8 @@ namespace {{cookiecutter.project_name}}.Controllers
             inputObj.Add("mch_id", mch_id);//商户号
             inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串
             inputObj.Add("sign", PayHelper.MakeSign(inputObj));//签名
-            string xml = inputObj.ToXml();            
-            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/secapi/pay/reverse", true, timeOut);            
+            string xml = inputObj.ToXml();
+            string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/secapi/pay/reverse", true, timeOut);
 
             return PayHelper.FromXml(response);
         }
@@ -497,7 +508,7 @@ namespace {{cookiecutter.project_name}}.Controllers
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
-            
+
             return PayHelper.FromXml(response);
         }
 
@@ -527,7 +538,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串
             inputObj.Add("sign", PayHelper.MakeSign(inputObj));//签名
 
-            string xml = inputObj.ToXml();   
+            string xml = inputObj.ToXml();
             string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/pay/refundquery", false, timeOut);//调用HTTP通信接口以提交数据到API
 
             return PayHelper.FromXml(response);
@@ -556,7 +567,7 @@ namespace {{cookiecutter.project_name}}.Controllers
 
             string xml = inputObj.ToXml();
             string response = HttpService.Post(xml, "https://api.mch.weixin.qq.com/pay/downloadbill", false, timeOut);//调用HTTP通信接口以提交数据到API
-            
+
             if (response.Substring(0, 5) == "<xml>")
                 return PayHelper.FromXml(response);
             else
@@ -642,10 +653,11 @@ namespace {{cookiecutter.project_name}}.Controllers
             inputObj.Add("spbill_create_ip", ip);//终端ip	  	    
             inputObj.Add("nonce_str", PayHelper.Nonce_str);//随机字符串
 
-            inputObj.Add("sign", PayHelper.MakeSign(inputObj));
-            string response = HttpService.Post(PayHelper.ToXml(inputObj), "https://api.mch.weixin.qq.com/pay/unifiedorder", false, timeOut);            
+            inputObj.Add("sign", PayHelper.MakeSign(inputObj, key));
+            
+            string response = HttpService.Post(PayHelper.ToXml(inputObj), "https://api.mch.weixin.qq.com/pay/unifiedorder", false, timeOut);
 
-            return PayHelper.FromXml(response);
+            return PayHelper.FromXml(response, key);
         }
 
 
@@ -675,6 +687,14 @@ namespace {{cookiecutter.project_name}}.Controllers
 
             return PayHelper.FromXml(response);
         }
+
+        public string GetPostStr()
+        {
+            Stream stream = HttpContext.Request.Body;
+            byte[] buffer = new byte[HttpContext.Request.ContentLength.Value];
+            stream.Read(buffer, 0, buffer.Length);
+            return Encoding.UTF8.GetString(buffer);
+        }
     }
 
     public static class PayHelper
@@ -683,18 +703,23 @@ namespace {{cookiecutter.project_name}}.Controllers
         public static string Time_stamp => Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalSeconds).ToString();
         public static string Nonce_str => Guid.NewGuid().ToString().Replace("-", "");
 
-        public static string MakeSign(this SortedDictionary<string, object> data)
+        public static string MakeSign(this SortedDictionary<string, object> data, string key = "")
         {
-            return EncryptHelper.MD5(ToUrl(data)).ToUpper();
+            return EncryptHelper.MD5(ToUrl(data, key)).ToUpper();
         }
-        public static string ToUrl(SortedDictionary<string, object> data)
-        {            
+        public static string ToUrl(SortedDictionary<string, object> data, string key = "")
+        {
+            Dictionary<string, object> data2 = data.OrderBy(d => d.Key).ToDictionary(d => d.Key, d => d.Value);
             string buff = "";
-            foreach (var pair in data)
+            foreach (var pair in data2)
             {
+                if (pair.Key == "sign") continue;
                 buff += pair.Key + "=" + pair.Value + "&";
             }
-            return buff.Trim('&');
+            if (!string.IsNullOrEmpty(key))
+                return buff + "key=" + key;
+            else
+                return buff.Trim('&');
         }
         public static string ToXml(this SortedDictionary<string, object> data)
         {
@@ -707,23 +732,23 @@ namespace {{cookiecutter.project_name}}.Controllers
                     throw new Exception("WxPayData内部含有值为null的字段!");
                 }
 
-                if (pair.Value.GetType() == typeof(int))
-                {
-                    xml += "<" + pair.Key + ">" + pair.Value + "</" + pair.Key + ">";
-                }
-                else if (pair.Value.GetType() == typeof(string))
-                {
-                    xml += "<" + pair.Key + ">" + "<![CDATA[" + pair.Value + "]]></" + pair.Key + ">";
-                }
-                else//除了string和int类型不能含有其他数据类型
-                {
-                    throw new Exception("WxPayData字段数据类型错误!");
-                }
+                //if (pair.Value.GetType() == typeof(int))
+                //{
+                xml += "<" + pair.Key + ">" + pair.Value + "</" + pair.Key + ">";
+                //}
+                //else if (pair.Value.GetType() == typeof(string))
+                //{
+                //    xml += "<" + pair.Key + ">" + "<![CDATA[" + pair.Value + "]]></" + pair.Key + ">";
+                //}
+                //else//除了string和int类型不能含有其他数据类型
+                //{
+                //    throw new Exception("WxPayData字段数据类型错误!");
+                //}
             }
             xml += "</xml>";
             return xml;
         }
-        public static SortedDictionary<string, object> FromXml(string xml)
+        public static SortedDictionary<string, object> FromXml(string xml, string key = "")
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xml);
@@ -739,24 +764,20 @@ namespace {{cookiecutter.project_name}}.Controllers
             if (data["return_code"].ToString() != "SUCCESS")
                 return data;
 
-            if (!CheckSign(data)) throw new Exception("签名较验不通过：" + JsonConvert.SerializeObject(data));
+            if (!CheckSign(data, key)) throw new Exception("签名较验不通过：" + JsonConvert.SerializeObject(data));
             return data;
         }
-        public static bool CheckSign(this SortedDictionary<string, object> data)
+        public static bool CheckSign(this SortedDictionary<string, object> data, string key = "")
         {
-            if (!data.ContainsKey("sign"))
-                return false;
-            if (string.IsNullOrEmpty(data["sign"].ToString()))
-                return false;
-            
-            return MakeSign(data) == data["sign"].ToString();
+            return MakeSign(data, key) == data["sign"].ToString();
         }
+
     }
 
     public class HttpService
     {
         public static string Post(string xml, string url, bool isUseCert, int timeout)
-        {            
+        {
             //设置最大连接数
             ServicePointManager.DefaultConnectionLimit = 200;
             //设置https验证方式
@@ -784,7 +805,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             reqStream.Close();
 
             //获取服务端返回
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();            
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             using (StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
                 return sr.ReadToEnd().Trim();
