@@ -1,0 +1,6 @@
+﻿
+--步骤一：从数据库生成实体（生成的实体不能手动删除，否则无法重新生成）
+Scaffold-DbContext “data source=.;initial catalog=BitAdminCore;user id=sa;password=123456;” Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context DataContext -Force
+
+--步骤二：修改DataContext.cs中OnConfiguring的数据库链接引用（改为从配置文件读取）
+optionsBuilder.UseSqlServer(SqlHelper.ConnectionString);
