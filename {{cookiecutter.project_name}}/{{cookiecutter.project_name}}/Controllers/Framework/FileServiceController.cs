@@ -32,7 +32,8 @@ namespace {{cookiecutter.project_name}}.Controllers
         DataContext dbContext = new DataContext();
 
         //为迎接未来，默认保存到文件服务器，要本地保存清空Url即可。
-        string FileServiceUrl = "http://localhost:54117/FileService/Upload";
+        readonly string fileServer = "http://localhost:54117/FileService/Upload";
+        readonly bool isLocal = true;
 
         [HttpPost]
         public async Task<JsonResult> Upload()
@@ -67,7 +68,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 fileData.CreateTime = nowDate;
 
                 string ThumbnailSizes = Request.Form["thumbnailSizes"].FirstOrDefault();
-                if (string.IsNullOrEmpty(FileServiceUrl))
+                if (isLocal)
                 {
                     //保存本地
                     using (var stream = System.IO.File.Create(destFileName))
@@ -115,7 +116,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                     thumbnailSizes.Headers.ContentDisposition.Name = "thumbnailSizes";
                     form.Add(thumbnailSizes);
 
-                    HttpResponseMessage res = client.PostAsync(FileServiceUrl, form).Result;
+                    HttpResponseMessage res = client.PostAsync(fileServer, form).Result;
                     var json = res.Content.ReadAsStringAsync().Result;
                     JObject result = JObject.Parse(json);
 

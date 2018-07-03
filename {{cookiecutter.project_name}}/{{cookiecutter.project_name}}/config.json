@@ -2,7 +2,7 @@
 {
   /*上传到文件服务器*/
   "fileServer": "http://localhost:54117/FileService/UEditor", /*文件服务api*/
-  "isLocal": false, /*是否保存到本地*/
+  "isLocal": true, /*是否保存到本地*/
 
   /* 上传图片配置项 */
   "imageActionName": "uploadimage", /* 执行上传图片的action名称 */
