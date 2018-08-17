@@ -60,19 +60,18 @@
         //查询套件初始化
         var querySuite = $("#exampleQuery").querySuite()
             .columns["workOrderName"].format(function (event, val, data) {
-                var span = $('<span class="btn btn-link">' + (val || '') + '</span>');
-                span.bind('click', function () {
-                    switch (data.mainCode) {
-                        case "999":
-                            BitPage.Redirect("/WorkflowExample/ExampleTab", { orderId: data.billsCode, state: $('.querySuite-filter [name=state]').val(), taskUserId: data.taskUserId }, "WorkflowExample");
-                            break;
-                        case '':
-                            break;
-                    }
-                });
-                $(this).append(span);
+                $(this).append($('<span class="btn btn-link">' + (val || '') + '</span>')
+                    .bind('click', function () {
+                        switch (data.mainCode) {
+                            case "999":
+                                BitPage.Redirect("/WorkflowExample/ExampleTab", { orderId: data.billsCode, state: $('.querySuite-filter [name=state]').val(), taskUserId: data.taskUserId }, "WorkflowExample");
+                                break;
+                            case '':
+                                break;
+                        }
+                    }));
             })
-            .columns["userName"].format(function (event,val, data) {
+            .columns["userName"].format(function (event, val, data) {
                 $(this).html(data.userName + "(" + data.userCode + ")");
             })
             .query();

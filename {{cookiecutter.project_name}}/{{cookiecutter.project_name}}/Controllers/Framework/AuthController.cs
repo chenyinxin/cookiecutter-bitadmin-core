@@ -106,7 +106,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 var mc = new Regex("(?<=\\u0028).*?(?= \\u0029)", RegexOptions.None).Matches(json)[0];//提取出json对象
                 JObject me = JObject.Parse(mc.Value);
                 string client_id = (string)me["client_id"];
-                string openId = (string)me["openId"];
+                string openId = (string)me["openid"];
 
                 SysUserOpenId userOpenId = dbContext.Set<SysUserOpenId>().Where(x => x.OpenId == openId).FirstOrDefault();
                 if (userOpenId != null && userOpenId.UserId != Guid.Empty)

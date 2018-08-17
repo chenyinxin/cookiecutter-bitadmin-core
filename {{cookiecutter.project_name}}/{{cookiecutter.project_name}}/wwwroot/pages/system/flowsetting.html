@@ -93,12 +93,11 @@
     $(function () {
         //查询套件初始化
         var querySuite = $("#FlowMainQuery").querySuite()
-            .columns["option"].format(function (val, data) {
-                var span = $('<span class="btn btn-link">配置流程</span>');
-                span.bind('click', function () {
-                    window.open("../system/flowdesign.html?fm=" + data.id, 'newwindow', 'height=' + (window.screen.availHeight - 70) + 'px,width=' + (window.screen.availWidth - 15) + 'px,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=yes, status=no');
-                });
-                return span;
+            .columns["option"].format(function (event, val, data) {
+                $(this).append($('<span class="btn btn-link">配置流程</span>')
+                    .bind('click', function () {
+                        window.open("../system/flowdesign.html?fm=" + data.id, 'flowdesign', 'height=' + (window.screen.availHeight - 70) + 'px,width=' + (window.screen.availWidth - 15) + 'px,top=0,left=0,toolbar=no,menubar=no,scrollbars=yes, resizable=yes,location=yes, status=no');
+                    }));
             })
             .query();
 

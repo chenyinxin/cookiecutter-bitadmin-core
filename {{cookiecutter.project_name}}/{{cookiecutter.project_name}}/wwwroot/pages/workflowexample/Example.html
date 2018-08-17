@@ -26,15 +26,6 @@
             <button class="btn btn-default" action="add" id="workflowAdd">
                 <span class="glyphicon glyphicon-plus-sign"></span>添加
             </button>
-            <button class="btn btn-default" action="import">
-                <span class="glyphicon glyphicon-export"></span>导入
-            </button>
-            <button class="btn btn-default" action="export">
-                <span class="glyphicon glyphicon-export"></span>导出
-            </button>
-            <button class="btn btn-default" action="other">
-                <span class="glyphicon glyphicon-export"></span>其它
-            </button>
             <button class="btn btn-danger" action="delete">
                 <span class="glyphicon glyphicon-trash"></span>删除
             </button>
@@ -44,8 +35,6 @@
              data-key="exampleId"
              data-query-url="../../WorkFlowTemp/QueryCompleteExample"
              data-delete-url="../../WorkFlowTemp/DeleteCompleteExample"
-             data-import-url="../../WorkFlowTemp/ImportCompleteExample"
-             data-export-url="../../WorkFlowTemp/ExportCompleteExample"
              data-add-url="exampleEdit">
             <table>
                 <thead>
@@ -73,13 +62,11 @@
     $(function () {
         //查询套件初始化
         var querySuite = $("#exampleQuery").querySuite()
-            .columns["option"].format(function (event,val, data) {
-                var span = $('<span class="btn btn-link">修改</span>');
-                span.bind('click', function () {
-                    debugger;
-                    BitPage.Redirect("/WorkflowExample/ExampleEdit", { exampleId: data.exampleId }, "WorkflowExample");
-                });
-                $(this).append(span);
+            .columns["option"].format(function (event, val, data) {
+                $(this).append($('<span class="btn btn-link">修改</span>')
+                    .bind('click', function () {
+                        BitPage.Redirect("/WorkflowExample/ExampleEdit", { exampleId: data.exampleId }, "WorkflowExample");
+                    }));
             })
             .import(function (result) {
                 console.log(result);

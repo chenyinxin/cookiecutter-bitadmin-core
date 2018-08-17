@@ -42,8 +42,7 @@
         var _options = workflowHisotry;
         $('#flowHistoryBlock [name=taskUserId]').val(_options.taskUserId);
         //查询套件初始化
-        var querySuite = $("#flowHistoryBlock")
-            .querySuite()
+        var querySuite = $("#flowHistoryBlock").querySuite()
             .columns["userName"].format(function (event, val, data) {
                 if (!data.userName)
                     $(this).append("");

@@ -24,6 +24,12 @@
             <button class="btn btn-default" action="add" action-modal="myModal">
                 <span class="glyphicon glyphicon-plus-sign"></span>添加
             </button>
+            <button class="btn btn-default" action="import">
+                <span class="glyphicon glyphicon-export"></span>导入
+            </button>
+            <button class="btn btn-default" action="export">
+                <span class="glyphicon glyphicon-export"></span>导出
+            </button>
             <button class="btn btn-danger" action="delete">
                 <span class="glyphicon glyphicon-trash"></span>删除
             </button>
@@ -32,7 +38,9 @@
         <div class="querySuite-table" data-sort-name="orderNo" data-sort-order="desc"
              data-key="exampleId"
              data-query-url="../../Example/QueryExample"
-             data-delete-url="../../Example/DeleteExample">
+             data-delete-url="../../Example/DeleteExample"
+             data-import-url="../../WorkFlowTemp/ImportCompleteExample"
+             data-export-url="../../WorkFlowTemp/ExportCompleteExample">
             <table>
                 <thead>
                     <tr>
