@@ -253,7 +253,7 @@
 
         //设置角色权限
         $("#btnAddRole").click(function () {
-            BitPage.Redirect("system/roleOperate", { isQuery: "", roleId: $("#roleId").val(), roleName: $("#roleName").val() }, "Role");
+            goPage("system/roleOperate", { isQuery: "", roleId: $("#roleId").val(), roleName: $("#roleName").val() }, "Role");
         });
         getRoleData();
     });

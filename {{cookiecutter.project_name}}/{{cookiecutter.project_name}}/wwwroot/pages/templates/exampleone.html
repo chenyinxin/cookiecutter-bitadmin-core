@@ -6,13 +6,10 @@
         <div class="querySuite-filter">
             <table>
                 <tr>
-
                     <th>示例名称：</th>
                     <td>
                         <input type="text" name="exampleName" class="form-control">
-                        <input type="hidden" name="ID" />
                     </td>
-
                 </tr>
             </table>
         </div>
@@ -37,8 +34,8 @@
         <!-- 列表-->
         <div class="querySuite-table" data-sort-name="orderNo" data-sort-order="desc"
              data-key="exampleId"
-             data-query-url="../../Example/QueryExample"
-             data-delete-url="../../Example/DeleteExample"
+             data-query-url="../../example/QueryExample"
+             data-delete-url="../../example/DeleteExample"
              data-import-url="../../WorkFlowTemp/ImportCompleteExample"
              data-export-url="../../WorkFlowTemp/ExportCompleteExample">
             <table>
@@ -46,7 +43,7 @@
                     <tr>
                         <th style="width:30px;"><input type="checkbox" /></th>
                         <th data-field="exampleName" data-sort="true" data-filter="true" data-format="edit">示例名称</th>
-                        <th data-field="exampleText">普通文本</th>
+                        <th data-field="exampleText" data-sort="true">普通文本</th>
                         <th data-field="dateTimePicker" data-format="time|yyyy-MM-dd">创建时间</th>
                         <th data-field="option">编辑</th>
                     </tr>
@@ -62,134 +59,88 @@
     <div class="modal-dialog" style="width:1000px">
         <div class="modal-content">
             <div class="modal-body">
-                <form data-title="数据字典"
+                <form data-title="示例模型"
+                      data-key="exampleId"
                       data-save-url="../../Example/SaveExample"
                       data-load-url="../../Example/LoadExample">
                     <table class="table-bordered">
                         <tr>
-                            <th>示例名称：</th>
+                            <th>必填文本：</th>
                             <td>
-                                <input type="hidden" name="exampleId" />
-                                <input name="exampleName" type="text" class="form-control required" placeholder="示例名称" />
+                                <input name="exampleName" type="text" class="form-control required" placeholder="必填文本" />
                             </td>
                             <th>普通文本：</th>
                             <td>
-                                <input name="exampleText" type="text" class="form-control required" placeholder="普通文本">
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th>单选：</th>
-                            <td>
-                                <label data-control="bitRadio" data-control-type="DicUrl" data-type="A" data-text="memberName" data-value="member" data-inline="true" data-control-name="radioChange">
-                                    <input type="radio" name="exampleRadio">
-                                </label>
-                            </td>
-                            <th>复选：</th>
-                            <td>
-                                <label data-control="bitCheckbox" data-control-type="DicUrl" data-type="b" data-text="memberName" data-value="member" data-inline="true">
-                                    <input type="checkbox" name="exampleCheckbox">
-                                </label>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>下拉框：</th>
-                            <td>
-                                <select class="form-control" name="exampleSelect" data-control="bitSelect" data-control-type="DicUrl" data-type="A" data-text="memberName" data-value="member"></select>
-                            </td>
-                            <th>电话号码：</th>
-                            <td>
-                                <input type="text" name="examplePhone" class="form-control phone required" placeholder="电话号码">
+                                <input name="exampleText" type="text" class="form-control" placeholder="普通文本">
                             </td>
                         </tr>
                         <tr>
-                            <th>下拉联动(异步)：</th>
-                            <td>
-                                <div id="linkageSelectTrue" data-url="../../Example/GetLinkageSelect" data-ajax="true" data-text="departmentName" data-value="departmentId">
-                                    <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectD"></select>
-                                    <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectE"></select>
-                                    <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectF"></select>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>下拉联动(同步)：</th>
-                            <td>
-                                <div id="linkageSelectFalse" data-url="../../Example/QueryTreeTableData" data-ajax="false" data-text="departmentName" data-value="departmentId">
-                                    <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectA"></select>
-                                    <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectB"></select>
-                                    <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectC"></select>
-                                </div>
-                            </td>
                             <th>日期时间：</th>
                             <td>
-                                <div data-control="datePicker" data-format="yyyy-MM-dd HH:mm:ss" data-control-name="selectChange">
-                                    <input type="text" name="exampleTime" class="form-control" placeholder="日期时间" />
-                                </div>
+                                <input type="text" name="exampleTime" class="form-control" data-picker="datetime" data-format="yyyy-MM-dd HH:mm:ss" placeholder="日期时间" />
+                            </td>
+                            <th>下拉控件：</th>
+                            <td>
+                                <select class="form-control" name="exampleSelect" data-select="../../system/dictionaries" data-type="a" data-text="memberName" data-value="member"></select>
                             </td>
                         </tr>
                         <tr>
                             <th>用户：</th>
                             <td>
-                                <div class="input-group" data-control="picker" data-control-type="UserPicker" data-param="single:true">
-                                    <input type="text" name="userName" class="form-control" placeholder="用户" />
+                                <div class="input-group" data-picker="../picker/userpicker.html" data-param="single:false">
+                                    <input type="text" class="form-control" name="exampleUserName" placeholder="用户" />
                                     <input type="hidden" name="exampleUser" />
                                 </div>
                             </td>
                             <th>部门：</th>
                             <td>
-                                <div class="input-group" data-control="picker" data-control-type="OUPicker" data-param="single:false">
-                                    <input type="text" name="departmentName" class="form-control" placeholder="部门" />
+                                <div class="input-group" data-picker="../picker/oupicker.html" data-param="single:true">
+                                    <input type="text" class="form-control" name="departmentName" placeholder="部门" />
                                     <input type="hidden" name="department" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>单选：</th>
+                            <td>
+                                <input type="radio" name="exampleRadio" data-radio="../../system/dictionaries" data-type="a" data-text="memberName" data-value="member">
+                            </td>
+                            <th>复选：</th>
+                            <td>
+                                <input type="checkbox" name="exampleCheckbox" data-checkbox="../../system/dictionaries" data-type="b" data-text="memberName" data-value="member">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>下拉联动(异步)：</th>
+                            <td>
+                                <div id="linkageSelectTrue" data-linkage="../../Example/GetLinkageSelect" data-ajax="true" data-text="departmentName" data-value="departmentId">
+                                    <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectA"></select>
+                                    <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectB"></select>
+                                    <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectC"></select>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <th>自动提示文本</th>
                             <td>
-                                <input class="form-control" data-control="bitAutoComplete" id="inputAutoCmplete" name="autoComplete" data-text="member" data-control-type="DicUrl" data-type="A" />
+                                <input class="form-control" name="autoComplete" data-autotext="../../system/dictionaries" data-type="A" data-text="member" />
                             </td>
                             <th>自动提示下拉框</th>
                             <td>
-                                <input type="text" data-control="bitAutoComSelect" data-control-type="DicUrl" name="autoComSelectText" class="form-control" data-target="autoComSelect" data-text="memberName" data-value="member" data-type="A" />
-                                <input type="hidden" name="autoComSelect" />
+                                <div class="input-group" data-autoselect="../../system/dictionaries" data-type="A" data-text="memberName" data-value="member">
+                                    <input type="text" class="form-control" name="autoComSelectText" />
+                                    <input type="hidden" name="autoComSelect" />
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <input id="fileupload" type="file"
-                                       data-mode="ico"
-                                       data-target="#fileBox"
-                                       data-multiple="true">
-                                <div id="fileBox"></div>
+                                <input type="file" name="fileupload" data-file="ico">
                             </td>
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <input id="fileupload3" type="file"
-                                       data-mode="list"
-                                       data-target="#fileBox3"
-                                       data-multiple="true">
-                                <div id="fileBox3"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <input id="fileupload2" type="file"
-                                       data-buttontxt="上传"
-                                       data-button-style="float:left"
-                                       data-islocal="true"
-                                       data-mode="view"
-                                       data-target="#fileBox2"
-                                       data-multiple="true"
-                                       data-onlyfile="true"
-                                       data-filetypes="jpg|jpeg|png|gif"
-                                       data-minfilesize="0"
-                                       data-maxfilesize="2147483648"
-                                       data-thumbnailsizes="50;155"
-                                       data-format="yyyy-MM-dd">
-                                <div id="fileBox2"></div>
+                                <script name="repeatText" data-ueditor="repeatText"></script>
                             </td>
                         </tr>
                     </table>
@@ -207,63 +158,24 @@
     </div><!-- /.modal -->
 </div>
 <script src="../../js/lib/jquery.fileupload.js"></script>
-<script src="../../js/framework/BitAdmin-fileupload.js"></script>
+<script src="../../js/framework/bitadmin-fileupload.js"></script>
+<script src="../../lib/ueditor/ueditor.config.js"></script>
+<script src="../../lib/ueditor/ueditor.all.min.js"></script>
+<script src="../../lib/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-
     $(function () {
-
-        var linkageSelectTrue = $("#linkageSelectTrue").linkageSelect().change(function (e) {});
-        //同步
-        var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) {});
-
-        //查询套件初始化
         var querySuite = $(".querySuite-wrapper").querySuite()
             .columns["option"].format(function (event, val, data) {
                 $(this).append($('<span class="btn btn-link">修改</span>')
                     .click(function () {
-                        console.log(val);
                         console.log(data);
                     }));
             })
             .query();
 
-        //表单套件初始化
         var formSuite = $("#myModal").formSuite()
-            .add(function () {//点击添加：初始化表单后
-                linkageSelectFalse.wrapper.find('select').attr('data-actualval', '');
-                linkageSelectFalse.wrapper.find('select:first').change();
-
-                linkageSelectTrue.wrapper.find('select').attr('data-actualval', '');
-                linkageSelectTrue.wrapper.find('select:first').change();
-
-                fileUpload.clear();
-                fileUpload2.clear();
-            })
-            .edit(function (e) {//点击编辑：加载数据后
-                linkageSelectFalse.wrapper.find('select:first').change();
-
-                linkageSelectTrue.wrapper.find('select:first').change();
-
-                fileUpload.query(e.data.exampleId);
-            })
-            .submit(function (result) {//点击保存：数据保存成功后
+            .submit(function (result) {
                 querySuite.query();
-                debugger
-                fileUpload.save(result.data.exampleId);
-            }).controls["radioChange"].change(function (e) {
-                debugger
             });
-
-        //radio回调事件
-        $("body").on("change", "#myModal :radio[name=ExampleRadio]", function () { })
-
-        //checkbox回调事件
-        $("body").on("change", "#myModal :checkbox[name=ExampleCheckbox]", function () { })
-
-        var fileUpload = $('#fileupload').upload();
-
-        var fileUpload2 = $('#fileupload2').upload();
-
-        var fileUpload3 = $('#fileupload3').upload();
     });
 </script>

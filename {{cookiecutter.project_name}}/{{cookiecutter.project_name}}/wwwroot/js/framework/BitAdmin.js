@@ -10,7 +10,7 @@ var BitAdmin = {
         window.location.href = "../../pages/home/index.html";
     },
     //是否已登录
-    IsLogin: function (success,sign) {
+    IsLogin: function (success, sign) {
         $.get("../../account/isLogin", function (result) {
             if (result == "true" && sign == "login") BitAdmin.RedirectToHomePage();
             if (result == "false" && sign == "page") BitAdmin.RedirectToLoginPage();
@@ -54,36 +54,32 @@ var BitAdmin = {
         });
     }
 }
-var BitPage = {
-    GetQueryString: function (name, url) {
-        if (url == undefined) url = window.location.search;
-        var reg = new RegExp("(\\?|&)" + name + "=([^&]*)(&|$)");
-        var r = url.match(reg);
-        if (r != null) return unescape(r[2]); return null;
+var bitPage = {
+    query: function (name) {
+        return url.query(name, url.query("page"));
     },
-    LoadContent: function () {
-        var pageUrl = BitPage.GetQueryString("page").split("?")[0];
+    url: function () {
+        return url.query("page");
+    },
+    loadContent: function () {
+        var pageUrl = url.query("page").split("?")[0];
+        var _pages = window.parent.BitAdmin.Pages || window.BitAdmin.Pages;
+        var _page = _pages[pageUrl.toLowerCase().replace(/\//g, "").replace(/\./g, "")];
         pageUrl = pageUrl.replace('../', '').indexOf('.') > -1 ? pageUrl : pageUrl + '.html';
         $("section.content").load("../" + pageUrl);
-        var sign = BitPage.GetQueryString("sign");
-        BitAdmin.InitRight(sign);           //初始化操作权限
 
-        var modulePage;
-        if (window.parent.BitAdmin.Pages)
-            modulePage = window.parent.BitAdmin.Pages[sign];
-        else if (window.BitAdmin.Pages)
-            modulePage = window.BitAdmin.Pages[sign];
-
-        if (modulePage != null) {
-            $(document).attr("title", modulePage.PageName);
-            $(".header-moduleName").text(modulePage.ModuleName);
-            $(".header-pageName").text(modulePage.PageName);
-            //$(".header-PageDesc").text(modulePage.Description);
+        var sign = url.query("sign");
+        if (_page) {
+            $(document).attr("title", _page.pageName)
+            $(".header-moduleName").text(_page.pageModuleName);
+            $(".header-pageName").text(_page.pageName);
+            sign = sign || _page.pageSign;
         }
+        BitAdmin.InitRight(sign);
     },
     Redirect: function (tabUrl, param, tabSign, type) {
         var options = { "tabUrl": tabUrl, "param": param, "tabSign": tabSign }
-        var pageUrl = BitPage.GetRedirect(options);
+        var pageUrl = bitPage.GetRedirect(options);
         switch (type) {
             case 1:
                 window.parent.window.location.href = pageUrl;
@@ -119,11 +115,22 @@ var BitPage = {
             var layout = "layout.html";
             if (urlArr.length > 1)
                 layout = suffix + ".html";
-            pageUrl = "../../pages/shared/" + layout + "?page=" + encodeURIComponent(options.tabUrl.replace("." + urlArr[urlArr.length - 1], '') + param) + "&sign=" + options.tabSign;
+            pageUrl = "../../pages/shared/" + layout + "?page=" + encodeURIComponent(options.tabUrl.replace("." + urlArr[urlArr.length - 1], '') + param) + (options.tabSign ? "&sign=" + options.tabSign : "");
         }
         return pageUrl;
     },
 }
+
+
+var url = {
+    query: function (name, url) {
+        if (url == undefined) url = window.location.search;
+        var reg = new RegExp("(\\?|&)" + name + "=([^&]*)(&|$)");
+        var r = url.match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    },
+}
+
 var string = {
 	/*
 	 *	方法名：字符串格式项替换
@@ -148,7 +155,7 @@ var string = {
         });
         return source;
     },
-    subString : function (val, len) {
+    subString: function (val, len) {
         if (val.length > len) {
             val = val.substr(0, len) + '...';
         }
@@ -204,6 +211,7 @@ var time = {
         return new Date(o["yyyy"], o["MM"] - 1, o["dd"], o["HH"], o["mm"], o["ss"], o["fff"]);
     }
 }
+
 var guid = {
 	/*
 	 *	方法名：guid.new()
@@ -224,7 +232,7 @@ var guid = {
     validate: function (value) {
         return value != null && guid.regex.test(value);
     },
-    regex : new RegExp("^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$")
+    regex: new RegExp("^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$")
 }
 
 var array = {
@@ -238,14 +246,18 @@ var array = {
     }
 }
 
+var goPage = bitPage.Redirect;
+
 $.extend({
-    //加载中......
     showLoading: function () {
+        $.lock = true;
         $("body").append('<div class="pageLoading"></div>');
     },
     hideLoading: function () {
+        $.lock = false;
         $(".pageLoading").remove();
-    }
+    },
+    lock: false,
 });
 
 $.ajaxSetup({

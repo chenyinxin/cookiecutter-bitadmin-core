@@ -67,10 +67,10 @@
     $(function () {
         //$("input[name=inputName]").bitAutoComSelect();
         //url取值
-        var url = BitPage.GetQueryString("page");
-        var exampleId = BitPage.GetQueryString('exampleId', url);
-        var taskUserId = BitPage.GetQueryString('taskUserId', url);
-        var state = BitPage.GetQueryString('state', url);
+        var pageUrl = url.query("page");
+        var exampleId = url.query('exampleId', pageUrl);
+        var taskUserId = url.query('taskUserId', pageUrl);
+        var state = url.query('state', pageUrl);
 
         //表单套件初始化
         var formSuite = $("#exampleModal").generalForm()
@@ -100,19 +100,19 @@
             .close(function (result) {
                 switch (state) {
                     case 'ToDo':
-                        BitPage.Redirect("/Workbench/ToDoList", null, "ToDoList", 1);
+                        goPage("/Workbench/ToDoList", null, "ToDoList", 1);
                         break;
                     case 'Done':
-                        BitPage.Redirect("/Workbench/DoneList", null, "DoneList", 1);
+                        goPage("/Workbench/DoneList", null, "DoneList", 1);
                         break;
                     case 'ToRead':
-                        BitPage.Redirect("/Workbench/ToReadList", null, "ToReadList", 1);
+                        goPage("/Workbench/ToReadList", null, "ToReadList", 1);
                         break;
                     case 'ReadEnd':
-                        BitPage.Redirect("/Workbench/ReadEndList", null, "ReadEndList", 1);
+                        goPage("/Workbench/ReadEndList", null, "ReadEndList", 1);
                         break;
                     default:
-                        BitPage.Redirect("/WorkflowExample/Example", null, "WorkflowExample");
+                        goPage("/WorkflowExample/Example", null, "WorkflowExample");
                         break;
                 }
             })

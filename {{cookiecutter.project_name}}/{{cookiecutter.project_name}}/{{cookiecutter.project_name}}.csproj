@@ -10,6 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Dockerfile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Dockerfile" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BitAdminCore.ALL" Version="1.0.6" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />

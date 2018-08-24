@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>BitAdminCore-首页</title>
-    <meta name="description" content="BitAdminCore, Version 0.1, Alpha" />
+    <meta name="description" content="BitAdminCore, Version 1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -97,7 +97,7 @@
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="javascript:void(1)" class="btn btn-default btn-flat changepassowrd">修改密码</a>
+                                        <a href="javascript:void(1)" class="btn btn-default btn-flat" data-toggle="modal" data-target="#PasswordModal">修改密码</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="javascript:void(1)" class="btn btn-default btn-flat signout">退出登录</a>
@@ -148,15 +148,53 @@
             </section>
         </div>
         <!--<div class="content-wrapper" style="background-color:white;" mode="iframe">
-            <iframe id="iframe_page_home" style="width: 100%;" src="Readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
-        </div>-->
+        <iframe id="iframe_page_home" style="width: 100%;" src="Readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+    </div>-->
         <footer class="main-footer" style="padding: 5px;">
-            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1263497164'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1263497164%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+            <!--<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1263497164'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1263497164%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>-->
             <strong>Copyright &copy; 2017-2018 <a href="javascript:void();">bitdao</a>.</strong> All rights reserved.
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.0.0
             </div>
         </footer>
+        <!-- 修改密码 -->
+        <div class="modal fade" id="PasswordModal" tabindex="-1" role="dialog" aria-labelledby="ModalOneLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="ModalOneLabel">修改用户密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group has-feedback">
+                            <span>请输入旧密码：</span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input type="password" id="OldPassword" class="form-control" placeholder="旧密码">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <span>请输入新密码：</span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input type="password" id="NewPasswordOne" class="form-control" placeholder="新密码">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input type="password" id="NewPasswordTow" class="form-control" placeholder="新密码确认">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <span id="spanmsg" style="color:red;"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="savePassword">修改密码</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
     </div>
     <!-- ./wrapper -->
     <!--基础引用-->
@@ -199,11 +237,62 @@
                 }
                 $('#page-tabs').scrollLeft(num - 100);
             });
+
             $(".signout").click(function () {
                 $.get("../../account/signOut", function (result) {
                     if (result.code == 0) BitAdmin.RedirectToLoginPage();
                 });
                 return false;
+            });
+
+            $('#PasswordModal').on('show.bs.modal', function () {
+                $("#OldPassword").val("");
+                $("#NewPasswordOne").val("");
+                $("#NewPasswordTow").val("");
+            })
+            $("#savePassword").click(function () {
+                $("#spanmsg").text("");
+                var oldpassword = $("#OldPassword").val();
+                var newpasswordone = $("#NewPasswordOne").val();
+                var newpasswordtow = $("#NewPasswordTow").val();
+                if (oldpassword == "") {
+                    $("#spanmsg").text("请输入旧密码");
+                    return;
+                }
+                if (newpasswordone == "" || newpasswordtow == "") {
+                    $("#spanmsg").text("请输入新密码");
+                    return;
+                }
+                if (newpasswordone != newpasswordtow) {
+                    $("#spanmsg").text("两次新密码不相同");
+                    return;
+                }
+                //密码复杂度
+                if (newpasswordone.length < 6) {
+                    $("#spanmsg").text("密码长度大于6位");
+                    return;
+                }
+
+                $.showLoading();
+                $.ajax({
+                    url: "../../account/UpdatePassword",
+                    data: { OldPwd: oldpassword, NewPwd: newpasswordone },
+                    datatype: "json",
+                    type: "post",
+                    success: function (result) {
+                        if (result.code == 0) {
+                            alert(result.msg);
+                            $(".PasswordModal").modal("hide");
+                        } else {
+                            $("#spanmsg").text(result.msg);
+                        }
+                        $.hideLoading();
+                    },
+                    error: function (a, b, c) {
+                        alert(a.responseText);
+                        $.hideLoading();
+                    }
+                });
             });
             BitNoticeService = BitNotice();
         });

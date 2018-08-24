@@ -32,9 +32,8 @@
 <script type="text/javascript">
     var saveRoleModuleData;
     $(function () {
-        var url = BitPage.GetQueryString("page");
-        var isQuery = BitPage.GetQueryString("isQuery", url);
-        var roleId = BitPage.GetQueryString("roleId", url);
+        var isQuery = url.query("isQuery", url.query("page"));
+        var roleId = url.query("roleId", url.query("page"));
         $(".querySuite-table").attr("data-query-url", "../../system/GetRoleMeunsData?roleId=" + roleId);
         //初始化表格
         var treetable = $(".querySuite-wrapper").treeTable({

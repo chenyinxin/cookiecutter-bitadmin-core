@@ -296,6 +296,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         private static string FormatKey(string msg)
         {
+
             int lastUpper = 0;
             char[] msgArr = msg.ToCharArray();
 
@@ -308,6 +309,17 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
             if (msgArr.Length > 0) msgArr[0] = msgArr[0].ToString().ToLower()[0];
             return new StringBuilder().Append(msgArr).ToString();
+
+            //char[] msgArr = msg.ToCharArray();
+            //char[] result = msg.ToCharArray();
+            //for (int i = 0; i < msgArr.Length; i++)
+            //{
+            //    if ((i == 0 || i == msgArr.Length - 1) && msgArr[i] >= 'A' && msgArr[i] <= 'Z')
+            //        result[i] = msgArr[i].ToString().ToLower()[0];
+            //    else if (i + 1 < msgArr.Length && msgArr[i] >= 'A' && msgArr[i] <= 'Z' && msgArr[i - 1] >= 'A' && msgArr[i - 1] <= 'Z')
+            //        result[i] = msgArr[i].ToString().ToLower()[0];
+            //}
+            //return new StringBuilder().Append(result).ToString();
         }
     }
 
@@ -329,7 +341,7 @@ namespace {{cookiecutter.project_name}}.Helpers
             {
                 if (!string.IsNullOrEmpty(controller.Request.Form[p.Name].FirstOrDefault()))
                 {
-                    p.SetValue(t, ChangeType(controller.Request.Form[p.Name].FirstOrDefault(), (Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType)), null);
+                    p.SetValue(t, ChangeType(string.Join("|", controller.Request.Form[p.Name].ToArray()), (Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType)), null);
                 }
                 else if (controller.Request.Form[p.Name].FirstOrDefault() != null)
                 {

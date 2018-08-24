@@ -45,7 +45,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {             
-                 string sql = @"select e.*,s.userName,p.departmentName from GeneralExample e 
+                 string sql = @"select e.*,s.userName exampleUserName,p.departmentName from GeneralExample e 
                                  left join SysUser s on e.ExampleUser=s.UserID 
                                  left join SysDepartment p on e.Department=p.DepartmentID 
                                  where e.exampleId=@exampleId";

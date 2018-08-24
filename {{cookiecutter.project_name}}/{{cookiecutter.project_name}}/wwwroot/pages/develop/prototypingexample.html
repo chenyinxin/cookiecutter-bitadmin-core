@@ -114,7 +114,7 @@
 
 <script type="text/javascript">
     $(function () {
-        var pageUrl = BitPage.GetQueryString("page").split("?")[0];
+        var pageUrl = url.query("page").split("?")[0];
         var pageArr = pageUrl.split('/');
         $(".querySuite-filter table").first("td")
             .append('<input type="hidden" name="module" value="' + pageArr[pageArr.length - 2] + '" />')

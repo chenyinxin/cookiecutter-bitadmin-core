@@ -7,384 +7,356 @@ $.extend({
         $.extend($.adminSetting, option)
     },
     adminSetting: {
-        addLogs: function (title, type, msg) { },
-        Pickers: {},
-        DataApis: {}
+        addLogs: function (title, type, msg) { }
     },
     adminTools: {
-        renderControls: function (_topid, _wrapper, _changes) {
-            $.adminTools.renderPicker(_topid, _wrapper, _changes);
-            $.adminTools.renderDatePicker(_topid, _wrapper, _changes);
-            $.adminTools.renderSelect(_topid, _wrapper, _changes);
-            $.adminTools.renderRadio(_topid, _wrapper, _changes);
-            $.adminTools.renderCheckbox(_topid, _wrapper, _changes);
-            $.adminTools.renderAutoComplete(_topid, _wrapper, _changes);
-            $.adminTools.renderAutoComSelect(_topid, _wrapper, _changes);
-        },
-        renderPicker: function (_topid, _wrapper, _changes) {
-            var _controls = _wrapper.find('[data-control=picker]');
-            $.each(_controls, function (index, el) {
-                var _type = $(this).attr("data-control-type");
-                var _name = $(this).attr("data-control-name");
-                $(this).attr("data-url", $.adminSetting.Pickers[_type]);
-                $(this).picker("#" + _topid).change(_changes,_name);
-            });
-        },
-        renderDatePicker: function (_topid, _wrapper, _changes) {
-            var _controls = _wrapper.find('[data-control=datePicker]');
-            $.each(_controls, function (index, el) {
-                var _name = $(this).attr("data-control-name");
-                
-                $(this).datePicker().change(_changes,_name);
-            });
-        },
-        renderSelect: function (_topid, _wrapper, _changes) {
-            var _controls = _wrapper.find('[data-control=bitSelect]');
-            $.each(_controls, function (index, el) {
-                var _type = $(this).attr("data-control-type");
-                var _name = $(this).attr("data-control-name");
-                $(this).attr("data-url", $.adminSetting.DataApis[_type]);
-                $(this).bitSelect().change(_changes, _name);
-            });
-        },
-        renderAutoComplete: function (_topid, _wrapper, _changes) {
-            var _controls = _wrapper.find('[data-control=bitAutoComplete]');
-            $.each(_controls, function (index, el) {
-                var _type = $(this).attr("data-control-type");
-                var _name = $(this).attr("data-control-name");
-                $(this).attr("data-url", $.adminSetting.DataApis[_type]);
-                $(this).bitAutoComplete().change(_changes, _name);
-            });
-        },
-        renderAutoComSelect: function(_topid, _wrapper, _changes) {
-            var _controls = _wrapper.find('[data-control=bitAutoComSelect]');
-            $.each(_controls, function (index, el) {
-                var _type = $(this).attr("data-control-type");
-                var _name = $(this).attr("data-control-name");
-                $(this).attr("data-url", $.adminSetting.DataApis[_type]);
-                $(this).bitAutoComSelect().change(_changes, _name);
-            });
-        },
-        renderRadio: function (_topid, _wrapper, _changes) {
-            var _controls = _wrapper.find('[data-control=bitRadio]');
-            $.each(_controls, function (index, el) {
-                var _type = $(this).attr("data-control-type");
-                var _name = $(this).attr("data-control-name");
-                $(this).attr("data-url", $.adminSetting.DataApis[_type]);
+        renderControls: function (_topid, _wrapper, _option) {
+            var _changes = {};
+            $.each(_wrapper.find("input,select,script"), function (i, d) {
+                var key = $(d).attr("name"); if (key == undefined) return;
+                if ($(d).attr("data-select") || $(d).attr("data-radio") || $(d).attr("data-checkbox") || $(d).attr("data-autotext") || $(d).attr("data-picker") || $(d).attr("data-file") || $(d).attr("data-ueditor")) {
+                    var ctl;
+                    if ($(d).attr("data-select"))
+                        ctl = $(this).bitSelect(_changes);
+                    else if ($(d).attr("data-radio"))
+                        ctl = $(this).bitRadio(_changes);
+                    else if ($(d).attr("data-checkbox"))
+                        ctl = $(this).bitCheckbox(_changes);
+                    else if ($(d).attr("data-autotext"))
+                        ctl = $(this).bitAutoComplete(_changes);
+                    else if ($(d).attr("data-picker") == "datetime")
+                        ctl = $(this).datePicker(_changes);
+                    else if ($(d).attr("data-file")) {
+                        if ($.fn.upload) {
+                            ctl = $(this).upload(_changes);
+                        }
+                    }
+                    else if ($(d).attr("data-ueditor")) {
+                        if (UE) {
+                            $(this).attr("id", key);
+                            ctl = UE.getEditor(key);
+                        }
+                    }
 
-                $(this).bitRadio().change(_changes,_name);
-            });
-        }, 
-        renderCheckbox: function (_topid, _wrapper, _changes) {
-            var _controls = _wrapper.find('[data-control=bitCheckbox]');
-            $.each(_controls, function (index, el) {
-                var _type = $(this).attr("data-control-type");
-                var _name = $(this).attr("data-control-name");
-                $(this).attr("data-url", $.adminSetting.DataApis[_type]);
+                    _option.controls[key] = inputChange(key, $(d), true, ctl);
+                }
+                else if ($(this).parent().attr("data-picker") || ($(this).parent().attr("data-linkage")) || ($(this).parent().attr("data-autoselect"))) {
+                    var ctl;
+                    $.each($(this).parent().children(), function () {
+                        if (_option.controls[$(this).attr("name")] && _option.controls[$(this).attr("name")].bitcontrol && ctl == undefined)
+                            ctl = _option.controls[$(this).attr("name")].bitcontrol;
+                    });
+                    if ($(this).parent().attr("data-picker") && ctl == undefined) {
+                        ctl = $(this).parent().picker("#" + _topid, _changes);
+                    }
+                    else if ($(this).parent().attr("data-linkage") && ctl == undefined)
+                        ctl = $(this).parent().linkageSelect(_changes);
+                    else if ($(this).parent().attr("data-autoselect") && ctl == undefined)
+                        ctl = $(this).parent().bitAutoComSelect(_changes);
 
-                $(this).bitCheckbox();
+                    _option.controls[key] = inputChange(key, $(d), true, ctl);
+                }
+                else {
+                    _option.controls[key] = inputChange(key, $(d), false);
+                }
+            });
+            function inputChange(key, input, isbit, ctl) {
+                if (_option.controls[key]) {
+                    _option.controls[key].controls.push(input);
+                    return _option.controls[key]
+                }
+                var _input = {
+                    key: key,
+                    isbit: isbit,
+                    bitcontrol: ctl,
+                    controls: new Array(),
+                };
+                _input.controls.push(input);
+                _input.change = function (action) {
+                    if ($.isFunction(action)) {
+                        _changes[key] = action;
+                        if (!isbit) {
+                            debugger;
+                            $.each(_input.controls, function () {
+                                $(this).change(function () {
+                                    action($(this).val(), $(this));
+                                });
+                            })
+                        };
+                    }
+                    return _option;
+                }
+                return _input;
+            }
+        },
+        initForm(_option, _callback, _wrapper, _form) {
+            $.extend(_option, {
+                controls: {},
+                logType: "add",
+                title: _form.attr("data-title"),
+                key: _form.attr("data-key"),
+                loadFormUrl: _form.attr("data-load-url"),
+                saveFormUrl: _form.attr("data-save-url"),
+            });
+            if ($("[name=" + _option.key + "]").length == 0) _form.find("td:eq(0)").append('<input type="hidden" name="' + _option.key + '" />');
+            _wrapper.find("[action=save]").click(function () { _option.submit(); });
+
+            _option.add = function (callback) {
+                if ($.isFunction(callback)) { _callback.add = callback; }
+                else {
+                    _option.reset();
+                    if ($.isFunction(_callback.add)) { _callback.add(); }
+                }
+                return _option;
+            };
+            _option.valid = function () { return _form.valid(); };
+
+            _option.submit = function (callback) {
+                if ($.isFunction(callback)) { _callback.submit = callback; }
+                else {
+                    _form.validate(_option.validator);
+                    _form.submit();
+                }
+                return _option;
+            };
+        },
+        clearForm(_form, _option) {
+            _option.logType = "add";
+            _form.resetForm();
+            _form.find("input[type=hidden]").val("");
+            _form.find("label[class^=error]").remove();
+            _form.find(".error").removeClass("error");
+            $.each(_form.find("input,select"), function (i) {
+                if (($(this).attr("class") != undefined && $(this).attr("class").indexOf("required") > -1) || $(this).attr("required")) {
+                    var prev = $(this).parent().prev();
+                    if (!prev.is("th"))
+                        prev = $(this).parent().parent().prev();
+                    var text = prev.text();
+                    prev.html('<label id="' + $(this).attr("name") + '-error" class="error error-lab" for="' + $(this).attr("name") + '">*</label>' + text);
+                }
+            });
+
+            $.each(_form.find("[data-linkage]"), function () {
+                $(this).find('select').attr('data-actualval', '');
+                $(this).find('select:first').change();
+            });
+            $.each(_form.find("[data-file]"), function () {
+                _option.controls[$(this).attr('name')].bitcontrol.clear();
+            });
+            $.each(_form.find("[data-ueditor]"), function () {
+                if (UE) {
+                    var ue = _option.controls[$(this).attr('name')].bitcontrol;
+                    ue.ready(function () {
+                        ue.setContent("");
+                    });
+                }
+            });
+        },
+        renderForm(_form, data, _option, pkval) {
+            for (var key in data) {
+                var input = _form.find(" [name='" + key + "']");
+                if (input.length > 0) {
+                    var name = input.attr("name");
+                    var type = input.attr("type");
+                    switch (type) {
+                        case "radio":
+                            _form.find("input[name='" + key + "'][value='" + data[key] + "']").prop("checked", "checked");
+                            input.parents("form").attr("data-" + name, data[key]);
+                            break;
+                        case "checkbox":
+                            if (data[key] != null && data[key].toString() != "") {
+                                var arr = data[key].toString().split('|');
+                                _form.find("input[name='" + key + "']").removeAttr("checked");
+                                for (var i in arr) {
+                                    _form.find("input[name='" + key + "'][value='" + arr[i] + "']").prop("checked", "checked");
+                                }
+                            }
+                            input.parents("form").attr("data-" + name, data[key]);
+                            break;
+                        default:
+                            {
+                                var value = data[key];
+                                if (input[0].tagName == "SELECT") {
+                                    input.attr("data-actualval", value);
+                                    input.val(value);
+                                    continue;
+                                }
+                                var _control = input.parent();
+                                var _controltype = _control.attr("data-control");
+                                if (_controltype == "datePicker") {
+                                    var formatter = _control.attr("data-format");
+                                    value = time.format(value, formatter);
+                                }
+                                input.val(value);
+                            }
+                            break;
+                    }
+                }
+            }
+
+            $.each(_form.find("[data-linkage]"), function () {
+                $(this).find('select:first').change();
+            });
+            $.each(_form.find("[data-file]"), function () {
+                _option.controls[$(this).attr('name')].bitcontrol.query(pkval);
+            });
+            $.each(_form.find("[data-ueditor]"), function () {
+                if (UE) {
+                    var ue = _option.controls[$(this).attr('name')].bitcontrol;
+                    ue.ready(function () {
+                        ue.setContent(data[$(this).attr('name')]);
+                    });
+                }
             });
         },
     }
 });
 
-$.fn.zk_filter = function (querySuite) {
-    var _filter = querySuite.jqFilter;
-    var _option = {
-        getfilters: null
-    };
-    //获得查询条件输入值
-    _option.getfilters = function () {
-        var data = {};
-        $.each(_filter.find("input,select"), function () {
-            var name = $(this).attr("name");
-            var type = $(this).attr("type");
-            var value = "";
-            if (name != undefined) {
-                switch (type) {
-                    case "radio":
-                        value = $("input[name='" + name + "']:checked").val();
-                        break;
-                    case "checkbox":
-                        $("input[name='" + name + "']:checked").each(function (i) {
-                            value += $(this).val() + ',';
-                        });
-                        value = value.substring(0, value.length - 1);
-                        break;
-                    default:
-                        if ($(this).val() != "")
-                            value = $(this).val();
-                        break;
-                }
-                if (value != "" && value != undefined && value != "undefined")
-                    data[name] = value;
-            }
-        });
-        return data;
-    };
-    return _option;
-}
+$.fn.zk_table = function (_option, querySuite) {
+    var _wrapper = $(this);
 
-$.fn.zk_table = function (option, querySuite) {
-    var self = this;
-    var _default = {
-        columns: [],
-        initiaTBody: function (msg) { },
-        rows: null,
-        isSelect: false,
-        sortable: function (key, rule) { },
-        formatter: null,
-        update: null,
-        Table: null
-    }
-    var _option = $.extend(_default, option);
+    _option.table = $('<table class="table table-bordered table-hover"></table>');
+    _option.checkbox = _wrapper.find("input[type=checkbox]").length;
 
-    //表格行内检索组件
     var querySuiteSearch = function (option) {
-        //默认选项
-        var defaults = {
-            event: event,
-            TableData: null,
-            cancleCallback: function () { },
-            queryCallback: function () { }
-        }
-        //合并参数
-        var option = $.extend(defaults, option);
-        var self = this;
+        var content = $('<div class="querySuiteSearch"></div>')
+            .css('left', event.pageX - 30)
+            .css('top', event.pageY + 20);
 
-        var _remove = function () {
-            $("body").find('.querySuiteSearch').remove();
-        }
-
-        var _click = function (event) {
-            //获取触发容器的位置坐标：        
-            _remove();
-            var content = $('<div class="querySuiteSearch"></div>')
-                .css('left', event.pageX - 30)
-                .css('top', event.pageY + 20);
-
-            var btnContent = $('<div class="btnContnet"></div>');
-            var btnClose = $('<div class="btnClose">&times;</div>')
+        var btnContent = $('<div class="btnContnet"></div>').append(
+            $('<div class="btnClose">&times;</div>')
                 .bind('click', function () {
                     content.remove();
                     if ($.isFunction(option.cancleCallback)) {
                         option.cancleCallback();
                     }
-                });
-            content.append(btnContent.append(btnClose));
+                }));
 
-            var inContent = $('<div class="inputContent"></div>');
-            var input = $('<input type="text" placeholder="输入关键字" />');
-            var btnSearch = $('<span class="btn btn-primary"">查询</span>')
-                .bind('click', function () {
-                    if ($.isFunction(option.queryCallback)) {
-                        option.queryCallback(option.TableData, input.val());
-                        content.remove();
-                    }
-                });
-            content.append(inContent.append(input).append(btnSearch));
+        var inContent = $('<div class="inputContent"></div>');
+        var input = $('<input type="text" placeholder="查询关键字" />');
+        var btnSearch = $('<span class="btn btn-primary"">查询</span>')
+            .bind('click', function () {
+                content.remove();
+                if ($.isFunction(option.queryCallback)) {
+                    option.queryCallback(input.val());
+                }
+            });
 
-            $('body').append(content);
-        }
-        _click(option.event);
+        $('body').append(content.append(btnContent).append(inContent.append(input).append(btnSearch)));
+        input.bind('keypress', function (event) { if (event.keyCode == "13") { btnSearch.click(); } }).focus();
     };
-    var _searchTable = function (tdName, event) {
-        querySuiteSearch({
-            event: event,
-            queryCallback: function (data, key) {
-                querySuite.column = tdName;
-                querySuite.keyword = key;
-                querySuite.query();
-            }
-        })
-    };
+
     _option.sortable = function (key, rule) {
         querySuite.queryOrderType = rule;
         querySuite.queryOrderBy = key;
         querySuite.refresh();
     };
 
-    ///初始化表格
-    _option.Table = $('<table class="table table-bordered table-hover"></table>');
+    _option.renderTable = function () {
+        _wrapper.empty().append($('<div></div>').append(_option.table));
+    }
 
-    ///初始化表头
-    var createHeadHTML = function () {
-        var thtml = $(self).find('thead');
-        _option.Table.append(thtml);
+    _option.renderHead = function () {
+        var thtml = _wrapper.find('thead');
+        _option.table.append(thtml);
 
-        if (_option.isSelect) {
-            thtml.find('input[type="checkbox"]').change(function () {
+        if (_option.checkbox) {
+            thtml.find('input[type=checkbox]').change(function () {
                 var is_checked = $(this).prop("checked");
                 thtml.parent().find("tbody").find(".SelectRow").prop("checked", is_checked);
             });
         }
 
-        ///验证表头是否存在检索
-        var columns = _option.Table.find("thead").find('th');
-        $.each(columns, function (index, element) {
-            var key = $(this).attr('data-filter');
+        $.each(_option.table.find("thead").find("[data-filter=true]"), function (index, element) {
             var field = $(this).attr('data-field');
-            if (key == "true") {
-                var sch = $('<span class="glyphicon glyphicon-filter" style="top:3px;cursor: pointer;"></span>');
-                $(this).append(sch);
-                sch.bind('click', function (event) {
-                    _searchTable(field, event);
-                })
-            }
+            $(this).append($('<span class="glyphicon glyphicon-filter" style="top:3px;cursor: pointer;"></span>')
+                .bind('click', function () {
+                    querySuiteSearch({
+                        queryCallback: function (keyword) {
+                            querySuite.column = field;
+                            querySuite.keyword = keyword;
+                            querySuite.query();
+                        }
+                    });
+                }));
         });
 
-        ///验证表头是否存在排序
-        ///排序的状态===初始状态、、、升序、、、、降序
-        $.each(columns, function (index, element) {
-            var key = $(this).attr('data-sort');
+        $.each(_option.table.find("thead").find("[data-sort=true]"), function (index, element) {
             var field = $(this).attr('data-field');
-            if (key == "true") {
-                var sch = $('<span class="querySuite-sortable glyphicon glyphicon-sort"></span>');
-                sch.data('data', 'glyphicon-sort');
-                $(this).append(sch);
-                sch.bind('click', function (event) {
-                    ///如果点击项是默认状态。 修改其余项成为默认状态。修改当期项降序
-                    if ($(this).data('data') == 'glyphicon-sort') {
-                        var ot = _option.Table.find('thead').find('.querySuite-sortable');
-                        $.each(ot, function (index, element) {
-                            $(this).data('data', 'glyphicon-sort');
-                            $(this).removeClass('glyphicon-sort-by-attributes-alt');
-                            $(this).removeClass('glyphicon-sort-by-attributes');
-                            $(this).addClass('glyphicon-sort');
+            $(this).append($('<span class="querySuite-sortable glyphicon glyphicon-sort"></span>').data('sort', 'sort')
+                .bind('click', function () {
+                    if ($(this).data('sort') == 'sort') {
+                        $.each(_option.table.find('thead').find('.querySuite-sortable'), function (index, element) {
+                            $(this).removeClass('glyphicon-sort-by-attributes-alt').removeClass('glyphicon-sort-by-attributes').addClass('glyphicon-sort').data('sort', 'sort');
                         });
-                        var ops = _option.Table.find('thead').find('th[data-field=' + field + ']');
-                        ops.find('.querySuite-sortable').removeClass('glyphicon-sort');
-                        ops.find('.querySuite-sortable').addClass('glyphicon-sort-by-attributes-alt');
-                        ops.find('.querySuite-sortable').data('data', 'glyphicon-sort-by-attributes-alt');
-                        ///控制复制的table层次。
-                        var list = $('.querySuite-sortable');
-                        $.each(list, function (index, element) {
-                            $(this).data('data', 'glyphicon-sort');
-                            $(this).removeClass('glyphicon-sort-by-attributes-alt');
-                            $(this).removeClass('glyphicon-sort-by-attributes');
-                            $(this).addClass('glyphicon-sort');
-                        })
-                        $(this).removeClass('glyphicon-sort');
-                        $(this).addClass('glyphicon-sort-by-attributes-alt');
-                        $(this).data('data', 'glyphicon-sort-by-attributes-alt');
+                        _option.table.find('thead').find('th[data-field=' + field + ']').find('.querySuite-sortable').removeClass('glyphicon-sort').addClass('glyphicon-sort-by-attributes-alt').data('sort', 'desc');
                         _option.sortable(field, 'desc');
-                        return;
                     }
-
-                    if ($(this).data('data') == 'glyphicon-sort-by-attributes-alt') {
-                        var ops = _option.Table.find('thead').find('th[data-field=' + field + ']');
-                        ops.find('.querySuite-sortable').removeClass('glyphicon-sort-by-attributes-alt');
-                        ops.find('.querySuite-sortable').addClass('glyphicon-sort-by-attributes');
-                        ops.find('.querySuite-sortable').data('data', 'glyphicon-sort-by-attributes');
-                        $(this).addClass('glyphicon-sort-by-attributes');
-                        $(this).removeClass('glyphicon-sort-by-attributes-alt');
-                        $(this).data('data', 'glyphicon-sort-by-attributes');
+                    else if ($(this).data('sort') == 'desc') {
+                        $(this).addClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt').data('sort', 'asc');
                         _option.sortable(field, 'asc');
-                        return;
                     }
-
-                    if ($(this).data('data') == 'glyphicon-sort-by-attributes') {
-                        var ops = _option.Table.find('thead').find('th[data-field=' + field + ']');
-                        ops.find('.querySuite-sortable').removeClass('glyphicon-sort-by-attributes');
-                        ops.find('.querySuite-sortable').addClass('glyphicon-sort-by-attributes-alt');
-                        ops.find('.querySuite-sortable').data('data', 'glyphicon-sort-by-attributes-alt');
-                        $(this).addClass('glyphicon-sort-by-attributes-alt');
-                        $(this).removeClass('glyphicon-sort-by-attributes');
-                        $(this).data('data', 'glyphicon-sort-by-attributes-alt');
+                    else if ($(this).data('sort') == 'asc') {
+                        $(this).addClass('glyphicon-sort-by-attributes-alt').removeClass('glyphicon-sort-by-attributes').data('sort', 'desc');
                         _option.sortable(field, 'desc');
-                        return;
                     }
-                })
-            }
-        })
-
+                }));
+        });
     }
 
     ///组织列表体
-    var _GetTbodyHtml = function (rows, table, isFirst) {
+    _option.renderBody = function (rows) {
+        _option.table.find('tbody').remove();
+        _option.table.append($('<tbody></tbody>'));
         if (rows != null && rows.length > 0) {
             for (var i = 0; i < rows.length; i++) {
-                var node = rows[i];
-                var index_th = 0;
-                var tr = $('<tr></tr>');
-                tr.data('data', node);
+                var row = rows[i];
+                var tr = $('<tr></tr>').data('data', row);
                 ///绑定全选按钮
-                if (_option.isSelect) {
-                    var style = _option.Table.find("thead").find('th:eq(' + index_th + ')').attr('style');
-                    style = (style != undefined) ? "style='" + style + "'" : "";
-                    var inpt = $('<td ' + style + '><input class="SelectRow" type="checkbox"></td>');
-
-                    index_th++;
-
-                    ///绑定全选的方法
-                    inpt.find('.SelectRow').data('data', node);
-                    inpt.find('.SelectRow').change(function () {
-                        var is_checked = $(this).prop("checked");
-                        if (is_checked == false) {
-                            querySuite.jqTable.find('thead').find('input[type="checkbox"]').prop('checked', false);
-                        } else {
-                            var length = querySuite.jqTable.find('.SelectRow:checked').length;
-                            if (length == querySuite.pageSize) {
-                                querySuite.jqTable.find('thead').find('input[type="checkbox"]').prop('checked', true);
+                if (_option.checkbox) {
+                    var style = _option.table.find("thead").find('th:eq(0)').attr('style');
+                    var inpt = $('<td><input class="SelectRow" type="checkbox"></td>').attr("style", style);
+                    inpt.find('.SelectRow').data('data', row)
+                        .change(function () {
+                            if ($(this).prop("checked")) {
+                                if (_option.table.find('.SelectRow:checked').length == rows.length)
+                                    _option.table.find('thead').find('input[type="checkbox"]').prop('checked', true);
+                            } else {
+                                _option.table.find('thead').find('input[type="checkbox"]').prop('checked', false);
                             }
-                        }
-                    });
+                        });
                     tr.append(inpt);
-                    tr.bind('click', function () {
-                        $(this).siblings("tr").removeClass("Selected");
-                        $(this).addClass("Selected");
-                    });
                 }
                 ///使用数据填充列表部分
-                for (var m = 0; m < _option.columns.length; m++) {
+                for (var m = 0; m < _option.keys.length; m++) {
                     var td = $('<td></td>');
-                    var key = _option.columns[m];
-                    var isFormatter = _option.formatter[key];
+                    var key = _option.keys[m];
+                    var isFormatter = _option.formatters[key];
                     if (isFormatter == undefined) {
-                        td.html(node[key]);
+                        td.html(row[key]);
                     } else {
                         td.bind("format", isFormatter);
-                        td.trigger("format", [node[key], node]);
+                        td.trigger("format", [row[key], row]);
                     }
-                    var style = _option.Table.find("thead").find('th:eq(' + index_th + ')').attr('style');
-                    if (style != undefined) {
-                        td.attr("style", style);
-                        if (style.indexOf("display:none") > -1)
-                            td.show();
-                    }
-                    index_th++;
+                    var style = _option.table.find("thead").find('th:eq(' + (m + _option.checkbox) + ')').attr('style');
+                    if (style) { td.attr("style", style); }
                     tr.append(td);
                 }
-                table.find('tbody').append(tr);
+                _option.table.find('tbody').append(tr);
             }
         }
-    }
-
-    ///生成表体
-    var createBodyHTML = function (isFirst) {
-        _option.Table.find('tbody').remove();
-        _option.Table.append($('<tbody></tbody>'));
-        if ($.isFunction(_option.initiaTBody)) {
-            _option.initiaTBody(_option.Table);
-        } else {
-            ///使用key和data来生成数据     
-            _GetTbodyHtml(_option.rows, _option.Table, isFirst);
-        }
-    }
-
+    };
+    
     ///表格更新
     _option.updata = function (data) {
         $("body").find('.querySuiteSearch').remove();
-        _option.Table.find("input[type=checkbox]").prop('checked', false);
-        _option.Table.find('tbody').remove();
-        _option.Table.append($('<tbody></tbody>'));
-        _GetTbodyHtml(data, _option.Table, false);
-        _option.resize();
-    }
+        _option.table.find("input[type=checkbox]").prop('checked', false);
+        _option.renderBody(data);
+    };
 
     ///获取所有的选择
-    _option.getSelect = function () {
-        var ckList = _option.Table.find('.SelectRow:checked');
+    _option.selected = function () {
+        var ckList = _option.table.find('.SelectRow:checked');
         var DataList = [];
         if (ckList.length > 0) {
             for (var i = 0; i < ckList.length; i++) {
@@ -393,27 +365,16 @@ $.fn.zk_table = function (option, querySuite) {
             }
         }
         return DataList;
-    }
+    };
 
-    ///调整页面大小
-    _option.resize = function () {
-        var content = $('<div></div>')
-        content.append(_option.Table);
-        $(self).html('');
-        $(self).append(content);
-    }
-    ///浏览器窗口修改事件
+    _option.renderHead();
+    _option.renderBody();
+    _option.renderTable();
+
     $(window).resize(function () {
-        _option.resize();
-    })
+        _option.renderTable();
+    });
     
-    createHeadHTML()
-    createBodyHTML(true);
-
-    var content = $('<div></div>')
-    content.append(_option.Table);
-    $(self).html('');
-    $(self).append(content);
     return _option;
 }
 
@@ -536,7 +497,6 @@ $.fn.zk_paging = function (option) {
     $(self).append(table);
 }
 
-//查询套件
 $.fn.querySuite = function (option) {
     var _wrapper = $(this);
     var _filter = _wrapper.find(".querySuite-filter");
@@ -552,39 +512,21 @@ $.fn.querySuite = function (option) {
         jqButton: _button,
         jqTable: _table,
         jqPaging: _paging,
-        query: null,            //重新查询第一页数据
-        queryUrl: null,
-        delete: null,           //删除列表选择的数据
-        deleteUrl: null,
-        export: null,           //导出当前查询条件的数据
-        exportUrl: null,
-        refresh: null,          //刷新当前页的数据
-        columnsKey: [],            //要显示的列集合
-        key: null,          //主键，组合主键用(，)隔开
-        pageIndex: 1,           //当前显示页数
-        pageSize: null
+        keys: [],
+        columns: {},
+        pageIndex: 1,
+        pageSize: 10,
     };
-    $.extend(_option, option);
-
-    _option.queryUrl = _table.attr("data-query-url");
-
-    var orderby = _table.attr("data-order-by");
-    if (orderby != undefined) {
-        var arr = orderby.split(" ");
-        _option.queryOrderBy = arr[0];
-        _option.queryOrderType = arr.length == 2 ? arr[1] : "";
-    }
-
-    _option.deleteUrl = _table.attr("data-delete-url");
-    _option.sortUrl = _table.attr("data-sort-url");
-    _option.importUrl = _table.attr("data-import-url");
-    _option.exportUrl = _table.attr("data-export-url");
-    _option.key = _table.attr("data-key");
-
-    _option.pageSize = _paging.attr("data-page-size");
-    if (_option.pageSize == "undefined" || _option.pageSize == undefined)
-        _option.pageSize = 10;
-    _option.pageSize = parseInt(_option.pageSize);
+    $.extend(_option, option, {
+        key: _table.attr("data-key"),
+        queryUrl: _table.attr("data-query-url"),
+        deleteUrl: _table.attr("data-delete-url"),
+        importUrl: _table.attr("data-import-url"),
+        exportUrl: _table.attr("data-export-url"),
+        sortUrl: _table.attr("data-sort-url"),
+        pageSize: _paging.attr("data-page-size"),
+    });
+    var _callback = {};
 
     //导入初始化
     if ($("[action=import]").length > 0 && _option.importUrl) {
@@ -604,7 +546,7 @@ $.fn.querySuite = function (option) {
             },
             success: function (result) {
                 if (result.code == 0) {
-                    if ($.isFunction(_importCallback)) { _importCallback(result); }
+                    if ($.isFunction(_callback.import)) { _callback.import(result); }
                     else {
                         alert(result.msg);
                     }
@@ -639,8 +581,6 @@ $.fn.querySuite = function (option) {
         _filter.find("tr:eq(0)").find("td:last").append($("<span></span>").append(expand).append(shrink));
     }
 
-    var _zkFilter = _filter.zk_filter(_option);
-
     _option.GetData = function () {
         var re = null;
 
@@ -653,13 +593,15 @@ $.fn.querySuite = function (option) {
             column: _option.column,
             r: new Date().getTime()
         };
-        var filter = _zkFilter.getfilters();
-        $.extend(data, filter);
 
+        var filter = _filter.formSerialize();
+        for (var key in data) {
+            if (data[key] != undefined) filter += "&" + key + "=" + data[key];
+        }
         $.ajax({
             url: _option.queryUrl,
             async: false,
-            data: data,
+            data: filter,
             type: "post",
             success: function (result) {
                 re = result;
@@ -683,34 +625,27 @@ $.fn.querySuite = function (option) {
     };
 
     var _zkTable;
-    var _queryCallback;
     //查询
     _option.query = function (callback) {
         if ($.isFunction(callback)) {
-            _queryCallback = callback;
+            _callback.query = callback;
             return _option;
         }
 
-        if (_zkTable){
-            _option.pageIndex = 1;
-            return _option.refresh();
-        }
-        else {
+        if (_zkTable == undefined) {
             _zkTable = _table.zk_table({
-                columns: _option.columnsKey,
-                isSelect: isSelect,
-                formatter: formatters
+                keys: _option.keys,
+                formatters: formatters
             }, _option);
-            _zkTable.updata(_option.GetData().data);
-            if (_option.sortUrl != undefined && _option.sortUrl != "") _option.sortable();
-            return _option;
         }
+        _option.pageIndex = 1;
+        return _option.refresh();
     }
 
     //刷新
     _option.refresh = function () {
         _zkTable.updata(_option.GetData().data);
-        if ($.isFunction(_queryCallback)) _queryCallback();
+        if ($.isFunction(_callback.query)) _callback.query();
         if (_option.sortUrl != undefined && _option.sortUrl != "") _option.sortable();
         return _option;
     };
@@ -759,12 +694,10 @@ $.fn.querySuite = function (option) {
         return _option;
     }
 
-    //删除
-    var _deleteCallback;
     _option.delete = function (param) {
-        if ($.isFunction(param)) { _deleteCallback = param; }
+        if ($.isFunction(param)) { _callback.delete = param; }
         else {
-            var se = _zkTable.getSelect();
+            var se = _zkTable.selected();
             var selections = [];
             var primarys = _option.key.split(',');
             for (var i = 0; i < se.length; i++) {
@@ -780,57 +713,47 @@ $.fn.querySuite = function (option) {
 
             if (selections.length == 0) {
                 alert("请选择要删除的项");
-                return;
+                return _option;
             }
 
             if (confirm("您确定要删除所选内容吗？")) {
                 $.post(_option.deleteUrl, { ids: selections.toString() }, function (result) {
                     if (result && result.code == 0) {
-                        $.adminSetting.addLogs($(document).attr("title"), "删除", "删除数据" + selections.toString());   //添加日志
+                        $.adminSetting.addLogs($(document).attr("title"), "删除", "删除数据" + selections.toString());
                         _option.query();
                     }
                     alert(result.msg);
-                    if ($.isFunction(_deleteCallback)) {
-                        _deleteCallback(result);
-                    }
+                    if ($.isFunction(_callback.delete)) { _callback.delete(result); }
                 });
             }
         }
         return _option;
     };
 
-    //导入
-    var _importCallback;
-    _option.import = function (param) {
-        if ($.isFunction(param)) { _importCallback = param; }
-        else {}
+    _option.import = function (callback) {
+        if ($.isFunction(callback)) { _callback.import = callback; }
         return _option;
     };
 
-    //导出
     _option.export = function () {
-        var data = {
-            r: new Date().getTime()
-        };
-        var filter = _zkFilter.getfilters();
-        $.extend(data, filter);
+        var filter = (_filter.formSerialize() + "&r=" + new Date().getTime()).split('&');
         var form = $("<form></form>").attr("action", _option.exportUrl).attr("method", "post");
-        for (var name in data) {
-            form.append($("<input></input>").attr("type", "hidden").attr("name", name).attr("value", data[name]));
+        for (var idx in filter) {
+            var item = filter[idx].split("=");
+            form.append($("<input></input>").attr("type", "hidden").attr("name", item[0]).attr("value", item[1]));
         }
         form.appendTo('body').submit().remove();
+
         return _option;
     };
-    _option.getSelect = function () {
-        return _zkTable.getSelect();
+    _option.selected = function () {
+        return _zkTable.selected();
     }
-    var isSelect = (_table.find("input[type=checkbox]").length > 0);
     var formatters = {};
-    _option.columns = {};
     $.each(_option.jqTable.find("th"), function (i, d) {
         var key = $(d).attr("data-field");
         if (key != "undefined" && key != undefined) {
-            _option.columnsKey.push(key);
+            _option.keys.push(key);
             _option.columns[key] = columnformat(key);
         }
 
@@ -860,11 +783,9 @@ $.fn.querySuite = function (option) {
                         if (para.length == 1)
                             para.push($(".formSuite-wrapper").attr("id"));
 
-                        var loadform = $("#" + para[1] + ' [data-action="loadform"]');
-                        var primarys = _option.key.split(',');
                         var param = {};
-                        $.each(primarys, function (j, d) { param[d] = data[d]; })
-                        loadform.attr("data-param", JSON.stringify(param)).click();
+                        $.each(_option.key.split(','), function (j, d) { param[d] = data[d]; })
+                        $("#" + para[1] + ' [data-action="loadform"]').attr("data-param", JSON.stringify(param)).click();
                     });
                     $(this).append(span);
                 }
@@ -872,18 +793,18 @@ $.fn.querySuite = function (option) {
         }
     });
 
-    function columnformat(column) {
+    function columnformat(key) {
         _column = {};
         _column.format = function (action, fmt) {
             if ($.isFunction(action)) {
-                formatters[column] = action;
+                formatters[key] = action;
             }
             return _option;
         }
         return _column;
     }
 
-    _button.find("[action='query']").click(function () {
+    _button.find("[action=query]").click(function () {
         _option.column = "";
         _option.keyword = "";
         _option.query();
@@ -892,33 +813,19 @@ $.fn.querySuite = function (option) {
     _button.find("[action='export']").click(function () { _option.export(); });
 
     _option.controls = {};
-    _option.changes = {};
-    $.each(_option.jqFilter.find("input,select"), function (i, d) {
-        var key = $(d).attr("name");
-        if (key != "undefined" && key != undefined) {
-            _option.controls[key] = inputChange($(d));
-        }
-    });
-    $.each(_option.jqFilter.find("[data-control-name]"), function (i, d) {
-        _option.controls[key] = inputChange($(d), true, $(d).attr("data-control-name"));
-    });
-    function inputChange(input, isBit, key) {
-        _input = {};
-        _input.change = function (action) {
-            if ($.isFunction(action)) {
-                if (isBit) _option.changes[key] = action;
-                 input.change(action);
-            }
-            return _option;
-        }
-        return _input;
-    }
-    $.adminTools.renderControls(_wrapper.attr("id"), _filter, _option.changes);
+    $.adminTools.renderControls(_wrapper.attr("id"), _filter, _option);
     return _option;
 }
 
-$.fn.formSuite = function (option) {
+$.fn.formSuite = function () {
     var _wrapper = $(this);
+    var _form = _wrapper.find("form");
+
+    var _option = {};
+    var _callback = {};
+
+    $.adminTools.initForm(_option, _callback, _wrapper, _form);
+
     var _header = $('<div class="modal-header">\
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
         <h4 class="modal-title"></h4></div>');
@@ -929,104 +836,47 @@ $.fn.formSuite = function (option) {
     var _title = _wrapper.find(".modal-title").attr("id", h4id);
     _wrapper.attr("aria-labelledby", h4id).attr("tabindex", "-1");
 
-    var _form = _wrapper.find("form");
-    var _addButton = $("[action-modal=" + _wrapper.attr("id") + "]").attr("data-toggle", "modal").attr("data-target", "#" + _wrapper.attr("id")).click(function () { _option.add(); });;
-    var _saveButton = _wrapper.find("[action=save]").click(function () { _option.submit(); });
+    $("[action-modal=" + _wrapper.attr("id") + "]").attr("data-toggle", "modal").attr("data-target", "#" + _wrapper.attr("id")).click(function () { _option.add(); });
+    _wrapper.append($('<span data-action="loadform"></span>').click(function () { _option.load(JSON.parse($(this).attr("data-param"))); }));
 
-    var _loadform = $('<span data-action="loadform"></span>');
-    _loadform.click(function () { _option.load(JSON.parse($(this).attr("data-param"))); });
-    _wrapper.append(_loadform);
-
-    var _option = {
-        jqModal: _wrapper,
-        jqForm: _form
-    };
-    $.extend(_option, option,
-        {
-            title: _form.attr("data-title"),
-            submitClose: _form.attr("data-submit-close"),
-            loadFormUrl: _form.attr("data-load-url"),
-            saveFormUrl: _form.attr("data-save-url")
-        });
-
-
-    var lock = false;
-
-    _option
-
-    //添加
-    var _addCallback;
-    _option.add = function (param) {
-        if ($.isFunction(param)) { _addCallback = param; }
+    _option.save = function (callback) {
+        if ($.isFunction(callback)) { _callback.save = callback; }
         else {
-            _option.reset();
-            if ($.isFunction(_addCallback)) { _addCallback(); }
-        }
-        return _option;
-    }
-
-    //验证
-    _option.valid = function () {
-        return _form.valid();
-    };
-
-    //保存（不验证）
-    var _saveCallback;
-    _option.save = function (param) {
-        if ($.isFunction(param)) { _saveCallback = param; }
-        else {
-            if (!lock) {
-                lock = true;
-                $.showLoading();
-                var data = _form.formSerialize();
-                $.post(_option.saveFormUrl, data, function (result) {
-                    if (result.code == 0) {
-                        if ($.isFunction(_saveCallback)) {
-                            _saveCallback(result);
-                        }
-                    }
-                    else {
-                        alert(result.msg);
-                    }
-                    lock = false;
-                    $.hideLoading();
-                });
-            }
-        }
-        return _option;
-    };
-
-    //提交（验证）
-    var _submitCallback;
-    _option.submit = function (param) {
-        if ($.isFunction(param)) { _submitCallback = param; }
-        else {
-            _form.validate(_validator);
-            _form.submit();
-        }
-        return _option;
-    };
-    var _validator = {
-        submitHandler: function (form) {
-            if (lock) return false;
-
-            lock = true;
+            if ($.lock) return _option;
             $.showLoading();
             var data = _form.formSerialize();
             $.post(_option.saveFormUrl, data, function (result) {
                 if (result.code == 0) {
-                    $.adminSetting.addLogs($(document).attr("title"), (logType != "edit") ? "新增" : "编辑", data);   //添加日志
-                    if (_option.submitClose != "false") {
-                        _wrapper.modal('hide');
-                        _form.resetForm(); // 提交后重置表单
-                    }
+                    $.each(_form.find("[data-file]"), function () {
+                        _option.controls[$(this).attr('name')].bitcontrol.save(result.data[_option.key]);
+                    });
+                    if ($.isFunction(_callback.save)) { _callback.save(result); }
+                }
+                else {
+                    alert(result.msg);
+                }
+                $.hideLoading();
+            });
 
-                    if ($.isFunction(_submitCallback)) {
-                        _submitCallback(result);
-                    }
+        }
+        return _option;
+    };
+
+    _option.validator = {
+        submitHandler: function (form) {
+            if ($.lock) return false;
+
+            $.showLoading();
+            var data = _form.formSerialize();
+            $.post(_option.saveFormUrl, data, function (result) {
+                if (result.code == 0) {
+                    $.adminSetting.addLogs($(document).attr("title"), (_option.logType != "edit") ? "新增" : "编辑", data);
+                    $.each(_form.find("[data-file]"), function () {
+                        _option.controls[$(this).attr('name')].bitcontrol.save(result.data[_option.key]);
+                    });
+                    if ($.isFunction(_callback.submit)) { if (_callback.submit(result) != false) _wrapper.modal('hide');  }
                 }
                 else { alert(result.msg); }
-                lock = false;
                 $.hideLoading();
             });
 
@@ -1035,33 +885,18 @@ $.fn.formSuite = function (option) {
     };
 
     _option.reset = function () {
-        _form.resetForm();
-        _form.find("input[type=hidden]").val("");
-        _form.find("label[class^=error]").remove();
-        _form.find(".error").removeClass("error");
-        $.each(_form.find("input,select"), function (i) {
-            if (($(this).attr("class") != undefined && $(this).attr("class").indexOf("required") > -1) || $(this).attr("required")) {
-                var prev = $(this).parent().prev();
-                if (!prev.is("th"))
-                    prev = $(this).parent().parent().prev();
-                var text = prev.text();
-                prev.html('<label id="' + $(this).attr("name") + '-error" class="error error-lab" for="' + $(this).attr("name") + '">*</label>' + text);
-            }
-        });
-
-        logType = "add";
+        $.adminTools.clearForm(_form, _option);
         _title.text("新增" + _option.title);
         return _option;
     };
 
-    var _editCallback;
     _option.edit = function (param) {
-        if ($.isFunction(param)) { _editCallback = param; }
+        if ($.isFunction(param)) { _callback.edit = param; }
         else {
             _option.reset();
             _wrapper.modal("show");
             $.showLoading();
-            logType = "edit";
+            _option.logType = "edit";
             _title.text("修改" + _option.title);
             $.ajax({
                 type: "post",
@@ -1069,54 +904,9 @@ $.fn.formSuite = function (option) {
                 datatype: "json",
                 data: param,
                 success: function (result) {
-                
-
-                    for (var key in result.data) {
-                        var input = _form.find(" [name='" + key + "']");
-                        if (input.length > 0) {
-                            var name = input.attr("name");
-                            var type = input.attr("type");
-                            switch (type) {
-                                case "radio":
-                                    _form.find("input[name='" + key + "'][value='" + result.data[key] + "']").prop("checked", "checked");
-                                    input.parent().attr("data-actualval", result.data[key]);
-                                    break;
-                                case "checkbox":
-                                    input.parent().attr("data-actualval", result.data[key]);
-                                    if (result.data[key] != null && result.data[key].toString() != "") {
-                                        var arr = result.data[key].toString().split(',');
-                                        _form.find("input[name='" + key + "']").removeAttr("checked");
-                                        for (var i in arr) {
-                                            _form.find("input[name='" + key + "'][value='" + arr[i] + "']").prop("checked", "checked");
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    {
-                                        
-                                        var value = result.data[key];
-                                        if (input[0].tagName == "SELECT") {
-                                            input.attr("data-actualval", value);
-                                            input.val(value);
-                                            continue;
-                                        }
-                                        var _control = input.parent();
-                                        var _controltype = _control.attr("data-control");
-                                        if (_controltype == "datePicker") {
-                                            var formatter = _control.attr("data-format");
-                                            value = time.format(value, formatter);
-                                        }
-                                        input.val(value);
-                                    }
-                                    break;
-                            }
-                        }
-                    }
+                    $.adminTools.renderForm(_form, result.data, _option, param[_option.key]);
                     $.hideLoading();
-                    
-                    if ($.isFunction(_editCallback)) {
-                        _editCallback(result);
-                    }
+                    if ($.isFunction(_callback.edit)) { _callback.edit(result); }
                 },
                 error: function (msg) {
                     $.hideLoading();
@@ -1133,112 +923,55 @@ $.fn.formSuite = function (option) {
 
         return _option;
     };
-    _option.controls = {};
-    _option.changes = {};
-    $.each(_option.jqForm.find("input,select"), function (i, d) {
-        var key = $(d).attr("name");
-        if (key != "undefined" && key != undefined) {
-            _option.controls[key] = inputChange($(d));
-        }
-    });
-    $.each(_option.jqForm.find("[data-control-name]"), function (i, d) {
-        _option.controls[$(d).attr("data-control-name")] = inputChange($(d), true, $(d).attr("data-control-name"));
-    });
-    function inputChange(input, isBit, key) {
-        _input = {};
-        _input.change = function (action) {
-            if ($.isFunction(action)) {
-                if (isBit) _option.changes[key] = action;
-                else input.change(action);
-            }
-            return _option;
-        }
-        return _input;
-    }
-    $.adminTools.renderControls(_wrapper.attr("id"), _form, _option.changes);
+    $.adminTools.renderControls(_wrapper.attr("id"), _form, _option);
     return _option;
 }
 
-$.fn.generalForm = function (option) {
+$.fn.generalForm = function () {
     var _wrapper = $(this);
-
     var _form = _wrapper.find("form");
-    var _saveButton = _wrapper.find("[action=save]").click(function () { _option.submit(); });;
+    var _option = {};
+    var _callback = {};
 
-    var _option = {
-        jqModal: _wrapper,
-        jqForm: _form,
-        loadFormUrl: _form.attr("data-load-url"),
-        saveFormUrl: _form.attr("data-save-url")
-    };
-    $.extend(_option, option);
+    $.adminTools.initForm(_option, _callback, _wrapper, _form);
 
-    var lock = false;    
-    //添加
-    var _addCallback;
-    _option.add = function (param) {
-        if ($.isFunction(param)) { _addCallback = param; }
-        else {
-            _option.reset();
-            if ($.isFunction(_addCallback)) { _addCallback(); }
-        }
-        return _option;
-    }
-
-    //验证
-    _option.valid = function () {
-        return _form.valid();
-    };
-
-    //保存（不验证）
-    var _saveCallback;
     _option.save = function (param) {
-        if ($.isFunction(param)) { _saveCallback = param; }
+        if ($.isFunction(param)) { _callback.save = param; }
         else {
-            if (lock) return _option;
+            if ($.lock) return _option;
 
-            lock = true;
             $.showLoading();
             $.post(_option.saveFormUrl, _form.formSerialize(), function (result) {
                 if (result.code == 0) {
-                    if ($.isFunction(_saveCallback)) { _saveCallback(result); }
+                    $.each(_form.find("[data-file]"), function () {
+                        _option.controls[$(this).attr('name')].bitcontrol.save(result.data[_option.key]);
+                    });
+                    if ($.isFunction(_callback.save)) { _callback.save(result); }
                 }
                 else {
                     alert(result.msg);
                 }
-                lock = false;
                 $.hideLoading();
             });
         }
         return _option;
     };
 
-    //提交（验证）
-    var _submitCallback;
-    _option.submit = function (param) {
-        if ($.isFunction(param)) { _submitCallback = param; }
-        else {
-            _form.validate(_validator);
-            _form.submit();
-        }
-        return _option;
-    };
-    var _validator = {
+    _option.validator = {
         submitHandler: function (form) {
-            if (lock) return false;
+            if ($.lock) return false;
 
-            lock = true;
             $.showLoading();
             var data = _form.formSerialize();
             $.post(_option.saveFormUrl, data, function (result) {
                 if (result.code == 0) {
-                    $.adminSetting.addLogs($(document).attr("title"), (logType != "edit") ? "新增" : "编辑", data);   //添加日志
-                    if ($.isFunction(_submitCallback)) {
-                        _submitCallback(result);
-                    }
+                    $.adminSetting.addLogs($(document).attr("title"), (_option.logType != "edit") ? "新增" : "编辑", data);
+                    $.each(_form.find("[data-file]"), function () {
+                        _option.controls[$(this).attr('name')].bitcontrol.save(result.data[_option.key]);
+                    });
+                    if ($.isFunction(_callback.submit)) { _callback.submit(result); }
                 }
                 else { alert(result.msg); }
-                lock = false;
                 $.hideLoading();
             });
 
@@ -1247,80 +980,25 @@ $.fn.generalForm = function (option) {
     };
 
     _option.reset = function () {
-        _form.resetForm();
-        _form.find("input[type=hidden]").val("");
-        _form.find("label[class^=error]").remove();
-        _form.find(".error").removeClass("error");
-        $.each(_form.find("input,select"), function (i) {
-            if (($(this).attr("class") != undefined && $(this).attr("class").indexOf("required") > -1) || $(this).attr("required")) {
-                var prev = $(this).parent().prev();
-                if (!prev.is("th"))
-                    prev = $(this).parent().parent().prev();
-                var text = prev.text();
-                prev.html('<label id="' + $(this).attr("name") + '-error" class="error error-lab" for="' + $(this).attr("name") + '">*</label>' + text);
-            }
-        });
-
-        logType = "add";
+        $.adminTools.clearForm(_form, _option);
         return _option;
     };
 
-    var _editCallback;
     _option.edit = function (param) {
-        if ($.isFunction(param)) { _editCallback = param; }
+        if ($.isFunction(param)) { _callback.edit = param; }
         else {
             _option.reset();
             $.showLoading();
-            logType = "edit";
+            _option.logType = "edit";
             $.ajax({
                 type: "post",
                 url: _option.loadFormUrl,
                 datatype: "json",
                 data: param,
                 success: function (result) {
-                    for (var key in result.data) {
-                        var input = _form.find(" [name='" + key + "']");
-                        if (input.length > 0) {
-                            var name = input.attr("name");
-                            var type = input.attr("type");
-                            switch (type) {
-                                case "radio":
-                                    _form.find("input[name='" + key + "'][value='" + result.data[key] + "']").prop("checked", "checked");
-                                    input.parent().attr("data-actualval", result.data[key]);
-                                    break;
-                                case "checkbox":
-                                    input.parent().attr("data-actualval", result.data[key]);
-                                    if (result.data[key] != null && result.data[key].toString() != "") {
-                                        var arr = result.data[key].toString().split(',');
-                                        _form.find("input[name='" + key + "']").removeAttr("checked");
-                                        for (var i in arr) {
-                                            _form.find("input[name='" + key + "'][value='" + arr[i] + "']").prop("checked", "checked");
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    {
-                                        var value = result.data[key];
-                                        if (input[0].tagName == "SELECT") {
-                                            input.attr("data-actualval", value);
-                                            input.val(value);
-                                            continue;
-                                        }
-                                        var _control = input.parent();
-                                        var _controltype = _control.attr("data-control");
-                                        if (_controltype == "datePicker") {
-                                            var formatter = _control.attr("data-format");
-                                            value = time.format(value, formatter);
-                                        }
-                                        input.val(value);
-                                    }
-                                    break;
-                            }
-                        }
-                    }
+                    $.adminTools.renderForm(_form, result.data, _option, param[_option.key]);
                     $.hideLoading();
-
-                    if ($.isFunction(_editCallback)) { _editCallback(result); }
+                    if ($.isFunction(_callback.edit)) { _callback.edit(result); }
                 },
                 error: function (msg) {
                     $.hideLoading();
@@ -1330,7 +1008,6 @@ $.fn.generalForm = function (option) {
         return _option;
     };
     _option.load = function (data) {
-
         var val = "";
         for (var key in data) {
             val += data[key];
@@ -1340,32 +1017,8 @@ $.fn.generalForm = function (option) {
             _option.edit(data);
         else
             _option.add();
-
         return _option;
     };
-    _option.controls = {};
-    _option.changes = {};
-    $.each(_option.jqForm.find("select:not([data-control-name]),input:not([data-control-name])"), function (i, d) {
-        var key = $(d).attr("name");
-        if (key != "undefined" && key != undefined) {
-            _option.controls[key] = inputChange($(d));
-        }
-    });
-    $.each(_option.jqForm.find("[data-control-name]"), function (i, d) {
-        _option.controls[$(d).attr("data-control-name")] = inputChange($(d), true, $(d).attr("data-control-name"));
-    });
-    function inputChange(input, isBit, key) {
-        _input = {};
-        _input.change = function (action) {
-            if ($.isFunction(action)) {
-                if (isBit) _option.changes[key] = action;
-                else input.change(action);
-            }
-            return _option;
-        }
-        return _input;
-    }
-
-    $.adminTools.renderControls(_wrapper.attr("id"), _form, _option.changes);
+    $.adminTools.renderControls(_wrapper.attr("id"), _form, _option);
     return _option;
 }

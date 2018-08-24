@@ -65,7 +65,7 @@
             .columns["option"].format(function (event, val, data) {
                 $(this).append($('<span class="btn btn-link">修改</span>')
                     .bind('click', function () {
-                        BitPage.Redirect("/WorkflowExample/ExampleEdit", { exampleId: data.exampleId }, "WorkflowExample");
+                        goPage("/WorkflowExample/ExampleEdit", { exampleId: data.exampleId }, "WorkflowExample");
                     }));
             })
             .import(function (result) {
@@ -74,7 +74,7 @@
             .query();
 
         $("#workflowAdd").click(function () {
-            BitPage.Redirect("/WorkflowExample/ExampleEdit", { exampleId: '' }, "WorkflowExample");
+            goPage("/WorkflowExample/ExampleEdit", { exampleId: '' }, "WorkflowExample");
         });
     });
 </script>

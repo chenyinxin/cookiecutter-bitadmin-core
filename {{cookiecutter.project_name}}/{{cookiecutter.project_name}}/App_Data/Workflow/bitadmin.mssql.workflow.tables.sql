@@ -3,24 +3,24 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowBills](
-	[id] [uniqueidentifier] NOT NULL,
-	[parentId] [uniqueidentifier] NULL,
-	[mainId] [uniqueidentifier] NULL,
-	[stepId] [uniqueidentifier] NULL,
-	[billsType] [nvarchar](500) NULL,
-	[workOrderCode] [nvarchar](500) NULL,
-	[workOrderName] [nvarchar](2000) NULL,
-	[billsCode] [nvarchar](255) NULL,
-	[sort] [int] NOT NULL,
-	[state] [nvarchar](50) NULL,
-	[submitUser] [uniqueidentifier] NOT NULL,
-	[createTime] [datetime] NOT NULL,
-	[updateTime] [datetime] NULL,
-	[description] [nvarchar](1024) NULL,
-	[version] [int] NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[ParentId] [uniqueidentifier] NULL,
+	[MainId] [uniqueidentifier] NULL,
+	[StepId] [uniqueidentifier] NULL,
+	[BillsType] [nvarchar](500) NULL,
+	[WorkOrderCode] [nvarchar](500) NULL,
+	[WorkOrderName] [nvarchar](2000) NULL,
+	[BillsCode] [nvarchar](255) NULL,
+	[Sort] [int] NOT NULL,
+	[State] [nvarchar](50) NULL,
+	[SubmitUser] [uniqueidentifier] NOT NULL,
+	[CreateTime] [datetime] NOT NULL,
+	[UpdateTime] [datetime] NULL,
+	[Description] [nvarchar](1024) NULL,
+	[Version] [int] NULL,
  CONSTRAINT [PK_dbo.FlowBills] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -30,25 +30,25 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowBillsRecord](
-	[id] [uniqueidentifier] NOT NULL,
-	[billsId] [uniqueidentifier] NOT NULL,
-	[prevStepId] [uniqueidentifier] NULL,
-	[nextStepId] [uniqueidentifier] NULL,
-	[userId] [uniqueidentifier] NULL,
-	[prevBillsRecordId] [uniqueidentifier] NULL,
-	[auditDate] [datetime] NULL,
-	[sort] [int] NOT NULL,
-	[condition] [int] NOT NULL,
-	[state] [nvarchar](4000) NULL,
-	[startTime] [datetime] NULL,
-	[endTime] [datetime] NULL,
-	[choice] [nvarchar](4000) NULL,
-	[type] [int] NOT NULL,
-	[description] [nvarchar](1000) NULL,
-	[batch] [int] NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[BillsId] [uniqueidentifier] NOT NULL,
+	[PrevStepId] [uniqueidentifier] NULL,
+	[NextStepId] [uniqueidentifier] NULL,
+	[UserId] [uniqueidentifier] NULL,
+	[PrevBillsRecordId] [uniqueidentifier] NULL,
+	[AuditDate] [datetime] NULL,
+	[Sort] [int] NOT NULL,
+	[Condition] [int] NOT NULL,
+	[State] [nvarchar](4000) NULL,
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
+	[Choice] [nvarchar](4000) NULL,
+	[Type] [int] NOT NULL,
+	[Description] [nvarchar](1000) NULL,
+	[Batch] [int] NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecord] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -58,24 +58,24 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowBillsRecordUser](
-	[id] [uniqueidentifier] NOT NULL,
-	[stepId] [uniqueidentifier] NULL,
-	[billsRecordId] [uniqueidentifier] NOT NULL,
-	[billsRecordOutId] [uniqueidentifier] NULL,
-	[userId] [uniqueidentifier] NULL,
-	[createTime] [datetime] NULL,
-	[startTime] [datetime] NULL,
-	[endTime] [datetime] NULL,
-	[type] [int] NOT NULL,
-	[state] [nvarchar](4000) NULL,
-	[condition] [nvarchar](4000) NULL,
-	[choice] [nvarchar](4000) NULL,
-	[opinion] [nvarchar](4000) NULL,
-	[displayState] [nvarchar](4000) NULL,
-	[runTime] [datetime] NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[StepId] [uniqueidentifier] NULL,
+	[BillsRecordId] [uniqueidentifier] NOT NULL,
+	[BillsRecordOutId] [uniqueidentifier] NULL,
+	[UserId] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[StartTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
+	[Type] [int] NOT NULL,
+	[State] [nvarchar](4000) NULL,
+	[Condition] [nvarchar](4000) NULL,
+	[Choice] [nvarchar](4000) NULL,
+	[Opinion] [nvarchar](4000) NULL,
+	[DisplayState] [nvarchar](4000) NULL,
+	[RunTime] [datetime] NULL,
  CONSTRAINT [PK_dbo.FlowBillsRecordUser] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -85,13 +85,13 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowMain](
-	[id] [uniqueidentifier] NOT NULL,
-	[code] [nvarchar](1024) NULL,
-	[name] [nvarchar](256) NULL,
-	[description] [nvarchar](1024) NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[Code] [nvarchar](1024) NULL,
+	[Name] [nvarchar](256) NULL,
+	[Description] [nvarchar](1024) NULL,
  CONSTRAINT [PK_dbo.FlowMain] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -101,14 +101,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowOrderCodes](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[pinyin] [nvarchar](64) NOT NULL,
-	[day] [nvarchar](64) NOT NULL,
-	[index] [int] NOT NULL,
-	[code] [nvarchar](512) NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Pinyin] [nvarchar](64) NOT NULL,
+	[Day] [nvarchar](64) NOT NULL,
+	[Index] [int] NOT NULL,
+	[Code] [nvarchar](512) NOT NULL,
  CONSTRAINT [PK_FlowOrderCodes] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -118,27 +118,27 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowStep](
-	[stepId] [uniqueidentifier] NOT NULL,
-	[mainId] [uniqueidentifier] NULL,
-	[stepName] [nvarchar](64) NULL,
-	[stepStatus] [int] NOT NULL,
-	[agency] [nvarchar](32) NULL,
-	[circularize] [nvarchar](32) NULL,
-	[runMode] [nvarchar](4000) NULL,
-	[linkCode] [nvarchar](128) NULL,
-	[showTabIndex] [nvarchar](4000) NULL,
-	[reminderTimeout] [bigint] NULL,
-	[auditNorm] [nvarchar](128) NULL,
-	[auditId] [nvarchar](256) NULL,
-	[auditNormRead] [nvarchar](128) NULL,
-	[auditIdRead] [nvarchar](256) NULL,
-	[smsTemplateToDo] [nvarchar](4000) NULL,
-	[smsTemplateRead] [nvarchar](4000) NULL,
-	[description] [nvarchar](4000) NULL,
-	[style] [nvarchar](512) NULL,
+	[StepId] [uniqueidentifier] NOT NULL,
+	[MainId] [uniqueidentifier] NULL,
+	[StepName] [nvarchar](64) NULL,
+	[StepStatus] [int] NOT NULL,
+	[Agency] [nvarchar](32) NULL,
+	[Circularize] [nvarchar](32) NULL,
+	[RunMode] [nvarchar](4000) NULL,
+	[LinkCode] [nvarchar](128) NULL,
+	[ShowTabIndex] [nvarchar](4000) NULL,
+	[ReminderTimeout] [bigint] NULL,
+	[AuditNorm] [nvarchar](128) NULL,
+	[AuditId] [nvarchar](256) NULL,
+	[AuditNormRead] [nvarchar](128) NULL,
+	[AuditIdRead] [nvarchar](256) NULL,
+	[SmsTemplateToDo] [nvarchar](4000) NULL,
+	[SmsTemplateRead] [nvarchar](4000) NULL,
+	[Description] [nvarchar](4000) NULL,
+	[Style] [nvarchar](512) NULL,
  CONSTRAINT [PK_dbo.FlowStep] PRIMARY KEY CLUSTERED 
 (
-	[stepId] ASC
+	[StepId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -148,29 +148,29 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[FlowStepPath](
-	[id] [uniqueidentifier] NOT NULL,
-	[mainId] [uniqueidentifier] NULL,
-	[startStepId] [uniqueidentifier] NULL,
-	[stopStepId] [uniqueidentifier] NULL,
-	[nikename] [nvarchar](512) NULL,
-	[condition] [int] NOT NULL,
-	[expression] [nvarchar](512) NULL,
-	[description] [nvarchar](1024) NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[MainId] [uniqueidentifier] NULL,
+	[StartStepId] [uniqueidentifier] NULL,
+	[StopStepId] [uniqueidentifier] NULL,
+	[Nikename] [nvarchar](512) NULL,
+	[Condition] [int] NOT NULL,
+	[Expression] [nvarchar](512) NULL,
+	[Description] [nvarchar](1024) NULL,
  CONSTRAINT [PK_dbo.FlowStepPath] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 
 
-ALTER TABLE [dbo].[FlowBillsRecord]  WITH CHECK ADD  CONSTRAINT [FK_FlowBillsRecord_FlowBills] FOREIGN KEY([billsId])
-REFERENCES [dbo].[FlowBills] ([id])
+ALTER TABLE [dbo].[FlowBillsRecord]  WITH CHECK ADD  CONSTRAINT [FK_FlowBillsRecord_FlowBills] FOREIGN KEY([BillsId])
+REFERENCES [dbo].[FlowBills] ([Id])
 GO
 ALTER TABLE [dbo].[FlowBillsRecord] CHECK CONSTRAINT [FK_FlowBillsRecord_FlowBills]
 GO
-ALTER TABLE [dbo].[FlowBillsRecordUser]  WITH CHECK ADD  CONSTRAINT [FK_FlowBillsRecordUser_FlowBillsRecord] FOREIGN KEY([billsRecordId])
-REFERENCES [dbo].[FlowBillsRecord] ([id])
+ALTER TABLE [dbo].[FlowBillsRecordUser]  WITH CHECK ADD  CONSTRAINT [FK_FlowBillsRecordUser_FlowBillsRecord] FOREIGN KEY([BillsRecordId])
+REFERENCES [dbo].[FlowBillsRecord] ([Id])
 GO
 ALTER TABLE [dbo].[FlowBillsRecordUser] CHECK CONSTRAINT [FK_FlowBillsRecordUser_FlowBillsRecord]
 GO

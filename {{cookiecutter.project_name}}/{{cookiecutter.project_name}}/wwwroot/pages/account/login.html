@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>用户登录</title>
-    <meta name="description" content="BitAdminCore, Version 0.1, Alpha" />
+    <meta name="description" content="BitAdminCore, Version 1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -31,7 +31,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="javascript:void(0);"><b>BitAdmin.Core</b></a>
+            <a href="javascript:void(0);"><b>BitAdminCore</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -39,7 +39,6 @@
             <ul class="nav nav-tabs nav-justified">
                 <li role="presentation" class="active"><a href="#t1" data-toggle="tab">账号密码</a></li>
                 <li role="presentation"><a href="#t2" data-toggle="tab">手机验证</a></li>
-                <li role="presentation"><a href="#t3" data-toggle="tab">人脸验证</a></li>
             </ul>
             <div class="tab-content" style="padding-top:15px;">
                 <div id="t1" class="tab-pane fade in active">
@@ -69,31 +68,16 @@
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group row">
-                        <div class="col-xs-4" style="padding-left: 15px;">
+                        <div class="col-xs-6" style="padding-left: 15px;">
                             <input type="text" id="smsCode" class="form-control" placeholder="验证码">
                             <input type="hidden" id="smsSign" />
                         </div>
-                        <div class="col-xs-8" style="padding-right: 15px;">
+                        <div class="col-xs-6" style="padding-right: 15px;">
                             <button type="button" id="smsSend" class="btn btn-primary btn-block ">发送验证短信</button>
                         </div>
                     </div>
                     <div class="form-group has-feedback">
                         <button type="button" id="smsLogin" class="btn btn-primary btn-block " disabled>短信验证登录</button>
-                    </div>
-                </div>
-                <div id="t3" class="tab-pane fade">
-                    <div class="form-group has-feedback">
-                        <input type="text" id="txtUserCode3" class="form-control disabled" placeholder="帐号/手机" value="admin">
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <div class="vidaoing" style="position:relative;float:left;width:320px;height:210px;padding-left:20px;">
-                            <video id="video" style="position: absolute;width:280px;height:210px;" preload autoplay loop muted></video>
-                            <canvas id="canvas" style="position: absolute;width:280px;height:210px;" width="280" height="210"></canvas>
-                        </div>
-                        <div class="vidaooff" style="display:none;padding-left:20px;">
-                            <canvas id="shortCut" width="280" height="210"></canvas>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -110,9 +94,6 @@
                 </a>
                 <a href="https://open.weixin.qq.com/connect/qrconnect?appid={0}&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fauth%2Fweixinsignin&response_type=code&scope=snsapi_login&state=#wechat_redirect">
                     <img style="width:48px;" class="gray" src="../../images/account/weixin.png" />
-                </a>
-                <a href="javascript:void(0);">
-                    <img style="width:48px;" class="gray" src="../../images/account/weibo.png" />
                 </a>
             </div>
         </div>
@@ -183,6 +164,7 @@
                     }
                 });
             });
+            $("#verifyCode").bind('keypress', function (event) { if (event.keyCode == "13") { $("#btnLogin").click(); } });
 
             //手机验证登录
             $("#smsSend").click(function () {
@@ -242,73 +224,6 @@
                     countdown--;
                     setTimeout(settime, 1000);
                 }
-            }
-
-            //人脸识别登录（人脸识别建议作为二次登录），本处需要重构。
-            $(".nav-tabs").click(function () {
-                if ($("#t3").hasClass("active"))
-                    faceTrack.stop();//暂停
-                else
-                    setTimeout(face, 500);
-            });
-            var faceTrack;
-            function face() {
-                var video = document.getElementById('video');
-                var canvas = document.getElementById('canvas');
-                var context = canvas.getContext('2d');
-                var shortCut = document.getElementById('shortCut');
-                var scContext = shortCut.getContext('2d');
-
-                var tracker = new tracking.ObjectTracker('face');
-                tracker.setInitialScale(4);
-                tracker.setStepSize(2);
-                tracker.setEdgesDensity(0.1);
-
-                faceTrack = tracking.track('#video', tracker, { camera: true });
-                console.log(faceTrack);
-                var flag = true; isAjax = false;
-                tracker.on('track', function (event) {
-                    if (event.data.length === 0) {
-                        context.clearRect(0, 0, canvas.width, canvas.height);
-                    } else {
-                        context.clearRect(0, 0, canvas.width, canvas.height);
-                        event.data.forEach(function (rect) {
-                            context.strokeStyle = '#ff0000';
-                            context.fillStyle = "#ff0000";
-                            context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-                        });
-                        if (flag && !isAjax) {
-                            flag = false;
-                            isAjax = true;
-                            setTimeout(function () { flag = true; }, 10000);//冷却
-
-                            setTimeout(function () {//延后处理
-                                scContext.drawImage(video, 0, 0, 280, 210);
-                                var imgStr = shortCut.toDataURL("image/png");
-                                $(".vidaoing").hide();
-                                $(".vidaooff").show();
-                                $.ajax({
-                                    url: "../../account/facelogin",
-                                    type: "post",
-                                    dataType: "json",
-                                    data: {
-                                        account: $("#txtUserCode3").val(),
-                                        imgStr: imgStr.substring(imgStr.indexOf(",") + 1)
-                                    },
-                                    success: function (result) {
-                                        if (result.code == 0) {
-                                            BitAdmin.RedirectToHomePage();
-                                        } else {
-                                            isAjax = false;
-                                            $(".vidaoing").show();
-                                            $(".vidaooff").hide();
-                                        }
-                                    }
-                                });
-                            }, 1000);
-                        } else { }
-                    }
-                });
             }
         });
     </script>

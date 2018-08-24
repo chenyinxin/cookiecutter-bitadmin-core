@@ -18,8 +18,8 @@
     <link href="../../lib/admin-lte/css/AdminLTE.min.css" rel="stylesheet" />
     <link href="../../lib/admin-lte/css/skins/_all-skins.min.css" rel="stylesheet" />
     <!--框架引用-->
-    <link rel="stylesheet" href="../../css/framework/BitAdmin.css" />
-    <link rel="stylesheet" href="../../css/framework/AdminSuite.css" />
+    <link rel="stylesheet" href="../../css/framework/bitadmin.css" />
+    <link rel="stylesheet" href="../../css/framework/adminSuite.css" />
     <!--常用控件-->
     <link href="../../css/lib/jedate.css" rel="stylesheet" />
 
@@ -44,26 +44,17 @@
     <!--常用控件-->
     <script src="../../js/lib/jquery.jedate.js"></script>
     <!-- 框架引用 -->
-    <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>
+    <script type="text/javascript" src="../../js/framework/bitadmin.js"></script>
     <script type="text/javascript" src="../../js/framework/adminSuite-tools.js"></script>
     <script type="text/javascript" src="../../js/framework/adminSuite.js"></script>
 
     <script type="text/javascript">
         BitAdmin.IsLogin(function () {
-            BitPage.LoadContent();
+            bitPage.loadContent();
         });
 
         $.adminSetup({
-            addLogs: function (title, type, msg) { BitAdmin.AddLogs(title, type, msg); },
-            Pickers: {
-                OUPicker: "../picker/oupicker.html",
-                UserPicker: "../picker/userpicker.html",
-                ModulePicker: "../picker/modulepicker.html",
-                ExamplePicker: "../picker/examplepicker.html",
-            },
-            DataApis: {
-                DicUrl: "../../develop/GetDictionary"
-            }
+            addLogs: function (title, type, msg) { BitAdmin.AddLogs(title, type, msg); }
         });
     </script>
 </head>
@@ -83,9 +74,9 @@
             </section>
             <section class="content"></section>
             <!--cnzz统计代码，可以移除，开始-->
-            <div style="display:none;">
+            <!--<div style="display:none;">
                 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1263497164'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1263497164%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
-            </div>
+            </div>-->
             <!--cnzz统计代码，可以移除，结束-->
         </div>
     </div>

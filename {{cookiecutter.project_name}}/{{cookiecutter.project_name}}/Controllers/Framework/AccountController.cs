@@ -191,25 +191,6 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
 
-        public JsonResult FaceLogin(string account, string imgStr)
-        {
-            try
-            {
-                if (!SSOClient.Validate(account, out SysUser user))
-                    return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
-                //百度Api调整，已无法验证，直接通过。
-                //if (!FaceHelper.Verify(account, imgStr))
-                //    return Json(new { Code = 1, Msg = "验证不通过！" });
-                SSOClient.SignIn(user.UserId);
-                return Json(new { Code = 0,Msg="登录成功！" });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
         [BitAuthorize]
         public JsonResult BindClientId(string clientId, Guid? userId)
         {

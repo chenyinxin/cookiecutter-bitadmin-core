@@ -45,9 +45,8 @@ INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIco
 INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'6e16c53c-53ee-4c13-b096-a44458901b2e', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'Generating', N'生成代码', NULL, N'/develop/generating', NULL, 4)
 INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'cfcdc86d-3546-4578-9e1a-b5c210cbf2f5', N'5dfab181-a524-44b2-9e6a-273fc2d2e272', N'PrototypingExample', N'原型示例', NULL, N'/develop/prototypingexample', NULL, 5)
 
-INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'a93a433d-85e7-4019-b7bf-e0f87429b7f4', N'20256a37-fead-4d11-8052-f0df33738c3b', N'ExampleOne', N'表单示例1', NULL, N'/templates/exampleone', N'功能实现', 1)
-INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'5a4bd0dc-ed8b-42a0-9801-1040f71aa606', N'20256a37-fead-4d11-8052-f0df33738c3b', N'ExampleRedirect', N'表单示例2', NULL, N'/templates/exampleredirect', NULL, 2)
-INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'94a9c1a1-45a8-4ec5-bf0d-764331878542', N'20256a37-fead-4d11-8052-f0df33738c3b', N'ExampleTree', N'表单示例3', NULL, N'/templates/exampletree', NULL, 3)
+INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'a93a433d-85e7-4019-b7bf-e0f87429b7f4', N'20256a37-fead-4d11-8052-f0df33738c3b', N'ExampleOne', N'简单示例', NULL, N'/templates/exampleone', N'表单套件最简易实现', 1)
+INSERT [dbo].[SysModulePage] ([id], [moduleId], [pageSign], [pageName], [pageIcon], [pageUrl], [description], [orderNo]) VALUES (N'5a4bd0dc-ed8b-42a0-9801-1040f71aa606', N'20256a37-fead-4d11-8052-f0df33738c3b', N'ExampleRedirect', N'完整示例', NULL, N'/templates/exampleredirect', N'表单套件完整功能参数', 2)
 
 GO
 

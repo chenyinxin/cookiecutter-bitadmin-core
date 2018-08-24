@@ -2,67 +2,61 @@
  * BitAdmin2.0框架文件
  ***********************/
 $.fn.upload = function (option) {
-    var _this = $(this);
-    _this.hide();
+    var _wrapper = $(this);
+    _wrapper.hide();
 
     var _option = {
+        mode: "ico",                                //结果模式（ico|list|view）
         buttonTxt: "上传",
-        buttonStyle: "",
-        uploadUrl: "",                 //上传路径
-        downloadUrl: "",             //下载地址
-        saveUrl: "../../FileService/SaveData",//保存地址
-        queryUrl: "../../FileService/QueryData",//查询地址
-        isLocal: 'true',              //是否上传到本地
-        mode: "ico",                //结果模式（ico|list|view）
-        target: null,               //结果显示目标
-        multiple: "false",            //是否上传多个文件
-        onlyFile: "false",            //列表只保存唯一文件
-        fileTypes: null,            //文件类型（jpg|png|gif）
-        minFileSize: 0,             //文件最小Size（字节）
-        maxFileSize: 2147483648,    //文件最大Size（字节）
-        thumbnailSizes: '50;155',   //压缩尺寸
-        createByName: null,         //文件创建人名称（一般都是当前登录人）
-        formatter: 'yyyy-MM-dd hh:mm:ss',                //列表时间格式
-        date: [],                   //文件列表
+        buttonStyle: "float:right;",
+        uploadUrl: "../../fileservice/upload",                  //上传路径
+        downloadUrl: "../../fileservice/download",              //下载地址
+        saveUrl: "../../fileservice/SaveData",                  //保存地址
+        queryUrl: "../../fileservice/QueryData",                //查询地址
+        multiple: "true",                           //是否上传多个文件
+        onlyFile: "false",                          //列表只保存唯一文件
+        fileTypes: null,                            //文件类型（jpg|png|gif）
+        minFileSize: 0,                             //文件最小Size（字节）
+        maxFileSize: 2147483648,                    //文件最大Size（字节）
+        thumbnailSizes: '50;155',                   //压缩尺寸
+        createByName: null,                         //文件创建人名称（一般都是当前登录人）
+        formatter: 'yyyy-MM-dd hh:mm:ss',           //列表时间格式
+        date: [],                                   //文件列表
     };
-    var option2 = {
-        buttonTxt: _this.attr('data-buttontxt'),
-        buttonStyle: _this.attr('data-button-style'),
-        uploadUrl: _this.attr("data-uploadurl"),
-        saveUrl: _this.attr("data-saveurl"),
-        queryUrl: _this.attr("data-queryurl"),
-        isLocal:_this.attr("data-islocal"),
-        downloadUrl: _this.attr("data-downloadrrl"),
-        mode: _this.attr('data-mode'),
-        target: _this.attr('data-target'),
-        multiple: _this.attr('data-multiple'),
-        onlyFile: _this.attr('data-onlyfile'),
-        fileTypes: _this.attr('data-filetypes'),
-        minFileSize: _this.attr('data-minfilesize'),
-        maxFileSize: _this.attr('data-maxfilesize'),
-        thumbnailSizes: _this.attr('data-thumbnailsizes'),
-        formatter: _this.attr('data-format')
-    };
-    $.extend(_option, option, option2);
+    $.extend(_option, {
+        mode: _wrapper.attr('data-file'),
+        buttonTxt: _wrapper.attr('data-buttontxt'),
+        buttonStyle: _wrapper.attr('data-button-style'),
+        uploadUrl: _wrapper.attr("data-uploadurl"),
+        saveUrl: _wrapper.attr("data-saveurl"),
+        queryUrl: _wrapper.attr("data-queryurl"),
+        downloadUrl: _wrapper.attr("data-downloadrrl"),
+        target: _wrapper.attr('data-target'),
+        multiple: _wrapper.attr('data-multiple'),
+        onlyFile: _wrapper.attr('data-onlyfile'),
+        fileTypes: _wrapper.attr('data-filetypes'),
+        minFileSize: _wrapper.attr('data-minfilesize'),
+        maxFileSize: _wrapper.attr('data-maxfilesize'),
+        thumbnailSizes: _wrapper.attr('data-thumbnailsizes'),
+        formatter: _wrapper.attr('data-format')
+    });
     var Queue_add = 0;          //用于添加文件回调方法，当前队列是否首次触发
     var Queue_always = 0;       //用于回调完成方法，当前队列是否结束
-    //本地上传/下载 or 服务器上传/下载
-    if (_option.isLocal == "false") {
-        _option.uploadUrl = "../../FileService/FileServiceUpload";
-        _option.downloadUrl = "../../FileService/FileServiceDownload";
-    }
-    else {
-        _option.uploadUrl = "../../FileService/Upload";
-        _option.downloadUrl = "../../FileService/Download";
-    }
+
     _option.targetId = guid.new();
     _option.fileCode = guid.new();
-    _this.attr("data-code", _option.fileCode);
+    _wrapper.attr("data-code", _option.fileCode);
+
+    if (_option.target == undefined) _option.target = _wrapper.attr("name") + "view";
     var _target = $(_option.target);
+    if (_target.length == 0) {
+        _target = $("<div></div>").attr("name", _option.target.replace("#",""));
+        $(this).parent().append(_target);
+    }
 
     var buttonUploadBox=$('<div style="float:left;width:100%;"><button type="button" class="btn btn-default fileControl-marBot10" style="' + _option.buttonStyle + '"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> ' + _option.buttonTxt + '</button></ div>');
     _option.buttonUpload = buttonUploadBox.find('button').on("click", function () { $('[data-code=' + _option.fileCode + ']').click(); });
-    _this.after(buttonUploadBox);
+    _wrapper.after(buttonUploadBox);
 
     _option.modal = $(string.format('<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{0}ModalLab" id="{0}">\
             <div class="modal-dialog" role="document">\
@@ -96,14 +90,14 @@ $.fn.upload = function (option) {
     _target.append($(fileBox));
 
     if ($.trim(_option.fileTypes).length > 0 && _option.fileTypes != null)
-        _this.attr("accept", getMIME(_option.fileTypes));
+        _wrapper.attr("accept", getMIME(_option.fileTypes));
     if (_option.multiple == "true")
-        _this.attr("multiple", "");
+        _wrapper.attr("multiple", "");
 
     _option._saveCallback = function () { }
     _option._bindCallback = function () { }
 
-    _this.fileupload({
+    _wrapper.fileupload({
         /********   ajax选项    ********/
         type: 'POST',
         url: _option.uploadUrl,
@@ -339,7 +333,7 @@ $.fn.upload = function (option) {
         var strAction = '';
         var fileNameArr = data.names.split('|');
         if (checkImg(data.suffix)) {
-            strICO = string.format('<img style="width: 50px;height: 50px;" class="img-rounded" src="{0}" alt="图片不存在">', data.path + '/' + fileNameArr[0]);
+            strICO = string.format('<img style="width: 36px;height: 36px;" class="img-rounded" src="{0}" alt="图片不存在">', data.path + '/' + fileNameArr[0]);
             strAction = '<a href="javascript:void(0);" title="预览" data-type="search" class="btn btn-default fileControl-color"><i class="fa fa-search-plus" aria-hidden="true"></i></a>';
         }
         else {

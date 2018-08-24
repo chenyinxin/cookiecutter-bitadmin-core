@@ -4,40 +4,40 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[GeneralExample](
-	[exampleId] [uniqueidentifier] NOT NULL,
-	[exampleName] [nvarchar](64) NULL,
-	[plainText] [nvarchar](64) NULL,
-	[requiredText] [nvarchar](64) NULL,
-	[repeatText] [nvarchar](64) NULL,
-	[mobileText] [nvarchar](64) NULL,
-	[emailText] [nvarchar](64) NULL,
-	[plainInt] [int] NULL,
-	[plainDecimal] [decimal](18, 2) NULL,
-	[dateTimePicker] [datetime] NULL,
-	[dateTimePickerDate] [datetime] NULL,
-	[dateTimePickerYYMM] [datetime] NULL,
-	[dateTimePickerFormatter] [datetime] NULL,
-	[userPicker] [nvarchar](64) NULL,
-	[ouPicker] [nvarchar](64) NULL,
-	[exampleText] [nvarchar](256) NULL,
-	[exampleRadio] [nvarchar](256) NULL,
-	[exampleCheckbox] [nvarchar](256) NULL,
-	[exampleSelect] [nvarchar](256) NULL,
-	[examplePhone] [varchar](16) NULL,
-	[exampleTime] [datetime] NULL,
-	[exampleUser] [nvarchar](4000) NULL,
-	[department] [nvarchar](4000) NULL,
-	[autoComplete] [nvarchar](4000) NULL,
-	[autoComSelectText] [nvarchar](4000) NULL,
-	[autoComSelect] [nvarchar](4000) NULL,
-	[linkageSelectA] [nvarchar](64) NULL,
-	[linkageSelectB] [nvarchar](64) NULL,
-	[linkageSelectC] [nvarchar](64) NULL,
-	[createTime] [datetime] NULL,
-	[linkageSelectD] [nvarchar](64) NULL,
-	[linkageSelectE] [nvarchar](64) NULL,
-	[linkageSelectF] [nvarchar](64) NULL,
-	[parentId] [uniqueidentifier] NULL,
+	[ExampleId] [uniqueidentifier] NOT NULL,
+	[ExampleName] [nvarchar](64) NULL,
+	[ParentId] [uniqueidentifier] NULL,
+	[PlainText] [nvarchar](64) NULL,
+	[RequiredText] [nvarchar](64) NULL,
+	[RepeatText] [nvarchar](64) NULL,
+	[MobileText] [nvarchar](64) NULL,
+	[EmailText] [nvarchar](64) NULL,
+	[PlainInt] [int] NULL,
+	[PlainDecimal] [decimal](18, 2) NULL,
+	[DateTimePicker] [datetime] NULL,
+	[DateTimePickerDate] [datetime] NULL,
+	[DateTimePickerYYMM] [datetime] NULL,
+	[DateTimePickerFormatter] [datetime] NULL,
+	[UserPicker] [nvarchar](64) NULL,
+	[OUPicker] [nvarchar](64) NULL,
+	[ExampleText] [nvarchar](256) NULL,
+	[ExampleRadio] [nvarchar](256) NULL,
+	[ExampleCheckbox] [nvarchar](256) NULL,
+	[ExampleSelect] [nvarchar](256) NULL,
+	[ExamplePhone] [varchar](16) NULL,
+	[ExampleTime] [datetime] NULL,
+	[ExampleUser] [nvarchar](4000) NULL,
+	[Department] [nvarchar](4000) NULL,
+	[AutoComplete] [nvarchar](4000) NULL,
+	[AutoComSelectText] [nvarchar](4000) NULL,
+	[AutoComSelect] [nvarchar](4000) NULL,
+	[LinkageSelectA] [nvarchar](64) NULL,
+	[LinkageSelectB] [nvarchar](64) NULL,
+	[LinkageSelectC] [nvarchar](64) NULL,
+	[LinkageSelectD] [nvarchar](64) NULL,
+	[LinkageSelectE] [nvarchar](64) NULL,
+	[LinkageSelectF] [nvarchar](64) NULL,
+	[CreateTime] [datetime] NULL,
  CONSTRAINT [PK_GeneralExample] PRIMARY KEY CLUSTERED 
 (
 	[exampleId] ASC
@@ -51,22 +51,22 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysAttachment](
-	[id] [uniqueidentifier] NOT NULL,
-	[relationID] [nvarchar](64) NULL,
-	[name] [nvarchar](512) NULL,
-	[url] [nvarchar](max) NULL,
-	[type] [int] NULL,
-	[suffix] [nvarchar](32) NULL,
-	[path] [nvarchar](max) NULL,
-	[names] [nvarchar](max) NULL,
-	[status] [int] NULL,
-	[size] [bigint] NULL,
-	[createBy] [nvarchar](64) NULL,
-	[createByName] [nvarchar](64) NULL,
-	[createTime] [datetime] NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[RelationID] [nvarchar](64) NULL,
+	[Name] [nvarchar](512) NULL,
+	[Url] [nvarchar](max) NULL,
+	[Type] [int] NULL,
+	[Suffix] [nvarchar](32) NULL,
+	[Path] [nvarchar](max) NULL,
+	[Names] [nvarchar](max) NULL,
+	[Status] [int] NULL,
+	[Size] [bigint] NULL,
+	[CreateBy] [nvarchar](64) NULL,
+	[CreateByName] [nvarchar](64) NULL,
+	[CreateTime] [datetime] NULL,
  CONSTRAINT [PK__SysAttachment] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
@@ -76,19 +76,19 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysDepartment](
-	[departmentId] [uniqueidentifier] NOT NULL,
-	[parentId] [uniqueidentifier] NULL,
-	[departmentCode] [nvarchar](64) NULL,
-	[departmentName] [nvarchar](64) NULL,
-	[departmentFullName] [nvarchar](512) NULL,
-	[orderNo] [int] NULL,
-	[createTime] [datetime] NULL,
-	[createBy] [uniqueidentifier] NULL,
-	[updateTime] [datetime] NULL,
-	[pdateBy] [uniqueidentifier] NULL,
+	[DepartmentId] [uniqueidentifier] NOT NULL,
+	[ParentId] [uniqueidentifier] NULL,
+	[DepartmentCode] [nvarchar](64) NULL,
+	[DepartmentName] [nvarchar](64) NULL,
+	[DepartmentFullName] [nvarchar](512) NULL,
+	[OrderNo] [int] NULL,
+	[CreateTime] [datetime] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
+	[PdateBy] [uniqueidentifier] NULL,
  CONSTRAINT [PK_SysDepartment] PRIMARY KEY CLUSTERED 
 (
-	[departmentId] ASC
+	[DepartmentId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -98,15 +98,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysDictionary](
-	[type] [nvarchar](64) NOT NULL,
-	[member] [nvarchar](64) NOT NULL,
-	[memberName] [nvarchar](64) NOT NULL,
-	[description] [nvarchar](2048) NULL,
-	[orderNo] [int] NULL,
+	[Type] [nvarchar](64) NOT NULL,
+	[Member] [nvarchar](64) NOT NULL,
+	[MemberName] [nvarchar](64) NOT NULL,
+	[Description] [nvarchar](2048) NULL,
+	[OrderNo] [int] NULL,
  CONSTRAINT [PK_Dictionary] PRIMARY KEY NONCLUSTERED 
 (
-	[type] ASC,
-	[member] ASC
+	[Type] ASC,
+	[Member] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -116,14 +116,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysLeader](
-	[leaderId] [uniqueidentifier] NOT NULL,
-	[departmentCode] [nvarchar](512) NULL,
-	[userCode] [nvarchar](512) NULL,
-	[pos] [nvarchar](2048) NULL,
-	[sequence] [nvarchar](2048) NULL,
+	[LeaderId] [uniqueidentifier] NOT NULL,
+	[DepartmentCode] [nvarchar](512) NULL,
+	[UserCode] [nvarchar](512) NULL,
+	[Pos] [nvarchar](2048) NULL,
+	[Sequence] [nvarchar](2048) NULL,
  CONSTRAINT [PK_Leader] PRIMARY KEY CLUSTERED 
 (
-	[leaderId] ASC
+	[LeaderId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -133,19 +133,19 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysLog](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[userName] [varchar](50) NULL,
-	[userId] [uniqueidentifier] NULL,
-	[userCode] [varchar](32) NULL,
-	[ipAddress] [varchar](50) NULL,
-	[departmentName] [nvarchar](500) NULL,
-	[title] [varchar](50) NULL,
-	[type] [varchar](50) NULL,
-	[createTime] [datetime] NULL,
-	[description] [nvarchar](2048) NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](50) NULL,
+	[UserId] [uniqueidentifier] NULL,
+	[UserCode] [varchar](32) NULL,
+	[IpAddress] [varchar](50) NULL,
+	[DepartmentName] [nvarchar](500) NULL,
+	[Title] [varchar](50) NULL,
+	[Type] [varchar](50) NULL,
+	[CreateTime] [datetime] NULL,
+	[Description] [nvarchar](2048) NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -155,15 +155,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysModule](
-	[moduleId] [uniqueidentifier] NOT NULL,
-	[parentId] [uniqueidentifier] NULL,
-	[moduleName] [nvarchar](64) NULL,
-	[moduleIcon] [nvarchar](512) NULL,
-	[description] [nvarchar](2048) NULL,
-	[orderNo] [int] NULL,
+	[ModuleId] [uniqueidentifier] NOT NULL,
+	[ParentId] [uniqueidentifier] NULL,
+	[ModuleName] [nvarchar](64) NULL,
+	[ModuleIcon] [nvarchar](512) NULL,
+	[Description] [nvarchar](2048) NULL,
+	[OrderNo] [int] NULL,
  CONSTRAINT [PK_SysModule] PRIMARY KEY CLUSTERED 
 (
-	[moduleId] ASC
+	[ModuleId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -173,17 +173,17 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysModulePage](
-	[id] [uniqueidentifier] NOT NULL,
-	[moduleId] [uniqueidentifier] NULL,
-	[pageSign] [nvarchar](64) NOT NULL,
-	[pageName] [nvarchar](64) NOT NULL,
-	[pageIcon] [nvarchar](512) NULL,
-	[pageUrl] [nvarchar](512) NULL,
-	[description] [nvarchar](2048) NULL,
-	[orderNo] [int] NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[ModuleId] [uniqueidentifier] NULL,
+	[PageSign] [nvarchar](64) NOT NULL,
+	[PageName] [nvarchar](64) NOT NULL,
+	[PageIcon] [nvarchar](512) NULL,
+	[PageUrl] [nvarchar](512) NULL,
+	[Description] [nvarchar](2048) NULL,
+	[OrderNo] [int] NULL,
  CONSTRAINT [PK_SysModulePage] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -193,15 +193,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysOperation](
-	[id] [uniqueidentifier] NOT NULL,
-	[operationSign] [nvarchar](64) NULL,
-	[operationName] [nvarchar](64) NULL,
-	[createBy] [nvarchar](64) NULL,
-	[createTime] [datetime] NULL,
-	[orderNo] [int] NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[OperationSign] [nvarchar](64) NULL,
+	[OperationName] [nvarchar](64) NULL,
+	[CreateBy] [nvarchar](64) NULL,
+	[CreateTime] [datetime] NULL,
+	[OrderNo] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -211,12 +211,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysPageOperation](
-	[id] [uniqueidentifier] NOT NULL,
-	[pageID] [uniqueidentifier] NULL,
-	[operationSign] [varchar](512) NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[PageID] [uniqueidentifier] NULL,
+	[OperationSign] [varchar](512) NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -226,11 +226,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysRole](
-	[id] [uniqueidentifier] NOT NULL,
-	[roleName] [nvarchar](64) NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[RoleName] [nvarchar](64) NULL,
  CONSTRAINT [PK_SysRole] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -240,14 +240,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysRoleOperatePower](
-	[id] [uniqueidentifier] NOT NULL,
-	[roleId] [uniqueidentifier] NULL,
-	[modulePageId] [uniqueidentifier] NULL,
-	[moduleParentId] [uniqueidentifier] NULL,
-	[operationSign] [nvarchar](512) NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[RoleId] [uniqueidentifier] NULL,
+	[ModulePageId] [uniqueidentifier] NULL,
+	[ModuleParentId] [uniqueidentifier] NULL,
+	[OperationSign] [nvarchar](512) NULL,
  CONSTRAINT [PK_SysRoleM_] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -257,12 +257,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysRoleUser](
-	[id] [uniqueidentifier] NOT NULL,
-	[roleId] [uniqueidentifier] NULL,
-	[userId] [uniqueidentifier] NULL,
+	[Id] [uniqueidentifier] NOT NULL,
+	[RoleId] [uniqueidentifier] NULL,
+	[UserId] [uniqueidentifier] NULL,
  CONSTRAINT [PK_SysRolesUser] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -272,27 +272,27 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysUser](
-	[userId] [uniqueidentifier] NOT NULL,
-	[departmentId] [uniqueidentifier] NULL,
-	[userCode] [nvarchar](32) NULL,
-	[userName] [nvarchar](32) NULL,
-	[userPassword] [nvarchar](128) NULL,
-	[idCard] [nvarchar](32) NULL,
-	[mobile] [nvarchar](32) NULL,
-	[email] [nvarchar](128) NULL,
-	[post] [nvarchar](32) NULL,
-	[gender] [nvarchar](32) NULL,
-	[birthday] [datetime] NULL,
-	[extendId] [nvarchar](64) NULL,
-	[userStatus] [nvarchar](32) NULL,
-	[orderNo] [int] NULL,
-	[createBy] [uniqueidentifier] NULL,
-	[createTime] [datetime] NULL,
-	[updateBy] [uniqueidentifier] NULL,
-	[updateTime] [datetime] NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[DepartmentId] [uniqueidentifier] NULL,
+	[UserCode] [nvarchar](32) NULL,
+	[UserName] [nvarchar](32) NULL,
+	[UserPassword] [nvarchar](128) NULL,
+	[IdCard] [nvarchar](32) NULL,
+	[Mobile] [nvarchar](32) NULL,
+	[Email] [nvarchar](128) NULL,
+	[Post] [nvarchar](32) NULL,
+	[Gender] [nvarchar](32) NULL,
+	[Birthday] [datetime] NULL,
+	[ExtendId] [nvarchar](64) NULL,
+	[UserStatus] [nvarchar](32) NULL,
+	[OrderNo] [int] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_SysUser] PRIMARY KEY CLUSTERED 
 (
-	[userId] ASC
+	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -302,13 +302,13 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysUserOpenId](
-	[openId] [nvarchar](64) NOT NULL,
-	[userId] [uniqueidentifier] NULL,
-	[createTime] [datetime] NULL,
-	[bindTime] [datetime] NULL,
+	[OpenId] [nvarchar](64) NOT NULL,
+	[UserId] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[BindTime] [datetime] NULL,
  CONSTRAINT [PK_SysUserOpenId] PRIMARY KEY CLUSTERED 
 (
-	[openId] ASC
+	[OpenId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -318,12 +318,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysUserClientId](
-	[clientId] [nvarchar](64) NOT NULL,
-	[userId] [uniqueidentifier] NULL,
-	[updateTime] [datetime] NULL,
+	[ClientId] [nvarchar](64) NOT NULL,
+	[UserId] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_SysUserClientId] PRIMARY KEY CLUSTERED 
 (
-	[clientId] ASC
+	[ClientId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -335,12 +335,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[SysServer](
-	[serverIP] [nvarchar](128) NOT NULL,
-	[createTime] [datetime] NULL,
-	[updateTime] [datetime] NULL,
+	[ServerIP] [nvarchar](128) NOT NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_SysServer] PRIMARY KEY CLUSTERED 
 (
-	[serverIP] ASC
+	[ServerIP] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -352,17 +352,17 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[SysSmsCode](
-	[id] [uniqueidentifier] NOT NULL,
-	[mobile] [nvarchar](32) NULL,
-	[smsSign] [nvarchar](32) NULL,
-	[smsCode] [nvarchar](32) NULL,
-	[isVerify] [int] NULL,
-	[createTime] [datetime] NULL,
-	[overTime] [datetime] NULL,
-	[verifyTime] [datetime] NULL,
- CONSTRAINT [PK_SysSMSCode] PRIMARY KEY CLUSTERED 
+	[Id] [uniqueidentifier] NOT NULL,
+	[Mobile] [nvarchar](32) NULL,
+	[SmsSign] [nvarchar](32) NULL,
+	[SmsCode] [nvarchar](32) NULL,
+	[IsVerify] [int] NULL,
+	[CreateTime] [datetime] NULL,
+	[OverTime] [datetime] NULL,
+	[VerifyTime] [datetime] NULL,
+ CONSTRAINT [PK_SysSmsCode] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO

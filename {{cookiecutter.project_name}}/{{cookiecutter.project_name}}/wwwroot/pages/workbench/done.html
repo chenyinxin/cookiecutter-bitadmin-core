@@ -5,25 +5,18 @@
         <div class="querySuite-filter">
             <table>
                 <tr>
-                    <th>流程类型：</th>
+                    <th>工单名称：</th>
                     <td>
-                        <input type="text" name="name" class="form-control">
-                        <!-- 隐藏控件 -->
+                        <input type="text" name="workOrderName" class="form-control">
                         <input type="hidden" name="state" value="Done" />
                     </td>
-                    <th>当前处理环节：</th>
-                    <td><input type="text" name="stepName" class="form-control"></td>
                     <th>待办结束时间：</th>
                     <td>
-                        <div data-control="datePicker" data-format="yyyy-MM-dd">
-                            <input type="text" name="startDate" class="form-control" />
-                        </div>
+                        <input type="text" name="startDate" class="form-control" data-picker="datetime" data-format="yyyy-MM-dd" placeholder="开始时间" />
                     </td>
                     <th>至</th>
                     <td>
-                        <div data-control="datePicker" data-format="yyyy-MM-dd">
-                            <input type="text" name="endDate" class="form-control" />
-                        </div>
+                        <input type="text" name="endDate" class="form-control" data-picker="datetime" data-format="yyyy-MM-dd" placeholder="结束时间" />
                     </td>
                 </tr>
             </table>
@@ -65,7 +58,7 @@
                 span.bind('click', function () {
                     switch (data.mainCode) {
                         case "999":
-                            BitPage.Redirect("/WorkflowExample/ExampleTab", { orderId: data.billsCode, state: $('.querySuite-filter [name=state]').val(), taskUserId: data.taskUserId }, "WorkflowExample");
+                            goPage("/WorkflowExample/ExampleTab", { orderId: data.billsCode, state: $('.querySuite-filter [name=state]').val(), taskUserId: data.taskUserId }, "WorkflowExample");
                             break;
                         case '':
                             break;

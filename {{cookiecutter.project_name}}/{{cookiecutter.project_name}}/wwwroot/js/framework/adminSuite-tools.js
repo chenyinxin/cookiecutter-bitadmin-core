@@ -2,20 +2,21 @@
  * BitAdmin2.0框架文件
  * 自定义控件
  ***********************/
-$.fn.bitSelect = function () {
+$.fn.bitSelect = function (_changes) {
     var _wrapper = $(this);
-    var url = _wrapper.attr("data-url");
     var _option = {
         text: "text",
         value: "value"
     };
     $.extend(_option, {
+        name: _wrapper.attr("name"),
+        url: _wrapper.attr("data-select"),
         text: _wrapper.attr("data-text"),
         value: _wrapper.attr("data-value")
     });
 
-    if (url != null && url != "" && url != undefined) {
-        $.getJSON(url, { type: _wrapper.attr("data-type") }, function (result) {
+    if (_option.url != null && _option.url != "" && _option.url != undefined) {
+        $.getJSON(_option.url, { type: _wrapper.attr("data-type") }, function (result) {
             _bind(_wrapper, result.data, true);
         });
     }
@@ -29,182 +30,122 @@ $.fn.bitSelect = function () {
             $(select).append($("<option value='" + data[i][_option.value] + "' " + (actualval + '' == data[i][_option.value] ? 'selected' : '') + ">" + data[i][_option.text] + "</option>"));
         }
     };
-    _option.change = function (callback, name) {
-        if ($.isFunction(callback)) {
-            _wrapper.change(function () {
-                var data = $(_wrapper).data("bind")[_wrapper.get(0).selectedIndex - 1];
-                callback(data);
-            });
+    _wrapper.change(function () {
+        if ($.isFunction(_changes[_option.name])) {
+            var data = $(_wrapper).data("bind")[_wrapper.get(0).selectedIndex - 1];
+            _changes[_option.name](data,$(this));
         }
-        else {
-            _wrapper.change(function () {
-                if ($.isFunction(callback[name])) {
-                    var data = $(_wrapper).data("bind")[_wrapper.get(0).selectedIndex - 1];
-                    callback[name](data);
-                }
-            });
-        }
-    }
+    });
     return _option;
 }
 
-$.fn.bitRadio = function () {
+$.fn.bitRadio = function (_changes) {
     var _wrapper = $(this);
-    var url = _wrapper.attr("data-url");
     var _option = {
         text: "text",
         value: "value",
         inline: "true"
     };
     $.extend(_option, {
+        name: _wrapper.attr("name"),
+        url: _wrapper.attr("data-radio"),
         text: _wrapper.attr("data-text"),
         value: _wrapper.attr("data-value"),
         inline: _wrapper.attr("data-inline")
     });
     _option.parent = _wrapper.parent();
-    if (url != null && url != "" && url != undefined) {
-        $.getJSON(url, { type: _wrapper.attr("data-type") }, function (result) {
-                var _radioControl = _wrapper.find('input[type="radio"]');
-                var _labControl1 = $(_wrapper[0].outerHTML).html('');
-                if (_option.inline != "false") 
-                    _labControl1.addClass("radio-inline");
-                var _labControl2 = _labControl1.clone().removeAttr("data-control data-type data-text data-value data-inline data-url data-change");
-                var actualval = _wrapper.attr("data-actualval");
 
-                _option.parent.html('');
-                var index = 0;
+    if (_option.url != null && _option.url != "" && _option.url != undefined) {
+        $.getJSON(_option.url, { type: _wrapper.attr("data-type") }, function (result) {
+            var _radioControl = _wrapper.find('input[type="radio"]');
+            var _label = $(_option.inline ? '<label class="radio-inline"></label>' : '<label></label>');
+            var actualval = _wrapper.parents("form").attr("data-" + _option.name);
 
-                for (var i in result.data) {
-                    if ($.isFunction(result.data[i])) {
-                        continue;
-                    }
-                    var _labControl = null;
-                    if (index == 0) 
-                        _labControl = _labControl1.clone();
-                    else
-                        _labControl = _labControl2.clone();
+            _option.parent.empty();
 
-                    var _radioControl1 = _radioControl.clone();
-                    _radioControl1.data("bind", result.data[i]);
-                    _radioControl1.val(result.data[i][_option.value]);
-                    if (actualval == _radioControl1.val()) {
-                        _radioControl1.prop("checked", "checked");
-                    }
-                    //if ($.isFunction(callback)) {
-                    //    _radioControl1.click(function () {
-                    //        callback($(this), $(this).data("bind"));
-                    //    });
-                    //}
-                    _labControl.append(_radioControl1);
-                    _labControl.append(result.data[i][_option.text]);
-                    if (_option.inline == "false") {
-                        _option.parent.append($('<div class="checkbox"></div>').append(_labControl))
-                    }
-                    else {
-                        _option.parent.append(_labControl);
-                    }
-                    index++;
-            }
-        });
-    }
+            $.each(result.data, function (index, row) {
+                var _labControl = _label.clone();
+                var _radio = $('<input type="radio" name="' + _option.name + '">').data("bind", row).val(row[_option.value]);
+                _labControl.append(_radio);
+                _labControl.append(row[_option.text]);
 
-    _option.change = function (callback, name) {
-        
-        if ($.isFunction(callback)) {
-            var _radios = _wrapper.parent().find('input[type="radio"]');
-            _radios.change(function () {
-                var data = $(_wrapper);
-                callback(data);
-            });
-        }
-        else {
-            var _radios = _wrapper.parent().find('input[type="radio"]');
-            _radios.change(function () {
-                if ($.isFunction(callback[name])) {
-                    var data = $(_wrapper);
-                    callback[name](data);
+                if (actualval == _radio.val()) {
+                    _radio.prop("checked", "checked");
                 }
-            });
-        }
-    }
-   
-    return _option;
-}
-
-$.fn.bitCheckbox = function (callback) {
-    var _wrapper = $(this);
-    var url = _wrapper.attr("data-url");
-    var _option = {
-        text: "text",
-        value: "value",
-        inline: "true"
-    };
-    $.extend(_option, {
-        text: _wrapper.attr("data-text"),
-        value: _wrapper.attr("data-value"),
-        inline: _wrapper.attr("data-inline")
-    });
-    _option.parent = _wrapper.parent();
-    if (url != null && url != "" && url != undefined) {
-        $.getJSON(url, { type: _wrapper.attr("data-type") }, function (result) {
-            var _radioControl = _wrapper.find('input[type="checkbox"]');
-            var _labControl1 = $(_wrapper[0].outerHTML).html('');
-            if (_option.inline != "false")
-                _labControl1.addClass("checkbox-inline");
-            var _labControl2 = _labControl1.clone().removeAttr("data-control data-type data-text data-value data-inline data-url data-change");
-            var actualval = _wrapper.attr("data-actualval");
-
-            _option.parent.html('');
-            var index = 0;
-
-            for (var i in result.data) {
-                if ($.isFunction(result.data[i])) {
-                    continue;
-                }
-                var _labControl = null;
-                if (index == 0)
-                    _labControl = _labControl1.clone();
+                if (_option.inline == "false")
+                    _option.parent.append($('<div class="radio"></div>').append(_labControl));
                 else
-                    _labControl = _labControl2.clone();
-
-                var _radioControl1 = _radioControl.clone();
-                _radioControl1.data("bind", result.data[i]);
-                _radioControl1.val(result.data[i][_option.value]);
-                if (actualval != '' && actualval != null && (',' + actualval + ',').indexOf(',' + _radioControl1.val()) > 0) {
-                    _radioControl1.prop("checked", "checked");
-                }
-                if ($.isFunction(callback)) {
-                    _radioControl1.click(function () {
-                        callback($(this), $(this).data("bind"));
-                    });
-                }
-                _labControl.append(_radioControl1);
-                _labControl.append(result.data[i][_option.text]);
-                if (_option.inline == "false") {
-                    _option.parent.append($('<div class="checkbox"></div>').append(_labControl))
-                }
-                else {
                     _option.parent.append(_labControl);
-                }
-                index++;
-            }
+
+                _radio.change(function (e) {
+                    if ($.isFunction(_changes[_option.name]))
+                        _changes[_option.name](row, $(this));
+                });
+            });
         });
-    }
+    }    
     return _option;
 }
 
+$.fn.bitCheckbox = function (_changes) {
+    var _wrapper = $(this);
+    var _option = {
+        text: "text",
+        value: "value",
+        inline: "true"
+    };
+    $.extend(_option, {
+        name: _wrapper.attr("name"),
+        url: _wrapper.attr("data-checkbox"),
+        text: _wrapper.attr("data-text"),
+        value: _wrapper.attr("data-value"),
+        inline: _wrapper.attr("data-inline")
+    });
+    _option.parent = _wrapper.parent();
 
-$.fn.bitAutoComplete = function () {
+    if (_option.url != null && _option.url != "" && _option.url != undefined) {
+        $.getJSON(_option.url, { type: _wrapper.attr("data-type") }, function (result) {
+            var _radioControl = _wrapper.find('input[type="checkbox"]');
+            var _label = $(_option.inline ? '<label class="checkbox-inline"></label>' : '<label></label>');
+            var actualval = _wrapper.parents("form").attr("data-" + _option.name);
+
+            _option.parent.empty();
+
+            $.each(result.data, function (index, row) {
+                var _checkbox = $('<input type="checkbox" name="' + _option.name + '">').data("bind", row).val(row[_option.value]);
+                var _labControl = _label.clone().append(_checkbox).append(row[_option.text]);
+
+                if (actualval != '' && actualval != null && ('|' + actualval + '|').indexOf('|' + _checkbox.val()) > 0) {
+                    _checkbox.prop("checked", "checked");
+                }
+                if (_option.inline == "false") 
+                    _option.parent.append($('<div class="checkbox"></div>').append(_labControl));
+                else 
+                    _option.parent.append(_labControl);
+
+                _checkbox.change(function (e) {
+                    if ($.isFunction(_changes[_option.name]))
+                        _changes[_option.name](row, $(this));
+                });
+            });
+        });
+    }
+
+    return _option;
+}
+
+$.fn.bitAutoComplete = function (_changes) {
     var _wrapper = $(this);
     var _option = {
         text: "text"
     };
     $.extend(_option, {
+        name: _wrapper.attr("name"),
+        url: _wrapper.attr("data-autotext"),
         text: _wrapper.attr("data-text")
     });
-    var url = _wrapper.attr("data-url");
-    if (url != null && url != "" && url != undefined) {
-        $.getJSON(url, { type: _wrapper.attr("data-type") }, function (result) {
+    if (_option.url != null && _option.url != "" && _option.url != undefined) {
+        $.getJSON(_option.url, { type: _wrapper.attr("data-type") }, function (result) {
             var availableTags = [];
             for (var i in result.data) {
                 if (!$.isFunction(result.data[i]))
@@ -218,46 +159,41 @@ $.fn.bitAutoComplete = function () {
             });
         });
     }
-    _option.change = function (callback, name) {
-        if ($.isFunction(callback)) {
-            _wrapper.change(function () {
-                var data = $(_wrapper)[0].value;
-                callback(data)
-            });
-        } else {
-            _wrapper.change(function () {
-                if ($.isFunction(callback[name])) {
-                    var data = $(_wrapper)[0].value;
-                    callback[name](data)
-                }
-            })
+    _wrapper.change(function () {
+        if ($.isFunction(_changes[_option.name])) {
+            var data = $(_wrapper)[0].value;
+            _changes[_option.name](data, $(this));
         }
-    }
+    });
     return _option;
 }
 
-$.fn.bitAutoComSelect = function () {
+$.fn.bitAutoComSelect = function (_changes) {
     var _wrapper = $(this);
+    _wrapper.append('<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>');
+    var _text = _wrapper.find("[type=text]");
+    var _value = _wrapper.find("[type=hidden]");
+
+    var _textName = _text.attr("name");
+    var _valueName = _value.attr("name");
     var backVal;
     var _option = {
         text: "text",
-        value: "value",
-        target: ""
+        value: "value"
     };
     $.extend(_option, {
+        url: _wrapper.attr("data-autoselect"),
         text: _wrapper.attr("data-text"),
-        value: _wrapper.attr("data-value"),
-        target: _wrapper.attr("data-target")
+        value: _wrapper.attr("data-value")
     });
-    var url = _wrapper.attr("data-url");
-    if (url != null && url != "" && url != undefined) {
-        $.getJSON(url, { type: _wrapper.attr("data-type") }, function (result) {
+    if (_option.url != null && _option.url != "" && _option.url != undefined) {
+        $.getJSON(_option.url, { type: _wrapper.attr("data-type") }, function (result) {
             var availableTags = [];
             for (var i in result.data) {
                 if (!$.isFunction(result.data[i]))
                     availableTags.push({ label: result.data[i][_option.text], value: result.data[i][_option.text], dataVal: result.data[i][_option.value] });
             };
-            _wrapper.autocomplete({
+            _text.autocomplete({
                 delay: 0,
                 minLength: 0,
                 source: availableTags,
@@ -266,32 +202,26 @@ $.fn.bitAutoComSelect = function () {
                 },
                 change: function (event, data) {
                     if (data.item == null) {
-                        //alert('请选择项！');
-                        _wrapper.next('[name=' + _option.target + ']').val('');
+                        _value.val('');
                         backVal = "";
                         return;
                     }
-                    _wrapper.next('[name=' + _option.target + ']').val(data.item.dataVal);
+                    _value.val(data.item.dataVal);
                 }
 
             })
         });
     }
-    _option.change = function (callback, name) {
-        if ($.isFunction(callback)) {
-            _wrapper.change(function () {
-                var data = backVal;
-                callback(data)
-            });
-        } else {
-            _wrapper.change(function () {
-                if ($.isFunction(callback[name])) {
-                    var data = backVal;
-                    callback[name](data)
-                }
-            })
-        }
-    }
+    _wrapper.change(function () {
+        var exec = true;
+        $.each(_wrapper.find("input"), function () {
+            var name = $(this).attr("name");
+            if ($.isFunction(_changes[name]) && exec) {
+                _changes[name](backVal, $(this));
+                exec = false;
+            }
+        });  
+    });
    
     return _option;
 }
@@ -368,7 +298,7 @@ $.fn.bitTree = function (option) {
     return _option;
 };
 
-$.fn.picker = function (parent) {
+$.fn.picker = function (parent, _changes) {
     var _wrapper = $(this);
     var _text = _wrapper.find("[type=text]");
     var _value = _wrapper.find("[type=hidden]");
@@ -376,10 +306,11 @@ $.fn.picker = function (parent) {
     var _textName = _text.attr("name");
     var _valueName = _value.attr("name");
 
-    var _url = _wrapper.attr("data-url");
-    var _param = _wrapper.attr("data-param");
-    var _icon = _wrapper.attr("data-icon");
-    var _remove = _wrapper.attr("data-remove");
+    var _option = {
+        url: _wrapper.attr("data-picker"),
+        param: _wrapper.attr("data-param"),
+        isShowRemove: _wrapper.attr("data-remove")
+    };
     
     if (parent == undefined || parent == null)
         parent = "";
@@ -392,9 +323,9 @@ $.fn.picker = function (parent) {
         if (lock) return;
 
         lock = true;
-        if (_param != undefined) {
+        if (_option.param != undefined) {
             var val = {};
-            var inParams = _param.split(",");
+            var inParams = _option.param.split(",");
             for (var i in inParams) {
                 if (typeof inParams[i] != 'string')
                     continue;
@@ -413,55 +344,44 @@ $.fn.picker = function (parent) {
             $.extend(_data, val);
         }
         //先清除,再绑定
-        pickType = _url.replace(/\./g, "p").replace(/\//g, "p");
+        pickType = _option.url.replace(/\./g, "p").replace(/\//g, "p");
         $("[data-picker-type=" + pickType + "]").remove();
-        $("body").append('<div id="' + _textName + '" data-picker-type=' + pickType + '></div>');
-        $("#" + _textName).attr("data-param", JSON.stringify(_data));
-        $("#" + _textName).load(_url);        
+        var _picker = $('<div id="' + _textName + '" data-picker-type=' + pickType + '></div>');
+        _picker.attr("data-param", JSON.stringify(_data));
+        _picker.load(_option.url);
+        $("body").append(_picker);  
         lock = false;
     };
     //清除绑定事件
     _text.unbind("click");
     _text.click(clickfn);
 
-    if (_icon == undefined || _icon == "")
-        _icon = "glyphicon-list-alt";
-    var icon = $('<span class="input-group-addon"><i class="glyphicon ' + _icon + '"></i></span>');
-    icon.click(clickfn);
+    var icon = $('<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>').click(clickfn);
     $(this).append(icon);
 
-    if (_remove != "false") {
-        var remove = $('<span class="input-group-addon"><i class="glyphicon glyphicon-remove"></i></span>');
-        $(this).append(remove);
-        remove.click(function () {
+    if (_option.isShowRemove != "false") {
+        var remove = $('<span class="input-group-addon" title="清空"><i class="glyphicon glyphicon-remove"></i></span>').click(function () {
             _text.val("");
             _value.val("");
         });
+        $(this).append(remove);
     }
-    _wrapper.addClass("input-group");
-    _text.parent().children("span").css("cursor", "pointer");
-    _text.attr("readonly", "readonly");
-    _text.css("background-color", "white");
-    _text.css("border-right", "0px");
+    _text.parent().children().css("cursor", "pointer");
+    _text.attr("readonly", "readonly").css("background-color", "white").css("border-right", "0px");
 
-    var _option = {};
-    _option.change = function (callback, name) {
-        if ($.isFunction(callback)) {
-            _text.change(function () { callback(_value.val(), _text.val()) });
-        } else {
-            _text.change(function () {
-                if ($.isFunction(callback[name])) {
-                    callback[name](_value.val(), _text.val())
-                }
-            });
+    _text.change(function () {
+        if ($.isFunction(_changes[_textName])) {
+            _changes[_textName](_value.val(), _text.val());
         }
-    };
-    return _option
+        else if ($.isFunction(_changes[_valueName])) {
+            _changes[_valueName](_value.val(), _text.val());
+        }
+    });
+    return _option;
 };
 
-$.fn.datePicker = function () {
-    var _wrapper = $(this);
-    var _value = _wrapper.find("input");
+$.fn.datePicker = function (_changes) {
+    var _value = $(this).clone();
 
     var _option = {
         format: "YYYY-MM-DD hh:mm:ss",               //日期格式
@@ -473,15 +393,16 @@ $.fn.datePicker = function () {
         isShowRemove: true,
         choosefun: function (elem, datas) { }
     };
-    var option = {
-        format: _wrapper.attr('data-format').replace("yyyy", "YYYY").replace("dd", "DD").replace("HH", "hh"),
-        minDate: _wrapper.attr('data-min'),
-        maxDate: _wrapper.attr('data-max')
-    };
-    $.extend(_option, option);
+    $.extend(_option, {
+        name: _value.attr("name"),
+        format: _value.attr('data-format').replace("yyyy", "YYYY").replace("dd", "DD").replace("HH", "hh"),
+        minDate: _value.attr('data-min'),
+        maxDate: _value.attr('data-max'),
+        parent: $(this).parent()
+    });
     
-    _wrapper.find('.input-group-addon').remove();
-    _wrapper.removeClass('input-group');
+    var _wrapper = $('<div class="input-group"></div>').append(_value);
+    _option.parent.empty().append(_wrapper);
 
     if (_option.isShowCalendar = true) {
         var _calendar = $('<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>');
@@ -491,40 +412,28 @@ $.fn.datePicker = function () {
         _wrapper.append(_calendar);
     }
     if (_option.isShowRemove == true) {
-        var _remove = $('<span class="input-group-addon"><i class="glyphicon glyphicon-remove"></i></span>');
+        var _remove = $('<span class="input-group-addon" title="清空"><i class="glyphicon glyphicon-remove"></i></span>');
         _remove.click(function () {
             _value.val("");
         });
         _wrapper.append(_remove);
     }
-    _wrapper.addClass("input-group");
-    _wrapper.children("span").css("cursor", "pointer");
-    _value.attr("readonly", "readonly");
-    _value.css("background-color", "white");
-    _value.css("border-right","0px");
+    _wrapper.children().css("cursor", "pointer");
+    _value.attr("readonly", "readonly").css("background-color", "white").css("border-right","0px");
 
     //设置时间控件
-    _value.jeDate(_option);
- 
-    _option.change = function (callback,name) {
-        if ($.isFunction(callback)) {
-                _option.choosefun = callback;
-        } else {
-            _option.choosefun = (function () {
-                if ($.isFunction(callback[name])) {
-                    _option.choosefun = callback[name];
-                }
-            })
+    _value.jeDate(_option); 
+    _option.choosefun = function (a, b, c) {
+        if ($.isFunction(_changes[_option.name])) {
+            _changes[_option.name](b, a);
         }
-
     };
+
     return _option
 }
 
-$.fn.linkageSelect = function () {
+$.fn.linkageSelect = function (_changes) {
     var _wrapper = $(this);
-    var url = _wrapper.attr("data-url");
-    var isAjax = _wrapper.attr("data-ajax");
 
     var _select = _wrapper.find("select:first");
    
@@ -533,14 +442,15 @@ $.fn.linkageSelect = function () {
         value: "value"
     };
     _option.wrapper = _wrapper;
-    var _param = {
+    $.extend(_option, {
+        url: _wrapper.attr("data-linkage"),
+        isAjax: _wrapper.attr("data-ajax"),
         text: _wrapper.attr("data-text"),
         value: _wrapper.attr("data-value")
-    }
-    $.extend(_option, _param)
+    });
 
-    if (url != null && url != "" && url != undefined) {
-        $.getJSON(url, { type: _select.attr("data-type"), parent: "" }, function (result) {
+    if (_option.url != null && _option.url != "" && _option.url != undefined) {
+        $.getJSON(_option.url, { type: _select.attr("data-type"), parent: "" }, function (result) {
             _option.bind(_select, result.data, true);
             _option.bindChange(_select);
         });
@@ -560,12 +470,11 @@ $.fn.linkageSelect = function () {
         $(select).change(function () {
             var val = $(select).val();
             _option.clearNext(select);
-            if (isAjax == "true" && val != "") {
-                var datatype = _next.attr("data-type");
-                $.getJSON(url, { type: datatype, parent: val }, function (result) {
+            if (_option.isAjax == "true" && val != "") {
+                $.getJSON(_option.url, { type: _next.attr("data-type"), parent: val }, function (result) {
                     _option.bind(_next, result.data, true);
                 });
-            } else if (isAjax == "true") {
+            } else if (_option.isAjax == "true") {
                 _option.bind(_next, {}, false);
             }
             else {
@@ -594,22 +503,19 @@ $.fn.linkageSelect = function () {
             $(select).change();
         }
     };
-    _option.change = function (callback, name) {
-        if ($.isFunction(callback)) {
-            _wrapper.find("select:last").change(function () {
+
+    _wrapper.find("select:last").change(function () {
+        var exec = true;
+        $.each(_wrapper.find("select"), function () {
+            var name = $(this).attr("name");
+            if ($.isFunction(_changes[name]) && exec) {
                 var data = $(this).data("bind")[$(this).get(0).selectedIndex - 1];
-                callback(data)
-            });
-        } else {
-            _wrapper.find("select:last").change(function () {
-                if ($.isFunction(callback[name])) {
-                    var data = $(this).data("bind")[$(this).get(0).selectedIndex - 1];
-                    callback[name](data)
-                }
-            })
-        }
-        return _option;
-    }
+                _changes[name](data, $(this));
+                exec = false;
+            }
+        });        
+    });
+
     return _option;
 };
 

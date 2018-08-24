@@ -39,10 +39,10 @@
     $(function () {
         $('#tabSource ul li a').hide();
         $('#tabSource .tab-content>div>iframe').css('height', $(window).height() - 105);
-        var url = BitPage.GetQueryString("page");
-        var orderId = BitPage.GetQueryString('orderId', url);
-        var taskUserId = BitPage.GetQueryString('taskUserId', url);
-        var state = BitPage.GetQueryString('state', url);
+        var pageUrl = url.query("page");
+        var orderId = url.query('exampleId', pageUrl);
+        var taskUserId = url.query('taskUserId', pageUrl);
+        var state = url.query('state', pageUrl);
 
         $(window).resize(function () {
             $('#tabSource .tab-content>div>iframe').css('height', $(window).height() - 105);
@@ -74,7 +74,7 @@
                                         var _iframe = $('#tabSource .tab-content #step' + tabIndex + " iframe");
                                         if (_iframe.attr('src') == '' || _iframe.attr('src') == null) {
                                             var src = _iframe.attr('data-src');
-                                            src = BitPage.GetRedirect({ "tabUrl": src, "param": { "exampleId": orderId, "state": state, "taskUserId": taskUserId }, "tabSign": "WorkflowExample" });
+                                            src = bitPage.GetRedirect({ "tabUrl": src, "param": { "exampleId": orderId, "state": state, "taskUserId": taskUserId }, "tabSign": "WorkflowExample" });
                                             _iframe.attr('src', src);
                                         }
                                     });

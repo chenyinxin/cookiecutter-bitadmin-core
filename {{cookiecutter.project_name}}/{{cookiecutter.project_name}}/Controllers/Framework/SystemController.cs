@@ -616,5 +616,21 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
         #endregion
+
+        #region 数据字典
+        public JsonResult Dictionaries(string type)
+        {
+            try
+            {
+                var list = dbContext.SysDictionary.Where(x => x.Type == type).OrderBy(x => x.OrderNo).ToList();
+                return Json(new { Code = 0, Data = list });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        } 
+        #endregion
     }
 }

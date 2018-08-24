@@ -17,8 +17,8 @@ $.extend(BitAdmin,
             if (exists) {
                 $("#tab_a_" + options.tabName).click();
             } else {
-                var pageUrl = BitPage.GetRedirect(options);
-                if (pageUrl == undefined) return;
+                //var pageUrl = bitPage.GetRedirect(options);
+                if (options.pageUrl == undefined) return;
 
                 var li = $('<li id="tab_li_' + options.tabName + '"></li>');
                 var a = $('<a href="#tab_content_' + options.tabName + '" data-toggle="tab" id="tab_a_' + options.tabName + '">' + options.tabTitle + '  </a>');
@@ -31,7 +31,7 @@ $.extend(BitAdmin,
                 a.append(spanRefresh).append(spanClose);
                 $("#" + options.tabMainName).append(li.append(a));
 
-                var tabIframe = $('<iframe id="iframe_' + options.tabName + '" style="height:' + this.getIframeHeight() + ' ; width: 100%;" src="' + pageUrl + '" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>');
+                var tabIframe = $('<iframe id="iframe_' + options.tabName + '" style="height:' + this.getIframeHeight() + ' ; width: 100%;" src="' + options.pageUrl + '" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>');
 
                 var tabDiv = $('<div id="tab_content_' + options.tabName + '" role="tabpanel" class="tab-pane" id="' + options.tabName + '"></div>');
                 $("#" + options.tabContentMainName).append(tabDiv.append(tabIframe));
@@ -57,7 +57,7 @@ $.extend(BitAdmin,
             $('#' + id).attr('src', $('#' + id).attr('src') + "&isRefresh=true");
         },
         getIframeHeight: function () {
-            if (BitAdmin.mode == "tab") 
+            if (BitAdmin.mode == "tab")
                 return ($(window).height() - $('body > .wrapper >.main-header').height() - $('body > .wrapper .tab-title').height() * 2 - $('body > .wrapper .main-footer').height() + 10) + 'px';
             if (BitAdmin.mode == "iframe")
                 return ($(window).height() - $('body > .wrapper >.main-header').height() - $('body > .wrapper .tab-title').height() * 2 - $('body > .wrapper .main-footer').height() - 20) + 'px';
@@ -74,6 +74,7 @@ $.extend(BitAdmin,
             $('.sidebar').height($('.main-sidebar').height() - 10);
         },
         Pages: {},
+        Signs: new Array(),
     }
 );
 
@@ -117,30 +118,36 @@ $.fn.extend({
                 else {
                     var li = $('<li><a href="javascript:void(0);"><i class="fa ' + moduleICO + '"></i>' + menu.name + '</a></li>');
                     pul.append(li);
-                    li.click(function () {
-                        if (menu.url != undefined && menu.url != null && menu.url != "") {
-                            BitAdmin.Pages[menu.pageSign] = {
-                                ModuleName: menu.moduleName,
-                                PageName: menu.name,
-                                Description: menu.description
-                            };
-                            if (BitAdmin.mode == "tab") {
-                                BitAdmin.addTab({
-                                    tabMainName: "page-tabs",
-                                    tabName: "page_" + menu.id,
-                                    tabSign: menu.pageSign,
-                                    tabTitle: menu.name,
-                                    tabUrl: menu.url,
-                                    tabContentMainName: "tab-content",
-                                    title: title + menu.name
-                                });
-                            } else if (BitAdmin.mode == "iframe") {
-                                $("[mode=" + BitAdmin.mode + "] iframe").attr("src", menu.url);
-                            } else if (BitAdmin.mode == "load") {
-                                $("[mode=" + BitAdmin.mode + "]").load(menu.url);
-                            }
+                    if (menu.url != undefined && menu.url != null && menu.url != "") {
+                        var option = {
+                            tabMainName: "page-tabs",
+                            tabName: "page_" + menu.id,
+                            tabTitle: menu.name,
+                            tabUrl: menu.url,
+                            tabContentMainName: "tab-content",
+                            title: title + menu.name
                         }
-                    });
+                        option.pageUrl = bitPage.GetRedirect(option);
+                        var key = url.query("page", option.pageUrl).split("?")[0].toLowerCase().replace(/\//g, "").replace(/\./g, "");
+                        BitAdmin.Pages[key] = {
+                            pageKey: key,
+                            pageSign: menu.pageSign,
+                            pageUrl: menu.url,
+                            pageModuleName: menu.moduleName,
+                            pageName: menu.name,
+                            pageDescription: menu.description
+                        };
+
+                        li.click(function () {
+                            if (BitAdmin.mode == "tab") {
+                                BitAdmin.addTab(option);
+                            } else if (BitAdmin.mode == "iframe") {
+                                $("[mode=" + BitAdmin.mode + "] iframe").attr("src", option.pageUrl);
+                            } else if (BitAdmin.mode == "load") {
+                                $("[mode=" + BitAdmin.mode + "]").load(option.pageUrl);
+                            }
+                        });
+                    }
                 }
             });
         }

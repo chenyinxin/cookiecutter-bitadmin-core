@@ -103,8 +103,8 @@
         async: true,
         data: { DepID: $(valueInput).val() },
         success: function (result) {
-            if (result.Data) {
-                $.each(result.Data, function (i, d) {
+            if (result.code == 0) {
+                $.each(result.data, function (i, d) {
                     var li = $('<li class="list-group-item" dataid="' + d.departmentId + '" text="' + d.departmentName + '"><span class="glyphicon glyphicon-remove-circle" style="cursor:pointer;color:red;padding-right: 5px"></span>' + d.departmentFullName + ' </li>');
                     li.find("span").bind("click", function () {
                         $(this).parent().remove();

@@ -69,7 +69,7 @@
                     $("#spanmsg").text("请输入登录密码");
                     return;
                 }
-                var openId = BitPage.GetQueryString("openid");
+                var openId = url.query("openid");
                 $.showLoading();
                 $.ajax({
                     url: "../../auth/binduser",

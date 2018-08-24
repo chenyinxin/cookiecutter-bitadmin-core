@@ -1,112 +1,142 @@
-﻿<!--BitAdmin2.0框架文件-->
-<div id="exampleModal" class="formSuite-wrapper"
-     data-submit-close="false">
+﻿<!-- 完整表单控件注释说明 -->
+<!-- form 表单组件分两种 formSuite和generalForm，功能基本一致，formSuite是模态窗模式，generalForm是普通页面模式。通过两个事例对比差异。 -->
+<!-- class:formSuite-wrapper：必选，用于控制整体样式。-->
+<div class="formSuite-wrapper">
     <div class="modal-content">
         <div class="modal-body">
-            <form data-save-url="../../Example/SaveExample"
+            <!-- data-key：条件必选，表单主键，仅支持单键；声明主键会自动生成主键控件，未声明主键需要放一个主键隐藏控件；使用上传附件时必选。 -->
+            <!-- data-title：必选，标题显示。 -->
+            <!-- data-load-url：必选，加载表单数据的api -->
+            <!-- data-save-url：必选，保存表单数据的api -->
+            <form data-key="exampleId"
+                  data-title="示例模型"
+                  data-save-url="../../Example/SaveExample"
                   data-load-url="../../Example/LoadExample">
                 <table class="table-bordered">
                     <tr>
-                        <th>示例名称：</th>
+                        <th>必填文本：</th>
                         <td>
-                            <input type="hidden" name="exampleId" />
-                            <input name="exampleName" type="text" class="form-control required" placeholder="示例名称" />
+                            <!-- 普通文本控件，无特殊声明 -->
+                            <!-- 常用验证属性包括如下，更多说明请百度jquery-validation，自行扩展验证可以在adminSuite-tools.js未尾添加。 -->
+                            <!-- required：  必填项 -->
+                            <!-- phone：     手机号码 -->
+                            <!-- telephone： 电话号码 -->
+                            <!-- idcard：    身份证号码 -->
+                            <!-- number：    数字 -->
+                            <!-- digits：    整数 -->
+                            <!-- email：     电子邮件地址 -->
+                            <!-- url：       网页地址 -->
+                            <!-- date：      日期 -->
+                            <input name="exampleName" type="text" class="form-control required" placeholder="必填文本" />
                         </td>
                         <th>普通文本：</th>
                         <td>
                             <input name="exampleText" type="text" class="form-control" placeholder="普通文本">
                         </td>
-
                     </tr>
                     <tr>
-                        <th>单选：</th>
-                        <td>
-                            <label data-control="bitRadio" data-control-type="DicUrl" data-type="A" data-text="memberName" data-value="member" data-inline="true" data-control-name="radioChange">
-                                <input type="radio" name="exampleRadio">
-                            </label>
-                        </td>
-                        <th>复选：</th>
-                        <td>
-                            <label data-control="bitCheckbox" data-control-type="DicUrl" data-type="b" data-text="memberName" data-value="member" data-inline="true">
-                                <input type="checkbox" name="exampleCheckbox">
-                            </label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>下拉框：</th>
-                        <td>
-                            <select class="form-control" name="exampleSelect" data-control="bitSelect" data-control-type="DicUrl" data-type="A" data-text="memberName" data-value="member"></select>
-                        </td>
-                        <th>电话号码：</th>
-                        <td>
-                            <input type="text" name="examplePhone" class="form-control" placeholder="电话号码">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>下拉联动(异步)：</th>
-                        <td>
-                            <div id="linkageSelectTrue" data-url="../../Example/GetLinkageSelect" data-ajax="true" data-text="departmentName" data-value="departmentId">
-                                <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectD"></select>
-                                <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectE"></select>
-                                <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectF"></select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>下拉联动(同步)：</th>
-                        <td>
-                            <div id="linkageSelectFalse" data-url="../../Example/QueryTreeTableData" data-ajax="false" data-text="departmentName" data-value="departmentId">
-                                <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectA"></select>
-                                <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectB"></select>
-                                <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectC"></select>
-                            </div>
-                        </td>
                         <th>日期时间：</th>
                         <td>
-                            <div data-control="datePicker" data-format="yyyy-MM-dd HH:mm:ss" data-control-name="selectChange">
-                                <input type="text" name="exampleTime" class="form-control" placeholder="日期时间" />
-                            </div>
+                            <!-- 时间日期控件，使用jeDate封装，参数如下，更多说明请百度。 -->
+                            <!-- data-picker=datetime：  必选 -->
+                            <!-- data-format：           可选，默认格式yyyy-MM-dd -->
+                            <!-- data-min：              可选，最小日期 -->
+                            <!-- data-max：              可选，最大日期 -->
+                            <input type="text" name="exampleTime" class="form-control" data-picker="datetime" data-format="yyyy-MM-dd HH:mm:ss" placeholder="日期时间" />
+                        </td>
+                        <th>下拉控件：</th>
+                        <td>
+                            <!-- 下拉选择控件，数据源格式需遵照规范，具体参考已有api. -->
+                            <!-- data-select：   必选，声明控件及数据源api -->
+                            <!-- data-type：     可选，传递给api参数type，后台查询条件，多个数据类型使用同一个api时适用。 -->
+                            <!-- data-text：     可选，text绑定的属性名称，默认为text -->
+                            <!-- data-member：   可选，value绑定的属性名称，默认为value -->
+                            <select class="form-control" name="exampleSelect" data-select="../../system/dictionaries" data-type="a" data-text="memberName" data-value="member"></select>
                         </td>
                     </tr>
                     <tr>
                         <th>用户：</th>
                         <td>
-                            <div class="input-group" data-control="picker" data-control-type="UserPicker" data-param="single:true">
-                                <input type="text" name="userName" class="form-control" placeholder="用户" />
+                            <div class="input-group" data-picker="../picker/userpicker.html" data-param="single:false">
+                                <input type="text" class="form-control" name="exampleUserName" placeholder="用户" />
                                 <input type="hidden" name="exampleUser" />
                             </div>
                         </td>
                         <th>部门：</th>
                         <td>
-                            <div class="input-group" data-control="picker" data-control-type="OUPicker" data-param="single:false">
-                                <input type="text" name="departmentName" class="form-control" placeholder="部门" />
+                            <div class="input-group" data-picker="../picker/oupicker.html" data-param="single:true">
+                                <input type="text" class="form-control" name="departmentName" placeholder="部门" />
                                 <input type="hidden" name="department" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>单选：</th>
+                        <td>
+                            <input type="radio" name="exampleRadio" data-radio="../../system/dictionaries" data-type="a" data-text="memberName" data-value="member">
+                        </td>
+                        <th>复选：</th>
+                        <td>
+                            <input type="checkbox" name="exampleCheckbox" data-checkbox="../../system/dictionaries" data-type="b" data-text="memberName" data-value="member">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>下拉联动(异步)：</th>
+                        <td>
+                            <div id="linkageSelectTrue" data-linkage="../../Example/GetLinkageSelect" data-ajax="true" data-text="departmentName" data-value="departmentId">
+                                <select class="form-control" style="display:initial;width:33%" data-type="a" name="linkageSelectA"></select>
+                                <select class="form-control" style="display:initial;width:33%" data-type="b" name="linkageSelectB"></select>
+                                <select class="form-control" style="display:initial;width:33%" data-type="c" name="linkageSelectC"></select>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>自动提示文本</th>
                         <td>
-                            <input class="form-control" data-control="bitAutoComplete" id="inputAutoCmplete" name="autoComplete" data-text="member" data-control-type="DicUrl" data-type="A" />
+                            <input class="form-control" name="autoComplete" data-autotext="../../system/dictionaries" data-type="A" data-text="member" />
                         </td>
                         <th>自动提示下拉框</th>
                         <td>
-                            <input type="text" data-control="bitAutoComSelect" data-control-type="DicUrl" name="autoComSelectText" class="form-control" data-target="autoComSelect" data-text="memberName" data-value="member" data-type="A" />
-                            <input type="hidden" name="autoComSelect" />
+                            <div class="input-group" data-autoselect="../../system/dictionaries" data-type="A" data-text="memberName" data-value="member">
+                                <input type="text" class="form-control" name="autoComSelectText" />
+                                <input type="hidden" name="autoComSelect" />
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <script id="repeatText" name="repeatText" type="text/plain">
-                            </script>
+                            <input type="file" name="fileupload3"
+                                   data-file="list"
+                                   data-target="#fileBox3"
+                                   data-multiple="true">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <input type="file" name="fileupload2"
+                                   data-file="view"
+                                   data-buttontxt="上传"
+                                   data-button-style="float:left"
+                                   data-islocal="true"
+                                   data-multiple="true"
+                                   data-onlyfile="true"
+                                   data-filetypes="jpg|jpeg|png|gif"
+                                   data-minfilesize="0"
+                                   data-maxfilesize="2147483648"
+                                   data-thumbnailsizes="50;155"
+                                   data-format="yyyy-MM-dd">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <script name="repeatText" data-ueditor="repeatText"></script>
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary notHide" id="save">
+            <button class="btn btn-primary notHide" action="save">
                 <span class="glyphicon glyphicon-saved"></span> 保存
             </button>
             <button class="btn btn-default notHide" id="close">
@@ -115,6 +145,10 @@
         </div>
     </div>
 </div>
+<!--文件上传引用-->
+<script src="../../js/lib/jquery.fileupload.js"></script>
+<script src="../../js/framework/bitadmin-fileupload.js"></script>
+<!--Ueditor引用-->
 <script src="../../lib/ueditor/ueditor.config.js"></script>
 <script src="../../lib/ueditor/ueditor.all.min.js"></script>
 <script src="../../lib/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -122,57 +156,21 @@
 <script type="text/javascript">
 
     $(function () {
-        var url = BitPage.GetQueryString("page");
-        var exampleId = BitPage.GetQueryString('exampleId', url);
-
-        var linkageSelectTrue = $("#linkageSelectTrue").linkageSelect().change(function (e) { });
-        //同步
-        var linkageSelectFalse = $("#linkageSelectFalse").linkageSelect().change(function (e) { });
-
-        var ue = UE.getEditor('repeatText');
+        var exampleId = bitPage.query('exampleId');
 
         //表单套件初始化
-        var formSuite = $("#exampleModal").generalForm()
+        var formSuite = $(".formSuite-wrapper").generalForm()
             .add(function () {//点击添加：初始化表单后
-                ue.ready(function () {
-                    ue.setContent("");
-                });
             })
             .edit(function (result) {//点击编辑：加载数据后
-                ue.ready(function () {
-                    ue.setContent(result.data.repeatText);
-                });
-
-                linkageSelectFalse.wrapper.find('select:first').change();
-                linkageSelectTrue.wrapper.find('select:first').change();
-            })
-            .controls["selectChange"].change(function (a) {
-
             })
             .submit(function (result) {
-                ue.ready(function () {
-                    console.log(result);
-                    console.log(ue.getContent());
-                });
+                goPage("/Templates/ExampleRedirect");
             }).load({ "exampleId": exampleId });
 
-        //radio回调事件
-        $("body").on("change", "#myModal :radio[name=exampleRadio]", function () { })
-
-        //checkbox回调事件
-        $("body").on("change", "#myModal :checkbox[name=exampleCheckbox]", function () { })
-
-        $("#save").click(function () {
-            formSuite.submit();
-            BitPage.Redirect("/Templates/ExampleRedirect", null, "ExampleRedirect");
-        })
         $("#close").click(function () {
-
-            BitPage.Redirect("/Templates/ExampleRedirect", null, "ExampleRedirect");
+            goPage("/Templates/ExampleRedirect");
         });
 
     });
-
-
-
 </script>
