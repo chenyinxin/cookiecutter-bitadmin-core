@@ -1,7 +1,8 @@
 using Quartz;
+using System.Net.WebSockets;
 /***********************
- * BitAdmin2.0框架文件
- ***********************/
+* BitAdmin2.0框架文件
+***********************/
 
 namespace BitAdminService.Jobs
 {

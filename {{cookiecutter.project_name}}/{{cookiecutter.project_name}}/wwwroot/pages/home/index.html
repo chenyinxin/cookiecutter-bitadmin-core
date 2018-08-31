@@ -315,6 +315,7 @@
                 socket.send(JSON.stringify(msgObj));
             };
             var receive = function (msg) {
+                console.log(msg);
                 var msgObj = JSON.parse(msg);
                 switch (msgObj.MessageType) {
                     case "notice"://通知消息

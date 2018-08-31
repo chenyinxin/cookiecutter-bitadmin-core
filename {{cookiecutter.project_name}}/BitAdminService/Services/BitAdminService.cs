@@ -3,12 +3,18 @@
  ***********************/
 using {{cookiecutter.project_name}}.Helpers;
 using BitAdminService.Jobs;
+using Newtonsoft.Json;
 using Quartz;
 using Quartz.Impl;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
+using System.Net.WebSockets;
 using System.ServiceProcess;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BitAdminService
@@ -23,6 +29,7 @@ namespace BitAdminService
         protected override void OnStart(string[] args)
         {
             Run().GetAwaiter().GetResult();
+            
             LogHelper.SaveLog("service", "started");
         }
 
@@ -55,7 +62,6 @@ namespace BitAdminService
             {
                 LogHelper.SaveLog(ex);
             }
-
         }
     }
 

@@ -98,7 +98,7 @@ $.extend({
                 loadFormUrl: _form.attr("data-load-url"),
                 saveFormUrl: _form.attr("data-save-url"),
             });
-            if ($("[name=" + _option.key + "]").length == 0) _form.find("td:eq(0)").append('<input type="hidden" name="' + _option.key + '" />');
+            if (_option.key != undefined && $("[name=" + _option.key + "]").length == 0) _form.find("td:eq(0)").append('<input type="hidden" name="' + _option.key + '" />');
             _wrapper.find("[action=save]").click(function () { _option.submit(); });
 
             _option.add = function (callback) {
@@ -528,38 +528,6 @@ $.fn.querySuite = function (option) {
     });
     var _callback = {};
 
-    //导入初始化
-    if ($("[action=import]").length > 0 && _option.importUrl) {
-        var importFile = $('<input style="display:none;" type="file" class="queryImport" />')
-        $("[action=import]").before(importFile).on("click", function () { $(".queryImport").click(); });
-        importFile.fileupload({
-            url: _option.importUrl,
-            autoUpload: true,
-            add: function (e, data) {
-                var fileName = data.files[0].name.toLowerCase();
-                var suffix = fileName.substring(fileName.lastIndexOf("."));
-                if (suffix != ".xlsx" && suffix != ".xls" && suffix != ".txt") {
-                    alert("文件类型错误，请选择 xls,xlsx,txt 类型文件!");
-                    return false;
-                }
-                data.submit();
-            },
-            success: function (result) {
-                if (result.code == 0) {
-                    if ($.isFunction(_callback.import)) { _callback.import(result); }
-                    else {
-                        alert(result.msg);
-                    }
-                } else {
-                    alert(result.msg);
-                }
-            },
-            error: function (msg) {
-                alert('数据文件导入失败，请稍后重试！');
-            }
-        });
-    }
-
     //查询条件行数，大于1行显示收缩
     if (_filter.find("tr").length > 1) {
         _filter.find("tr").addClass("tr_shrink").hide();
@@ -735,9 +703,9 @@ $.fn.querySuite = function (option) {
         return _option;
     };
 
-    _option.export = function () {
+    _option.export = function (exportUrl) {
         var filter = (_filter.formSerialize() + "&r=" + new Date().getTime()).split('&');
-        var form = $("<form></form>").attr("action", _option.exportUrl).attr("method", "post");
+        var form = $("<form></form>").attr("action", exportUrl).attr("method", "post");
         for (var idx in filter) {
             var item = filter[idx].split("=");
             form.append($("<input></input>").attr("type", "hidden").attr("name", item[0]).attr("value", item[1]));
@@ -810,8 +778,41 @@ $.fn.querySuite = function (option) {
         _option.query();
     });
     _button.find("[action='delete']").click(function () { _option.delete(); });
-    _button.find("[action='export']").click(function () { _option.export(); });
 
+    //导入初始化
+    $("[action=import]").each(function () {
+        var importUrl = $(this).attr("data-url") || _option.importUrl;
+        var importFile = $('<input style="display:none;" type="file" class="queryImport" />');
+        importFile.fileupload({
+            url: importUrl,
+            autoUpload: true,
+            add: function (e, data) {
+                var fileName = data.files[0].name.toLowerCase();
+                var suffix = fileName.substring(fileName.lastIndexOf("."));
+                if (suffix != ".xlsx" && suffix != ".xls" && suffix != ".txt") {
+                    alert("文件类型错误，请选择 xls,xlsx,txt 类型文件!");
+                    return false;
+                }
+                data.submit();
+            },
+            success: function (result) {
+                if (result.code == 0) {
+                    if ($.isFunction(_callback.import)) { _callback.import(result); }
+                } else {
+                    alert(result.msg);
+                }
+            },
+            error: function (msg) {
+                alert('数据文件导入失败，请稍后重试！');
+            }
+        });
+        $(this).before(importFile).on("click", function () { importFile.click(); });
+    });
+    $("[action=export]").each(function () {
+        var exportUrl = $(this).attr("data-url") || _option.exportUrl;
+        $(this).click(function () { _option.export(exportUrl); });
+
+    });
     _option.controls = {};
     $.adminTools.renderControls(_wrapper.attr("id"), _filter, _option);
     return _option;

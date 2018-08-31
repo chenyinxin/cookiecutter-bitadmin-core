@@ -10,6 +10,7 @@ namespace {{cookiecutter.project_name}}.Models
         public Guid? UserId { get; set; }
         public string UserCode { get; set; }
         public string IpAddress { get; set; }
+        public string UserAgent { get; set; }
         public string DepartmentName { get; set; }
         public string Title { get; set; }
         public string Type { get; set; }

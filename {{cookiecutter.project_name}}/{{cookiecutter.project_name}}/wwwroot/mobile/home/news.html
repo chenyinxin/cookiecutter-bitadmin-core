@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>消息提示</title>
+    <link href="../../lib/weui/weui.min.css" rel="stylesheet" />
+    <link href="../../css/mobile/common/common.css" rel="stylesheet" />
+    <link href="../../css/mobile/fonts/iconfont.css" rel="stylesheet" />
+    <link href="../../css/mobile/theme/news.css" rel="stylesheet" />
+
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script src="../../js/mobile/theme/common.js"></script>
+</head>
+<body>
+    JSON.stringfly
+    <div class="content">
+        <div class="top">
+            <a href="javaScript:history.back()" class="back"><i class="icon iconfont icon-ttpodicon"></i>返回</a>
+            <span class="top-title nomore">消息提示</span>
+        </div>
+
+        <div class="demo-btn">
+            <div><a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="diaBtn">对话框样式一</a></div>
+            <div><a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="diaBtn2">对话框样式二</a></div>
+            <div><a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="msgBtn">成功提示页</a></div>
+            <div><a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="msgBtn2">失败提示页</a></div>
+            <div><a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="toaBtn">完成提示面包屑</a></div>
+            <div><a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="toaBtn2">加载提示面包屑</a></div>
+        </div>
+        <div class="demo-box">
+            <div class="pop-box" id="dialog1">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <div class="weui-dialog__hd"><strong class="weui-dialog__title">弹窗标题</strong></div>
+                    <div class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:void(0);" class="weui-dialog__btn weui-dialog__btn_default box-close">辅助操作</a>
+                        <a href="javascript:void(0);" class="weui-dialog__btn weui-dialog__btn_primary box-confirm">主操作</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pop-box" id="dialog2">
+                <div class="weui-mask"></div>
+                <div class="weui-dialog">
+                    <div class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+                    <div class="weui-dialog__ft">
+                        <a href="javascript:void(0);" class="weui-dialog__btn weui-dialog__btn_primary box-close">知道了</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="toast1" class="toast pop-box">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                    <p class="weui-toast__content">添加成功</p>
+                </div>
+            </div>
+
+            <div id="loadingToast" class="toast pop-box">
+                <div class="weui-mask_transparent"></div>
+                <div class="weui-toast">
+                    <i class="weui-loading weui-icon_toast"></i>
+                    <p class="weui-toast__content">数据加载中</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="msg-page">
+            <div class="pop-page" id="succPage">
+                <div class="weui-msg">
+                    <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+                    <div class="weui-msg__text-area">
+                        <h2 class="weui-msg__title">操作成功</h2>
+                        <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p>
+                    </div>
+                    <div class="weui-msg__opr-area">
+                        <p class="weui-btn-area">
+                            <a href="javascript:void(0);" class="weui-btn weui-btn_primary msg-hide">推荐操作</a>
+                            <a href="javascript:void(0);" class="weui-btn weui-btn_default msg-hide">辅助操作</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="pop-page" id="failPage">
+                <div class="weui-msg">
+                    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+                    <div class="weui-msg__text-area">
+                        <h2 class="weui-msg__title">操作失败</h2>
+                        <p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p>
+                    </div>
+                    <div class="weui-msg__opr-area">
+                        <p class="weui-btn-area">
+                            <a href="javascript:void(0);" class="weui-btn weui-btn_primary msg-hide">推荐操作</a>
+                            <a href="javascript:void(0);" class="weui-btn weui-btn_default msg-hide">辅助操作</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            popTips()
+        });
+    </script>
+</body>
+</html>

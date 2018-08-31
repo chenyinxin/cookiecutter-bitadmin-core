@@ -23,7 +23,5 @@ namespace {{cookiecutter.project_name}}.Models
         public string SmsTemplateRead { get; set; }
         public string Description { get; set; }
         public string Style { get; set; }
-
-        public FlowMain Main { get; set; }
     }
 }

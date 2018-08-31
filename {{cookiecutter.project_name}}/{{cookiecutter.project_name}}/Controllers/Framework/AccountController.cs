@@ -9,15 +9,8 @@ using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Models;
-using System.Net;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
-using {{cookiecutter.project_name}}.Services;
-using System.DrawingCore;
 using System.IO;
-using System.DrawingCore.Imaging;
-using Microsoft.Extensions.Caching.Memory;
+using System.Drawing.Imaging;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {

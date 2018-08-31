@@ -1,35 +1,138 @@
-﻿<!--BitAdmin2.0框架文件-->
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
 <head>
-    <meta charset="utf-8" />
-    <title>微信首页</title>
-    <meta name="description" content="BitAdminCore, Version 0.1, Alpha" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>首页</title>
+    <link href="../../lib/weui/weui.min.css" rel="stylesheet" />
+    <link href="../../css/mobile/common/common.css" rel="stylesheet" />
+    <link href="../../css/mobile/fonts/iconfont.css" rel="stylesheet" />
+    <link href="../../css/mobile/theme/index.css" rel="stylesheet" />
 
-    <link href="../../lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script src="../../js/mobile/theme/common.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            微信首页<br />
-            姓名：<span class="userName"></span><br />
-            手机：<span class="mobile"></span>
+    <div class="content">
+
+        <div class="top">
+            <span class="top-title">首页</span>
+            <span class=" icon iconfont icon-more"></span>
+            <div class="more-box">
+                <span><i class="icon iconfont icon-collect"></i>收藏</span>
+                <span><i class="icon iconfont icon-share"></i>分享到朋友圈</span>
+                <span><i class="icon iconfont icon-link"></i>复制链接</span>
+            </div>
+        </div>
+        <div class="slide-adver" id="slideAdv">
+            <div class="img-list" id="imgList">
+                <a href="#"><img src="../../images/mobile/theme/index-img2.jpg" /></a>
+                <a href="#"><img src="../../images/mobile/theme/index-img.jpg" /></a>
+                <a href="#"><img src="../../images/mobile/theme/index-img2.jpg" /></a>
+                <a href="#"><img src="../../images/mobile/theme/index-img.jpg" /></a>
+            </div>
+            <div class="index-list">
+                <ul>
+                    <li><i class="icon iconfont icon-dot blue-dot"></i></li>
+                    <li><i class="icon iconfont icon-dot"></i></li>
+                    <li><i class="icon iconfont icon-dot"></i></li>
+                    <li><i class="icon iconfont icon-dot"></i></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skip-btn">
+            <ul>
+                <li class="btn1"><a href="list.html"><img src="../../images/mobile/theme/list.png" /><span>列表</span></a></li>
+                <li class="btn2"><a href="detail.html"><img src="../../images/mobile/theme/detail.png" /><span>详情</span></a></li>
+                <li class="btn3"><a href="comment.html"><img src="../../images/mobile/theme/comment.png" /><span>评论</span></a></li>
+                <li class="btn4"><a href="search.html"><img src="../../images/mobile/theme/search.png" /><span>搜索</span></a></li>
+                <li class="btn5"><a href="form.html"><img src="../../images/mobile/theme/form.png" /><span>表单</span></a></li>
+                <li class="btn6"><a href="news.html"><img src="../../images/mobile/theme/news.png" /><span>消息</span></a></li>
+                <li class="btn7"><a href="delete.html"><img src="../../images/mobile/theme/del.png" /><span>滑动删除</span></a></li>
+                <li class="btn8"><a href="#"><img src="../../images/mobile/theme/other.png" /><span>无跳转</span></a></li>
+            </ul>
+        </div>
+
+        <div class="list1-view" id="list1View">
+            <h3>热门推荐</h3>
+            <div class="list1-detail">
+                <ul>
+                    <li>
+                        <div class="list1-imgCont">
+                            <div class="list1-img"><img src="../../images/mobile/theme/recommend.jpg" /></div>
+                            <div class="list1Img-lt">
+                                <div class="lt-mask"></div>
+                                <i class="icon iconfont icon-depart"></i>
+                                <span>自由行</span>
+                                <i class="depart-bor"></i>
+                                <span class="lt-right">广州出发</span>
+                            </div>
+                            <div class="list1Img-lb">
+                                '
+                                <span>￥<b>4599</b>起</span>
+                                <span class="lb-bottom">立省￥350</span>
+                            </div>
+                            <div class="list1Img-rb">
+                                <span><b>568</b>人出游</span>
+                                <span><b>97%</b>满意</span>
+                            </div>
+                        </div>
+
+                        <div class="list1-intro">
+                            <p class="intro-title">[海边度假]巴厘岛4晚5日或6日自助游</p>
+                            <p>私享五星服务，爱海就离海近</p>
+                            <p><span class="minus">立减</span><span>酒店别墅任选人选</span><span>最爱</span><span>贵浪漫</span><span>酒店别墅任选</span><span>别墅任选</span></p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="list1-imgCont">
+                            <div class="list1-img"><img src="../../images/mobile/theme/recommend.jpg" /></div>
+                            <div class="list1Img-lt">
+                                <div class="lt-mask"></div>
+                                <i class="icon iconfont icon-depart"></i>
+                                <span>自由行</span>
+                                <i class="depart-bor"></i>
+                                <span class="lt-right">广州出发</span>
+                            </div>
+                            <div class="list1Img-lb">
+                                '
+                                <span>￥<b>4599</b>起</span>
+                                <span class="lb-bottom">立省￥350</span>
+                            </div>
+                            <div class="list1Img-rb">
+                                <span><b>568</b>人出游</span>
+                                <span><b>97%</b>满意</span>
+                            </div>
+                        </div>
+
+                        <div class="list1-intro">
+                            <p class="intro-title">[海边度假]巴厘岛4晚5日或6日自助游</p>
+                            <p>私享五星服务，爱海就离海近</p>
+                            <p><span class="minus">立减</span><span>白富美最爱</span><span>体会高贵浪漫</span><span>酒店别墅任选</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer" id="footer">
+            <ul>
+                <li class="home"><i></i><span>首页</span></li>
+                <li class="find"><i></i><span>发现</span></li>
+                <li class="destination"><i></i><span>目的地</span></li>
+                <li class="trip"><i></i><span>行程</span></li>
+                <li class="personal"><i></i><span>我的</span></li>
+            </ul>
         </div>
     </div>
     <script>
-        $.get("../../account/getUser", function (result) {
-            if (result.code == 1) {
-                alert(result.msg);
-            } else {
-                for (var key in result) {
-                    if ($("." + key) != null)
-                        $("." + key).text(result[key]);
-                }
-            }
+        $(function () {
+            skipReact();
+            adverSlide();
+            bottomTab();
+            share()
         });
     </script>
 </body>

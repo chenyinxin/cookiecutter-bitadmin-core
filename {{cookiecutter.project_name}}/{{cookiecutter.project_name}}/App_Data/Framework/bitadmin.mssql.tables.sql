@@ -82,10 +82,10 @@ CREATE TABLE [dbo].[SysDepartment](
 	[DepartmentName] [nvarchar](64) NULL,
 	[DepartmentFullName] [nvarchar](512) NULL,
 	[OrderNo] [int] NULL,
-	[CreateTime] [datetime] NULL,
 	[CreateBy] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
 	[UpdateTime] [datetime] NULL,
-	[PdateBy] [uniqueidentifier] NULL,
  CONSTRAINT [PK_SysDepartment] PRIMARY KEY CLUSTERED 
 (
 	[DepartmentId] ASC
@@ -117,10 +117,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysLeader](
 	[LeaderId] [uniqueidentifier] NOT NULL,
-	[DepartmentCode] [nvarchar](512) NULL,
-	[UserCode] [nvarchar](512) NULL,
-	[Pos] [nvarchar](2048) NULL,
-	[Sequence] [nvarchar](2048) NULL,
+	[DepartmentCode] [nvarchar](32) NULL,
+	[UserCode] [nvarchar](32) NULL,
+	[Pos] [nvarchar](32) NULL,
+	[Sequence] [nvarchar](32) NULL,
  CONSTRAINT [PK_Leader] PRIMARY KEY CLUSTERED 
 (
 	[LeaderId] ASC
@@ -134,15 +134,16 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[SysLog](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserName] [varchar](50) NULL,
 	[UserId] [uniqueidentifier] NULL,
-	[UserCode] [varchar](32) NULL,
-	[IpAddress] [varchar](50) NULL,
-	[DepartmentName] [nvarchar](500) NULL,
-	[Title] [varchar](50) NULL,
-	[Type] [varchar](50) NULL,
+	[UserCode] [varchar](64) NULL,
+	[UserName] [varchar](64) NULL,
+	[DepartmentName] [nvarchar](128) NULL,
+	[IpAddress] [varchar](64) NULL,
+	[UserAgent] [varchar](128) NULL,
+	[Title] [varchar](64) NULL,
+	[Type] [varchar](64) NULL,
 	[CreateTime] [datetime] NULL,
-	[Description] [nvarchar](2048) NULL,
+	[Description] [text] NULL,
  CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

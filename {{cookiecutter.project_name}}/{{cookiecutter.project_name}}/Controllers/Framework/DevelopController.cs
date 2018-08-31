@@ -490,45 +490,5 @@ namespace {{cookiecutter.project_name}}.Controllers
 
         }
         #endregion
-
-        #region 定时服务
-        public JsonResult QueryTimeJobs()
-        {
-            try
-            {
-                return Json(new { Code = 0, Total = JobHelper.Jobs.Count, Data = JobHelper.Jobs });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
-        public JsonResult SaveTimeJob(string id, string state)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(state))
-                    return Json(new { Code = 1, Msg = "参数错误！" });
-
-                switch (state)
-                {
-                    case "start":
-                        JobHelper.Start(id); break;
-                    case "stop":
-                        JobHelper.Stop(id); break;
-                    default: break;
-                }
-
-                return Json(new { Code = 0, Msg = "操作成功", Total = JobHelper.Jobs.Count, Data = JobHelper.Jobs });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-        #endregion
     }
 }

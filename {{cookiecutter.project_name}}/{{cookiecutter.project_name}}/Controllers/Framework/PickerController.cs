@@ -16,44 +16,6 @@ namespace {{cookiecutter.project_name}}.Controllers
     [BitAuthorize]
     public class PickerController : Controller
     {        
-        #region 加载数据字典中的数据        
-        public JsonResult GetDropDownList(string Type, string Member)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(Type))
-                    return Json(false);
-
-                using (DataContext context = new DataContext())
-                {
-                    string sqlWhere = string.Empty;
-                    List<SqlParameter> list = new List<SqlParameter>();//添加查询条件
-
-                    if (!string.IsNullOrEmpty(Type))
-                    {
-                        sqlWhere += " and Type = @Type ";
-                        list.Add(new SqlParameter("@Type", Type));
-                    }
-                    if (!string.IsNullOrEmpty(Member))
-                    {
-                        sqlWhere += " and charindex(Member,@Member)>0 ";
-                        list.Add(new SqlParameter("@Member", Member));
-                    }
-
-                    string strSql = "select * from SysDictionary where 1=1 " + sqlWhere + " order by [OrderNo]";
-                    var result = context.Set<SysDictionary>().FromSql(strSql, list.ToArray()).ToList();
-                    return Json(new { Code = 0, Data = result });
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
-        #endregion
-
         #region 模块选择
         /// <summary>
         /// 模块选择
@@ -73,26 +35,9 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-
-        public JsonResult GetExampleTreeData()
-        {
-            try
-            {
-                string sql = @" select * from Example order by createTime asc";
-                DataTable dt = SqlHelper.Query(sql).Tables[0];
-                return Json(new { Code = 0, Data = QuerySuite.ToDictionary(dt, "parentId", "id") });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
         #endregion
 
         #region 组织架构选择
-
         /// <summary>
         /// 获取组织架构
         /// </summary>
@@ -147,7 +92,6 @@ namespace {{cookiecutter.project_name}}.Controllers
         #endregion
 
         #region 用户选择
-
         /// <summary>
         /// 根据部门获取用户信息
         /// </summary>

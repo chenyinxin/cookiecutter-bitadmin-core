@@ -7,6 +7,7 @@ namespace {{cookiecutter.project_name}}.Models
     {
         public Guid ExampleId { get; set; }
         public string ExampleName { get; set; }
+        public Guid? ParentId { get; set; }
         public string PlainText { get; set; }
         public string RequiredText { get; set; }
         public string RepeatText { get; set; }
@@ -19,7 +20,7 @@ namespace {{cookiecutter.project_name}}.Models
         public DateTime? DateTimePickerYymm { get; set; }
         public DateTime? DateTimePickerFormatter { get; set; }
         public string UserPicker { get; set; }
-        public string OuPicker { get; set; }
+        public string Oupicker { get; set; }
         public string ExampleText { get; set; }
         public string ExampleRadio { get; set; }
         public string ExampleCheckbox { get; set; }
@@ -34,10 +35,9 @@ namespace {{cookiecutter.project_name}}.Models
         public string LinkageSelectA { get; set; }
         public string LinkageSelectB { get; set; }
         public string LinkageSelectC { get; set; }
-        public DateTime? CreateTime { get; set; }
         public string LinkageSelectD { get; set; }
         public string LinkageSelectE { get; set; }
         public string LinkageSelectF { get; set; }
-        public Guid? ParentId { get; set; }
+        public DateTime? CreateTime { get; set; }
     }
 }

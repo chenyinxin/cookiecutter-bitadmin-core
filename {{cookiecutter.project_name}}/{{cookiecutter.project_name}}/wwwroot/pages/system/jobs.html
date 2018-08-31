@@ -1,0 +1,33 @@
+﻿<div id="querySuite" class="box-body querySuite-wrapper">
+    <!-- 列表-->
+    <div class="querySuite-table"
+         data-query-url="../../system/QueryJobsData">
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="jobSign">服务标识</th>
+                    <th data-field="jobName">服务名称</th>
+                    <th data-field="interval">定时信息</th>
+                    <th data-field="remark">服务说明</th>
+                    <th data-field="status">状态</th>
+                    <th data-field="lasttime">最后运行时间</th>
+                    <th data-field="lasttime">下次运行时间</th>
+                    <th data-field="action">操作</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var querySuite = $("#querySuite").querySuite()
+            .columns["action"].format(function (event, val, data) {
+                $(this).append($('<span class="btn btn-link">停止</span>')
+                    .click(function () {
+                        console.log("停止");
+                    }));
+
+            });
+
+    });
+</script>

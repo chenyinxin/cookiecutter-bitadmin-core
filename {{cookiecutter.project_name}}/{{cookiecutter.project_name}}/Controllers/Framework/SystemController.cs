@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using {{cookiecutter.project_name}}.Models;
 using Microsoft.AspNetCore.Mvc;
 using {{cookiecutter.project_name}}.Helpers;
+using System.Net;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
@@ -302,30 +303,43 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
+        public JsonResult LoadLogData(int id)
+        {
+            try
+            {
+                return Json(new { Code = 0, Data = dbContext.SysLog.FirstOrDefault(x => x.Id == id) });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
 
         /// <summary>
         /// 添加日志
         /// </summary>
         /// <returns></returns>
-        public JsonResult AddLog(string title, string Type, string Description)
+        public JsonResult AddLog(string title, string type, string description)
         {
             try
             {
                 var currentUser = SSOClient.User;
                 //负载均衡环境下IP地址
                 string ip = Request.Headers["X-Forwarded-For"].FirstOrDefault();
-
+                
                 SysLog model = new SysLog
                 {
                     UserId = currentUser.UserId,
-                    UserName = currentUser.UserName,
                     UserCode = currentUser.UserCode,
+                    UserName = currentUser.UserName,
                     DepartmentName = SSOClient.Department.DepartmentFullName,
                     IpAddress = string.IsNullOrEmpty(ip) ? HttpContext.Connection.RemoteIpAddress.ToString() : ip,
+                    UserAgent= Request.Headers["User-Agent"],
                     CreateTime = DateTime.Now,
-                    Type = Type,
-                    Description = Description,
-                    Title = title
+                    Type = type,
+                    Title = title,
+                    Description = description,
                 };
                 dbContext.Set<SysLog>().Add(model);
                 dbContext.SaveChanges();

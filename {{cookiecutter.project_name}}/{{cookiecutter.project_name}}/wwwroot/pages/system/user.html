@@ -75,6 +75,7 @@
                             <th>工号：</th>
                             <td>
                                 <input type="hidden" name="userId">
+                                <input type="hidden" name="departmentId"/>
                                 <input name="userCode" required class="form-control required" />
                             </td>
                         </tr>
@@ -88,15 +89,6 @@
                             <th>电话号码：</th>
                             <td>
                                 <input type="text" name="mobile" class="form-control phone" placeholder="电话号码">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>所属部门：</th>
-                            <td>
-                                <div class="input-group" data-picker="../picker/oupicker.html" data-param="single:true">
-                                    <input type="text" class="form-control" name="departmentName" placeholder="部门" />
-                                    <input type="hidden" name="departmentId" />
-                                </div>
                             </td>
                         </tr>
                     </table>
@@ -122,6 +114,9 @@
 
         //表单套件初始化
         var formSuite = $("#formSuite").formSuite()
+            .add(function () {
+                $("[name=departmentId]").val($("#parentId").val());
+            })
             .submit(function () {
                 querySuite.query();
             });

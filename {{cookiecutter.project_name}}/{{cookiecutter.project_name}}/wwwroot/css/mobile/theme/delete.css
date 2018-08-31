@@ -1,0 +1,105 @@
+.content{
+    overflow: hidden;
+}
+.top .more{
+    line-height: 50px;
+}
+.content .line-list{
+    margin-top: 50px;
+}
+.line-list .line-wrapper {
+    width: 100%;
+    border-bottom: 1px solid #d9d9d9;
+}
+.line-wrapper .line-scroll-wrapper {
+    white-space: nowrap;
+    clear: both;
+}
+.line-wrapper .line-btn-delete {
+    float: left;
+    width: 90px;
+    display: none;
+}
+.line-wrapper .line-btn-delete button {
+    width: 100%;
+    background: red;
+    border: none;
+    color: #fff;
+    vertical-align: top;
+    height: 66px;
+    font-size: 14px;
+}
+.line-wrapper .line-normal-wrapper {
+    display: inline-block;
+    float: left;
+}
+.line-wrapper .line-left{
+    position: relative;
+    -webkit-tap-highlight-color:transparent ;
+}
+.line-wrapper .line-info{
+    padding: 8px 20px 5px 60px;
+    width: 100%;
+    font-size: 16px;
+}
+.line-wrapper .line-msg{
+    color: #999;
+    font-size: 13px;
+    line-height: 28px;
+}
+.line-wrapper .line-edit span{
+    position: absolute;
+    left:10px;
+    top:0;
+    font-size: 40px;
+    color: #3eaeee;
+    display:inline-block;
+}
+.line-wrapper .checkone i{
+    position: absolute;
+    right: 10px;
+    top: 21px;
+    width:20px;
+    height:20px;
+    background-color: #fff;
+    border-color: #3eaeee;
+    color:#3eaeee;
+    line-height: 20px;
+    font-size: 15px;
+}
+.line-wrapper .checkone.checked i:after{
+    color: #3eaeee;
+    left:2px;
+}
+.content .add-line{
+    color:#fff;
+    font-size: 14px;
+    background-color: #3eaeee;
+    width: 100%;
+    text-align: center;
+    padding:9px 0;
+    position: fixed;
+    bottom: 0;
+}
+.content .add-line .icon{
+    font-size: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.content .add-line span{
+    vertical-align: middle;
+}
+.toast,.weui-msg,
+.weui_dialog_alert{
+    display: none;
+}
+.weui-msg{
+    margin-top: 50px;
+}
+.weui_dialog_alert .weui-dialog__ft a{
+    color:#3eaeee;
+    display:block;
+    width: 100%;
+}
+
+

@@ -80,22 +80,11 @@
             扫描可以下载框架安卓App。
         </div>
         <div class="row">
-            <img src="../../qrcode/encode?msg=http%3a%2f%2fbit.bitdao.cn%2fapps%2fBitAdminCore_1.0.3.apk" width="100" height="100" />
+            <img src="../../qrcode/encode?msg=https%3a%2f%2fwww.bitadmincore.com%2fapps%2fBitAdminCore_1.0.3.apk" width="100" height="100" />
         </div>
     </div>
-    <div class="col-md-12" style="height:100px;"></div>
+    <div class="col-md-12" style="height:50px;"></div>
     <div class="col-md-12">
-        <div class="row">
-            <h4>定时服务列表：</h4>
-            换了NETCore2.1之后就不启动了。<br />
-            <a href="javascript:timejob();" class="btn btn-success">刷新服务列表</a>
-        </div>
-        <div class="row">
-            <table class="table">
-                <thead><tr><th>服务ID</th><th>服务名称</th><th>定时信息</th><th>服务说明</th><th>状态</th><th>最后运行时间</th></tr></thead>
-                <tbody class="timejob"></tbody>
-            </table>
-        </div>
         <div class="row">
             <h4>WebSocket在线连接详细信息：</h4>
             提供WebSocket服务器信息，用户在线信息。<br />
@@ -162,17 +151,7 @@
                 });
             }); return false;
         }
-        function timejob() {
-            $.get("../../Develop/QueryTimeJobs", function (result) {
-                var server = $(".timejob");
-                server.empty();
-                for (var name in result.data) {
-                    var job = result.data[name];
-                    server.append('<tr><td>' + job.id + '</td><td>' + job.name + '</td><td>' + job.invoke + '</td><td>' + job.remark + '</td><td>' + job.state + '</td><td>' + time.format(job.runtime, "yyyy-MM-dd HH:mm:ss") + '</td></tr>');
-                }
-            }); return false;
-        }
-        online(); timejob();
+        online();
     </script>
 </body>
 </html>

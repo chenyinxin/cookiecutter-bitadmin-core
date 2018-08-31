@@ -30,12 +30,12 @@ namespace {{cookiecutter.project_name}}.Helpers
             var collection = GetCollection(key);
             collection.InsertMany(docs);
         }
-        public static long Count(string key, BsonDocument doc)
-        {
-            if (doc == null) doc = new BsonDocument();
-             var collection = GetCollection(key);
-            return collection.Count(doc);
-        }
+        //public static long Count(string key, BsonDocument doc)
+        //{
+        //    if (doc == null) doc = new BsonDocument();
+        //     var collection = GetCollection(key);
+        //    return collection.Count(doc);
+        //}
 
         public static IMongoCollection<BsonDocument> GetCollection(string key)
         {

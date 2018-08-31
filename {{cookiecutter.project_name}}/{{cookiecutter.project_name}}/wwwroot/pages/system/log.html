@@ -5,20 +5,12 @@
         <div class="querySuite-filter">
             <table>
                 <tr>
-                    <th>用户名:</th>
-                    <td><input type="text" name="userName" class="form-control"></td>
-                    <th>部门：</th>
-                    <td><input type="text" name="departmentName" class="form-control"></td>
-                    <th>日志标题:</th>
-                    <td><input type="text" name="title" class="form-control"></td>
-                </tr>
-                <tr>
                     <th>日志类型：</th>
                     <td><input type="text" name="Type" class="form-control"></td>
+                    <th>日志标题:</th>
+                    <td><input type="text" name="title" class="form-control"></td>
                     <th>日志描述：</th>
                     <td><input type="text" name="Description" class="form-control"></td>
-                    <th>&nbsp;</th>
-                    <td>&nbsp;</td>
                 </tr>
             </table>
         </div>
@@ -30,17 +22,18 @@
         </div>
         <!-- 列表-->
         <div class="querySuite-table"
+             data-key="id"
              data-query-url="../../system/GetLogData">
             <table>
                 <thead>
                     <tr>
+                        <th data-field="title" data-format="edit">日志标题</th>
+                        <th data-field="createTime" data-format="time">日志记录时间</th>
+                        <th data-field="type">日志类型</th>
+                        <th data-field="ipAddress">IP地址</th>
                         <th data-field="userName">用户名</th>
                         <th data-field="userCode">用户标识</th>
                         <th data-field="departmentName">部门</th>
-                        <th data-field="title">日志标题</th>
-                        <th data-field="ipAddress">IP地址</th>
-                        <th data-field="type">日志类型</th>
-                        <th data-field="createTime" data-format="time">日志记录时间</th>
                     </tr>
                 </thead>
             </table>
@@ -48,9 +41,42 @@
         <!-- 分页 -->
         <div class="querySuite-paging"></div>
     </div>
+
+    <!-- 模态框（Modal） -->
+    <div id="logModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="width:1000px">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form data-title="日志详情"
+                          data-load-url="../../system/LoadLogData">
+                        <table class="table-bordered">
+                            <tr>
+                                <th>详情：</th>
+                                <td>
+                                    <textarea name="description" class="form-control" rows="15" readonly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>代理：</th>
+                                <td>
+                                    <input name="userAgent" class="form-control" readonly />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span> 关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 </div>
 <script type="text/javascript">
     $(function () {
         var querySuite = $(".querySuite-wrapper").querySuite().query();
+        var formSuite = $(".formSuite-wrapper").formSuite();
     });
 </script>

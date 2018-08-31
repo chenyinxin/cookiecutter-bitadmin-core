@@ -13,7 +13,7 @@ namespace {{cookiecutter.project_name}}.Controllers
 {
     public class QRCodeController : Controller
     {
-        public ActionResult Encode(string msg = "http://bit.bitdao.cn/")
+        public ActionResult Encode(string msg = "https://www.bitadmincore.com/")
         {
             try
             {

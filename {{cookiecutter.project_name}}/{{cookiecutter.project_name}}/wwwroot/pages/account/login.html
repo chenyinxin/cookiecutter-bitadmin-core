@@ -113,7 +113,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            if (self.frameElement && self.frameElement.tagName == "IFRAME") {
+            if (self.frameElement && self.frameElement.tagName === "IFRAME") {
                 parent.location = this.location;
             }
             BitAdmin.IsLogin(function () {
@@ -127,17 +127,17 @@
 
             $("#btnLogin").click(function () {
                 var account = $("#txtUserCode1").val();
-                if (account == "") {
+                if (account === "") {
                     $("#spanmsg").text("请输入帐号/手机/邮箱");
                     return;
                 }
                 var password = $("#txtPassword").val();
-                if (password == "") {
+                if (password === "") {
                     $("#spanmsg").text("请输入登录密码");
                     return;
                 }
                 var verifyCode = $("#verifyCode").val();
-                if (verifyCode == "") {
+                if (verifyCode === "") {
                     $("#spanmsg").text("请输入验证码");
                     return;
                 }
@@ -149,7 +149,7 @@
                     datatype: "json",
                     type: "post",
                     success: function (result) {
-                        if (result.code == 0) {
+                        if (result.code === 0) {
                             BitAdmin.RedirectToHomePage();
                         } else {
                             $("#spanmsg").text(result.msg);
@@ -164,13 +164,13 @@
                     }
                 });
             });
-            $("#verifyCode").bind('keypress', function (event) { if (event.keyCode == "13") { $("#btnLogin").click(); } });
+            $("#verifyCode").bind('keypress', function (event) { if (event.keyCode === 13) { $("#btnLogin").click(); } });
 
             //手机验证登录
             $("#smsSend").click(function () {
                 $("#spanmsg").text("");
                 var account = $("#txtUserCode2").val();
-                if (account == "") {
+                if (account === "") {
                     $("#spanmsg").text("请输入账号/手机/邮箱");
                     return;
                 }
@@ -178,7 +178,7 @@
                 var sign = Math.random();
                 $("#smsSign").val(sign);
                 $.get("../../account/smscode", { account: account, t: sign }, function (result) {
-                    if (result.code == 0) {
+                    if (result.code === 0) {
                         $("#smsLogin").attr('disabled', false);
                     } else {
                         countdown = 0;
@@ -188,18 +188,18 @@
             });
             $("#smsLogin").click(function () {
                 var account = $("#txtUserCode2").val();
-                if (account == "") {
+                if (account === "") {
                     $("#spanmsg").text("请输入账号/手机/邮箱");
                     return;
                 }
                 var smsCode = $("#smsCode").val();
-                if (smsCode == "") {
+                if (smsCode === "") {
                     $("#spanmsg").text("请输入验证码");
                     return;
                 }
                 $.showLoading();
                 $.get("../../account/smslogin", { account: account, t: $("#smsSign").val(), code: smsCode }, function (result) {
-                    if (result.code == 0) {
+                    if (result.code === 0) {
                         BitAdmin.RedirectToHomePage();
                     } else {
                         countdown = 0;
@@ -213,7 +213,7 @@
 
             var countdown = 5;
             function settime() {
-                if (countdown == 0) {
+                if (countdown === 0) {
                     $("#smsSend").attr('disabled', false);
                     $("#smsSend").text("发送验证短信");
                     countdown = 60;

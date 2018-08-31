@@ -1,0 +1,17 @@
+.content .demo-btn{
+    margin-top: 100px;
+}
+.content .demo-btn div{
+    margin-bottom: 15px;
+}
+.msg-page>div,
+.demo-box .pop-box{
+   display: none;
+}
+.weui-dialog__bd:first-child{
+    padding:1em 1em 0.5em;
+    min-height: 25px;
+}
+.msg-page>div{
+    margin-top: 50px;
+}

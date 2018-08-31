@@ -2,7 +2,7 @@
  * BitAdmin2.0框架文件
  ***********************/
 using System;
-using System.DrawingCore;
+using System.Drawing;
 using System.Security.Cryptography;
 
 namespace {{cookiecutter.project_name}}.Helpers

@@ -7,6 +7,15 @@ namespace {{cookiecutter.project_name}}.Models
 {
     public partial class DataContext : DbContext
     {
+        public DataContext()
+        {
+        }
+
+        public DataContext(DbContextOptions<DataContext> options)
+            : base(options)
+        {
+        }
+
         public virtual DbSet<FlowBills> FlowBills { get; set; }
         public virtual DbSet<FlowBillsRecord> FlowBillsRecord { get; set; }
         public virtual DbSet<FlowBillsRecordUser> FlowBillsRecordUser { get; set; }
@@ -15,6 +24,10 @@ namespace {{cookiecutter.project_name}}.Models
         public virtual DbSet<FlowStep> FlowStep { get; set; }
         public virtual DbSet<FlowStepPath> FlowStepPath { get; set; }
         public virtual DbSet<GeneralExample> GeneralExample { get; set; }
+        public virtual DbSet<PmProject> PmProject { get; set; }
+        public virtual DbSet<PmProjectUser> PmProjectUser { get; set; }
+        public virtual DbSet<PmTask> PmTask { get; set; }
+        public virtual DbSet<PmTaskUser> PmTaskUser { get; set; }
         public virtual DbSet<SysAttachment> SysAttachment { get; set; }
         public virtual DbSet<SysDepartment> SysDepartment { get; set; }
         public virtual DbSet<SysDictionary> SysDictionary { get; set; }
@@ -45,102 +58,40 @@ namespace {{cookiecutter.project_name}}.Models
         {
             modelBuilder.Entity<FlowBills>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.BillsCode)
-                    .HasColumnName("billsCode")
-                    .HasMaxLength(255);
+                entity.Property(e => e.BillsCode).HasMaxLength(255);
 
-                entity.Property(e => e.BillsType)
-                    .HasColumnName("billsType")
-                    .HasMaxLength(500);
+                entity.Property(e => e.BillsType).HasMaxLength(500);
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(1024);
+                entity.Property(e => e.Description).HasMaxLength(1024);
 
-                entity.Property(e => e.MainId).HasColumnName("mainId");
+                entity.Property(e => e.State).HasMaxLength(50);
 
-                entity.Property(e => e.ParentId).HasColumnName("parentId");
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Sort).HasColumnName("sort");
+                entity.Property(e => e.WorkOrderCode).HasMaxLength(500);
 
-                entity.Property(e => e.State)
-                    .HasColumnName("state")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.StepId).HasColumnName("stepId");
-
-                entity.Property(e => e.SubmitUser).HasColumnName("submitUser");
-
-                entity.Property(e => e.UpdateTime)
-                    .HasColumnName("updateTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Version).HasColumnName("version");
-
-                entity.Property(e => e.WorkOrderCode)
-                    .HasColumnName("workOrderCode")
-                    .HasMaxLength(500);
-
-                entity.Property(e => e.WorkOrderName)
-                    .HasColumnName("workOrderName")
-                    .HasMaxLength(2000);
+                entity.Property(e => e.WorkOrderName).HasMaxLength(2000);
             });
 
             modelBuilder.Entity<FlowBillsRecord>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.AuditDate)
-                    .HasColumnName("auditDate")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.AuditDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Batch).HasColumnName("batch");
+                entity.Property(e => e.Choice).HasMaxLength(4000);
 
-                entity.Property(e => e.BillsId).HasColumnName("billsId");
+                entity.Property(e => e.Description).HasMaxLength(1000);
 
-                entity.Property(e => e.Choice)
-                    .HasColumnName("choice")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Condition).HasColumnName("condition");
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(1000);
-
-                entity.Property(e => e.EndTime)
-                    .HasColumnName("endTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.NextStepId).HasColumnName("nextStepId");
-
-                entity.Property(e => e.PrevBillsRecordId).HasColumnName("prevBillsRecordId");
-
-                entity.Property(e => e.PrevStepId).HasColumnName("prevStepId");
-
-                entity.Property(e => e.Sort).HasColumnName("sort");
-
-                entity.Property(e => e.StartTime)
-                    .HasColumnName("startTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.State)
-                    .HasColumnName("state")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.Type).HasColumnName("type");
-
-                entity.Property(e => e.UserId).HasColumnName("userId");
+                entity.Property(e => e.State).HasMaxLength(4000);
 
                 entity.HasOne(d => d.Bills)
                     .WithMany(p => p.FlowBillsRecord)
@@ -151,55 +102,25 @@ namespace {{cookiecutter.project_name}}.Models
 
             modelBuilder.Entity<FlowBillsRecordUser>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.BillsRecordId).HasColumnName("billsRecordId");
+                entity.Property(e => e.Choice).HasMaxLength(4000);
 
-                entity.Property(e => e.BillsRecordOutId).HasColumnName("billsRecordOutId");
+                entity.Property(e => e.Condition).HasMaxLength(4000);
 
-                entity.Property(e => e.Choice)
-                    .HasColumnName("choice")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Condition)
-                    .HasColumnName("condition")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.DisplayState).HasMaxLength(4000);
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
 
-                entity.Property(e => e.DisplayState)
-                    .HasColumnName("displayState")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.Opinion).HasMaxLength(4000);
 
-                entity.Property(e => e.EndTime)
-                    .HasColumnName("endTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.RunTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Opinion)
-                    .HasColumnName("opinion")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
 
-                entity.Property(e => e.RunTime)
-                    .HasColumnName("runTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.StartTime)
-                    .HasColumnName("startTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.State)
-                    .HasColumnName("state")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.StepId).HasColumnName("stepId");
-
-                entity.Property(e => e.Type).HasColumnName("type");
-
-                entity.Property(e => e.UserId).HasColumnName("userId");
+                entity.Property(e => e.State).HasMaxLength(4000);
 
                 entity.HasOne(d => d.BillsRecord)
                     .WithMany(p => p.FlowBillsRecordUser)
@@ -210,42 +131,27 @@ namespace {{cookiecutter.project_name}}.Models
 
             modelBuilder.Entity<FlowMain>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Code)
-                    .HasColumnName("code")
-                    .HasMaxLength(1024);
+                entity.Property(e => e.Code).HasMaxLength(1024);
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(1024);
+                entity.Property(e => e.Description).HasMaxLength(1024);
 
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(256);
+                entity.Property(e => e.Name).HasMaxLength(256);
             });
 
             modelBuilder.Entity<FlowOrderCodes>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("id");
-
                 entity.Property(e => e.Code)
                     .IsRequired()
-                    .HasColumnName("code")
                     .HasMaxLength(512);
 
                 entity.Property(e => e.Day)
                     .IsRequired()
-                    .HasColumnName("day")
                     .HasMaxLength(64);
-
-                entity.Property(e => e.Index).HasColumnName("index");
 
                 entity.Property(e => e.Pinyin)
                     .IsRequired()
-                    .HasColumnName("pinyin")
                     .HasMaxLength(64);
             });
 
@@ -253,324 +159,235 @@ namespace {{cookiecutter.project_name}}.Models
             {
                 entity.HasKey(e => e.StepId);
 
-                entity.Property(e => e.StepId)
-                    .HasColumnName("stepId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.StepId).ValueGeneratedNever();
 
-                entity.Property(e => e.Agency)
-                    .HasColumnName("agency")
-                    .HasMaxLength(32);
+                entity.Property(e => e.Agency).HasMaxLength(32);
 
-                entity.Property(e => e.AuditId)
-                    .HasColumnName("auditId")
-                    .HasMaxLength(256);
+                entity.Property(e => e.AuditId).HasMaxLength(256);
 
-                entity.Property(e => e.AuditIdRead)
-                    .HasColumnName("auditIdRead")
-                    .HasMaxLength(256);
+                entity.Property(e => e.AuditIdRead).HasMaxLength(256);
 
-                entity.Property(e => e.AuditNorm)
-                    .HasColumnName("auditNorm")
-                    .HasMaxLength(128);
+                entity.Property(e => e.AuditNorm).HasMaxLength(128);
 
-                entity.Property(e => e.AuditNormRead)
-                    .HasColumnName("auditNormRead")
-                    .HasMaxLength(128);
+                entity.Property(e => e.AuditNormRead).HasMaxLength(128);
 
-                entity.Property(e => e.Circularize)
-                    .HasColumnName("circularize")
-                    .HasMaxLength(32);
+                entity.Property(e => e.Circularize).HasMaxLength(32);
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.Description).HasMaxLength(4000);
 
-                entity.Property(e => e.LinkCode)
-                    .HasColumnName("linkCode")
-                    .HasMaxLength(128);
+                entity.Property(e => e.LinkCode).HasMaxLength(128);
 
-                entity.Property(e => e.MainId).HasColumnName("mainId");
+                entity.Property(e => e.RunMode).HasMaxLength(4000);
 
-                entity.Property(e => e.ReminderTimeout).HasColumnName("reminderTimeout");
+                entity.Property(e => e.ShowTabIndex).HasMaxLength(4000);
 
-                entity.Property(e => e.RunMode)
-                    .HasColumnName("runMode")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.SmsTemplateRead).HasMaxLength(4000);
 
-                entity.Property(e => e.ShowTabIndex)
-                    .HasColumnName("showTabIndex")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.SmsTemplateToDo).HasMaxLength(4000);
 
-                entity.Property(e => e.SmsTemplateRead)
-                    .HasColumnName("smsTemplateRead")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.StepName).HasMaxLength(64);
 
-                entity.Property(e => e.SmsTemplateToDo)
-                    .HasColumnName("smsTemplateToDo")
-                    .HasMaxLength(4000);
-
-                entity.Property(e => e.StepName)
-                    .HasColumnName("stepName")
-                    .HasMaxLength(64);
-
-                entity.Property(e => e.StepStatus).HasColumnName("stepStatus");
-
-                entity.Property(e => e.Style)
-                    .HasColumnName("style")
-                    .HasMaxLength(512);
-
-                entity.HasOne(d => d.Main)
-                    .WithMany(p => p.FlowStep)
-                    .HasForeignKey(d => d.MainId)
-                    .HasConstraintName("FK_FlowStep_FlowMain");
+                entity.Property(e => e.Style).HasMaxLength(512);
             });
 
             modelBuilder.Entity<FlowStepPath>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Condition).HasColumnName("condition");
+                entity.Property(e => e.Description).HasMaxLength(1024);
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(1024);
+                entity.Property(e => e.Expression).HasMaxLength(512);
 
-                entity.Property(e => e.Expression)
-                    .HasColumnName("expression")
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.MainId).HasColumnName("mainId");
-
-                entity.Property(e => e.Nikename)
-                    .HasColumnName("nikename")
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.StartStepId).HasColumnName("startStepId");
-
-                entity.Property(e => e.StopStepId).HasColumnName("stopStepId");
-
-                entity.HasOne(d => d.Main)
-                    .WithMany(p => p.FlowStepPath)
-                    .HasForeignKey(d => d.MainId)
-                    .HasConstraintName("FK_FlowStepPath_FlowMain");
+                entity.Property(e => e.Nikename).HasMaxLength(512);
             });
 
             modelBuilder.Entity<GeneralExample>(entity =>
             {
                 entity.HasKey(e => e.ExampleId);
 
-                entity.Property(e => e.ExampleId)
-                    .HasColumnName("exampleId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.ExampleId).ValueGeneratedNever();
 
-                entity.Property(e => e.AutoComSelect)
-                    .HasColumnName("autoComSelect")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.AutoComSelect).HasMaxLength(4000);
 
-                entity.Property(e => e.AutoComSelectText)
-                    .HasColumnName("autoComSelectText")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.AutoComSelectText).HasMaxLength(4000);
 
-                entity.Property(e => e.AutoComplete)
-                    .HasColumnName("autoComplete")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.AutoComplete).HasMaxLength(4000);
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.DateTimePicker)
-                    .HasColumnName("dateTimePicker")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.DateTimePicker).HasColumnType("datetime");
 
-                entity.Property(e => e.DateTimePickerDate)
-                    .HasColumnName("dateTimePickerDate")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.DateTimePickerDate).HasColumnType("datetime");
 
-                entity.Property(e => e.DateTimePickerFormatter)
-                    .HasColumnName("dateTimePickerFormatter")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.DateTimePickerFormatter).HasColumnType("datetime");
 
                 entity.Property(e => e.DateTimePickerYymm)
-                    .HasColumnName("dateTimePickerYYMM")
+                    .HasColumnName("DateTimePickerYYMM")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Department)
-                    .HasColumnName("department")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.Department).HasMaxLength(4000);
 
-                entity.Property(e => e.EmailText)
-                    .HasColumnName("emailText")
-                    .HasMaxLength(64);
+                entity.Property(e => e.EmailText).HasMaxLength(64);
 
-                entity.Property(e => e.ExampleCheckbox)
-                    .HasColumnName("exampleCheckbox")
-                    .HasMaxLength(256);
+                entity.Property(e => e.ExampleCheckbox).HasMaxLength(256);
 
-                entity.Property(e => e.ExampleName)
-                    .HasColumnName("exampleName")
-                    .HasMaxLength(64);
+                entity.Property(e => e.ExampleName).HasMaxLength(64);
 
                 entity.Property(e => e.ExamplePhone)
-                    .HasColumnName("examplePhone")
                     .HasMaxLength(16)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ExampleRadio)
-                    .HasColumnName("exampleRadio")
-                    .HasMaxLength(256);
+                entity.Property(e => e.ExampleRadio).HasMaxLength(256);
 
-                entity.Property(e => e.ExampleSelect)
-                    .HasColumnName("exampleSelect")
-                    .HasMaxLength(256);
+                entity.Property(e => e.ExampleSelect).HasMaxLength(256);
 
-                entity.Property(e => e.ExampleText)
-                    .HasColumnName("exampleText")
-                    .HasMaxLength(256);
+                entity.Property(e => e.ExampleText).HasMaxLength(256);
 
-                entity.Property(e => e.ExampleTime)
-                    .HasColumnName("exampleTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.ExampleTime).HasColumnType("datetime");
 
-                entity.Property(e => e.ExampleUser)
-                    .HasColumnName("exampleUser")
-                    .HasMaxLength(4000);
+                entity.Property(e => e.ExampleUser).HasMaxLength(4000);
 
-                entity.Property(e => e.LinkageSelectA)
-                    .HasColumnName("linkageSelectA")
+                entity.Property(e => e.LinkageSelectA).HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectB).HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectC).HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectD).HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectE).HasMaxLength(64);
+
+                entity.Property(e => e.LinkageSelectF).HasMaxLength(64);
+
+                entity.Property(e => e.MobileText).HasMaxLength(64);
+
+                entity.Property(e => e.Oupicker)
+                    .HasColumnName("OUPicker")
                     .HasMaxLength(64);
 
-                entity.Property(e => e.LinkageSelectB)
-                    .HasColumnName("linkageSelectB")
-                    .HasMaxLength(64);
+                entity.Property(e => e.PlainText).HasMaxLength(64);
 
-                entity.Property(e => e.LinkageSelectC)
-                    .HasColumnName("linkageSelectC")
-                    .HasMaxLength(64);
+                entity.Property(e => e.RepeatText).HasMaxLength(64);
 
-                entity.Property(e => e.LinkageSelectD)
-                    .HasColumnName("linkageSelectD")
-                    .HasMaxLength(64);
+                entity.Property(e => e.RequiredText).HasMaxLength(64);
 
-                entity.Property(e => e.LinkageSelectE)
-                    .HasColumnName("linkageSelectE")
-                    .HasMaxLength(64);
+                entity.Property(e => e.UserPicker).HasMaxLength(64);
+            });
 
-                entity.Property(e => e.LinkageSelectF)
-                    .HasColumnName("linkageSelectF")
-                    .HasMaxLength(64);
+            modelBuilder.Entity<PmProject>(entity =>
+            {
+                entity.HasKey(e => e.ProjectId);
 
-                entity.Property(e => e.MobileText)
-                    .HasColumnName("mobileText")
-                    .HasMaxLength(64);
+                entity.Property(e => e.ProjectId).ValueGeneratedNever();
 
-                entity.Property(e => e.OuPicker)
-                    .HasColumnName("ouPicker")
-                    .HasMaxLength(64);
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.ParentId).HasColumnName("parentId");
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PlainDecimal).HasColumnName("plainDecimal");
+                entity.Property(e => e.PlanEndDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PlainInt).HasColumnName("plainInt");
+                entity.Property(e => e.PlanStartDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PlainText)
-                    .HasColumnName("plainText")
-                    .HasMaxLength(64);
+                entity.Property(e => e.ProjectCode).HasMaxLength(32);
 
-                entity.Property(e => e.RepeatText)
-                    .HasColumnName("repeatText")
-                    .HasMaxLength(64);
+                entity.Property(e => e.ProjectContent).HasColumnType("text");
 
-                entity.Property(e => e.RequiredText)
-                    .HasColumnName("requiredText")
-                    .HasMaxLength(64);
+                entity.Property(e => e.ProjectManagerMobile).HasMaxLength(16);
 
-                entity.Property(e => e.UserPicker)
-                    .HasColumnName("userPicker")
-                    .HasMaxLength(64);
+                entity.Property(e => e.ProjectName).HasMaxLength(64);
+
+                entity.Property(e => e.ProjectProperty).HasMaxLength(16);
+
+                entity.Property(e => e.ProjectStatus).HasMaxLength(16);
+
+                entity.Property(e => e.ProjectType).HasMaxLength(16);
+
+                entity.Property(e => e.Remark).HasColumnType("text");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<PmProjectUser>(entity =>
+            {
+                entity.HasKey(e => new { e.ProjectId, e.UserId });
+
+                entity.Property(e => e.UserRole).HasMaxLength(16);
+            });
+
+            modelBuilder.Entity<PmTask>(entity =>
+            {
+                entity.HasKey(e => e.TaskId);
+
+                entity.Property(e => e.TaskId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PlanEndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.PlanStartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Remark).HasColumnType("text");
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TaskContent).HasColumnType("text");
+
+                entity.Property(e => e.TaskManager).HasMaxLength(64);
+
+                entity.Property(e => e.TaskName).HasMaxLength(64);
+
+                entity.Property(e => e.TaskStatus).HasMaxLength(16);
+
+                entity.Property(e => e.TaskType).HasMaxLength(16);
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<PmTaskUser>(entity =>
+            {
+                entity.HasKey(e => new { e.TaskId, e.UserId });
+
+                entity.Property(e => e.UserRole).HasMaxLength(16);
             });
 
             modelBuilder.Entity<SysAttachment>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CreateBy)
-                    .HasColumnName("createBy")
-                    .HasMaxLength(64);
+                entity.Property(e => e.CreateBy).HasMaxLength(64);
 
-                entity.Property(e => e.CreateByName)
-                    .HasColumnName("createByName")
-                    .HasMaxLength(64);
+                entity.Property(e => e.CreateByName).HasMaxLength(64);
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.Names).HasColumnName("names");
-
-                entity.Property(e => e.Path).HasColumnName("path");
+                entity.Property(e => e.Name).HasMaxLength(512);
 
                 entity.Property(e => e.RelationId)
-                    .HasColumnName("relationID")
+                    .HasColumnName("RelationID")
                     .HasMaxLength(64);
 
-                entity.Property(e => e.Size).HasColumnName("size");
-
-                entity.Property(e => e.Status).HasColumnName("status");
-
-                entity.Property(e => e.Suffix)
-                    .HasColumnName("suffix")
-                    .HasMaxLength(32);
-
-                entity.Property(e => e.Type).HasColumnName("type");
-
-                entity.Property(e => e.Url).HasColumnName("url");
+                entity.Property(e => e.Suffix).HasMaxLength(32);
             });
 
             modelBuilder.Entity<SysDepartment>(entity =>
             {
                 entity.HasKey(e => e.DepartmentId);
 
-                entity.Property(e => e.DepartmentId)
-                    .HasColumnName("departmentId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.DepartmentId).ValueGeneratedNever();
 
-                entity.Property(e => e.CreateBy).HasColumnName("createBy");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.DepartmentCode).HasMaxLength(64);
 
-                entity.Property(e => e.DepartmentCode)
-                    .HasColumnName("departmentCode")
-                    .HasMaxLength(64);
+                entity.Property(e => e.DepartmentFullName).HasMaxLength(512);
 
-                entity.Property(e => e.DepartmentFullName)
-                    .HasColumnName("departmentFullName")
-                    .HasMaxLength(512);
+                entity.Property(e => e.DepartmentName).HasMaxLength(64);
 
-                entity.Property(e => e.DepartmentName)
-                    .HasColumnName("departmentName")
-                    .HasMaxLength(64);
-
-                entity.Property(e => e.OrderNo).HasColumnName("orderNo");
-
-                entity.Property(e => e.ParentId).HasColumnName("parentId");
-
-                entity.Property(e => e.PdateBy).HasColumnName("pdateBy");
-
-                entity.Property(e => e.UpdateTime)
-                    .HasColumnName("updateTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysDictionary>(entity =>
@@ -578,91 +395,61 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.HasKey(e => new { e.Type, e.Member })
                     .ForSqlServerIsClustered(false);
 
-                entity.Property(e => e.Type)
-                    .HasColumnName("type")
-                    .HasMaxLength(64);
+                entity.Property(e => e.Type).HasMaxLength(64);
 
-                entity.Property(e => e.Member)
-                    .HasColumnName("member")
-                    .HasMaxLength(64);
+                entity.Property(e => e.Member).HasMaxLength(64);
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(2048);
+                entity.Property(e => e.Description).HasMaxLength(2048);
 
                 entity.Property(e => e.MemberName)
                     .IsRequired()
-                    .HasColumnName("memberName")
                     .HasMaxLength(64);
-
-                entity.Property(e => e.OrderNo).HasColumnName("orderNo");
             });
 
             modelBuilder.Entity<SysLeader>(entity =>
             {
                 entity.HasKey(e => e.LeaderId);
 
-                entity.Property(e => e.LeaderId)
-                    .HasColumnName("leaderId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.LeaderId).ValueGeneratedNever();
 
-                entity.Property(e => e.DepartmentCode)
-                    .HasColumnName("departmentCode")
-                    .HasMaxLength(512);
+                entity.Property(e => e.DepartmentCode).HasMaxLength(32);
 
-                entity.Property(e => e.Pos)
-                    .HasColumnName("pos")
-                    .HasMaxLength(2048);
+                entity.Property(e => e.Pos).HasMaxLength(32);
 
-                entity.Property(e => e.Sequence)
-                    .HasColumnName("sequence")
-                    .HasMaxLength(2048);
+                entity.Property(e => e.Sequence).HasMaxLength(32);
 
-                entity.Property(e => e.UserCode)
-                    .HasColumnName("userCode")
-                    .HasMaxLength(512);
+                entity.Property(e => e.UserCode).HasMaxLength(32);
             });
 
             modelBuilder.Entity<SysLog>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.DepartmentName).HasMaxLength(500);
 
-                entity.Property(e => e.DepartmentName)
-                    .HasColumnName("departmentName")
-                    .HasMaxLength(500);
-
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(2048);
+                entity.Property(e => e.Description).HasMaxLength(2048);
 
                 entity.Property(e => e.IpAddress)
-                    .HasColumnName("ipAddress")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Title)
-                    .HasColumnName("title")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Type)
-                    .HasColumnName("type")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.UserAgent)
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.UserCode)
-                    .HasColumnName("userCode")
                     .HasMaxLength(32)
                     .IsUnicode(false);
 
-                entity.Property(e => e.UserId).HasColumnName("userId");
-
                 entity.Property(e => e.UserName)
-                    .HasColumnName("userName")
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -671,136 +458,75 @@ namespace {{cookiecutter.project_name}}.Models
             {
                 entity.HasKey(e => e.ModuleId);
 
-                entity.Property(e => e.ModuleId)
-                    .HasColumnName("moduleId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.ModuleId).ValueGeneratedNever();
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(2048);
+                entity.Property(e => e.Description).HasMaxLength(2048);
 
-                entity.Property(e => e.ModuleIcon)
-                    .HasColumnName("moduleIcon")
-                    .HasMaxLength(512);
+                entity.Property(e => e.ModuleIcon).HasMaxLength(512);
 
-                entity.Property(e => e.ModuleName)
-                    .HasColumnName("moduleName")
-                    .HasMaxLength(64);
-
-                entity.Property(e => e.OrderNo).HasColumnName("orderNo");
-
-                entity.Property(e => e.ParentId).HasColumnName("parentId");
+                entity.Property(e => e.ModuleName).HasMaxLength(64);
             });
 
             modelBuilder.Entity<SysModulePage>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(2048);
+                entity.Property(e => e.Description).HasMaxLength(2048);
 
-                entity.Property(e => e.ModuleId).HasColumnName("moduleId");
-
-                entity.Property(e => e.OrderNo).HasColumnName("orderNo");
-
-                entity.Property(e => e.PageIcon)
-                    .HasColumnName("pageIcon")
-                    .HasMaxLength(512);
+                entity.Property(e => e.PageIcon).HasMaxLength(512);
 
                 entity.Property(e => e.PageName)
                     .IsRequired()
-                    .HasColumnName("pageName")
                     .HasMaxLength(64);
 
                 entity.Property(e => e.PageSign)
                     .IsRequired()
-                    .HasColumnName("pageSign")
                     .HasMaxLength(64);
 
-                entity.Property(e => e.PageUrl)
-                    .HasColumnName("pageUrl")
-                    .HasMaxLength(512);
+                entity.Property(e => e.PageUrl).HasMaxLength(512);
             });
 
             modelBuilder.Entity<SysOperation>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CreateBy)
-                    .HasColumnName("createBy")
-                    .HasMaxLength(64);
+                entity.Property(e => e.CreateBy).HasMaxLength(64);
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.OperationName)
-                    .HasColumnName("operationName")
-                    .HasMaxLength(64);
+                entity.Property(e => e.OperationName).HasMaxLength(64);
 
-                entity.Property(e => e.OperationSign)
-                    .HasColumnName("operationSign")
-                    .HasMaxLength(64);
-
-                entity.Property(e => e.OrderNo).HasColumnName("orderNo");
+                entity.Property(e => e.OperationSign).HasMaxLength(64);
             });
 
             modelBuilder.Entity<SysPageOperation>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.OperationSign)
-                    .HasColumnName("operationSign")
-                    .HasMaxLength(64)
+                    .HasMaxLength(512)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PageId).HasColumnName("pageID");
+                entity.Property(e => e.PageId).HasColumnName("PageID");
             });
 
             modelBuilder.Entity<SysRole>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.RoleName)
-                    .HasColumnName("roleName")
-                    .HasMaxLength(64);
+                entity.Property(e => e.RoleName).HasMaxLength(64);
             });
 
             modelBuilder.Entity<SysRoleOperatePower>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.ModulePageId).HasColumnName("modulePageId");
-
-                entity.Property(e => e.ModuleParentId).HasColumnName("moduleParentId");
-
-                entity.Property(e => e.OperationSign)
-                    .HasColumnName("operationSign")
-                    .HasMaxLength(512);
-
-                entity.Property(e => e.RoleId).HasColumnName("roleId");
+                entity.Property(e => e.OperationSign).HasMaxLength(512);
             });
 
             modelBuilder.Entity<SysRoleUser>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.RoleId).HasColumnName("roleId");
-
-                entity.Property(e => e.UserId).HasColumnName("userId");
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<SysServer>(entity =>
@@ -808,119 +534,63 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.HasKey(e => e.ServerIp);
 
                 entity.Property(e => e.ServerIp)
-                    .HasColumnName("serverIP")
+                    .HasColumnName("ServerIP")
                     .HasMaxLength(128)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.UpdateTime)
-                    .HasColumnName("updateTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysSmsCode>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.IsVerify).HasColumnName("isVerify");
+                entity.Property(e => e.Mobile).HasMaxLength(32);
 
-                entity.Property(e => e.Mobile)
-                    .HasColumnName("mobile")
-                    .HasMaxLength(32);
+                entity.Property(e => e.OverTime).HasColumnType("datetime");
 
-                entity.Property(e => e.OverTime)
-                    .HasColumnName("overTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.SmsCode).HasMaxLength(32);
 
-                entity.Property(e => e.SmsCode)
-                    .HasColumnName("smsCode")
-                    .HasMaxLength(32);
+                entity.Property(e => e.SmsSign).HasMaxLength(32);
 
-                entity.Property(e => e.SmsSign)
-                    .HasColumnName("smsSign")
-                    .HasMaxLength(32);
-
-                entity.Property(e => e.VerifyTime)
-                    .HasColumnName("verifyTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.VerifyTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysUser>(entity =>
             {
                 entity.HasKey(e => e.UserId);
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("userId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.UserId).ValueGeneratedNever();
 
-                entity.Property(e => e.Birthday)
-                    .HasColumnName("birthday")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.Birthday).HasColumnType("datetime");
 
-                entity.Property(e => e.CreateBy).HasColumnName("createBy");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.Email).HasMaxLength(128);
 
-                entity.Property(e => e.DepartmentId).HasColumnName("departmentId");
+                entity.Property(e => e.ExtendId).HasMaxLength(64);
 
-                entity.Property(e => e.Email)
-                    .HasColumnName("email")
-                    .HasMaxLength(128);
+                entity.Property(e => e.Gender).HasMaxLength(32);
 
-                entity.Property(e => e.ExtendId)
-                    .HasColumnName("extendId")
-                    .HasMaxLength(64);
+                entity.Property(e => e.IdCard).HasMaxLength(32);
 
-                entity.Property(e => e.Gender)
-                    .HasColumnName("gender")
-                    .HasMaxLength(32);
+                entity.Property(e => e.Mobile).HasMaxLength(32);
 
-                entity.Property(e => e.IdCard)
-                    .HasColumnName("idCard")
-                    .HasMaxLength(32);
+                entity.Property(e => e.Post).HasMaxLength(32);
 
-                entity.Property(e => e.Mobile)
-                    .HasColumnName("mobile")
-                    .HasMaxLength(32);
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.OrderNo).HasColumnName("orderNo");
+                entity.Property(e => e.UserCode).HasMaxLength(32);
 
-                entity.Property(e => e.Post)
-                    .HasColumnName("post")
-                    .HasMaxLength(32);
+                entity.Property(e => e.UserName).HasMaxLength(32);
 
-                entity.Property(e => e.UpdateBy).HasColumnName("updateBy");
+                entity.Property(e => e.UserPassword).HasMaxLength(128);
 
-                entity.Property(e => e.UpdateTime)
-                    .HasColumnName("updateTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.UserCode)
-                    .HasColumnName("userCode")
-                    .HasMaxLength(32);
-
-                entity.Property(e => e.UserName)
-                    .HasColumnName("userName")
-                    .HasMaxLength(32);
-
-                entity.Property(e => e.UserPassword)
-                    .HasColumnName("userPassword")
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.UserStatus)
-                    .HasColumnName("userStatus")
-                    .HasMaxLength(32);
+                entity.Property(e => e.UserStatus).HasMaxLength(32);
             });
 
             modelBuilder.Entity<SysUserClientId>(entity =>
@@ -928,15 +598,10 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.HasKey(e => e.ClientId);
 
                 entity.Property(e => e.ClientId)
-                    .HasColumnName("clientId")
                     .HasMaxLength(64)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.UpdateTime)
-                    .HasColumnName("updateTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.UserId).HasColumnName("userId");
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysUserOpenId>(entity =>
@@ -944,19 +609,12 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.HasKey(e => e.OpenId);
 
                 entity.Property(e => e.OpenId)
-                    .HasColumnName("openId")
                     .HasMaxLength(64)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.BindTime)
-                    .HasColumnName("bindTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.BindTime).HasColumnType("datetime");
 
-                entity.Property(e => e.CreateTime)
-                    .HasColumnName("createTime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.UserId).HasColumnName("userId");
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
             });
         }
     }

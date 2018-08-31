@@ -1,6 +1,9 @@
 /***********************
  * BitAdmin2.0框架文件
  ***********************/
+using {{cookiecutter.project_name}}.Models;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 using System;
 using System.IO;
 using System.Text;
@@ -16,8 +19,31 @@ namespace {{cookiecutter.project_name}}.Helpers
             sb.AppendLine(ex.Message);
             sb.AppendLine(ex.StackTrace);
             sb.AppendLine(ex.Source);
-
             SaveLog("错误日志",sb.ToString());
+
+            try
+            {
+                DataContext dbContext = new DataContext();
+                var currentUser = SSOClient.User;
+                string ip = HttpContextCore.Current.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+
+                SysLog model = new SysLog
+                {
+                    UserId = currentUser.UserId,
+                    UserCode = currentUser.UserCode,
+                    UserName = currentUser.UserName,
+                    DepartmentName = SSOClient.Department.DepartmentFullName,
+                    IpAddress = string.IsNullOrEmpty(ip) ? HttpContextCore.Current.Connection.RemoteIpAddress.ToString() : ip,
+                    UserAgent = HttpContextCore.Current.Request.Headers["User-Agent"],
+                    CreateTime = DateTime.Now,
+                    Type = "错误日志",
+                    Title = "程序异常",
+                    Description = sb.ToString(),
+                };
+                dbContext.SysLog.Add(model);
+                dbContext.SaveChanges();
+            }
+            catch { }
         }
         public static void SaveLog(String logName, String msg)
         {

@@ -22,7 +22,7 @@ var BitAdmin = {
         if (sign == undefined) { return; }
         $.post("../../account/getOperationCode?sign=" + sign, function (result) {
             if (result.code == 0 && result.data) {
-                $.adminSetting.addLogs($(document).attr("title"), "页面访问", "访问");//添加访问日志
+                $.adminSetting.addLogs($(document).attr("title"), "页面访问", "访问页面");
 
                 if (result.data.Operation == true)
                     return;

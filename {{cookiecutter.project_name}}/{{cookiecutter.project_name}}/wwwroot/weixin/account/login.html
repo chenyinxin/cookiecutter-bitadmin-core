@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>登录</title>
-    <meta name="description" content="BitAdminCore, Version 0.1, Alpha" />
+    <meta name="description" content="BitAdminCore, Version 1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -22,25 +22,28 @@
         <div class="row">
             <h4>公众号授权模式：</h4>
             snsapi_base 静默授权只能获取用户openid；<br />
-            snsapi_userinfo 手动授权可通过openid获取基本信息。
+            snsapi_userinfo 手动授权可通过openid获取基本信息。<br />
+            备注：配置微信菜单可直接指向以下地址即可。
         </div>
         <div class="row">
-            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx806943202a75a124&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fauth%2Fweixingzhsignin&response_type=code&scope=snsapi_base&state=1#wechat_redirect" class="btn btn-success">公众号静默授权</a>
+            <a href="/weixin/authorize_base?state=menu1" class="btn btn-success">公众号静默授权</a>
         </div>
         <div class="row">
-            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx806943202a75a124&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fauth%2Fweixingzhsignin&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect" class="btn btn-success">公众号普通授权</a>
+            <a href="/weixin/authorize_user?state=menu2&scope=snsapi_userinfo" class="btn btn-success">公众号手动授权</a>
         </div>
         <div class="row">
             <h4>企业号授权模式：</h4>
             snsapi_base 静默授权只能获取用户openid；<br />
             snsapi_userinfo 静默授权可通过openid获取基本信息。<br />
             snsapi_privateinfo：手动授权，可获取成员的详细信息，包含手机、邮箱。<br />
+            备注：配置微信菜单可直接指向以下地址即可。<br />
+            企业微信页面在微信中打开只能取到OpenId，在企业微信中打开只能取到UserId。
         </div>
         <div class="row">
-            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwa26d4508575b5fe9&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fauth%2Fweixinqyhsignin&response_type=code&scope=snsapi_userinfo&agentid=1000007&state=#wechat_redirect" class="btn btn-success">企业号静默授权</a>
+            <a href="/weixinwork/authorize_user?state=menu1" class="btn btn-success">企业号静默授权</a>
         </div>
         <div class="row">
-            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwa26d4508575b5fe9&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fauth%2Fweixinqyhsignin&response_type=code&scope=snsapi_privateinfo&agentid=1000007&state=#wechat_redirect" class="btn btn-success">企业号手动授权</a>
+            <a href="/weixinwork/authorize_private?state=menu2" class="btn btn-success">企业号手动授权</a>
         </div>
         <div class="row">
 

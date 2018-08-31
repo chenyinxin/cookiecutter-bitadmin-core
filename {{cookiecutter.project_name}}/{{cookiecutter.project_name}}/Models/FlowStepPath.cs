@@ -13,7 +13,5 @@ namespace {{cookiecutter.project_name}}.Models
         public int Condition { get; set; }
         public string Expression { get; set; }
         public string Description { get; set; }
-
-        public FlowMain Main { get; set; }
     }
 }
