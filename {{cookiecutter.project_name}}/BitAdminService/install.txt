@@ -1,6 +1,7 @@
 ﻿
 
-sc create BitAdminService binPath= "E:\Git\BitAdminCore\BitAdminService\bin\Debug\BitAdminService.exe"
+--创建自启服务
+sc create BitAdminService binPath= "E:\Git\BitAdminCore\BitAdminService\bin\Debug\BitAdminService.exe -svc" displayname= "BitAdminCore服务框架" start= auto
 
-
+--创建服务
 sc delete BitAdminService

@@ -6,12 +6,13 @@ using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace {{cookiecutter.project_name}}.Helpers
 {
     public abstract class SqlHelper
     {
-        public static string ConnectionString { get { return System.Configuration.ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString; } }
+        public static string ConnectionString { get { return ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString; } }
 
         #region 公用方法
         /// <summary>

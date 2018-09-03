@@ -7,6 +7,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BitAdminService
 {
@@ -15,14 +16,22 @@ namespace BitAdminService
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            if (args.Length > 0 && args.Contains("-svc"))
             {
-                new BitAdminService()
-            };
-            ServiceBase.Run(ServicesToRun);
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
+                    new BitAdminService()
+                };
+                ServiceBase.Run(ServicesToRun);
+
+            }
+            else
+            {
+                Application.Run(new ServiceManagerForm());
+            }
         }
     }
 }

@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -41,7 +44,9 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServiceManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServiceManagerForm.Designer.cs">
+      <DependentUpon>ServiceManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\BitAdminService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -58,11 +69,11 @@
       <DependentUpon>BitAdminService.cs</DependentUpon>
     </Compile>
     <Compile Include="Jobs\HelloJob.cs" />
-    <Compile Include="Jobs\Jobs.cs" />
-    <Compile Include="Services\LogHelper.cs" />
+    <Compile Include="Services\IPCServer.cs" />
+    <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SqlHelper.cs" />
+    <Compile Include="Helpers\SqlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -71,5 +82,19 @@
   <ItemGroup>
     <None Include="install.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ServiceManagerForm.resx">
+      <DependentUpon>ServiceManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>::net stop BitAdminService</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>::net start BitAdminService</PostBuildEvent>
+  </PropertyGroup>
 </Project>
