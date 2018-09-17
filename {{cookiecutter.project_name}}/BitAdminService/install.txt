@@ -1,4 +1,8 @@
-﻿
+﻿服务开发说明
+
+1、增加定时服务，在Jobs中添加一个类继承IJob，声明Invoke属性即可。
+2、用以下脚本创建后台服务，注意加-svc参数。
+3、双击exe打开管理界面。
 
 --创建自启服务
 sc create BitAdminService binPath= "E:\Git\BitAdminCore\BitAdminService\bin\Debug\BitAdminService.exe -svc" displayname= "BitAdminCore服务框架" start= auto

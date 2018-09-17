@@ -62,8 +62,6 @@ namespace BitAdminService
                 {
                     Scheduler.AddJob(job);
                 }
-
-                //Jobs.Jobs.Config(Scheduler);
             }
             catch (SchedulerException ex)
             {

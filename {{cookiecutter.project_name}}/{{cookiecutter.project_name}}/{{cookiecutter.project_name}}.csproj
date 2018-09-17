@@ -12,20 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\app\html5\unpackage\debug\**" />
-    <Compile Remove="wwwroot\app\html5\unpackage\release\**" />
-    <Content Remove="wwwroot\app\html5\unpackage\debug\**" />
-    <Content Remove="wwwroot\app\html5\unpackage\release\**" />
-    <EmbeddedResource Remove="wwwroot\app\html5\unpackage\debug\**" />
-    <EmbeddedResource Remove="wwwroot\app\html5\unpackage\release\**" />
-    <None Remove="wwwroot\app\html5\unpackage\debug\**" />
-    <None Remove="wwwroot\app\html5\unpackage\release\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="BitAdminCore.ALL" Version="1.0.8" />
+    <PackageReference Include="BitAdminCore.ALL" Version="1.0.9" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,70 +25,6 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\app\html5\.project" />
-    <None Include="wwwroot\app\html5\bind.html" />
-    <None Include="wwwroot\app\html5\css\feedback.css" />
-    <None Include="wwwroot\app\html5\css\mui.css" />
-    <None Include="wwwroot\app\html5\css\mui.min.css" />
-    <None Include="wwwroot\app\html5\css\style.css" />
-    <None Include="wwwroot\app\html5\fonts\.DS_Store" />
-    <None Include="wwwroot\app\html5\fonts\iconfont.ttf" />
-    <None Include="wwwroot\app\html5\fonts\mui.ttf" />
-    <None Include="wwwroot\app\html5\forget_password.html" />
-    <None Include="wwwroot\app\html5\images\.DS_Store" />
-    <None Include="wwwroot\app\html5\images\60x60.gif" />
-    <None Include="wwwroot\app\html5\images\iconfont-tianjia.png" />
-    <None Include="wwwroot\app\html5\images\logo.png" />
-    <None Include="wwwroot\app\html5\images\ma.png" />
-    <None Include="wwwroot\app\html5\images\qihoo.png" />
-    <None Include="wwwroot\app\html5\images\qq.png" />
-    <None Include="wwwroot\app\html5\images\sinaweibo.png" />
-    <None Include="wwwroot\app\html5\images\user-photo.png" />
-    <None Include="wwwroot\app\html5\images\weixin.png" />
-    <None Include="wwwroot\app\html5\index.html" />
-    <None Include="wwwroot\app\html5\js\app.js" />
-    <None Include="wwwroot\app\html5\js\bitadmin.js" />
-    <None Include="wwwroot\app\html5\js\feedback.js" />
-    <None Include="wwwroot\app\html5\js\jquery.min.js" />
-    <None Include="wwwroot\app\html5\js\mui.enterfocus.js" />
-    <None Include="wwwroot\app\html5\js\mui.js" />
-    <None Include="wwwroot\app\html5\js\mui.locker.js" />
-    <None Include="wwwroot\app\html5\js\mui.min.js" />
-    <None Include="wwwroot\app\html5\js\mui.view.js" />
-    <None Include="wwwroot\app\html5\js\util.js" />
-    <None Include="wwwroot\app\html5\login.html" />
-    <None Include="wwwroot\app\html5\main.html" />
-    <None Include="wwwroot\app\html5\pages\tabone.html" />
-    <None Include="wwwroot\app\html5\pages\tabtow.html" />
-    <None Include="wwwroot\app\html5\README.md" />
-    <None Include="wwwroot\app\html5\reg.html" />
-    <None Include="wwwroot\app\html5\setting.html" />
-    <None Include="wwwroot\app\html5\unlock.html" />
-    <None Include="wwwroot\app\html5\unpackage\.confirmed_dependencies" />
-    <None Include="wwwroot\app\html5\unpackage\.dependencies" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\1024x1024.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\120x120.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\144x144.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\152x152.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\167x167.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\180x180.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\192x192.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\20x20.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\256x256.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\29x29.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\40x40.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\48x48.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\58x58.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\60x60.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\72x72.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\76x76.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\80x80.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\87x87.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\96x96.png" />
-    <None Include="wwwroot\app\html5\unpackage\res\icons\logo.png" />
   </ItemGroup>
 
 </Project>

@@ -122,12 +122,12 @@ namespace {{cookiecutter.project_name}}
                 //w.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
                 //w.Response.Headers.Add("Access-Control-Allow-Origin", "http://origin.bitadmincore.con");
 
-                ////非html页面
+                ////非html页面，不拦截
                 //var request = w.Request.AbsoluteUri().ToLower();
                 //if (!request.Contains(".html"))
                 //    return false;
 
-                ////较验模块页面
+                ////模块页面，有权限不拦截，特定页面不拦截
                 //var pages = w.Session.Get<List<string>>("htmlpagerights");
                 //if (pages == null)
                 //{

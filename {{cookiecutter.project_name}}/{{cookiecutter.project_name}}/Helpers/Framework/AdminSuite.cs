@@ -1,9 +1,7 @@
 /***********************
  * BitAdmin2.0框架文件
  ***********************/
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,7 +30,6 @@ namespace {{cookiecutter.project_name}}.Helpers
         Dictionary<string, string> _filter = new Dictionary<string, string>();
 
         List<SqlParameter> _sqlParams = new List<SqlParameter>();
-        List<MySqlParameter> _mysqlParams = new List<MySqlParameter>();
 
         Controller _controller;
 

@@ -2,6 +2,7 @@
  * BitAdmin2.0框架文件
  * 微信企业号
  ***********************/
+using Senparc.NeuChar.Entities;
 using Senparc.Weixin.Work.AdvancedAPIs;
 using Senparc.Weixin.Work.Containers;
 using Senparc.Weixin.Work.Entities;

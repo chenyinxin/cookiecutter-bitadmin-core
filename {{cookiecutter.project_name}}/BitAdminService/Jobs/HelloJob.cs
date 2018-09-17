@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace BitAdminService.Jobs
 {
     /*Interval单位为秒*/
-    [Invoke(Name = "HelloJob", Remark = "HelloJob示例服务", StartTime = "2018-05-01 12:00:00", Interval = 10)]
+    [Invoke(Name = "HelloJob", Remark = "HelloJob示例服务", StartTime = "2018-05-01 12:00:00", Interval = 11)]
     public class HelloJob : IJob
     {
         public Task Execute(IJobExecutionContext context)
@@ -20,7 +20,7 @@ namespace BitAdminService.Jobs
         }
     }
 
-    [Invoke(Name = "BitAdminJob", Remark = "BitAdminJob示例服务", StartTime = "2018-05-01 12:00:00", Interval = 20)]
+    [Invoke(Name = "BitAdminJob", Remark = "BitAdminJob示例服务", StartTime = "2018-05-01 12:00:00", Interval = 18)]
     public class BitAdminJob : IJob
     {
         public Task Execute(IJobExecutionContext context)

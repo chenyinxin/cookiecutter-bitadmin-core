@@ -2,6 +2,7 @@
  * BitAdmin2.0框架文件
  * 微信公众号
  ***********************/
+using Senparc.NeuChar.Entities;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using Senparc.Weixin.MP.Containers;
