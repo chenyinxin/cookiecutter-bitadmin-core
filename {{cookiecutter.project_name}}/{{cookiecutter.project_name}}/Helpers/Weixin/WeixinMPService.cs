@@ -18,7 +18,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         private static string appId = "wx806943202a75a124";
         private static string secret = "d52257abea1018eec3a798005ba4f841";
 
-        //发送文本
+        #region 发送文本
         public static void SendText(Guid? userId, string text)
         {
             SendText(new List<Guid?>() { userId }, text);
@@ -33,8 +33,9 @@ namespace {{cookiecutter.project_name}}.Helpers
             Register();
             CustomApi.SendText(appId, openId, text);
         }
+        #endregion
 
-        //发送图片
+        #region 发送图片
         public static void SendImage(Guid? userId, string text)
         {
             SendImage(new List<Guid?>() { userId }, text);
@@ -44,8 +45,9 @@ namespace {{cookiecutter.project_name}}.Helpers
             Register();
             QueryOpenId(userIds).ForEach(openId => CustomApi.SendImage(appId, openId, text));
         }
+        #endregion
 
-        //发送图文
+        #region 发送图文
         public static void SendNews(Guid? userId, List<Article> articles)
         {
             SendNews(new List<Guid?>() { userId }, articles);
@@ -54,12 +56,12 @@ namespace {{cookiecutter.project_name}}.Helpers
         {
             Register();
             QueryOpenId(userIds).ForEach(openId => CustomApi.SendNews(appId, openId, articles));
-        }
+        } 
+        #endregion
 
         /**
          * 发送模板信息（需要先在后台进行配置）
          * */
-
         public static void SendTemplate(Guid? userId, string templateId, string linkUrl)
         {
             SendTemplate(new List<Guid?>() { userId }, templateId, linkUrl);

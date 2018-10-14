@@ -97,17 +97,13 @@ namespace {{cookiecutter.project_name}}
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".apk"] = "application/vnd.android.package-archive";
 
-            //启用静态文件（uploadfiles:附件目录；import:导入临时文件；export:导出临时文件；apps:apk下载目录；prototyping原型数据文件）
+            //启用静态文件（uploadfiles:附件目录；import:导入临时文件；export:导出临时文件；）
             string fileupload = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploadfiles");
             if (!Directory.Exists(fileupload)) Directory.CreateDirectory(fileupload);
             string import = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "import");
             if (!Directory.Exists(import)) Directory.CreateDirectory(import);
             string export = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "export");
             if (!Directory.Exists(export)) Directory.CreateDirectory(export);
-            //string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
-            //if (!Directory.Exists(apps)) Directory.CreateDirectory(apps);
-            //string prototyping = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "prototyping");
-            //if (!Directory.Exists(prototyping)) Directory.CreateDirectory(prototyping);
 
             //启用Session缓存
             app.UseSession();
@@ -191,26 +187,26 @@ namespace {{cookiecutter.project_name}}
             //app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "{{cookiecutter.project_name}} api v1"));
         }
 
-        private bool IsRight(string url,List<string> pages)
-        {
-            foreach (string page in pages)
-            {
-                if (url.Contains(page))
-                    return true;
-            }
-            return false;
-        }
+        //private bool IsRight(string url,List<string> pages)
+        //{
+        //    foreach (string page in pages)
+        //    {
+        //        if (url.Contains(page))
+        //            return true;
+        //    }
+        //    return false;
+        //}
 
-        private string ConvertUrl(string url)
-        {
-            var lowerUrl = url.ToLower();
-            if (lowerUrl.Contains("_blank"))
-                return lowerUrl.Replace("_blank:", "");
-            if (lowerUrl.Contains(".html"))
-                return lowerUrl;
-            else
-                return (lowerUrl.Contains("..") ? lowerUrl.Replace("..", "") : "/pages" + lowerUrl) + ".html";
-        }
+        //private string ConvertUrl(string url)
+        //{
+        //    var lowerUrl = url.ToLower();
+        //    if (lowerUrl.Contains("_blank"))
+        //        return lowerUrl.Replace("_blank:", "");
+        //    if (lowerUrl.Contains(".html"))
+        //        return lowerUrl;
+        //    else
+        //        return (lowerUrl.Contains("..") ? lowerUrl.Replace("..", "") : "/pages" + lowerUrl) + ".html";
+        //}
 
     }
 

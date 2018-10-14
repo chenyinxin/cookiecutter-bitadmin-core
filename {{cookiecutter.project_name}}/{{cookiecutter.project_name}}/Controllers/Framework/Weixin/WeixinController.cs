@@ -143,17 +143,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 }
 
                 SSOClient.SignIn(userOpenId.UserId.Value);
-
-                switch (state)
-                {
-                    case "menu1":
-                        return Redirect("/weixin/templates/exampleone.html");
-                    case "menu2":
-                        return Redirect("/weixin/templates/exampletow.html");
-                    default:
-                        return Redirect("/weixin/home/index.html");
-                }
-
+                return ToMenu(state);
             }
             catch (Exception ex)
             {

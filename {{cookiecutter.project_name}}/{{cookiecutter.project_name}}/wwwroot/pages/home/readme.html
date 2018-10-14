@@ -21,51 +21,35 @@
         <p>定位于后台管理模块开发，以管理员对数据增删改查为核心。数据量在几千万以内，在线用户数在1000以内的应用。</p>
         <p>以程序易读性为核心，采用布局与逻辑分离、前端后端分离的思路，降低耦合度。</p>
         <h4><span style="font-weight:bold;">规范约定：</span></h4>
-        <p>使用EF Core与Sql语句混合开发模式；使用骆驼命名法，例：userName。</p>
+        <p>使用EF Core与Sql语句混合开发模式；使用骆驼命名法，前端示例：userName；后端示例：UserName。</p>
         <p></p>
 
         <h2><span style="font-weight:bold;">BitAdminCore套件</span></h2>
-        <h4><span style="font-weight:bold;">querySuite：</span></h4>
-        <p>querySuite是查询条件、查询操作、数据展示、分页控制一体化标注式查询套件，支持拖动排序。</p>
-        <h4><span style="font-weight:bold;">formSuite：</span></h4>
-        <p>formSuite是新增、修改一体化标注式表单套件。</p>
-        <h4><span style="font-weight:bold;">fileupload：</span></h4>
-        <p>fileupload是一个附件上传、保存、预览一体化套件。</p>
+        <h4><span style="font-weight:bold;">querySuite & formSuite：</span></h4>
+        <p>querySuite & formSuite 是增删改查一体化套件，快速实现模块增删改查功能。</p>
+        <h4><span style="font-weight:bold;">generalForm：</span></h4>
+        <p>generalForm 是一个独立表单套件。</p>        
         <h4><span style="font-weight:bold;">其它组件：</span></h4>
         <p>bitSelect、bitRadio、bitCheckbox、bitAutoComplete、bitAutoComSelect</p>
-        <p>bitTree、picker、datePicker、linkageSelect、treeTable</p>
+        <p>bitTree、picker、datePicker、linkageSelect、treeTable、fileUpload</p>
 
         <h2><span style="font-weight:bold;">BitAdminCore框架（网站）</span></h2>
         <h4><span style="font-weight:bold;">登录页面：</span></h4>
         <p>提供基础的用户名、密码、验证码、短信登录。支持负载均衡环境。</p>
-        <p>提供三方平台登录：微信、QQ</p>
+        <p>提供平台登录：微信、QQ、AD域</p>
         <h4><span style="font-weight:bold;">应用首页：</span></h4>
-        <p>基础布局：头部、菜单、内容，默认tab加载模式，支持iframe。</p>
+        <p>基础布局：头部、菜单、内容；默认tab加载模式，支持iframe。</p>
         <p>全局配置、通用操作、权限、日志、通知推送等</p>
         <h4><span style="font-weight:bold;">基础功能：</span></h4>
         <p>系统管理：部门信息、用户信息、角色权限、日志查看。</p>
         <p>开发功能：系统菜单、页面操作、数据字典、代码生成、原型示例。</p>
-        <p>流程引擎：流程配置、工作台。</p>
-        <h4><span style="font-weight:bold;">技术集成：</span></h4>
-        <p>二维码生成</p>
-        <p>Swagger</p>
-        <h4><span style="font-weight:bold;">服务集成：</span></h4>
-        <p>微信支付</p>
-        <p>个推平台</p>
+        <p>流程引擎：流程配置、我的待办、我的已办、我的待阅、我的已阅。</p>
+        <p>示例功能：简单示例、完整示例、流程示例。</p>
 
         <h2><span style="font-weight:bold;">BitAdminCore框架（微信）</span></h2>
         <h4><span style="font-weight:bold;">登录页面：</span></h4>
         <p>提供微信平台登录：公众号、企业号</p>
         <p>提供用户名、密码、验证码、短信用户绑定。支持负载均衡环境。</p>
-        <h4><span style="font-weight:bold;">应用首页：</span></h4>
-        <p>基础布局：菜单、个人设置。</p>
-
-
-        <h2><span style="font-weight:bold;">BitAdminCore框架（手机）</span></h2>
-        <h4><span style="font-weight:bold;">登录页面：</span></h4>
-        <p>提供基础的用户名、密码、验证码、短信登录。支持负载均衡环境。</p>
-        <h4><span style="font-weight:bold;">应用首页：</span></h4>
-        <p>基础布局：菜单、个人设置。</p>
 
         <h2><span style="font-weight:bold;">BitAdminCore文件服务</span></h2>
         <p>在负载环境下，需要将上传的附件保存到文件服务器。</p>
@@ -76,9 +60,7 @@
     </div>
 </div>
 <!--cnzz统计代码，可以移除，开始-->
-<div style="display:none;">
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cspan id='cnzz_stat_icon_1263497164'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1263497164%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
-</div>
+<script>var _hmt = _hmt || []; (function () { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?67d9c965e616fb773b85f279d372b0c4"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })();</script>
 <!--cnzz统计代码，可以移除，结束-->
 <script src="../../lib/jquery/jquery.min.js"></script>
 <script src="../../js/framework/bitadmin.js"></script>

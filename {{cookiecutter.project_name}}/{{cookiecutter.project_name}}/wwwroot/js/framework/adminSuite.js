@@ -76,7 +76,6 @@ $.extend({
                     if ($.isFunction(action)) {
                         _changes[key] = action;
                         if (!isbit) {
-                            debugger;
                             $.each(_input.controls, function () {
                                 $(this).change(function () {
                                     action($(this).val(), $(this));
