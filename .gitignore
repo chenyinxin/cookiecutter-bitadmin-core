@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs
+/{{cookiecutter.project_name}}/BitAdminFileService/obj
+/{{cookiecutter.project_name}}/BitAdminService/obj
+/{{cookiecutter.project_name}}/{{cookiecutter.project_name}}/obj
