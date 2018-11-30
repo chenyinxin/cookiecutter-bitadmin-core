@@ -29,4 +29,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="App_Data\Modules\" />
+    <Folder Include="Controllers\Modules\" />
+    <Folder Include="wwwroot\work\account\" />
+    <Folder Include="wwwroot\work\home\" />
+    <Folder Include="wwwroot\work\error\" />
+  </ItemGroup>
+
 </Project>

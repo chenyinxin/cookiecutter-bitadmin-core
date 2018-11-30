@@ -3,6 +3,10 @@
  * 全局样式
  ***********************/
 
+body{
+    line-height:1;
+}
+
 .content-wrapper {
     background-color: #fff;
 }

@@ -1,64 +1,70 @@
 ﻿<!--BitAdmin2.0框架文件-->
 <link href="../../lib/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet" />
-<div class="row">
-    <div class="col-md-4">
-        <div class="box">
-            <div class="box-body querySuite-wrapper">
-                <div class="panel-heading">
-                    组织架构
-                </div>
-                <div id="departmentTree" data-url="../../system/GetDepartmentTree" data-text="departmentName"></div>
+<div class="row box">
+    <div class="col-md-3">
+        <div class="card querySuite-wrapper">
+            <div class="card-header">
+                组织架构
             </div>
+            <div id="departmentTree" data-url="../../system/GetDepartmentTree" data-text="departmentName"></div>
         </div>
     </div>
-    <div class="col-md-8">
-        <div class="box">
-            <div id="querySuite" class="box-body querySuite-wrapper">
-                <!-- 条件搜索 -->
-                <div class="querySuite-filter">
-                    <table>
-                        <tr>
-                            <th>姓名:</th>
-                            <td><input type="text" name="userName" class="form-control" /></td>
-                            <th></th>
-                            <td><input type="hidden" id="parentId" name="parentId" /></td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- 按钮 查询 导入 -->
-                <div class="querySuite-button">
-                    <button class="btn btn-default" action="query">
-                        <span class="glyphicon glyphicon-search"></span> 查询
-                    </button>
-                    <button class="btn btn-default" action="add" action-modal="formSuite">
-                        <span class="glyphicon glyphicon-plus-sign"></span> 添加
-                    </button>
-                    <button class="btn btn-danger" action="delete">
-                        <span class="glyphicon glyphicon-trash"></span> 删除
-                    </button>
-                </div>
-                <!-- 列表-->
-                <div class="querySuite-table"
-                     data-key="userId"
-                     data-order-by="orderNo"
-                     data-query-url="../../system/QueryUserData"
-                     data-delete-url="../../system/DeleteUserData"
-                     data-sort-url="../../system/SortUserData">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:30px;"><input type="checkbox" /></th>
-                                <th data-field="userCode" data-format="edit">工号</th>
-                                <th data-field="userName">姓名</th>
-                                <th data-field="post">职位</th>
-                                <th data-field="mobile">联系电话</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <!-- 分页 -->
-                <div class="querySuite-paging" data-page-size="10"></div>
+    <div class="col-md-9">
+        <div id="querySuite" class="box-body querySuite-wrapper">
+            <!-- 条件搜索 -->
+            <div class="querySuite-filter">
+                <table>
+                    <tr>
+                        <th>姓名:</th>
+                        <td><input type="text" name="userName" class="form-control" /></td>
+                        <th></th>
+                        <td><input type="hidden" id="parentId" name="parentId" /></td>
+                    </tr>
+                </table>
             </div>
+            <!-- 按钮 查询 导入 -->
+            <div class="querySuite-button">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" action="query">
+                        <i class="fas fa-search"></i> 查询
+                    </button>
+                    <button type="button" class="btn btn-default" action="add" action-modal="formSuite">
+                        <i class="fas fa-plus"></i> 添加
+                    </button>
+                    <button type="button" class="btn btn-default" action="delete">
+                        <i class="fas fa-trash-alt"></i> 删除
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fas fa-retweet"></i> 同步</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" id="adsync"><i class="fas fa-download"></i> 从域控同步用户</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" id="weixinsync"><i class="fas fa-upload"></i> 同步到企业微信</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 列表-->
+            <div class="querySuite-table"
+                 data-key="userId"
+                 data-order-by="orderNo"
+                 data-query-url="../../system/QueryUserData"
+                 data-delete-url="../../system/DeleteUserData"
+                 data-sort-url="../../system/SortUserData">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:30px;"><input type="checkbox" /></th>
+                            <th data-field="userCode" data-format="edit">工号</th>
+                            <th data-field="userName">姓名</th>
+                            <th data-field="post">职位</th>
+                            <th data-field="mobile">联系电话</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!-- 分页 -->
+            <div class="querySuite-paging" data-page-size="10"></div>
         </div>
     </div>
 </div>
@@ -75,7 +81,7 @@
                             <th>工号：</th>
                             <td>
                                 <input type="hidden" name="userId">
-                                <input type="hidden" name="departmentId"/>
+                                <input type="hidden" name="departmentId" />
                                 <input name="userCode" required class="form-control required" />
                             </td>
                         </tr>
@@ -96,10 +102,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnSave" action="save">
-                    <span class="glyphicon glyphicon-saved"></span>保存
+                    <i class="fas fa-vote-yea"></i> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span>关闭
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -133,5 +139,20 @@
                 querySuite.query();
             })
             .load();
+
+        //同步域用户
+        $("#adsync").click(function () {
+            $.get("../../ad/sync", function (result) {
+                alert(result.msg);
+                querySuite.query();
+            });
+        });
+        //同步用户到企业微信
+        $('#weixinsync').click(function () {
+            $.get("../../WeixinWork/UploadUser", function (result) {
+                alert(result.msg);
+                querySuite.query();
+            });
+        })
     });
 </script>

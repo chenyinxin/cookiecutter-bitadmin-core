@@ -3,19 +3,21 @@
 <div class="box">
     <div class="box-body querySuite-wrapper">
         <!-- 按钮 查询 导入 -->
-        <div class="querySuite-button container-fluid navbar-right" style="margin-bottom:10px;">
-            <button class="btn btn-default" action="query">
-                <span class="glyphicon glyphicon-search"></span> 查询
-            </button>
-            <button class="btn btn-default" action="add" action-modal="addModel">
-                <span class="glyphicon glyphicon-plus-sign"></span> 新增模块
-            </button>
-            <button class="btn btn-default" action="add" action-modal="addPage">
-                <span class="glyphicon glyphicon-plus-sign"></span> 新增页面
-            </button>
-            <button class="btn btn-danger" action="delete">
-                <span class="glyphicon glyphicon-trash"></span> 删除
-            </button>
+        <div class="querySuite-button" style="text-align:right;">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" action="query">
+                    <i class="fas fa-search"></i> 查询
+                </button>
+                <button type="button" class="btn btn-default" action="add" action-modal="addModel">
+                    <i class="fas fa-plus"></i> 添加模块
+                </button>
+                <button type="button" class="btn btn-default" action="add" action-modal="addPage">
+                    <i class="fas fa-plus"></i> 添加页面
+                </button>
+                <button type="button" class="btn btn-default" action="delete">
+                    <i class="fas fa-trash-alt"></i> 删除
+                </button>
+            </div>
         </div>
         <!-- 列表-->
         <div class="querySuite-table"
@@ -43,8 +45,8 @@
     </div>
 </div>
 <!-- 模态框（Modal）编辑模块 -->
-<div id="addModel" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 500px;overflow-y:auto;">
+<div id="addModel" class="modal fade formSuite-wrapper">
+    <div class="modal-dialog" style="overflow-y:auto;">
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="模块"
@@ -68,9 +70,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>图标ICON：</th>
+                            <th>模块图标：</th>
                             <td>
                                 <input type="text" name="moduleIcon" class="form-control" />
+                                <br />图标使用FontAwesome完整样式名称，<a href="https://fontawesome.com/icons" target="_blank">查找图标</a>
                             </td>
                         </tr>
                         <tr>
@@ -84,18 +87,18 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" action="save">
-                    <span class="glyphicon glyphicon-saved"></span> 保存
+                    <i class="fas fa-vote-yea"></i> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
 <!-- 模态框（Modal）编辑页面 -->
-<div id="addPage" class="modal fade formSuite-wrapper" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width: 800px;overflow-y:auto;">
+<div id="addPage" class="modal fade formSuite-wrapper">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="菜单页面"
@@ -127,14 +130,21 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>页面URL：</th>
-                            <td colspan="3">
-                                <input type="text" name="pageUrl" required class="form-control" />
+                            <th></th>
+                            <td></td>
+                            <th></th>
+                            <td>
+                                图标使用FontAwesome完整样式名称，<a href="https://fontawesome.com/icons" target="_blank">查找图标</a>
                             </td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td colspan="3" style="font-size:9pt;">
+                            <th>页面路径：</th>
+                            <td colspan="3">
+                                <input type="text" name="pageUrl" required class="form-control" placeholder="例：/module/page" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="font-size:9pt;padding-left:100px;">
                                 <b>通过tab打开：</b><br />
                                 （1）使用模板，格式：/system/log 对应 /pages/system/log.html<br />
                                 （2）使用模板，格式：../news/system/log 对应 /news/system/log.html<br />
@@ -154,26 +164,24 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" action="save">
-                    <span class="glyphicon glyphicon-saved"></span>
-                    保存
+                    <i class="fas fa-vote-yea"></i> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span>
-                    关闭
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
 <!-- 模态框（Modal）设置操作 -->
-<div class="modal fade" id="Modal_operation" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="overflow-y: auto; overflow-x:hidden;">
-    <div class="modal-dialog" style="width: 500px;overflow-y:auto;">
+<div class="modal fade" id="Modal_operation">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <h4 class="modal-title" id="operationLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal">
                     &times;
                 </button>
-                <h4 class="modal-title" id="operationLabel"></h4>
             </div>
             <div class="modal-body">
                 <form id="formOperation" method="post">
@@ -189,12 +197,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnOperationSave" action="save">
-                    <span class="glyphicon glyphicon-saved"></span>
-                    保存
+                    <i class="fas fa-vote-yea"></i> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span>
-                    关闭
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->

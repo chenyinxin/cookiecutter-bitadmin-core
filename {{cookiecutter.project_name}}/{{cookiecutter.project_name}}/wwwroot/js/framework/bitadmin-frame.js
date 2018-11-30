@@ -20,12 +20,12 @@ $.extend(BitAdmin,
                 //var pageUrl = bitPage.GetRedirect(options);
                 if (options.pageUrl == undefined) return;
 
-                var li = $('<li id="tab_li_' + options.tabName + '"></li>');
-                var a = $('<a href="#tab_content_' + options.tabName + '" data-toggle="tab" id="tab_a_' + options.tabName + '">' + options.tabTitle + '  </a>');
+                var li = $('<li class="nav-item" id="tab_li_' + options.tabName + '"></li>');
+                var a = $('<a class="nav-link" href="#tab_content_' + options.tabName + '" data-toggle="tab" id="tab_a_' + options.tabName + '">' + options.tabTitle + '  </a>');
 
-                var spanRefresh = $('<span class="glyphicon glyphicon-repeat" style="float:none;font-size: 12px;"></span>');
+                var spanRefresh = $('<small><i class="fas fa-undo"></i></small>');
                 spanRefresh.bind('click', function () { BitAdmin.refreshTab('iframe_' + options.tabName); });
-                var spanClose = $('<span class="glyphicon glyphicon-remove"  style="float:none;font-size: 12px;"></span>');
+                var spanClose = $('  <i class="fas fa-times"></i>');
                 spanClose.bind('click', function () { BitAdmin.closeTab(this); });
 
                 a.append(spanRefresh).append(spanClose);
@@ -106,7 +106,7 @@ $.fn.extend({
             $.each(menus, function (index, menu) {
                 var moduleICO = menu.icon == null || menu.icon == "" ? "fa-edit" : menu.icon;
                 if (menu.children != null && menu.children.length > 0) {
-                    var li = $('<li class="treeview"><a href="javascript:void(0);"><i class="fa ' + moduleICO + '"></i><span>' + menu.name + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a></li>');
+                    var li = $('<li class="treeview"><a href="javascript:void(0);"><i class="' + moduleICO + '" style="margin-right:5px;"></i><span>' + menu.name + '</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a></li>');
                     var ul = $('<ul class="treeview-menu"></ul>');
                     li.append(ul);
                     li.click(function () {
@@ -116,7 +116,7 @@ $.fn.extend({
                     BindTreeViewMenu(menu.children, ul, title + menu.name);//绑定新的树结构<li class="treeview"></li>
                 }
                 else {
-                    var li = $('<li><a href="javascript:void(0);"><i class="fa ' + moduleICO + '"></i>' + menu.name + '</a></li>');
+                    var li = $('<li><a href="javascript:void(0);"><i class="' + moduleICO + '" style="margin-right:5px;"></i>' + menu.name + '</a></li>');
                     pul.append(li);
                     if (menu.url != undefined && menu.url != null && menu.url != "") {
                         var option = {

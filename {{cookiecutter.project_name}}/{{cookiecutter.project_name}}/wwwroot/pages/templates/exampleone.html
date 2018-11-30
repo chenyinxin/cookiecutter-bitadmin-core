@@ -15,27 +15,31 @@
         </div>
         <!-- 按钮 查询 导入 -->
         <div class="querySuite-button">
-            <button class="btn btn-default" action="query">
-                <span class="glyphicon glyphicon-search"></span>查询
-            </button>
-            <button class="btn btn-default" action="add" action-modal="myModal">
-                <span class="glyphicon glyphicon-plus-sign"></span>添加
-            </button>
-            <button class="btn btn-default" action="import">
-                <span class="glyphicon glyphicon-import"></span>导入
-            </button>
-            <button class="btn btn-default" action="import" data-url="../../example/import">
-                <span class="glyphicon glyphicon-import"></span>导入二
-            </button>
-            <button class="btn btn-default" action="export">
-                <span class="glyphicon glyphicon-export"></span>导出
-            </button>
-            <button class="btn btn-default" action="export" data-url="../../example/export">
-                <span class="glyphicon glyphicon-export"></span>导出二
-            </button>
-            <button class="btn btn-danger" action="delete">
-                <span class="glyphicon glyphicon-trash"></span>删除
-            </button>
+            <div class="btn-group">
+                <button class="btn btn-default" action="query">
+                    <i class="fas fa-search"></i> 查询
+                </button>
+                <button class="btn btn-default" action="add" action-modal="myModal">
+                    <i class="fas fa-plus"></i> 添加
+                </button>
+                <button class="btn btn-default" action="import">
+                    <i class="fas fa-file-import"></i> 导入
+                </button>
+                <button class="btn btn-default" action="import" data-url="../../example/import">
+                    <i class="fas fa-file-import"></i> 导入二
+                </button>
+                <button class="btn btn-default" action="export">
+                    <i class="fas fa-file-export"></i> 导出
+                </button>
+                <button class="btn btn-default" action="export" data-url="../../example/export">
+                    <i class="fas fa-file-export"></i> 导出二
+                </button>
+                <button class="btn btn-default" action="delete">
+                    <i class="fas fa-trash-alt"></i> 删除
+                </button>
+            </div>
+        </div>
+        <div class="querySuite-button">
         </div>
         <!-- 列表-->
         <div class="querySuite-table" data-sort-name="orderNo" data-sort-order="desc"
@@ -61,8 +65,8 @@
     </div>
 </div>
 <!-- 模态框（Modal）编辑数据字典信息 -->
-<div id="myModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" style="width:1000px">
+<div id="myModal" class="modal fade formSuite-wrapper">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="示例模型"
@@ -154,10 +158,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" action="save">
-                    <span class="glyphicon glyphicon-saved"></span> 保存
+                    <i class="fas fa-vote-yea"></i> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->

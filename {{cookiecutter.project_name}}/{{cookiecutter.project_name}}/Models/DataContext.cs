@@ -24,10 +24,6 @@ namespace {{cookiecutter.project_name}}.Models
         public virtual DbSet<FlowStep> FlowStep { get; set; }
         public virtual DbSet<FlowStepPath> FlowStepPath { get; set; }
         public virtual DbSet<GeneralExample> GeneralExample { get; set; }
-        public virtual DbSet<PmProject> PmProject { get; set; }
-        public virtual DbSet<PmProjectUser> PmProjectUser { get; set; }
-        public virtual DbSet<PmTask> PmTask { get; set; }
-        public virtual DbSet<PmTaskUser> PmTaskUser { get; set; }
         public virtual DbSet<SysAttachment> SysAttachment { get; set; }
         public virtual DbSet<SysDepartment> SysDepartment { get; set; }
         public virtual DbSet<SysDictionary> SysDictionary { get; set; }
@@ -272,86 +268,6 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.Property(e => e.RequiredText).HasMaxLength(64);
 
                 entity.Property(e => e.UserPicker).HasMaxLength(64);
-            });
-
-            modelBuilder.Entity<PmProject>(entity =>
-            {
-                entity.HasKey(e => e.ProjectId);
-
-                entity.Property(e => e.ProjectId).ValueGeneratedNever();
-
-                entity.Property(e => e.CreateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.EndDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PlanEndDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PlanStartDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ProjectCode).HasMaxLength(32);
-
-                entity.Property(e => e.ProjectContent).HasColumnType("text");
-
-                entity.Property(e => e.ProjectManagerMobile).HasMaxLength(16);
-
-                entity.Property(e => e.ProjectName).HasMaxLength(64);
-
-                entity.Property(e => e.ProjectProperty).HasMaxLength(16);
-
-                entity.Property(e => e.ProjectStatus).HasMaxLength(16);
-
-                entity.Property(e => e.ProjectType).HasMaxLength(16);
-
-                entity.Property(e => e.Remark).HasColumnType("text");
-
-                entity.Property(e => e.StartDate).HasColumnType("datetime");
-
-                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<PmProjectUser>(entity =>
-            {
-                entity.HasKey(e => new { e.ProjectId, e.UserId });
-
-                entity.Property(e => e.UserRole).HasMaxLength(16);
-            });
-
-            modelBuilder.Entity<PmTask>(entity =>
-            {
-                entity.HasKey(e => e.TaskId);
-
-                entity.Property(e => e.TaskId).ValueGeneratedNever();
-
-                entity.Property(e => e.CreateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.EndDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PlanEndDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PlanStartDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Remark).HasColumnType("text");
-
-                entity.Property(e => e.StartDate).HasColumnType("datetime");
-
-                entity.Property(e => e.TaskContent).HasColumnType("text");
-
-                entity.Property(e => e.TaskManager).HasMaxLength(64);
-
-                entity.Property(e => e.TaskName).HasMaxLength(64);
-
-                entity.Property(e => e.TaskStatus).HasMaxLength(16);
-
-                entity.Property(e => e.TaskType).HasMaxLength(16);
-
-                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<PmTaskUser>(entity =>
-            {
-                entity.HasKey(e => new { e.TaskId, e.UserId });
-
-                entity.Property(e => e.UserRole).HasMaxLength(16);
             });
 
             modelBuilder.Entity<SysAttachment>(entity =>

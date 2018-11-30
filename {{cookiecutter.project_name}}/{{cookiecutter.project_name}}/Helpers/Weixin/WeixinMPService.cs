@@ -15,8 +15,6 @@ namespace {{cookiecutter.project_name}}.Helpers
 {
     public class WeixinMPService
     {
-        private static string appId = "wx806943202a75a124";
-        private static string secret = "d52257abea1018eec3a798005ba4f841";
 
         #region 发送文本
         public static void SendText(Guid? userId, string text)
@@ -25,12 +23,10 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendText(List<Guid?> userIds, string text)
         {
-            Register();
             QueryOpenId(userIds).ForEach(openId => CustomApi.SendText(appId, openId, text));
         }
         public static void SendText(string openId, string text)
         {
-            Register();
             CustomApi.SendText(appId, openId, text);
         }
         #endregion
@@ -42,7 +38,6 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendImage(List<Guid?> userIds, string text)
         {
-            Register();
             QueryOpenId(userIds).ForEach(openId => CustomApi.SendImage(appId, openId, text));
         }
         #endregion
@@ -54,7 +49,6 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendNews(List<Guid?> userIds, List<Article> articles)
         {
-            Register();
             QueryOpenId(userIds).ForEach(openId => CustomApi.SendNews(appId, openId, articles));
         } 
         #endregion
@@ -68,7 +62,6 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendTemplate(List<Guid?> userIds, string templateId, string linkUrl)
         {
-            Register();
             QueryOpenId(userIds).ForEach(openId => {
                 var templateData = new TemplateData()
                 {
@@ -78,9 +71,10 @@ namespace {{cookiecutter.project_name}}.Helpers
                     Time = new TemplateDataItem("2111-11-11 11:11:11", "#000000"),
                     Remark = new TemplateDataItem("感谢您的购买~", "#000000")
                 };
-                SendTemplateMessageResult sendResult = TemplateApi.SendTemplateMessage(GetToken(), openId, templateId, linkUrl, templateData, null);
+                SendTemplateMessageResult sendResult = TemplateApi.SendTemplateMessage(appId, openId, templateId, linkUrl, templateData, null);
             });
         }
+        private static string appId { get { return AccessTokenContainer.GetFirstOrDefaultAppId(); } }
 
         public class TemplateData
         {
@@ -89,19 +83,7 @@ namespace {{cookiecutter.project_name}}.Helpers
             public TemplateDataItem Price { get; set; }
             public TemplateDataItem Time { get; set; }
             public TemplateDataItem Remark { get; set; }
-        }
-
-        private static void Register()
-        {
-            if (!AccessTokenContainer.CheckRegistered(appId))
-                AccessTokenContainer.Register(appId, secret);
-        }
-
-        private static string GetToken()
-        {
-            Register();
-            return AccessTokenContainer.GetAccessTokenResult(appId).access_token;
-        }
+        }               
 
         private static List<string> QueryOpenId(List<Guid?> userIds)
         {

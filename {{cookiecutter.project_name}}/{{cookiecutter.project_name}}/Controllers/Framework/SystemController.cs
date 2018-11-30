@@ -137,7 +137,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 删除部门
         /// </summary>
         /// <returns></returns>
-        public JsonResult DeleteDepartment(string IDs)
+        public JsonResult DeleteDepartmentData(string IDs)
         {
             try
             {
@@ -148,6 +148,24 @@ namespace {{cookiecutter.project_name}}.Controllers
 
                 SqlHelper.ExecuteSql(string.Format(@"delete SysDepartment where departmentId in ({0});", idfilter));
                 return Json(new { Code = 0, Msg = "删除成功！" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
+        /// <summary>
+        /// 用户拖动排序
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult SortDepartmentData(string ids)
+        {
+            try
+            {
+                var result = SqlHelper.ExecuteSql(QuerySuite.SortSql(ids, "SysDepartment", "orderNo", "departmentId"));
+                return Json(new { Code = 0, Msg = "保存成功" });
             }
             catch (Exception ex)
             {

@@ -180,9 +180,9 @@ $.extend({
                                     input.val(value);
                                     continue;
                                 }
-                                var _control = input.parent();
-                                var _controltype = _control.attr("data-control");
-                                if (_controltype == "datePicker") {
+                                var _control = input;
+                                var _controltype = _control.attr("data-picker");
+                                if (_controltype == "datetime") {
                                     var formatter = _control.attr("data-format");
                                     value = time.format(value, formatter);
                                 }
@@ -265,10 +265,31 @@ $.fn.zk_table = function (_option, querySuite) {
                 thtml.parent().find("tbody").find(".SelectRow").prop("checked", is_checked);
             });
         }
+        $.each(_option.table.find("thead").find("[data-sort=true]"), function (index, element) {
+            var field = $(this).attr('data-field');
+            $(this).append($('<i class="sortbutton fas fa-sort" style="top:3px;cursor: pointer;"></i>').data('sort', 'sort')
+                .bind('click', function () {
+                    if ($(this).data('sort') == 'sort') {
+                        $.each(_option.table.find('thead').find('.sortbutton'), function (index, element) {
+                            $(this).removeClass('fa-sort-alpha-up').removeClass('fa-sort-alpha-down').addClass('fa-sort').data('sort', 'sort');
+                        });
+                        _option.table.find('thead').find('th[data-field=' + field + ']').find('.sortbutton').removeClass('fa-sort').addClass('fa-sort-alpha-up').data('sort', 'desc');
+                        _option.sortable(field, 'desc');
+                    }
+                    else if ($(this).data('sort') == 'desc') {
+                        $(this).addClass('fa-sort-alpha-down').removeClass('fa-sort-alpha-up').data('sort', 'asc');
+                        _option.sortable(field, 'asc');
+                    }
+                    else if ($(this).data('sort') == 'asc') {
+                        $(this).addClass('fa-sort-alpha-up').removeClass('fa-sort-alpha-down').data('sort', 'desc');
+                        _option.sortable(field, 'desc');
+                    }
+                }));
+        });
 
         $.each(_option.table.find("thead").find("[data-filter=true]"), function (index, element) {
             var field = $(this).attr('data-field');
-            $(this).append($('<span class="glyphicon glyphicon-filter" style="top:3px;cursor: pointer;"></span>')
+            $(this).append($(' <small><i class="fas fa-filter" style="top:3px;cursor: pointer;"></i></small>')
                 .bind('click', function () {
                     querySuiteSearch({
                         queryCallback: function (keyword) {
@@ -277,28 +298,6 @@ $.fn.zk_table = function (_option, querySuite) {
                             querySuite.query();
                         }
                     });
-                }));
-        });
-
-        $.each(_option.table.find("thead").find("[data-sort=true]"), function (index, element) {
-            var field = $(this).attr('data-field');
-            $(this).append($('<span class="querySuite-sortable glyphicon glyphicon-sort"></span>').data('sort', 'sort')
-                .bind('click', function () {
-                    if ($(this).data('sort') == 'sort') {
-                        $.each(_option.table.find('thead').find('.querySuite-sortable'), function (index, element) {
-                            $(this).removeClass('glyphicon-sort-by-attributes-alt').removeClass('glyphicon-sort-by-attributes').addClass('glyphicon-sort').data('sort', 'sort');
-                        });
-                        _option.table.find('thead').find('th[data-field=' + field + ']').find('.querySuite-sortable').removeClass('glyphicon-sort').addClass('glyphicon-sort-by-attributes-alt').data('sort', 'desc');
-                        _option.sortable(field, 'desc');
-                    }
-                    else if ($(this).data('sort') == 'desc') {
-                        $(this).addClass('glyphicon-sort-by-attributes').removeClass('glyphicon-sort-by-attributes-alt').data('sort', 'asc');
-                        _option.sortable(field, 'asc');
-                    }
-                    else if ($(this).data('sort') == 'asc') {
-                        $(this).addClass('glyphicon-sort-by-attributes-alt').removeClass('glyphicon-sort-by-attributes').data('sort', 'desc');
-                        _option.sortable(field, 'desc');
-                    }
                 }));
         });
     }
@@ -409,7 +408,7 @@ $.fn.zk_paging = function (option) {
     }
     if (pagezNum < 1)
         pagezNum = 1;
-    var _init = $('<td style="vertical-align: middle;"><span>当前 ' + _option.pageIndex + ' / ' + pagezNum + ' 页，每页<input type="text" class="pageSize" title="离开此文本自动设置" style="width:40px;height: 20px;text-align: center; margin:0px 5px;border: #d2d6de 1px solid;border-radius: 4px;" value="' + _option.pageSize + '" />条\
+    var _init = $('<td style="vertical-align: middle;text-align: right;"><span>当前 ' + _option.pageIndex + ' / ' + pagezNum + ' 页，每页<input type="text" class="pageSize" title="离开此文本自动设置" style="width:40px;height: 20px;text-align: center; margin:0px 5px;border: #d2d6de 1px solid;border-radius: 4px;" value="' + _option.pageSize + '" />条\
                         ,总共 ' + _option.totalContent + ' 条记录</span></td>');
     _init.find(".pageSize").bind('keydown', function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
@@ -432,18 +431,16 @@ $.fn.zk_paging = function (option) {
         }
     });
 
-    table.append(_init);
 
-    var _nav = $('<td style="text-align:right"><nav class="pageNum"></nav></td>');
+    var _nav = $('<td><nav class="pageNum"></nav></td>');
     var ul = $('<ul class="pagination" style="margin: 5px 0px;">');
     _nav.find('nav').append(ul);
 
-    table.append(_nav);
 
     var initialPage = function () {
         ul.html('');
         ///添加首页
-        var li_first = $('<li><a href="javascript:void(0);">&laquo;</a></li>');
+        var li_first = $('<li class="page-item"><a class="page-link" href="javascript:void(0);">&laquo;</a></li>');
         ul.append(li_first);
         li_first.bind('click', function () {
             _option.pageIndex = 1;
@@ -466,7 +463,7 @@ $.fn.zk_paging = function (option) {
         }
 
         for (var i = StartNum; i <= EndNum; i++) {
-            var li = $('<li><a href="javascript:void(0);">' + i + '</a></li>');
+            var li = $('<li class="page-item"><a class="page-link" href="javascript:void(0);">' + i + '</a></li>');
             li.data('index', (i));
             if (i == _option.pageIndex) {
                 li.addClass('active');
@@ -481,7 +478,7 @@ $.fn.zk_paging = function (option) {
             ul.append(li);
         }
         ///添加最后一页
-        var li_last = $('<li><li><a href="javascript:void(0);">&raquo;</a></li></li>');
+        var li_last = $('<li class="page-item"><a class="page-link" href="javascript:void(0);">&raquo;</a></li>');
         ul.append(li_last);
 
         li_last.bind('click', function () {
@@ -490,7 +487,10 @@ $.fn.zk_paging = function (option) {
                 _option.onPageIndexChange(_option.pageIndex);
             }
             initialPage();
-        })
+        });
+
+        table.append(_nav);
+        table.append(_init);
     }
     initialPage();
     $(self).append(table);
@@ -504,7 +504,7 @@ $.fn.querySuite = function (option) {
     var _paging = _wrapper.find(".querySuite-paging");
 
     _filter.addClass("container-fluid");
-    _button.addClass("container-fluid");
+    _button.addClass("container-fluid").addClass("text-right");
 
     var _option = {
         jqFilter: _filter,
@@ -532,13 +532,13 @@ $.fn.querySuite = function (option) {
         _filter.find("tr").addClass("tr_shrink").hide();
         _filter.find("tr:eq(0)").removeClass("tr_shrink").show();
         _filter.find("tr").append("<td></td>");
-        var expand = $('<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-zoom-in"></span> 高级查询</button>')
+        var expand = $('<button type="button" class="btn btn-link"><i class="fas fa-search-plus"></i> 高级查询</button>')
             .bind("click", function () {
                 _filter.find(".tr_shrink").animate({ height: 'toggle', opacity: 'toggle' }, "slow");
                 $(this).css("display", "none");
                 shrink.css("display", "block");
             });
-        var shrink = $('<button type="button" class="btn btn-link"><span class="glyphicon glyphicon-zoom-out"></span> 高级查询</button>')
+        var shrink = $('<button type="button" class="btn btn-link"><i class="fas fa-search-minus"></i> 高级查询</button>')
             .bind("click", function () {
                 _filter.find(".tr_shrink").animate({ height: 'toggle', opacity: 'toggle' }, "slow");
                 $(this).css("display", "none");
@@ -563,7 +563,7 @@ $.fn.querySuite = function (option) {
 
         var filter = _filter.formSerialize();
         for (var key in data) {
-            if (data[key] != undefined) filter += "&" + key + "=" + data[key];
+            if (data[key] != undefined) filter += (filter != "" ? "&" : "") + key + "=" + data[key];
         }
         $.ajax({
             url: _option.queryUrl,
@@ -776,7 +776,7 @@ $.fn.querySuite = function (option) {
         _option.keyword = "";
         _option.query();
     });
-    _button.find("[action='delete']").click(function () { _option.delete(); });
+    _button.find("[action=delete]").click(function () { _option.delete(); });
 
     //导入初始化
     $("[action=import]").each(function () {
@@ -827,14 +827,13 @@ $.fn.formSuite = function () {
     $.adminTools.initForm(_option, _callback, _wrapper, _form);
 
     var _header = $('<div class="modal-header">\
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-        <h4 class="modal-title"></h4></div>');
+        <h4 class="modal-title"></h4>\
+        <button type="button" class="close" data-dismiss="modal">&times;</button></div>');
     if (_wrapper.find(".modal-content:first").children(".modal-header").length == 0)
         _header.insertBefore(_wrapper.find(".modal-body:first"));
 
     var h4id = _wrapper.attr("id") + "H4";
     var _title = _wrapper.find(".modal-title").attr("id", h4id);
-    _wrapper.attr("aria-labelledby", h4id).attr("tabindex", "-1");
 
     $("[action-modal=" + _wrapper.attr("id") + "]").attr("data-toggle", "modal").attr("data-target", "#" + _wrapper.attr("id")).click(function () { _option.add(); });
     _wrapper.append($('<span data-action="loadform"></span>').click(function () { _option.load(JSON.parse($(this).attr("data-param"))); }));

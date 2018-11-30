@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!--基础引用-->
     <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../../lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../lib/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link href="../../lib/admin-lte/css/AdminLTE.min.css" rel="stylesheet" />
     <link href="../../lib/admin-lte/css/skins/_all-skins.min.css" rel="stylesheet" />
 
@@ -17,6 +17,14 @@
 
     <link href="../../css/lib/spop.min.css" rel="stylesheet" />
     <style>
+        .main-header .sidebar-toggle {
+            padding: 0px;
+        }
+
+            .main-header .sidebar-toggle:before {
+                content: "";
+            }
+
         .content-wrapper .content {
             padding: 2px 0px 0px 0px;
         }
@@ -37,20 +45,7 @@
             #page-tabs li {
                 display: inline-block;
             }
-
-        .scrollBtn {
-            position: absolute;
-            z-index: 20;
-            width: 100%;
-            padding-right: 20px;
-            height: 35px;
-            line-height: 35px;
-        }
-
-            .scrollBtn span {
-                cursor: pointer;
-            }
-
+            
         .nav-tabs > li {
             float: none;
         }
@@ -60,14 +55,13 @@
     <div class="wrapper" style="margin-top:0px;">
         <header class="main-header">
             <a href="/pages/home/index.html" class="logo">
-                <span class="logo-mini"><b>系统</b></span>
                 <span class="logo-lg"><b>BitAdminCore</b></span>
+                <span class="logo-mini"><b>Core</b></span>
             </a>
-            <nav class="navbar navbar-static-top">
+            <nav class="navbar fixed-top">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <i class="fas fa-align-justify"></i>
+                    <span class="sr-only">打开/关闭菜单</span>
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-custom-menu">
@@ -78,29 +72,19 @@
                                 <span class="hidden-xs userName"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="user-header">
+                                <li class="user-header" style="height:145px;">
                                     <img src="../../images/home/user.jpg" class="img-circle">
-                                    <p>
-                                        <span class="userName"></span><span>-</span><span class="departmentName"></span>
-                                        <small class="idCard"></small>
-                                    </p>
+                                    <p><span class="userName"></span></p>
                                 </li>
                                 <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-xs-12 text-right">
-                                            <small class="mobile"></small>
-                                        </div>
-                                        <div class="col-xs-12 text-right">
-                                            <small class="email"></small>
-                                        </div>
-                                    </div>
+                                    <div class="text-right"><small class="departmentName"></small></div>
+                                    <div class="text-right"><small class="mobile"></small></div>
+                                    <div class="text-right"><small class="email"></small></div>
                                 </li>
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="javascript:void(1)" class="btn btn-default btn-flat" data-toggle="modal" data-target="#PasswordModal">修改密码</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="javascript:void(1)" class="btn btn-default btn-flat signout">退出登录</a>
+                                    <div class="btn-group" style="float:right;">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PasswordModal">修改密码</button>
+                                        <button type="button" class="btn btn-primary signout">退出登录</button>
                                     </div>
                                 </li>
                             </ul>
@@ -116,18 +100,18 @@
             </section>
         </aside>
         <!-- =============================================== -->
-        <div class="content-wrapper" style="background-color:white;" mode="tab">
+        <div class="content-wrapper" style="background-color:white;padding-top:50px;" mode="tab">
             <section class="content">
                 <div class="tab-title" style="position: relative; border-bottom: 1px solid #ddd; padding:0px 5px;">
                     <div>
-                        <a href="javascript:void(0);"><span id="Up" class="glyphicon glyphicon-chevron-left" style="float:left;margin-top:7px;"></span></a>
-                        <a href="javascript:void(0);"><span id="Down" class="glyphicon glyphicon-chevron-right" style="float:right;margin-top:7px;"></span></a>
+                        <a href="javascript:void(0);"><i class="fas fa-angle-left" style="float:left;margin-top:7px;"></i></a>
+                        <a href="javascript:void(0);"><i class="fas fa-angle-right" style="float:right;margin-top:7px;"></i></a>
                     </div>
                     <ul class="nav nav-tabs" id="page-tabs" style="border-bottom: none; position: relative; white-space: nowrap; overflow: hidden;">
-                        <li class="active"><a href="#home" data-toggle="tab" aria-expanded="false">首页</a></li>
-                        <li class=""><a href="#notice" data-toggle="tab" aria-expanded="false">示例</a></li>
-                        <li class=""><a href="#learn" data-toggle="tab" aria-expanded="false">教程</a></li>
-                        <li class=""><a href="#ad" data-toggle="tab" aria-expanded="false">支持</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab" aria-expanded="false">首页</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#notice" data-toggle="tab" aria-expanded="false">示例</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#learn" data-toggle="tab" aria-expanded="false">教程</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#ad" data-toggle="tab" aria-expanded="false">支持</a></li>
                     </ul>
                 </div>
                 <div class="tab-content" id="tab-content">
@@ -153,43 +137,49 @@
         <footer class="main-footer" style="padding: 5px;">
             <script>var _hmt = _hmt || []; (function () { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?67d9c965e616fb773b85f279d372b0c4"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })();</script>
             <strong>Copyright &copy; 2017-2018 <a href="javascript:void();">bitdao</a>.</strong> All rights reserved.
-            <div class="pull-right hidden-xs">
+            <div style="float:right;">
                 <b>Version</b> 1.0.0
             </div>
         </footer>
         <!-- 修改密码 -->
-        <div class="modal fade" id="PasswordModal" tabindex="-1" role="dialog" aria-labelledby="ModalOneLabel" aria-hidden="true">
+        <div class="modal fade" id="PasswordModal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4>修改用户密码</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="ModalOneLabel">修改用户密码</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group has-feedback">
+                        <div class="input-group mb-3">
                             <span>请输入旧密码：</span>
                         </div>
-                        <div class="form-group has-feedback">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
                             <input type="password" id="OldPassword" class="form-control" placeholder="旧密码">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-                        <div class="form-group has-feedback">
+                        <div class="input-group mb-3">
                             <span>请输入新密码：</span>
                         </div>
-                        <div class="form-group has-feedback">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
                             <input type="password" id="NewPasswordOne" class="form-control" placeholder="新密码">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-                        <div class="form-group has-feedback">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
                             <input type="password" id="NewPasswordTow" class="form-control" placeholder="新密码确认">
-                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
-                        <div class="form-group has-feedback">
+                        <div class="form-group">
                             <span id="spanmsg" style="color:red;"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i> 关闭</button>
                         <button type="button" class="btn btn-primary" id="savePassword">修改密码</button>
                     </div>
                 </div><!-- /.modal-content -->

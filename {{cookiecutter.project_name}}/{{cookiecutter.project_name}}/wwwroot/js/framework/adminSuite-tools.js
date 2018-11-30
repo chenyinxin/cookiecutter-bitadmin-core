@@ -58,16 +58,18 @@ $.fn.bitRadio = function (_changes) {
     if (_option.url != null && _option.url != "" && _option.url != undefined) {
         $.getJSON(_option.url, { type: _wrapper.attr("data-type") }, function (result) {
             var _radioControl = _wrapper.find('input[type="radio"]');
-            var _label = $(_option.inline ? '<label class="radio-inline"></label>' : '<label></label>');
+            var _label = $(_option.inline ? '<div class="custom-control custom-radio" style="display:inline-block;"></div>' : '<div class="custom-control custom-radio"></div>');
             var actualval = _wrapper.parents("form").attr("data-" + _option.name);
 
             _option.parent.empty();
 
             $.each(result.data, function (index, row) {
-                var _labControl = _label.clone();
-                var _radio = $('<input type="radio" name="' + _option.name + '">').data("bind", row).val(row[_option.value]);
-                _labControl.append(_radio);
-                _labControl.append(row[_option.text]);
+                var _radio = $('<input class="custom-control-input" type="radio" id="rdid' + _option.name + index + '" name="' + _option.name + '">').data("bind", row).val(row[_option.value]);
+                var _labControl = _label.clone().append(_radio).append('<label class="custom-control-label" for="rdid' + _option.name + index + '">' + row[_option.text] + '</label>');
+                //var _labControl = _label.clone();
+                //var _radio = $('<input type="radio" name="' + _option.name + '">').data("bind", row).val(row[_option.value]);
+                //_labControl.append(_radio);
+                //_labControl.append(row[_option.text]);
 
                 if (actualval == _radio.val()) {
                     _radio.prop("checked", "checked");
@@ -106,14 +108,14 @@ $.fn.bitCheckbox = function (_changes) {
     if (_option.url != null && _option.url != "" && _option.url != undefined) {
         $.getJSON(_option.url, { type: _wrapper.attr("data-type") }, function (result) {
             var _radioControl = _wrapper.find('input[type="checkbox"]');
-            var _label = $(_option.inline ? '<label class="checkbox-inline"></label>' : '<label></label>');
+            var _label = $(_option.inline ? '<div class="custom-control custom-checkbox" style="display:inline-block;"></div>' : '<div class="custom-control custom-checkbox"></div>');
             var actualval = _wrapper.parents("form").attr("data-" + _option.name);
 
             _option.parent.empty();
 
             $.each(result.data, function (index, row) {
-                var _checkbox = $('<input type="checkbox" name="' + _option.name + '">').data("bind", row).val(row[_option.value]);
-                var _labControl = _label.clone().append(_checkbox).append(row[_option.text]);
+                var _checkbox = $('<input class="custom-control-input" type="checkbox" id="cbid' + _option.name + index+ '" name="' + _option.name + '">').data("bind", row).val(row[_option.value]);
+                var _labControl = _label.clone().append(_checkbox).append('<label class="custom-control-label" for="cbid' + _option.name + index+ '">' + row[_option.text] + '</label>');
 
                 if (actualval != '' && actualval != null && ('|' + actualval + '|').indexOf('|' + _checkbox.val()) > 0) {
                     _checkbox.prop("checked", "checked");
@@ -170,7 +172,7 @@ $.fn.bitAutoComplete = function (_changes) {
 
 $.fn.bitAutoComSelect = function (_changes) {
     var _wrapper = $(this);
-    _wrapper.append('<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>');
+    _wrapper.append('<div class="input-group-append"><span class="input-group-text"><i class="fas fa-angle-down"></i></span></div>');
     var _text = _wrapper.find("[type=text]");
     var _value = _wrapper.find("[type=hidden]");
 
@@ -228,14 +230,13 @@ $.fn.bitAutoComSelect = function (_changes) {
 
 $.fn.bitTree = function (option) {
     var _wrapper = $(this);
-
     var _option = {
         url: null,
         checkbox: false,
         text: "text",
         nodes: "children",
-        expandIcon: 'glyphicon glyphicon-chevron-right',    //展开图标
-        collapseIcon: 'glyphicon glyphicon-chevron-down',   //合并图标
+        expandIcon: 'fas fa-chevron-right',    //展开图标
+        collapseIcon: 'fas fa-chevron-down',   //合并图标
         onNodeSelected: function (event, node) { },
         onNodeUnselected: function (event, node){},
         bind: null,
@@ -311,8 +312,8 @@ $.fn.picker = function (parent, _changes) {
         param: _wrapper.attr("data-param"),
         isShowRemove: _wrapper.attr("data-remove")
     };
-    
-    if (parent == undefined || parent == null)
+
+    if (parent == undefined || parent == null || parent =="#undefined")
         parent = "";
     var _data = {
         text: parent + " [name=" + _textName + "]",
@@ -356,15 +357,17 @@ $.fn.picker = function (parent, _changes) {
     _text.unbind("click");
     _text.click(clickfn);
 
-    var icon = $('<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>').click(clickfn);
-    $(this).append(icon);
+    var appendIco = $('<div class="input-group-append"></div>');
+    $(this).append(appendIco);
+    var icon = $('<span class="input-group-text"><i class="far fa-list-alt"></i></span>').click(clickfn);
+    appendIco.append(icon);
 
     if (_option.isShowRemove != "false") {
-        var remove = $('<span class="input-group-addon" title="清空"><i class="glyphicon glyphicon-remove"></i></span>').click(function () {
+        var remove = $('<span class="input-group-text" title="清空"><i class="fas fa-times"></i></span>').click(function () {
             _text.val("");
             _value.val("");
         });
-        $(this).append(remove);
+        appendIco.append(remove);
     }
     _text.parent().children().css("cursor", "pointer");
     _text.attr("readonly", "readonly").css("background-color", "white").css("border-right", "0px");
@@ -379,7 +382,33 @@ $.fn.picker = function (parent, _changes) {
     });
     return _option;
 };
+$.fn.pickerModal = function () {
+    var _wrapper = $(this);
+    _wrapper.modal('hide');
+    _wrapper.modal('show');
+    var _option = {};
+    var param = JSON.parse(_wrapper.parent().attr("data-param"));
+    $.extend(_option, param);
 
+    _wrapper.find("[action=save]").click(function () {
+        var result = _savecallback();
+        $(_option.value).val(result.value);
+        $(_option.text).val(result.text);
+        $(_option.text).change();
+        if (param.callback != undefined)
+            param.callback()
+
+        _wrapper.modal('hide');        
+    });
+
+    var _savecallback;
+    _option.save = function (callback) {
+        if ($.isFunction(callback))
+            _savecallback = callback;
+        return _option;
+    }
+    return _option;
+}
 $.fn.datePicker = function (_changes) {
     var _value = $(this).clone();
 
@@ -400,23 +429,26 @@ $.fn.datePicker = function (_changes) {
         maxDate: _value.attr('data-max'),
         parent: $(this).parent()
     });
-    
+
     var _wrapper = $('<div class="input-group"></div>').append(_value);
     _option.parent.empty().append(_wrapper);
 
+    var appendIco = $('<div class="input-group-append"></div>');
+    _wrapper.append(appendIco);
+
     if (_option.isShowCalendar = true) {
-        var _calendar = $('<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>');
+        var _calendar = $('<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>');
         _calendar.click(function () {
             _value.click();
         });
-        _wrapper.append(_calendar);
+        appendIco.append(_calendar);
     }
     if (_option.isShowRemove == true) {
-        var _remove = $('<span class="input-group-addon" title="清空"><i class="glyphicon glyphicon-remove"></i></span>');
+        var _remove = $('<span class="input-group-text" title="清空"><i class="fas fa-times"></i></span>');
         _remove.click(function () {
             _value.val("");
         });
-        _wrapper.append(_remove);
+        appendIco.append(_remove);
     }
     _wrapper.children().css("cursor", "pointer");
     _value.attr("readonly", "readonly").css("background-color", "white").css("border-right","0px");
@@ -660,7 +692,7 @@ $.fn.treeTable = function (option) {
     }
 
     _option.query();
-    _button.find("[action='delete']").click(function () { _option.delete(); });
+    _button.find("[action=delete]").click(function () { _option.delete(); });
     return _option;
 }
 

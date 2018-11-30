@@ -92,5 +92,18 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
         #endregion
+
+        public ActionResult UploadUser()
+        {
+            try
+            {
+                return Json(new { Code = 0, Msg = "同步成功！" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
     }
 }

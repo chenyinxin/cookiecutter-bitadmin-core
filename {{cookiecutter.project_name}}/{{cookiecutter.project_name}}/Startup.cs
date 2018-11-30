@@ -23,6 +23,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Senparc.CO2NET;
+using Senparc.CO2NET.RegisterServices;
+using Senparc.Weixin;
+using Senparc.Weixin.Entities;
+using Senparc.Weixin.MP;
+using Senparc.Weixin.RegisterServices;
 
 namespace {{cookiecutter.project_name}}
 {
@@ -65,7 +72,10 @@ namespace {{cookiecutter.project_name}}
 
             //UEditor富文本框后端扩展
             services.AddUEditorService();
-            
+
+            //Senparc.CO2NET 全局注册
+            services.AddSenparcGlobalServices(Configuration).AddSenparcWeixinServices(Configuration);
+
             //使用Swagger服务
             //services.AddSwaggerGen(options =>
             //{
@@ -79,7 +89,7 @@ namespace {{cookiecutter.project_name}}
             //});
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger, IOptions<SenparcSetting> senparcSetting, IOptions<SenparcWeixinSetting> senparcWeixinSetting)
         {
             if (env.IsDevelopment())
             {
@@ -181,6 +191,11 @@ namespace {{cookiecutter.project_name}}
 
             //启用WebSocket服务
             app.Map("/websocket/notice", BitNoticeService.Map);
+
+            //启动Senparc微信SDK功能
+            IRegisterService register = RegisterService.Start(env, senparcSetting.Value).UseSenparcGlobal();
+            register.UseSenparcWeixin(senparcWeixinSetting.Value, senparcSetting.Value);
+            register.RegisterMpAccount(senparcWeixinSetting.Value);
 
             //启用Swagger服务
             //app.UseSwagger();

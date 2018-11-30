@@ -65,7 +65,7 @@ namespace {{cookiecutter.project_name}}.Helpers
                         fs.Write(datetimefile, 0, datetimefile.Length);
                         if (!String.IsNullOrEmpty(msg))
                         {
-                            byte[] data = Encoding.Default.GetBytes(string.Format(msg, para) + "\r\n==========================================\r\n");
+                            byte[] data = Encoding.Default.GetBytes((para.Length > 0 ? string.Format(msg, para) : msg) + "\r\n==========================================\r\n");
                             fs.Write(data, 0, data.Length);
                         }
                         fs.Flush();

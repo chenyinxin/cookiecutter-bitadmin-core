@@ -16,15 +16,17 @@
         </div>
         <!-- 按钮 查询 添加 删除 等 -->
         <div class="querySuite-button">
-            <button class="btn btn-default" action="query">
-                <span class="glyphicon glyphicon-search"></span> 查询
-            </button>
-            <button class="btn btn-default" action="add" action-modal="formSuiteOne">
-                <span class="glyphicon glyphicon-plus-sign"></span> 添加
-            </button>
-            <button class="btn btn-danger" action="delete">
-                <span class="glyphicon glyphicon-trash"></span> 删除
-            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" action="query">
+                    <i class="fas fa-search"></i> 查询
+                </button>
+                <button type="button" class="btn btn-default" action="add" action-modal="formSuiteOne">
+                    <i class="fas fa-plus"></i> 添加
+                </button>
+                <button type="button" class="btn btn-default" action="delete">
+                    <i class="fas fa-trash-alt"></i> 删除
+                </button>
+            </div>
         </div>
         <!-- 列表 操作 -->
         <div class="querySuite-table"
@@ -102,10 +104,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnSave" action="save">
-                    <span class="glyphicon glyphicon-saved"></span> 保存
+                    <i class="fas fa-vote-yea"></i> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->

@@ -172,7 +172,7 @@ var time = {
         if (JSONDateString.toString().indexOf("Date") > 0) {
             date = new Date(parseInt(JSONDateString.replace("/Date(", "").replace(")/", ""), 10));
         } else {
-            date = new Date(JSONDateString);
+            date = new Date(JSONDateString + "+08:00");
         }
         var o = {
             "M+": date.getMonth() + 1,               //月份    

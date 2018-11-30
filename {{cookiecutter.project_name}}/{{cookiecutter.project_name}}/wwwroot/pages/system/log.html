@@ -6,19 +6,21 @@
             <table>
                 <tr>
                     <th>日志类型：</th>
-                    <td><input type="text" name="Type" class="form-control"></td>
+                    <td><input type="text" name="type" class="form-control"></td>
                     <th>日志标题:</th>
                     <td><input type="text" name="title" class="form-control"></td>
                     <th>日志描述：</th>
-                    <td><input type="text" name="Description" class="form-control"></td>
+                    <td><input type="text" name="description" class="form-control"></td>
                 </tr>
             </table>
         </div>
         <!-- 按钮 查询 导入 -->
         <div class="querySuite-button">
-            <button class="btn btn-default" action="query">
-                <span class="glyphicon glyphicon-search"></span> 查询
-            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" action="query">
+                    <i class="fas fa-search"></i> 查询
+                </button>
+            </div>
         </div>
         <!-- 列表-->
         <div class="querySuite-table"
@@ -41,10 +43,9 @@
         <!-- 分页 -->
         <div class="querySuite-paging"></div>
     </div>
-
     <!-- 模态框（Modal） -->
     <div id="logModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" style="width:1000px">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <form data-title="日志详情"
@@ -67,7 +68,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="glyphicon glyphicon-remove"></span> 关闭
+                        <i class="fas fa-times"></i> 关闭
                     </button>
                 </div>
             </div><!-- /.modal-content -->

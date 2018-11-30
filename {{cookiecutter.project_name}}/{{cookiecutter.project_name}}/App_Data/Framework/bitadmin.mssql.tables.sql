@@ -81,6 +81,8 @@ CREATE TABLE [dbo].[SysDepartment](
 	[DepartmentCode] [nvarchar](64) NULL,
 	[DepartmentName] [nvarchar](64) NULL,
 	[DepartmentFullName] [nvarchar](512) NULL,
+	[WeixinWorkId] [int] NULL,
+	[ExtendId] [nvarchar](64) NULL,
 	[OrderNo] [int] NULL,
 	[CreateBy] [uniqueidentifier] NULL,
 	[CreateTime] [datetime] NULL,

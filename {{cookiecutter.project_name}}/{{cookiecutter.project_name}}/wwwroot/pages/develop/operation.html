@@ -3,15 +3,17 @@
     <div class="box-body querySuite-wrapper">
         <!-- 按钮 查询 导入 -->
         <div class="querySuite-button">
-            <button class="btn btn-default" action="query">
-                <span class="glyphicon glyphicon-search"></span> 查询
-            </button>
-            <button class="btn btn-default" action="add" action-modal="myModal">
-                <span class="glyphicon glyphicon-plus-sign"></span> 添加
-            </button>
-            <button class="btn btn-danger" action="delete">
-                <span class="glyphicon glyphicon-trash"></span> 删除
-            </button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" action="query">
+                    <i class="fas fa-search"></i> 查询
+                </button>
+                <button type="button" class="btn btn-default" action="add" action-modal="formSuiteOne">
+                    <i class="fas fa-plus"></i> 添加
+                </button>
+                <button type="button" class="btn btn-default" action="delete">
+                    <i class="fas fa-trash-alt"></i> 删除
+                </button>
+            </div>
         </div>
         <!-- 列表-->
         <div class="querySuite-table" data-sort-name="logTime" data-sort-order="desc"
@@ -35,7 +37,7 @@
     </div>
 </div>
 <!-- 模态框（Modal）编辑数据字典信息 -->
-<div id="myModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+<div id="formSuiteOne" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -61,10 +63,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnSave" action="save">
-                    <span class="glyphicon glyphicon-saved"></span> 保存
+                    <i class="fas fa-vote-yea"></i> 保存
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -77,7 +79,7 @@
         var querySuite = $(".querySuite-wrapper").querySuite().sortable(function (ids) { querySuite.query(); }).query();
 
         //表单套件初始化
-        var formSuite = $("#myModal").formSuite()
+        var formSuite = $("#formSuiteOne").formSuite()
             .add(function () {//点击添加：初始化表单后
                 $('#Type').attr('readonly', false);
                 $('#Member').attr('readonly', false);

@@ -1,46 +1,50 @@
 ﻿<!--BitAdmin2.0框架文件-->
 <link href="../../lib/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet" />
 <style type="text/css">
-    .modal .panel-body {
+    .modal .card-body {
         padding: 0;
     }
 </style>
 
-<div class="modal fade" id="OUSelection" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="top: 30px">
-    <div class="modal-dialog" style=" width:500px;overflow-y:auto;">
+<div class="modal fade" id="OUSelection">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="panel-heading">
-                组织架构选择
+            <div class="modal-header">
+                <h4>组织架构选择</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
             </div>
-            <div class=" panel panel-default" style="margin-bottom: 0; width: 250px;float:left">
-                <div class="panel-heading">
-                    组织架构导航
-                </div>
-                <div class="panel-body">
-                    <div class="panel-body">
-                        <div id="OUSelectionTree" data-url="../../picker/GetDepData" data-text="departmentName" style="height:300px; overflow-y:auto"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                组织架构
+                            </div>
+                            <div class="card-body">
+                                <div id="OUSelectionTree" data-url="../../picker/GetDepData" data-text="departmentName" style="height:300px; overflow-y:auto"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="panel panel-default" style="margin-bottom: 10px; width: 250px; float: left">
-                <div class="panel-heading">
-                    已选择的组织
-                </div>
-                <div class="panel-body">
-                    <div class="panel-body">
-                        <ul class="list-group" id="OUSelectionSelect" style="height: 300px; overflow-y: auto;width:100%; margin-bottom:0px;"></ul>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                已选组织
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group" id="OUSelectionSelect" style="height: 300px; overflow-y: auto;width:100%; margin-bottom:0px;"></ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnSave">
-                    <span class="glyphicon glyphicon-saved"></span> 确定
+                <button type="button" class="btn btn-primary" action="save">
+                    <i class="fas fa-vote-yea"></i> 确定
                 </button>
-                <button type="button" id="close_module" class="btn btn-default" data-dismiss="modal">
-                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -49,38 +53,27 @@
 <script src="../../js/lib/multiselect.min.js"></script>
 <script src="../../lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 <script type="text/javascript">
-    $("#OUSelection").modal('hide');    //防止重复点击
-    $("#OUSelection").modal('show');
-    var param = JSON.parse($("#OUSelection").parent().attr("data-param"));
-    var valueInput = param.value;
-    var textInput = param.text;
-    var single = param.single;
 
-    //确定
-    $("#OUSelection #btnSave").click(function () {
-        var val = "";
-        var text = "";
-        $.each($("#OUSelectionSelect").find('li'), function (i, d) {
-            if (val != "") {
-                val += ",";
-                text += ",";
-            }
-            text += $(this).attr("text");
-            val += $(this).attr("dataid");
+    var modal = $("#OUSelection").pickerModal()
+        .save(function () {
+            var val = "";
+            var text = "";
+            $.each($("#OUSelectionSelect").find('li'), function (i, d) {
+                if (val != "") {
+                    val += ",";
+                    text += ",";
+                }
+                text += $(this).attr("text");
+                val += $(this).attr("dataid");
+            });
+            return { text: text, value: val };
         });
-        $(valueInput).val(val);
-        $(textInput).val(text);
-        $(textInput).change();
-
-        $("#OUSelection").modal('hide');
-
-    });
-
+    
     //加载部门
     $("#OUSelection #OUSelectionTree").bitTree()
         .select(function (event, node) {
             var bool = true;
-            if (single && single == "true")
+            if (modal.single && modal.single == "true")
                 $("#OUSelection #OUSelectionSelect").children("li").remove();
             $.each($("#OUSelectionSelect").find('li'), function (i, d) {
                 if ($(this).attr("dataid") == node.id && bool == true)
@@ -101,7 +94,7 @@
         type: 'post',
         cache: false,
         async: true,
-        data: { DepID: $(valueInput).val() },
+        data: { DepID: $(modal.value).val() },
         success: function (result) {
             if (result.code == 0) {
                 $.each(result.data, function (i, d) {

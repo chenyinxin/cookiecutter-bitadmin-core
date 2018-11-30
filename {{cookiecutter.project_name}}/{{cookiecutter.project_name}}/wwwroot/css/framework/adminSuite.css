@@ -1,9 +1,13 @@
 ﻿body {
+    line-height: 1;
     color: #666;
+    font-size: 0.8rem;
 }
+
 .list-group-item {
     padding: 7px 10px;
 }
+
 .input-group-addon {
     padding: 6px 6px;
 }
@@ -22,13 +26,12 @@
     }
 
     .querySuite-filter th {
-        white-space:nowrap;
+        white-space: nowrap;
         text-align: right;
         font-weight: bold;
     }
 
     .querySuite-filter .form-control {
-        height: 28px;
         width: 150px;
         border-radius: 4px;
     }
@@ -39,15 +42,11 @@
 
 .querySuite-button {
     margin: 0px -15px 5px 0;
-    float: right !important;
+    padding-right: 0px;
 }
 
-    .querySuite-button .btn {
-        padding: 3px 12px;
-    }
-
 .querySuite-table .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-    padding: 4px 8px;
+    padding: 8px 8px;
 }
 
 .querySuite-table .btn {
@@ -75,7 +74,6 @@
     height: 100px;
     position: absolute;
     z-index: 999999;
-
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: #f6f6f6;
@@ -98,6 +96,7 @@
         bottom: 97px;
         border-color: transparent transparent #f6f6f6 transparent;
     }
+
     .querySuiteSearch .btnContnet {
         height: 30px;
         line-height: 30px;
@@ -150,54 +149,99 @@
     overflow-x: hidden;
 }
 
-    .formSuite-wrapper .modal-dialog {
-        overflow-y: auto;
-    }
-
     .formSuite-wrapper .modal-body table {
         width: 100%;
     }
 
         .formSuite-wrapper .modal-body table th {
-            width:5%;
+            width: 5%;
             text-align: right;
         }
+
         .formSuite-wrapper .modal-body table td {
-            width:45%;
+            width: 45%;
         }
-        .formSuite-wrapper .modal-body table th,.formSuite-wrapper .modal-body table td {
+
+        .formSuite-wrapper .modal-body table th, .formSuite-wrapper .modal-body table td {
             padding: 5px;
-            word-break: keep-all;white-space:nowrap;
+            word-break: keep-all;
+            white-space: nowrap;
         }
-        
-            .formSuite-wrapper .modal-body table .error {
-                color: red;
-            }
+
+        .formSuite-wrapper .modal-body table .error {
+            color: red;
+        }
+
 
 .modal-content {
-   border-radius: 6px;
+    border-radius: 6px;
 }
+
+.modal-header {
+    padding: 10px;
+}
+
+    .modal-header h4 {
+        margin-bottom: 0px;
+    }
+
+.modal-body {
+    padding-top: 5px;
+    padding-bottom:5px;
+}
+
+.modal-footer {
+    padding: 10px;
+}
+
+.modal-lg {
+    max-width: 1000px;
+}
+
 .form-control {
     border-radius: 4px;
+    font-size: 0.8rem;
+    height: 32px;
 }
+
+.input-group-text {
+    height: 32px;
+}
+
+.custom-control {
+    padding-top: 5px;
+}
+
+.custom-control-label::before {
+    top: -3px;
+}
+
+.custom-control-label::after {
+    top: -3px;
+}
+
+.btn {
+    line-height: 1;
+    font-size: 0.8rem;
+}
+
 .input-group .input-group-addon:last-of-type {
-    border-radius:0px 4px 4px 0px;
-    border-width:1px 1px 1px 0px;
+    border-radius: 0px 4px 4px 0px;
+    border-width: 1px 1px 1px 0px;
 }
 
 .table {
-    margin-bottom:5px;
+    margin-bottom: 5px;
 }
+
 .box {
-    margin-bottom:0px;
+    margin-bottom: 0px;
     padding-top: 5px;
-    box-shadow:0px 0px;
+    box-shadow: 0px 0px;
 }
+
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     vertical-align: middle;
-}
-.modal-header .close {
-    margin-top: 2px;
 }
 
 /*jquery ui autocomplete 自动显示滚动条*/
@@ -213,7 +257,11 @@
 * html .ui-autocomplete {
     height: 200px;
 }
-.ui-front{
-    z-index:10000   /*模态框弹出,需设置自动提示下拉框属性*/
+
+.ui-front {
+    z-index: 10000 /*模态框弹出,需设置自动提示下拉框属性*/
 }
 
+.dropdown-menu a{
+    font-size:10pt;
+}
