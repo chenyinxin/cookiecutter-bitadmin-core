@@ -10,6 +10,8 @@ namespace {{cookiecutter.project_name}}.Models
         public string DepartmentCode { get; set; }
         public string DepartmentName { get; set; }
         public string DepartmentFullName { get; set; }
+        public long? WeixinWorkId { get; set; }
+        public string ExtendId { get; set; }
         public int? OrderNo { get; set; }
         public Guid? CreateBy { get; set; }
         public DateTime? CreateTime { get; set; }

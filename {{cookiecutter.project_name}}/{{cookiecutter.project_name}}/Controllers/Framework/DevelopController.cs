@@ -279,7 +279,22 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
+        public JsonResult QueryMeunsDataForSql(string id, string type)
+        {
+            try
+            {
+                string sql = type == "SysModule" ? @"select * from SysModule where ModuleId  = '" + id + "'" : @"select * from SysModulePage where Id  = '" + id + "'";
+                DataTable dt = SqlHelper.Query(sql).Tables[0];
 
+                var result = QuerySuite.ToDictionary(dt);
+                return Json(new { Code = 0, Data = result });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
         #endregion
 
         #region 页面操作

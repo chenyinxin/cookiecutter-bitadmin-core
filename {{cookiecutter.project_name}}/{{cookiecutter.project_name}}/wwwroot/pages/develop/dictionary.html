@@ -23,6 +23,9 @@
                 <button type="button" class="btn btn-default" action="add" action-modal="formSuiteOne">
                     <i class="fas fa-plus"></i> 添加
                 </button>
+                <button type="button" class="btn btn-default" id="buildSql">
+                    <i class="fas fa-file-export"></i> 生成脚本
+                </button>
                 <button type="button" class="btn btn-default" action="delete">
                     <i class="fas fa-trash-alt"></i> 删除
                 </button>
@@ -101,6 +104,24 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+
+<div id="modelSql" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>导出脚本</h5>
+            </div>
+            <div class="modal-body">
+                <span id="sqlscript"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="copyText()">
+                    <i class="fas fa-vote-yea"></i> 复制
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <script type="text/javascript">
     $(function () {
         //查询套件初始化
@@ -119,6 +140,46 @@
             .submit(function () {//点击保存：数据保存成功后
                 querySuite.query();
             });
+
+        $("#buildSql").click(function () {
+            var str = "";
+            $.ajax({
+                url: "../../Develop/QueryDictionary",
+                type: "Post",
+                async: false,
+                data: {
+                    Type: $(".querySuite-filter input[name=type]").val(),
+                    Member: $(".querySuite-filter input[name=member]").val(),
+                    MemberName: $(".querySuite-filter input[name=memberName]").val(),
+                },
+                success: function (result) {
+                    if (result.data.length > 0) {
+                        result.data.forEach(function (d, i) {
+                            str = str + "<p>" + string.format("insert into SysDictionary values('{0}','{1}','{2}','{3}',{4})", d.type, d.member, d.memberName, d.description, d.orderNo) + "</p>";
+                        });
+                        $("#sqlscript").html(str);
+                        $("#modelSql").modal('show')
+                    } else {
+                        alert("当前没有数据")
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    mui.toast("网络异常，请检查网络设置！");
+                }
+            });
+        });
     });
 
+    function copyText() {
+        var Url2 = $("#sqlscript").text();
+        var oInput = document.createElement('input');
+        oInput.value = Url2;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display = 'none';
+        alert('复制成功');
+    }
 </script>

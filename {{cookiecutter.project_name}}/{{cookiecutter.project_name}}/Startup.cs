@@ -29,7 +29,9 @@ using Senparc.CO2NET.RegisterServices;
 using Senparc.Weixin;
 using Senparc.Weixin.Entities;
 using Senparc.Weixin.MP;
+using Senparc.Weixin.Open;
 using Senparc.Weixin.RegisterServices;
+using Senparc.Weixin.Work;
 
 namespace {{cookiecutter.project_name}}
 {
@@ -196,6 +198,70 @@ namespace {{cookiecutter.project_name}}
             IRegisterService register = RegisterService.Start(env, senparcSetting.Value).UseSenparcGlobal();
             register.UseSenparcWeixin(senparcWeixinSetting.Value, senparcSetting.Value);
             register.RegisterMpAccount(senparcWeixinSetting.Value);
+            //register.RegisterTenpayV3(senparcWeixinSetting.Value);
+            //register.RegisterOpenComponent(senparcWeixinSetting.Value,
+            //        //getComponentVerifyTicketFunc
+            //        componentAppId =>
+            //        {
+            //            var dir = Path.Combine(Server.GetMapPath("~/App_Data/OpenTicket"));
+            //            if (!Directory.Exists(dir))
+            //            {
+            //                Directory.CreateDirectory(dir);
+            //            }
+
+            //            var file = Path.Combine(dir, string.Format("{0}.txt", componentAppId));
+            //            using (var fs = new FileStream(file, FileMode.Open))
+            //            {
+            //                using (var sr = new StreamReader(fs))
+            //                {
+            //                    var ticket = sr.ReadToEnd();
+            //                    return ticket;
+            //                }
+            //            }
+            //        },
+
+            //         //getAuthorizerRefreshTokenFunc
+            //         (componentAppId, auhtorizerId) =>
+            //         {
+            //             var dir = Path.Combine(Server.GetMapPath("~/App_Data/AuthorizerInfo/" + componentAppId));
+            //             if (!Directory.Exists(dir))
+            //             {
+            //                 Directory.CreateDirectory(dir);
+            //             }
+
+            //             var file = Path.Combine(dir, string.Format("{0}.bin", auhtorizerId));
+            //             if (!File.Exists(file))
+            //             {
+            //                 return null;
+            //             }
+
+            //             using (Stream fs = new FileStream(file, FileMode.Open))
+            //             {
+            //                 var binFormat = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            //                 var result = (RefreshAuthorizerTokenResult)binFormat.Deserialize(fs);
+            //                 return result.authorizer_refresh_token;
+            //             }
+            //         },
+
+            //         //authorizerTokenRefreshedFunc
+            //         (componentAppId, auhtorizerId, refreshResult) =>
+            //         {
+            //             var dir = Path.Combine(Server.GetMapPath("~/App_Data/AuthorizerInfo/" + componentAppId));
+            //             if (!Directory.Exists(dir))
+            //             {
+            //                 Directory.CreateDirectory(dir);
+            //             }
+
+            //             var file = Path.Combine(dir, string.Format("{0}.bin", auhtorizerId));
+            //             using (Stream fs = new FileStream(file, FileMode.Create))
+            //             {
+            //                 //这里存了整个对象，实际上只存RefreshToken也可以，有了RefreshToken就能刷新到最新的AccessToken
+            //                 var binFormat = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            //                 binFormat.Serialize(fs, refreshResult);
+            //                 fs.Flush();
+            //             }
+            //         }, "【盛派网络】开放平台");
+
 
             //启用Swagger服务
             //app.UseSwagger();

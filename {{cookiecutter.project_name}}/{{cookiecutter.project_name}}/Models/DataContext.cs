@@ -303,6 +303,8 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.DepartmentName).HasMaxLength(64);
 
+                entity.Property(e => e.ExtendId).HasMaxLength(64);
+
                 entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
@@ -341,20 +343,20 @@ namespace {{cookiecutter.project_name}}.Models
             {
                 entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
-                entity.Property(e => e.DepartmentName).HasMaxLength(500);
+                entity.Property(e => e.DepartmentName).HasMaxLength(128);
 
-                entity.Property(e => e.Description).HasMaxLength(2048);
+                entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.IpAddress)
-                    .HasMaxLength(50)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(50)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Type)
-                    .HasMaxLength(50)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserAgent)
@@ -362,11 +364,11 @@ namespace {{cookiecutter.project_name}}.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserCode)
-                    .HasMaxLength(32)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserName)
-                    .HasMaxLength(50)
+                    .HasMaxLength(64)
                     .IsUnicode(false);
             });
 

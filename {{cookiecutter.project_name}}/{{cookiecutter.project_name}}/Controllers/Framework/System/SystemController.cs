@@ -11,6 +11,7 @@ using {{cookiecutter.project_name}}.Models;
 using Microsoft.AspNetCore.Mvc;
 using {{cookiecutter.project_name}}.Helpers;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
@@ -334,6 +335,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
 
+        SysLog model;
         /// <summary>
         /// 添加日志
         /// </summary>
@@ -346,7 +348,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 //负载均衡环境下IP地址
                 string ip = Request.Headers["X-Forwarded-For"].FirstOrDefault();
                 
-                SysLog model = new SysLog
+                model = new SysLog
                 {
                     UserId = currentUser.UserId,
                     UserCode = currentUser.UserCode,
@@ -366,6 +368,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
             catch (Exception ex)
             {
+                LogHelper.SaveLog("AddLog", JsonConvert.SerializeObject(model));
                 LogHelper.SaveLog(ex);
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }

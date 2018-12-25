@@ -12,11 +12,13 @@
     <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../../lib/jquery/jquery.min.js"></script>
     <script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../../css/framework/BitAdmin.css" rel="stylesheet" />
 
     <style>
-        h4{
-            font-weight:bold;
+        h4 {
+            font-weight: bold;
         }
+
         .row {
             margin: 5px;
         }
@@ -27,85 +29,109 @@
     </style>
 </head>
 <body>
-    <div class="col-md-6">
+    <div class="container-fluid">
         <div class="row">
-            <h4>推送电子邮件：</h4>
-            发送邮件到你自己的邮箱。
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>推送电子邮件：</h4>
+                        发送邮件到你自己的邮箱。
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="javascript:sendEmail();" class="btn btn-success">发送电子邮件</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>推送WebSocket消息：</h4>
+                        通过WebSocket方式推送消息到网页，可改造为聊天功能。
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group">
+                            <a href="javascript:pushWebSocket();" class="btn btn-success">服务端推送</a>
+                            <a href="javascript:sendWebSocket();" class="btn btn-primary">客户端发送</a>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>推送微信公众号消息：</h4>
+                        先扫二维码关注公众号，再向自己推送一条消息。<br />
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="javascript:sendWeixinMP();" class="btn btn-success">推送公众号消息</a>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>推送微信企业号消息：</h4>
+                        先扫二维码加入企业，再向自己推送一条消息。<br />
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="javascript:sendWeixinWork();" class="btn btn-success">推送企业号消息</a>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>推送个推平台消息：</h4>
+                        通过个推平台向手机App推送消息。先绑定当前用户的clientId。
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group">
+                            <a href="javascript:bindClientId();" class="btn btn-success">绑定clientId</a>
+                            <a href="javascript:pushIgetui();" class="btn btn-primary">推送个推消息</a>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>生成二维码示例：</h4>
+                        扫描可以下载框架安卓App。
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
-            <a href="javascript:sendEmail();" class="btn btn-success">发送电子邮件</a>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>WebSocket在线连接详细信息：</h4>
+                        提供WebSocket服务器信息，用户在线信息。<br />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="javascript:online();" class="btn btn-success">刷新连接信息</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <thead><tr><th>服务器</th><th>心跳时间</th></tr></thead>
+                        <tbody class="server"></tbody>
+                    </table>
+                    <table class="table">
+                        <thead><tr><th>ID</th><th>远程</th><th>打开</th><th>远程IP</th><th>心跳时间</th></tr></thead>
+                        <tbody class="socket"></tbody>
+                    </table>
+                </div>
+                <div class="row">
+                </div>
+            </div>
         </div>
-        <hr />
-        <div class="row">
-            <h4>推送WebSocket消息：</h4>
-            通过WebSocket方式推送消息到网页，可改造为聊天功能。
-        </div>
-        <div class="row">
-            <a href="javascript:pushWebSocket();" class="btn btn-success">服务端推送</a>
-            <a href="javascript:sendWebSocket();" class="btn btn-success">客户端发送</a>
-        </div>
-        <hr />
-        <div class="row">
-            <h4>推送微信公众号消息：</h4>
-            先扫二维码关注公众号，再向自己推送一条消息。<br />
-            <img width="150" src="http://mmbiz.qpic.cn/mmbiz_jpg/sicib7WeTSmgW8wCM7UwhkiaZiaC35RyHibQ478zmJW3noqlo5I0GYuIhhNC37Xnb0H1DdVNWkdNtziakc2rpJjEXDug/0" />
-        </div>
-        <div class="row">
-            <a href="javascript:sendWeixinMP();" class="btn btn-success">推送公众号消息</a>
-        </div>
-        <hr />
-        <div class="row">
-            <h4>推送微信企业号消息：</h4>
-            先扫二维码加入企业，再向自己推送一条消息。<br />
-            <img width="150" src="https://work.weixin.qq.com/wework_admin/genqrcode?action=join&vcode=2d116dc3ab70036bc23d1de6e0436166&r=hb_share_mng_contacts" />
-        </div>
-        <div class="row">
-            <a href="javascript:sendWeixinWork();" class="btn btn-success">推送企业号消息</a>
-        </div>
-        <hr />
-        <div class="row">
-            <h4>推送个推平台消息：</h4>
-            通过个推平台向手机App推送消息。先绑定当前用户的clientId。
-        </div>
-        <div class="row">
-            <a href="javascript:bindClientId();" class="btn btn-primary">绑定clientId</a>
-            <a href="javascript:pushIgetui();" class="btn btn-success">推送个推消息</a>
-        </div>
-        <hr />
     </div>
-    <div class="col-md-6">
-
-        <div class="row">
-            <h4>生成二维码示例：</h4>
-            扫描可以下载框架安卓App。
-        </div>
-        <div class="row">
-            <img src="../../qrcode/encode?msg=https%3a%2f%2fwww.bitadmincore.com%2fapps%2fBitAdminCore_1.0.3.apk" width="100" height="100" />
-        </div>
-    </div>
-    <div class="col-md-12" style="height:50px;"></div>
-    <div class="col-md-12">
-        <div class="row">
-            <h4>WebSocket在线连接详细信息：</h4>
-            提供WebSocket服务器信息，用户在线信息。<br />
-            <a href="javascript:online();" class="btn btn-success">刷新连接信息</a>
-        </div>
-        <div class="row">
-            <table class="table">
-                <thead><tr><th>服务器</th><th>心跳时间</th></tr></thead>
-                <tbody class="server"></tbody>
-            </table>
-            <table class="table">
-                <thead><tr><th>ID</th><th>远程</th><th>打开</th><th>远程IP</th><th>心跳时间</th></tr></thead>
-                <tbody class="socket"></tbody>
-            </table>
-        </div>
-        <div class="row">
-        </div>
-    </div>
-    <!--cnzz统计代码，可以移除，开始-->
-    <script>var _hmt = _hmt || []; (function () { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?67d9c965e616fb773b85f279d372b0c4"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })();</script>
-    <!--cnzz统计代码，可以移除，结束-->
     <script src="../../js/framework/BitAdmin.js"></script>
     <script>
         function pushWebSocket() {

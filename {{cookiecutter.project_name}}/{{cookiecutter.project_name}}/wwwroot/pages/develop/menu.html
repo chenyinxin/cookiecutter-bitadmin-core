@@ -14,6 +14,9 @@
                 <button type="button" class="btn btn-default" action="add" action-modal="addPage">
                     <i class="fas fa-plus"></i> 添加页面
                 </button>
+                <button type="button" class="btn btn-default" id="buildSql">
+                    <i class="fas fa-file-export"></i> 生成脚本
+                </button>
                 <button type="button" class="btn btn-default" action="delete">
                     <i class="fas fa-trash-alt"></i> 删除
                 </button>
@@ -207,6 +210,23 @@
     </div><!-- /.modal -->
 </div>
 
+<div id="modelSql" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>导出脚本</h5>
+            </div>
+            <div class="modal-body">
+                <span id="sqlscript"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="copyText()">
+                    <i class="fas fa-vote-yea"></i> 复制
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <script src="../../lib/jquery-treegrid/js/jquery.treegrid.min.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -306,6 +326,56 @@
                 }
             });
         });
+
+        //生成数据脚本
+        $("#buildSql").click(function () {
+            var str = "";
+            $(".querySuite-table input[type=checkbox]:checked").each(function (i, d) {
+                var typeval = "";
+                if ($(d).parent().nextAll().eq(3).text() == "模块") {
+                    typeval = "SysModule";
+                } else {
+                    typeval = "SysModulePage";
+                }
+                $.ajax({
+                    url: "../../Develop/QueryMeunsDataForSql",
+                    type: "Post",
+                    async: false,
+                    data: {
+                        id: d.value,
+                        type: typeval
+                    },
+                    success: function (result) {
+                        if (result.data.length > 0) {
+                            var res = result.data[0];
+                            if (typeval == "SysModule") {
+                                str = str + "<p>" + string.format("insert into SysModule values('{0}','{1}','{2}','{3}','{4}',{5})", res.moduleId, res.parentId, res.moduleName, res.moduleIcon, res.description, res.orderNo) + "</p>"
+                            } else {
+                                str = str + "<p>" + string.format("insert into SysModulePage values('{0}','{1}','{2}','{3}','{4}','{5}','{6}',{7})", res.id, res.moduleId, res.pageSign, res.pageName, res.pageIcon, res.pageUrl, res.description, res.orderNo) + "</p>"
+                            }
+                        }
+                    }
+                })
+            })
+            if (str == "") {
+                alert("请先选择要生成的数据！");
+                return;
+            }
+            $("#sqlscript").html(str);
+            $("#modelSql").modal('show')
+
+        })
     });
 
+    function copyText() {
+        var Url2 = $("#sqlscript").text();
+        var oInput = document.createElement('input');
+        oInput.value = Url2;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display = 'none';
+        alert('复制成功');
+    }
 </script>

@@ -3,6 +3,7 @@
  * 微信企业号
  ***********************/
 using Senparc.NeuChar.Entities;
+using Senparc.Weixin;
 using Senparc.Weixin.Work.AdvancedAPIs;
 using Senparc.Weixin.Work.Containers;
 using Senparc.Weixin.Work.Entities;
@@ -15,9 +16,13 @@ namespace {{cookiecutter.project_name}}.Helpers
     
     public class WeixinWorkService
     {
-        private static readonly string AgentId = "1000002";
-        private static readonly string CorpID = "ww991092455544b3f4";
-        private static readonly string Secret = "J2ZSqRn0BPHkbJeQVcORU1rP7-JJP945vvjiGmhnEw4";
+        public static string CorpId = "ww991092455544b3f4";
+        public static readonly Dictionary<string, string> AgentSecrets = new Dictionary<string, string>();
+        static WeixinWorkService()
+        {
+            AgentSecrets["1000001"] = "GVDVK4i8qUYhAOtpe1K2IR8ywZIhVAegpavmIeOmzNk";//通讯录
+            AgentSecrets["1000002"] = "6vmf1zKvXGJR6TF7ht1JESMiaEiTZaRw_JYnJal4NSM";//框架测试
+        }
 
         #region 发送文本
         public static void SendText(string agentId, Guid? userId, string text)
@@ -34,8 +39,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendText(string agentId, List<string> userCodes, string text)
         {
-            Register();
-            userCodes.ForEach(userCode => MassApi.SendText(GetToken(), string.IsNullOrEmpty(agentId) ? AgentId : agentId, text, userCode));
+            userCodes.ForEach(userCode => MassApi.SendText(GetToken(agentId), agentId, text, userCode));
         }
         #endregion
         
@@ -54,8 +58,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendImage(string agentId, List<string> userCodes, string mediaId)
         {
-            Register();
-            userCodes.ForEach(userCode => MassApi.SendImage(GetToken(), agentId ?? AgentId, mediaId, userCode));
+            userCodes.ForEach(userCode => MassApi.SendImage(GetToken(agentId), agentId, mediaId, userCode));
         }
         #endregion
 
@@ -74,21 +77,13 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendNews(string agentId, List<string> userCodes, List<Article> articles)
         {
-            Register();
-            userCodes.ForEach(userCode => MassApi.SendNews(GetToken(), agentId ?? AgentId, articles, userCode));
+            userCodes.ForEach(userCode => MassApi.SendNews(GetToken(agentId), agentId, articles, userCode));
         } 
         #endregion
 
-        private static void Register()
+        public static string GetToken(string agentId= "1000001")
         {
-            if (!AccessTokenContainer.CheckRegistered(CorpID))
-                AccessTokenContainer.Register(CorpID, Secret);
-        }
-
-        private static string GetToken()
-        {
-            Register();
-            return AccessTokenContainer.TryGetToken(CorpID, Secret);
+            return AccessTokenContainer.TryGetToken(CorpId, AgentSecrets[agentId]);
         }
         private static List<string> QueryUserCode(List<Guid?> userIds)
         {
@@ -101,14 +96,6 @@ namespace {{cookiecutter.project_name}}.Helpers
                 clientIds.Add(Convert.ToString(row[0]));
 
             return clientIds;
-        }
-
-        /// <summary>
-        /// 同步本地用户到企业微信
-        /// </summary>
-        public void Sync()
-        {
-            //待实现
         }
     }
 }

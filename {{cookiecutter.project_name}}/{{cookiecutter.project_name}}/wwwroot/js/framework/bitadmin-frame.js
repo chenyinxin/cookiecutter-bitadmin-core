@@ -22,14 +22,19 @@ $.extend(BitAdmin,
 
                 var li = $('<li class="nav-item" id="tab_li_' + options.tabName + '"></li>');
                 var a = $('<a class="nav-link" href="#tab_content_' + options.tabName + '" data-toggle="tab" id="tab_a_' + options.tabName + '">' + options.tabTitle + '  </a>');
-
-                var spanRefresh = $('<small><i class="fas fa-undo"></i></small>');
-                spanRefresh.bind('click', function () { BitAdmin.refreshTab('iframe_' + options.tabName); });
+                li.on('contextmenu', function (e) {
+                    e.preventDefault();
+                    $("#menu").css({
+                        "display": "block",
+                        "left": e.clientX,
+                        "top": e.clientY
+                    });
+                    $("#menu").attr("data-id", options.tabName);
+                });
                 var spanClose = $('  <i class="fas fa-times"></i>');
                 spanClose.bind('click', function () { BitAdmin.closeTab(this); });
 
-                a.append(spanRefresh).append(spanClose);
-                $("#" + options.tabMainName).append(li.append(a));
+                $("#" + options.tabMainName).append(li.append(a.append(spanClose)));
 
                 var tabIframe = $('<iframe id="iframe_' + options.tabName + '" style="height:' + this.getIframeHeight() + ' ; width: 100%;" src="' + options.pageUrl + '" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>');
 
@@ -41,17 +46,18 @@ $.extend(BitAdmin,
         },
         closeTab: function (button) {
             //通过该button找到对应li标签的id
-            var li_id = $(button).parent().parent().attr('id');
-            var id = li_id.replace("tab_li_", "");
-
+            var li = $(button).parent().parent();
+            var id = li.attr('id').replace("tab_li_", "");
+            //bootstrap4的bug，需要先激活移除的项，否则会报错。
+            li.find("a").click();
             //如果关闭的是当前激活的TAB，激活他的前一个TAB
-            if ($("li.active").attr('id') == li_id) {
-                $("li.active").prev().find("a").click();
-            }
-
+            var isCur = li.parent().find(".active").attr('id') == "tab_a_" + id;
+            var active = isCur == true ? li.prev().find("a") : li.find("a");
             //关闭TAB
-            $("#" + li_id).remove();
+            $(li).remove();
             $("#tab_content_" + id).remove();
+
+            active.click();
         },
         refreshTab: function (id) {
             $('#' + id).attr('src', $('#' + id).attr('src') + "&isRefresh=true");
@@ -89,6 +95,8 @@ $.fn.extend({
                     if ($("." + key) != null)
                         $("." + key).text(result[key]);
                 }
+                if (result.userImage != "")
+                    $(".userImage").attr("src", result.userImage);
             }
         });
     },

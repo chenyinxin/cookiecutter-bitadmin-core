@@ -37,7 +37,10 @@ CREATE TABLE [dbo].[GeneralExample](
 	[LinkageSelectD] [nvarchar](64) NULL,
 	[LinkageSelectE] [nvarchar](64) NULL,
 	[LinkageSelectF] [nvarchar](64) NULL,
+	[CreateBy] [uniqueidentifier] NULL,
 	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_GeneralExample] PRIMARY KEY CLUSTERED 
 (
 	[exampleId] ASC
@@ -64,7 +67,7 @@ CREATE TABLE [dbo].[SysAttachment](
 	[CreateBy] [nvarchar](64) NULL,
 	[CreateByName] [nvarchar](64) NULL,
 	[CreateTime] [datetime] NULL,
- CONSTRAINT [PK__SysAttachment] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_SysAttachment] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -81,7 +84,7 @@ CREATE TABLE [dbo].[SysDepartment](
 	[DepartmentCode] [nvarchar](64) NULL,
 	[DepartmentName] [nvarchar](64) NULL,
 	[DepartmentFullName] [nvarchar](512) NULL,
-	[WeixinWorkId] [int] NULL,
+	[WeixinWorkId] [bigint] NULL,
 	[ExtendId] [nvarchar](64) NULL,
 	[OrderNo] [int] NULL,
 	[CreateBy] [uniqueidentifier] NULL,
@@ -105,6 +108,10 @@ CREATE TABLE [dbo].[SysDictionary](
 	[MemberName] [nvarchar](64) NOT NULL,
 	[Description] [nvarchar](2048) NULL,
 	[OrderNo] [int] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_Dictionary] PRIMARY KEY NONCLUSTERED 
 (
 	[Type] ASC,
@@ -141,7 +148,7 @@ CREATE TABLE [dbo].[SysLog](
 	[UserName] [varchar](64) NULL,
 	[DepartmentName] [nvarchar](128) NULL,
 	[IpAddress] [varchar](64) NULL,
-	[UserAgent] [varchar](128) NULL,
+	[UserAgent] [varchar](512) NULL,
 	[Title] [varchar](64) NULL,
 	[Type] [varchar](64) NULL,
 	[CreateTime] [datetime] NULL,
@@ -164,6 +171,10 @@ CREATE TABLE [dbo].[SysModule](
 	[ModuleIcon] [nvarchar](512) NULL,
 	[Description] [nvarchar](2048) NULL,
 	[OrderNo] [int] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_SysModule] PRIMARY KEY CLUSTERED 
 (
 	[ModuleId] ASC
@@ -184,6 +195,10 @@ CREATE TABLE [dbo].[SysModulePage](
 	[PageUrl] [nvarchar](512) NULL,
 	[Description] [nvarchar](2048) NULL,
 	[OrderNo] [int] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_SysModulePage] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -199,9 +214,11 @@ CREATE TABLE [dbo].[SysOperation](
 	[Id] [uniqueidentifier] NOT NULL,
 	[OperationSign] [nvarchar](64) NULL,
 	[OperationName] [nvarchar](64) NULL,
-	[CreateBy] [nvarchar](64) NULL,
-	[CreateTime] [datetime] NULL,
 	[OrderNo] [int] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -231,6 +248,11 @@ GO
 CREATE TABLE [dbo].[SysRole](
 	[Id] [uniqueidentifier] NOT NULL,
 	[RoleName] [nvarchar](64) NULL,
+	[OrderNo] [int] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateBy] [uniqueidentifier] NULL,
+	[UpdateTime] [datetime] NULL,
  CONSTRAINT [PK_SysRole] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -287,6 +309,7 @@ CREATE TABLE [dbo].[SysUser](
 	[Gender] [nvarchar](32) NULL,
 	[Birthday] [datetime] NULL,
 	[ExtendId] [nvarchar](64) NULL,
+	[UserImage] [nvarchar](128) NULL,
 	[UserStatus] [nvarchar](32) NULL,
 	[OrderNo] [int] NULL,
 	[CreateBy] [uniqueidentifier] NULL,

@@ -3,6 +3,7 @@
  * 微信公众号
  ***********************/
 using Senparc.NeuChar.Entities;
+using Senparc.Weixin;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using Senparc.Weixin.MP.Containers;
@@ -15,6 +16,7 @@ namespace {{cookiecutter.project_name}}.Helpers
 {
     public class WeixinMPService
     {
+        private static string AppId => AccessTokenContainer.GetFirstOrDefaultAppId(PlatformType.MP);
 
         #region 发送文本
         public static void SendText(Guid? userId, string text)
@@ -23,11 +25,11 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendText(List<Guid?> userIds, string text)
         {
-            QueryOpenId(userIds).ForEach(openId => CustomApi.SendText(appId, openId, text));
+            QueryOpenId(userIds).ForEach(openId => CustomApi.SendText(AppId, openId, text));
         }
         public static void SendText(string openId, string text)
         {
-            CustomApi.SendText(appId, openId, text);
+            CustomApi.SendText(AppId, openId, text);
         }
         #endregion
 
@@ -38,7 +40,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendImage(List<Guid?> userIds, string text)
         {
-            QueryOpenId(userIds).ForEach(openId => CustomApi.SendImage(appId, openId, text));
+            QueryOpenId(userIds).ForEach(openId => CustomApi.SendImage(AppId, openId, text));
         }
         #endregion
 
@@ -49,7 +51,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public static void SendNews(List<Guid?> userIds, List<Article> articles)
         {
-            QueryOpenId(userIds).ForEach(openId => CustomApi.SendNews(appId, openId, articles));
+            QueryOpenId(userIds).ForEach(openId => CustomApi.SendNews(AppId, openId, articles));
         } 
         #endregion
 
@@ -71,10 +73,9 @@ namespace {{cookiecutter.project_name}}.Helpers
                     Time = new TemplateDataItem("2111-11-11 11:11:11", "#000000"),
                     Remark = new TemplateDataItem("感谢您的购买~", "#000000")
                 };
-                SendTemplateMessageResult sendResult = TemplateApi.SendTemplateMessage(appId, openId, templateId, linkUrl, templateData, null);
+                SendTemplateMessageResult sendResult = TemplateApi.SendTemplateMessage(AppId, openId, templateId, linkUrl, templateData, null);
             });
         }
-        private static string appId { get { return AccessTokenContainer.GetFirstOrDefaultAppId(); } }
 
         public class TemplateData
         {

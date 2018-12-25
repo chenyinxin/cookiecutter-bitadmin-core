@@ -409,7 +409,7 @@ $.fn.zk_paging = function (option) {
     if (pagezNum < 1)
         pagezNum = 1;
     var _init = $('<td style="vertical-align: middle;text-align: right;"><span>当前 ' + _option.pageIndex + ' / ' + pagezNum + ' 页，每页<input type="text" class="pageSize" title="离开此文本自动设置" style="width:40px;height: 20px;text-align: center; margin:0px 5px;border: #d2d6de 1px solid;border-radius: 4px;" value="' + _option.pageSize + '" />条\
-                        ,总共 ' + _option.totalContent + ' 条记录</span></td>');
+                        ，总共 ' + _option.totalContent + ' 条记录</span></td>');
     _init.find(".pageSize").bind('keydown', function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
         // enter 键
@@ -814,6 +814,8 @@ $.fn.querySuite = function (option) {
     });
     _option.controls = {};
     $.adminTools.renderControls(_wrapper.attr("id"), _filter, _option);
+
+    _filter.find("input").bind('keypress', function (event) { if (event.keyCode === 13) { _option.query(); } });
     return _option;
 }
 

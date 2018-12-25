@@ -1,25 +1,25 @@
 using {{cookiecutter.project_name}}.Helpers;
 using {{cookiecutter.project_name}}.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Senparc.Weixin;
 using Senparc.Weixin.MP;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
+using Senparc.Weixin.MP.Containers;
 using Senparc.Weixin.MP.Entities.Request;
-using Senparc.Weixin.Work.AdvancedAPIs;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
-    public class WeixinController : Controller
+    /// <summary>
+    /// 微信公众号相关功能
+    /// </summary>
+    public class WeixinMPController : Controller
     {
         DataContext dbContext = new DataContext();
 
@@ -46,14 +46,8 @@ namespace {{cookiecutter.project_name}}.Controllers
         [HttpPost]
         public async Task<ActionResult> Entry(PostModel model)
         {
-            //这里总是较验不通过，不知道为什么。
-            //if (CheckSignature.Check(model.Signature, model.Timestamp, model.Nonce, token))
-            //{
-            //    LogHelper.SaveLog("weixin", JsonConvert.SerializeObject(model));
-            //    return Content("参数错误！");
-            //}
-
-            LogHelper.SaveLog("weixin", JsonConvert.SerializeObject(model));
+            if (!CheckSignature.Check(model.Signature, model.Timestamp, model.Nonce, token))
+                return Content("参数错误！");
 
             try
             {
@@ -89,22 +83,22 @@ namespace {{cookiecutter.project_name}}.Controllers
         #endregion
 
         #region 网页服务
-        readonly string _appId = "wx806943202a75a124";
         readonly string _secret = "d52257abea1018eec3a798005ba4f841";
-        readonly string _authorizeUrl = "https://www.bitadmincore.com/weixin/signin";
+        readonly string _authorizeUrl = "https://www.bitadmincore.com/weixinmp/signin";
+        private string AppId => AccessTokenContainer.GetFirstOrDefaultAppId(PlatformType.MP);
         public ActionResult Authorize_Base(string state)
         {
             if (SSOClient.IsLogin)
                 return ToMenu(state);
 
-            return Redirect(OAuthApi.GetAuthorizeUrl(_appId, _authorizeUrl, state, OAuthScope.snsapi_base));
+            return Redirect(OAuthApi.GetAuthorizeUrl(AppId, _authorizeUrl, state, OAuthScope.snsapi_base));
         }
         public ActionResult Authorize_User(string state, string scope)
         {
             if (SSOClient.IsLogin)
                 return ToMenu(state);
 
-            return Redirect(OAuthApi.GetAuthorizeUrl(_appId, _authorizeUrl, state, OAuthScope.snsapi_userinfo));
+            return Redirect(OAuthApi.GetAuthorizeUrl(AppId, _authorizeUrl, state, OAuthScope.snsapi_userinfo));
         }
         public ActionResult SignIn(string code, string state)
         {
@@ -112,8 +106,8 @@ namespace {{cookiecutter.project_name}}.Controllers
             {
                 if (string.IsNullOrEmpty(code))
                     return Redirect("/pages/error/error.html");
-
-                OAuthAccessTokenResult result = OAuthApi.GetAccessToken(_appId, _secret, code);
+                
+                OAuthAccessTokenResult result = OAuthApi.GetAccessToken(AppId, _secret, code);
                 if (result.errcode != 0)
                     return Redirect("/pages/error/error.html");
 
@@ -121,7 +115,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (userOpenId == null)
                 {
                     //逻辑1：跳转到绑定页面，适用于企业用户或已存在账号情况。
-                    return Redirect("/pages/account/bind.html?openid=" + result.openid);
+                    return Redirect("/weixin/account/bind.html?openid=" + result.openid);
 
                     //逻辑2：创建本地用户，适用公众网站，项目根据需要调整逻辑。
                     //var wxUser = OAuthApi.GetUserInfo(result.access_token, result.openid);
@@ -164,6 +158,5 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
         #endregion
-
     }
 }
