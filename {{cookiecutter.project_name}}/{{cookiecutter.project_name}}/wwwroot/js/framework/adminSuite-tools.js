@@ -395,8 +395,8 @@ $.fn.pickerModal = function () {
         $(_option.value).val(result.value);
         $(_option.text).val(result.text);
         $(_option.text).change();
-        if (param.callback != undefined)
-            param.callback()
+        if (param.callback != undefined && param.callback != "")
+            eval(param.callback + "()");
 
         _wrapper.modal('hide');        
     });
