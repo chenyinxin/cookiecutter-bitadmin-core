@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * UEditor
  * version: ueditor
  * build: Wed Aug 10 2016 11:05:20 GMT+0800 (CST)
@@ -31,14 +31,13 @@ var dom = UE.dom = {};
 
 // core/browser.js
 /**
- * 浏览器判断模块
- * @file
+ * 娴忚鍣ㄥ垽鏂ā鍧? * @file
  * @module UE.browser
  * @since 1.2.6.1
  */
 
 /**
- * 提供浏览器检测的模块
+ * 鎻愪緵娴忚鍣ㄦ娴嬬殑妯″潡
  * @unfile
  * @module UE.browser
  */
@@ -47,55 +46,54 @@ var browser = UE.browser = function(){
         opera = window.opera,
         browser = {
         /**
-         * @property {boolean} ie 检测当前浏览器是否为IE
+         * @property {boolean} ie 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁涓篒E
          * @example
          * ```javascript
          * if ( UE.browser.ie ) {
-         *     console.log( '当前浏览器是IE' );
+         *     console.log( '褰撳墠娴忚鍣ㄦ槸IE' );
          * }
          * ```
          */
         ie		:  /(msie\s|trident.*rv:)([\w.]+)/.test(agent),
 
         /**
-         * @property {boolean} opera 检测当前浏览器是否为Opera
+         * @property {boolean} opera 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁涓篛pera
          * @example
          * ```javascript
          * if ( UE.browser.opera ) {
-         *     console.log( '当前浏览器是Opera' );
+         *     console.log( '褰撳墠娴忚鍣ㄦ槸Opera' );
          * }
          * ```
          */
         opera	: ( !!opera && opera.version ),
 
         /**
-         * @property {boolean} webkit 检测当前浏览器是否是webkit内核的浏览器
+         * @property {boolean} webkit 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁鏄痺ebkit鍐呮牳鐨勬祻瑙堝櫒
          * @example
          * ```javascript
          * if ( UE.browser.webkit ) {
-         *     console.log( '当前浏览器是webkit内核浏览器' );
+         *     console.log( '褰撳墠娴忚鍣ㄦ槸webkit鍐呮牳娴忚鍣? );
          * }
          * ```
          */
         webkit	: ( agent.indexOf( ' applewebkit/' ) > -1 ),
 
         /**
-         * @property {boolean} mac 检测当前浏览器是否是运行在mac平台下
-         * @example
+         * @property {boolean} mac 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁鏄繍琛屽湪mac骞冲彴涓?         * @example
          * ```javascript
          * if ( UE.browser.mac ) {
-         *     console.log( '当前浏览器运行在mac平台下' );
+         *     console.log( '褰撳墠娴忚鍣ㄨ繍琛屽湪mac骞冲彴涓? );
          * }
          * ```
          */
         mac	: ( agent.indexOf( 'macintosh' ) > -1 ),
 
         /**
-         * @property {boolean} quirks 检测当前浏览器是否处于“怪异模式”下
+         * @property {boolean} quirks 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁澶勪簬鈥滄€紓妯″紡鈥濅笅
          * @example
          * ```javascript
          * if ( UE.browser.quirks ) {
-         *     console.log( '当前浏览器运行处于“怪异模式”' );
+         *     console.log( '褰撳墠娴忚鍣ㄨ繍琛屽浜庘€滄€紓妯″紡鈥? );
          * }
          * ```
          */
@@ -103,11 +101,11 @@ var browser = UE.browser = function(){
     };
 
     /**
-    * @property {boolean} gecko 检测当前浏览器内核是否是gecko内核
+    * @property {boolean} gecko 妫€娴嬪綋鍓嶆祻瑙堝櫒鍐呮牳鏄惁鏄痝ecko鍐呮牳
     * @example
     * ```javascript
     * if ( UE.browser.gecko ) {
-    *     console.log( '当前浏览器内核是gecko内核' );
+    *     console.log( '褰撳墠娴忚鍣ㄥ唴鏍告槸gecko鍐呮牳' );
     * }
     * ```
     */
@@ -132,48 +130,47 @@ var browser = UE.browser = function(){
 
         browser.ie11Compat = document.documentMode == 11;
         /**
-         * @property { boolean } ie9Compat 检测浏览器模式是否为 IE9 兼容模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
+         * @property { boolean } ie9Compat 妫€娴嬫祻瑙堝櫒妯″紡鏄惁涓?IE9 鍏煎妯″紡
+         * @warning 濡傛灉娴忚鍣ㄤ笉鏄疘E锛?鍒欒鍊间负undefined
          * @example
          * ```javascript
          * if ( UE.browser.ie9Compat ) {
-         *     console.log( '当前浏览器运行在IE9兼容模式下' );
+         *     console.log( '褰撳墠娴忚鍣ㄨ繍琛屽湪IE9鍏煎妯″紡涓? );
          * }
          * ```
          */
         browser.ie9Compat = document.documentMode == 9;
 
         /**
-         * @property { boolean } ie8 检测浏览器是否是IE8浏览器
-         * @warning 如果浏览器不是IE， 则该值为undefined
+         * @property { boolean } ie8 妫€娴嬫祻瑙堝櫒鏄惁鏄疘E8娴忚鍣?         * @warning 濡傛灉娴忚鍣ㄤ笉鏄疘E锛?鍒欒鍊间负undefined
          * @example
          * ```javascript
          * if ( UE.browser.ie8 ) {
-         *     console.log( '当前浏览器是IE8浏览器' );
+         *     console.log( '褰撳墠娴忚鍣ㄦ槸IE8娴忚鍣? );
          * }
          * ```
          */
         browser.ie8 = !!document.documentMode;
 
         /**
-         * @property { boolean } ie8Compat 检测浏览器模式是否为 IE8 兼容模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
+         * @property { boolean } ie8Compat 妫€娴嬫祻瑙堝櫒妯″紡鏄惁涓?IE8 鍏煎妯″紡
+         * @warning 濡傛灉娴忚鍣ㄤ笉鏄疘E锛?鍒欒鍊间负undefined
          * @example
          * ```javascript
          * if ( UE.browser.ie8Compat ) {
-         *     console.log( '当前浏览器运行在IE8兼容模式下' );
+         *     console.log( '褰撳墠娴忚鍣ㄨ繍琛屽湪IE8鍏煎妯″紡涓? );
          * }
          * ```
          */
         browser.ie8Compat = document.documentMode == 8;
 
         /**
-         * @property { boolean } ie7Compat 检测浏览器模式是否为 IE7 兼容模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
+         * @property { boolean } ie7Compat 妫€娴嬫祻瑙堝櫒妯″紡鏄惁涓?IE7 鍏煎妯″紡
+         * @warning 濡傛灉娴忚鍣ㄤ笉鏄疘E锛?鍒欒鍊间负undefined
          * @example
          * ```javascript
          * if ( UE.browser.ie7Compat ) {
-         *     console.log( '当前浏览器运行在IE7兼容模式下' );
+         *     console.log( '褰撳墠娴忚鍣ㄨ繍琛屽湪IE7鍏煎妯″紡涓? );
          * }
          * ```
          */
@@ -181,12 +178,12 @@ var browser = UE.browser = function(){
                 || document.documentMode == 7 );
 
         /**
-         * @property { boolean } ie6Compat 检测浏览器模式是否为 IE6 模式 或者怪异模式
-         * @warning 如果浏览器不是IE， 则该值为undefined
+         * @property { boolean } ie6Compat 妫€娴嬫祻瑙堝櫒妯″紡鏄惁涓?IE6 妯″紡 鎴栬€呮€紓妯″紡
+         * @warning 濡傛灉娴忚鍣ㄤ笉鏄疘E锛?鍒欒鍊间负undefined
          * @example
          * ```javascript
          * if ( UE.browser.ie6Compat ) {
-         *     console.log( '当前浏览器运行在IE6模式或者怪异模式下' );
+         *     console.log( '褰撳墠娴忚鍣ㄨ繍琛屽湪IE6妯″紡鎴栬€呮€紓妯″紡涓? );
          * }
          * ```
          */
@@ -213,12 +210,11 @@ var browser = UE.browser = function(){
     }
 
     /**
-     * @property { Number } chrome 检测当前浏览器是否为Chrome, 如果是，则返回Chrome的大版本号
-     * @warning 如果浏览器不是chrome， 则该值为undefined
+     * @property { Number } chrome 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁涓篊hrome, 濡傛灉鏄紝鍒欒繑鍥濩hrome鐨勫ぇ鐗堟湰鍙?     * @warning 濡傛灉娴忚鍣ㄤ笉鏄痗hrome锛?鍒欒鍊间负undefined
      * @example
      * ```javascript
      * if ( UE.browser.chrome ) {
-     *     console.log( '当前浏览器是Chrome' );
+     *     console.log( '褰撳墠娴忚鍣ㄦ槸Chrome' );
      * }
      * ```
      */
@@ -227,12 +223,11 @@ var browser = UE.browser = function(){
     }
 
     /**
-     * @property { Number } safari 检测当前浏览器是否为Safari, 如果是，则返回Safari的大版本号
-     * @warning 如果浏览器不是safari， 则该值为undefined
+     * @property { Number } safari 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁涓篠afari, 濡傛灉鏄紝鍒欒繑鍥濻afari鐨勫ぇ鐗堟湰鍙?     * @warning 濡傛灉娴忚鍣ㄤ笉鏄痵afari锛?鍒欒鍊间负undefined
      * @example
      * ```javascript
      * if ( UE.browser.safari ) {
-     *     console.log( '当前浏览器是Safari' );
+     *     console.log( '褰撳墠娴忚鍣ㄦ槸Safari' );
      * }
      * ```
      */
@@ -250,26 +245,25 @@ var browser = UE.browser = function(){
         version = parseFloat( agent.match( / applewebkit\/(\d+)/ )[1] );
 
     /**
-     * @property { Number } version 检测当前浏览器版本号
-     * @remind
+     * @property { Number } version 妫€娴嬪綋鍓嶆祻瑙堝櫒鐗堟湰鍙?     * @remind
      * <ul>
-     *     <li>IE系列返回值为5,6,7,8,9,10等</li>
-     *     <li>gecko系列会返回10900，158900等</li>
-     *     <li>webkit系列会返回其build号 (如 522等)</li>
+     *     <li>IE绯诲垪杩斿洖鍊间负5,6,7,8,9,10绛?/li>
+     *     <li>gecko绯诲垪浼氳繑鍥?0900锛?58900绛?/li>
+     *     <li>webkit绯诲垪浼氳繑鍥炲叾build鍙?(濡?522绛?</li>
      * </ul>
      * @example
      * ```javascript
-     * console.log( '当前浏览器版本号是： ' + UE.browser.version );
+     * console.log( '褰撳墠娴忚鍣ㄧ増鏈彿鏄細 ' + UE.browser.version );
      * ```
      */
     browser.version = version;
 
     /**
-     * @property { boolean } isCompatible 检测当前浏览器是否能够与UEditor良好兼容
+     * @property { boolean } isCompatible 妫€娴嬪綋鍓嶆祻瑙堝櫒鏄惁鑳藉涓嶶Editor鑹ソ鍏煎
      * @example
      * ```javascript
      * if ( UE.browser.isCompatible ) {
-     *     console.log( '浏览器与UEditor能够良好兼容' );
+     *     console.log( '娴忚鍣ㄤ笌UEditor鑳藉鑹ソ鍏煎' );
      * }
      * ```
      */
@@ -283,7 +277,7 @@ var browser = UE.browser = function(){
         false );
     return browser;
 }();
-//快捷方式
+//蹇嵎鏂瑰紡
 var ie = browser.ie,
     webkit = browser.webkit,
     gecko = browser.gecko,
@@ -291,25 +285,22 @@ var ie = browser.ie,
 
 // core/utils.js
 /**
- * 工具函数包
- * @file
+ * 宸ュ叿鍑芥暟鍖? * @file
  * @module UE.utils
  * @since 1.2.6.1
  */
 
 /**
- * UEditor封装使用的静态工具函数
- * @module UE.utils
+ * UEditor灏佽浣跨敤鐨勯潤鎬佸伐鍏峰嚱鏁? * @module UE.utils
  * @unfile
  */
 
 var utils = UE.utils = {
 
     /**
-     * 用给定的迭代器遍历对象
-     * @method each
-     * @param { Object } obj 需要遍历的对象
-     * @param { Function } iterator 迭代器， 该方法接受两个参数， 第一个参数是当前所处理的value， 第二个参数是当前遍历对象的key
+     * 鐢ㄧ粰瀹氱殑杩唬鍣ㄩ亶鍘嗗璞?     * @method each
+     * @param { Object } obj 闇€瑕侀亶鍘嗙殑瀵硅薄
+     * @param { Function } iterator 杩唬鍣紝 璇ユ柟娉曟帴鍙椾袱涓弬鏁帮紝 绗竴涓弬鏁版槸褰撳墠鎵€澶勭悊鐨剉alue锛?绗簩涓弬鏁版槸褰撳墠閬嶅巻瀵硅薄鐨刱ey
      * @example
      * ```javascript
      * var demoObj = {
@@ -327,10 +318,9 @@ var utils = UE.utils = {
      */
 
     /**
-     * 用给定的迭代器遍历数组或类数组对象
-     * @method each
-     * @param { Array } array 需要遍历的数组或者类数组
-     * @param { Function } iterator 迭代器， 该方法接受两个参数， 第一个参数是当前所处理的value， 第二个参数是当前遍历对象的key
+     * 鐢ㄧ粰瀹氱殑杩唬鍣ㄩ亶鍘嗘暟缁勬垨绫绘暟缁勫璞?     * @method each
+     * @param { Array } array 闇€瑕侀亶鍘嗙殑鏁扮粍鎴栬€呯被鏁扮粍
+     * @param { Function } iterator 杩唬鍣紝 璇ユ柟娉曟帴鍙椾袱涓弬鏁帮紝 绗竴涓弬鏁版槸褰撳墠鎵€澶勭悊鐨剉alue锛?绗簩涓弬鏁版槸褰撳墠閬嶅巻瀵硅薄鐨刱ey
      * @example
      * ```javascript
      * var divs = document.getElmentByTagNames( "div" );
@@ -361,10 +351,10 @@ var utils = UE.utils = {
     },
 
     /**
-     * 以给定对象作为原型创建一个新对象
+     * 浠ョ粰瀹氬璞′綔涓哄師鍨嬪垱寤轰竴涓柊瀵硅薄
      * @method makeInstance
-     * @param { Object } protoObject 该对象将作为新创建对象的原型
-     * @return { Object } 新的对象， 该对象的原型是给定的protoObject对象
+     * @param { Object } protoObject 璇ュ璞″皢浣滀负鏂板垱寤哄璞＄殑鍘熷瀷
+     * @return { Object } 鏂扮殑瀵硅薄锛?璇ュ璞＄殑鍘熷瀷鏄粰瀹氱殑protoObject瀵硅薄
      * @example
      * ```javascript
      *
@@ -384,13 +374,9 @@ var utils = UE.utils = {
     },
 
     /**
-     * 将source对象中的属性扩展到target对象上
-     * @method extend
-     * @remind 该方法将强制把source对象上的属性复制到target对象上
-     * @see UE.utils.extend(Object,Object,Boolean)
-     * @param { Object } target 目标对象， 新的属性将附加到该对象上
-     * @param { Object } source 源对象， 该对象的属性会被附加到target对象上
-     * @return { Object } 返回target对象
+     * 灏唖ource瀵硅薄涓殑灞炴€ф墿灞曞埌target瀵硅薄涓?     * @method extend
+     * @remind 璇ユ柟娉曞皢寮哄埗鎶妔ource瀵硅薄涓婄殑灞炴€у鍒跺埌target瀵硅薄涓?     * @see UE.utils.extend(Object,Object,Boolean)
+     * @param { Object } target 鐩爣瀵硅薄锛?鏂扮殑灞炴€у皢闄勫姞鍒拌瀵硅薄涓?     * @param { Object } source 婧愬璞★紝 璇ュ璞＄殑灞炴€т細琚檮鍔犲埌target瀵硅薄涓?     * @return { Object } 杩斿洖target瀵硅薄
      * @example
      * ```javascript
      *
@@ -406,13 +392,8 @@ var utils = UE.utils = {
      */
 
     /**
-     * 将source对象中的属性扩展到target对象上， 根据指定的isKeepTarget值决定是否保留目标对象中与
-     * 源对象属性名相同的属性值。
-     * @method extend
-     * @param { Object } target 目标对象， 新的属性将附加到该对象上
-     * @param { Object } source 源对象， 该对象的属性会被附加到target对象上
-     * @param { Boolean } isKeepTarget 是否保留目标对象中与源对象中属性名相同的属性
-     * @return { Object } 返回target对象
+     * 灏唖ource瀵硅薄涓殑灞炴€ф墿灞曞埌target瀵硅薄涓婏紝 鏍规嵁鎸囧畾鐨刬sKeepTarget鍊煎喅瀹氭槸鍚︿繚鐣欑洰鏍囧璞′腑涓?     * 婧愬璞″睘鎬у悕鐩稿悓鐨勫睘鎬у€笺€?     * @method extend
+     * @param { Object } target 鐩爣瀵硅薄锛?鏂扮殑灞炴€у皢闄勫姞鍒拌瀵硅薄涓?     * @param { Object } source 婧愬璞★紝 璇ュ璞＄殑灞炴€т細琚檮鍔犲埌target瀵硅薄涓?     * @param { Boolean } isKeepTarget 鏄惁淇濈暀鐩爣瀵硅薄涓笌婧愬璞′腑灞炴€у悕鐩稿悓鐨勫睘鎬?     * @return { Object } 杩斿洖target瀵硅薄
      * @example
      * ```javascript
      *
@@ -438,14 +419,9 @@ var utils = UE.utils = {
     },
 
     /**
-     * 将给定的多个对象的属性复制到目标对象target上
-     * @method extend2
-     * @remind 该方法将强制把源对象上的属性复制到target对象上
-     * @remind 该方法支持两个及以上的参数， 从第二个参数开始， 其属性都会被复制到第一个参数上。 如果遇到同名的属性，
-     *          将会覆盖掉之前的值。
-     * @param { Object } target 目标对象， 新的属性将附加到该对象上
-     * @param { Object... } source 源对象， 支持多个对象， 该对象的属性会被附加到target对象上
-     * @return { Object } 返回target对象
+     * 灏嗙粰瀹氱殑澶氫釜瀵硅薄鐨勫睘鎬у鍒跺埌鐩爣瀵硅薄target涓?     * @method extend2
+     * @remind 璇ユ柟娉曞皢寮哄埗鎶婃簮瀵硅薄涓婄殑灞炴€у鍒跺埌target瀵硅薄涓?     * @remind 璇ユ柟娉曟敮鎸佷袱涓強浠ヤ笂鐨勫弬鏁帮紝 浠庣浜屼釜鍙傛暟寮€濮嬶紝 鍏跺睘鎬ч兘浼氳澶嶅埗鍒扮涓€涓弬鏁颁笂銆?濡傛灉閬囧埌鍚屽悕鐨勫睘鎬э紝
+     *          灏嗕細瑕嗙洊鎺変箣鍓嶇殑鍊笺€?     * @param { Object } target 鐩爣瀵硅薄锛?鏂扮殑灞炴€у皢闄勫姞鍒拌瀵硅薄涓?     * @param { Object... } source 婧愬璞★紝 鏀寔澶氫釜瀵硅薄锛?璇ュ璞＄殑灞炴€т細琚檮鍔犲埌target瀵硅薄涓?     * @return { Object } 杩斿洖target瀵硅薄
      * @example
      * ```javascript
      *
@@ -474,16 +450,15 @@ var utils = UE.utils = {
     },
 
     /**
-     * 模拟继承机制， 使得subClass继承自superClass
+     * 妯℃嫙缁ф壙鏈哄埗锛?浣垮緱subClass缁ф壙鑷猻uperClass
      * @method inherits
-     * @param { Object } subClass 子类对象
-     * @param { Object } superClass 超类对象
-     * @warning 该方法只能让subClass继承超类的原型， subClass对象自身的属性和方法不会被继承
-     * @return { Object } 继承superClass后的子类对象
+     * @param { Object } subClass 瀛愮被瀵硅薄
+     * @param { Object } superClass 瓒呯被瀵硅薄
+     * @warning 璇ユ柟娉曞彧鑳借subClass缁ф壙瓒呯被鐨勫師鍨嬶紝 subClass瀵硅薄鑷韩鐨勫睘鎬у拰鏂规硶涓嶄細琚户鎵?     * @return { Object } 缁ф壙superClass鍚庣殑瀛愮被瀵硅薄
      * @example
      * ```javascript
      * function SuperClass(){
-     *     this.name = "小李";
+     *     this.name = "灏忔潕";
      * }
      *
      * SuperClass.prototype = {
@@ -493,14 +468,14 @@ var utils = UE.utils = {
      * }
      *
      * function SubClass(){
-     *     this.name = "小张";
+     *     this.name = "灏忓紶";
      * }
      *
      * UE.utils.inherits(SubClass,SuperClass);
      *
      * var sub = new SubClass();
-     * //output: '小张早上好!
-     * sub.hello("早上好!");
+     * //output: '灏忓紶鏃╀笂濂?
+     * sub.hello("鏃╀笂濂?");
      * ```
      */
     inherits:function (subClass, superClass) {
@@ -512,12 +487,9 @@ var utils = UE.utils = {
     },
 
     /**
-     * 用指定的context对象作为函数fn的上下文
+     * 鐢ㄦ寚瀹氱殑context瀵硅薄浣滀负鍑芥暟fn鐨勪笂涓嬫枃
      * @method bind
-     * @param { Function } fn 需要绑定上下文的函数对象
-     * @param { Object } content 函数fn新的上下文对象
-     * @return { Function } 一个新的函数， 该函数作为原始函数fn的代理， 将完成fn的上下文调换工作。
-     * @example
+     * @param { Function } fn 闇€瑕佺粦瀹氫笂涓嬫枃鐨勫嚱鏁板璞?     * @param { Object } content 鍑芥暟fn鏂扮殑涓婁笅鏂囧璞?     * @return { Function } 涓€涓柊鐨勫嚱鏁帮紝 璇ュ嚱鏁颁綔涓哄師濮嬪嚱鏁癴n鐨勪唬鐞嗭紝 灏嗗畬鎴恌n鐨勪笂涓嬫枃璋冩崲宸ヤ綔銆?     * @example
      * ```javascript
      *
      * var name = 'window',
@@ -544,14 +516,10 @@ var utils = UE.utils = {
     },
 
     /**
-     * 创建延迟指定时间后执行的函数fn
+     * 鍒涘缓寤惰繜鎸囧畾鏃堕棿鍚庢墽琛岀殑鍑芥暟fn
      * @method defer
-     * @param { Function } fn 需要延迟执行的函数对象
-     * @param { int } delay 延迟的时间， 单位是毫秒
-     * @warning 该方法的时间控制是不精确的，仅仅只能保证函数的执行是在给定的时间之后，
-     *           而不能保证刚好到达延迟时间时执行。
-     * @return { Function } 目标函数fn的代理函数， 只有执行该函数才能起到延时效果
-     * @example
+     * @param { Function } fn 闇€瑕佸欢杩熸墽琛岀殑鍑芥暟瀵硅薄
+     * @param { int } delay 寤惰繜鐨勬椂闂达紝 鍗曚綅鏄绉?     * @warning 璇ユ柟娉曠殑鏃堕棿鎺у埗鏄笉绮剧‘鐨勶紝浠呬粎鍙兘淇濊瘉鍑芥暟鐨勬墽琛屾槸鍦ㄧ粰瀹氱殑鏃堕棿涔嬪悗锛?     *           鑰屼笉鑳戒繚璇佸垰濂藉埌杈惧欢杩熸椂闂存椂鎵ц銆?     * @return { Function } 鐩爣鍑芥暟fn鐨勪唬鐞嗗嚱鏁帮紝 鍙湁鎵ц璇ュ嚱鏁版墠鑳借捣鍒板欢鏃舵晥鏋?     * @example
      * ```javascript
      * var start = 0;
      *
@@ -562,23 +530,16 @@ var utils = UE.utils = {
      * var testDefer = UE.utils.defer( test, 1000 );
      * //
      * start = new Date();
-     * //output: (大约在1000毫秒之后输出) 1000
+     * //output: (澶х害鍦?000姣涔嬪悗杈撳嚭) 1000
      * testDefer();
      * ```
      */
 
     /**
-     * 创建延迟指定时间后执行的函数fn, 如果在延迟时间内再次执行该方法， 将会根据指定的exclusion的值，
-     * 决定是否取消前一次函数的执行， 如果exclusion的值为true， 则取消执行，反之，将继续执行前一个方法。
-     * @method defer
-     * @param { Function } fn 需要延迟执行的函数对象
-     * @param { int } delay 延迟的时间， 单位是毫秒
-     * @param { Boolean } exclusion 如果在延迟时间内再次执行该函数，该值将决定是否取消执行前一次函数的执行，
-     *                     值为true表示取消执行， 反之则将在执行前一次函数之后才执行本次函数调用。
-     * @warning 该方法的时间控制是不精确的，仅仅只能保证函数的执行是在给定的时间之后，
-     *           而不能保证刚好到达延迟时间时执行。
-     * @return { Function } 目标函数fn的代理函数， 只有执行该函数才能起到延时效果
-     * @example
+     * 鍒涘缓寤惰繜鎸囧畾鏃堕棿鍚庢墽琛岀殑鍑芥暟fn, 濡傛灉鍦ㄥ欢杩熸椂闂村唴鍐嶆鎵ц璇ユ柟娉曪紝 灏嗕細鏍规嵁鎸囧畾鐨別xclusion鐨勫€硷紝
+     * 鍐冲畾鏄惁鍙栨秷鍓嶄竴娆″嚱鏁扮殑鎵ц锛?濡傛灉exclusion鐨勫€间负true锛?鍒欏彇娑堟墽琛岋紝鍙嶄箣锛屽皢缁х画鎵ц鍓嶄竴涓柟娉曘€?     * @method defer
+     * @param { Function } fn 闇€瑕佸欢杩熸墽琛岀殑鍑芥暟瀵硅薄
+     * @param { int } delay 寤惰繜鐨勬椂闂达紝 鍗曚綅鏄绉?     * @param { Boolean } exclusion 濡傛灉鍦ㄥ欢杩熸椂闂村唴鍐嶆鎵ц璇ュ嚱鏁帮紝璇ュ€煎皢鍐冲畾鏄惁鍙栨秷鎵ц鍓嶄竴娆″嚱鏁扮殑鎵ц锛?     *                     鍊间负true琛ㄧず鍙栨秷鎵ц锛?鍙嶄箣鍒欏皢鍦ㄦ墽琛屽墠涓€娆″嚱鏁颁箣鍚庢墠鎵ц鏈鍑芥暟璋冪敤銆?     * @warning 璇ユ柟娉曠殑鏃堕棿鎺у埗鏄笉绮剧‘鐨勶紝浠呬粎鍙兘淇濊瘉鍑芥暟鐨勬墽琛屾槸鍦ㄧ粰瀹氱殑鏃堕棿涔嬪悗锛?     *           鑰屼笉鑳戒繚璇佸垰濂藉埌杈惧欢杩熸椂闂存椂鎵ц銆?     * @return { Function } 鐩爣鍑芥暟fn鐨勪唬鐞嗗嚱鏁帮紝 鍙湁鎵ц璇ュ嚱鏁版墠鑳借捣鍒板欢鏃舵晥鏋?     * @example
      * ```javascript
      *
      * function test(){
@@ -587,7 +548,7 @@ var utils = UE.utils = {
      *
      * var testDefer = UE.utils.defer( test, 1000, true );
      *
-     * //output: (两次调用仅有一次输出) 1
+     * //output: (涓ゆ璋冪敤浠呮湁涓€娆¤緭鍑? 1
      * testDefer();
      * testDefer();
      * ```
@@ -603,12 +564,10 @@ var utils = UE.utils = {
     },
 
     /**
-     * 获取元素item在数组array中首次出现的位置, 如果未找到item， 则返回-1
+     * 鑾峰彇鍏冪礌item鍦ㄦ暟缁刟rray涓娆″嚭鐜扮殑浣嶇疆, 濡傛灉鏈壘鍒癷tem锛?鍒欒繑鍥?1
      * @method indexOf
-     * @remind 该方法的匹配过程使用的是恒等“===”
-     * @param { Array } array 需要查找的数组对象
-     * @param { * } item 需要在目标数组中查找的值
-     * @return { int } 返回item在目标数组array中首次出现的位置， 如果在数组中未找到item， 则返回-1
+     * @remind 璇ユ柟娉曠殑鍖归厤杩囩▼浣跨敤鐨勬槸鎭掔瓑鈥?==鈥?     * @param { Array } array 闇€瑕佹煡鎵剧殑鏁扮粍瀵硅薄
+     * @param { * } item 闇€瑕佸湪鐩爣鏁扮粍涓煡鎵剧殑鍊?     * @return { int } 杩斿洖item鍦ㄧ洰鏍囨暟缁刟rray涓娆″嚭鐜扮殑浣嶇疆锛?濡傛灉鍦ㄦ暟缁勪腑鏈壘鍒癷tem锛?鍒欒繑鍥?1
      * @example
      * ```javascript
      * var item = 1,
@@ -620,13 +579,9 @@ var utils = UE.utils = {
      */
 
     /**
-     * 获取元素item数组array中首次出现的位置, 如果未找到item， 则返回-1。通过start的值可以指定搜索的起始位置。
-     * @method indexOf
-     * @remind 该方法的匹配过程使用的是恒等“===”
-     * @param { Array } array 需要查找的数组对象
-     * @param { * } item 需要在目标数组中查找的值
-     * @param { int } start 搜索的起始位置
-     * @return { int } 返回item在目标数组array中的start位置之后首次出现的位置， 如果在数组中未找到item， 则返回-1
+     * 鑾峰彇鍏冪礌item鏁扮粍array涓娆″嚭鐜扮殑浣嶇疆, 濡傛灉鏈壘鍒癷tem锛?鍒欒繑鍥?1銆傞€氳繃start鐨勫€煎彲浠ユ寚瀹氭悳绱㈢殑璧峰浣嶇疆銆?     * @method indexOf
+     * @remind 璇ユ柟娉曠殑鍖归厤杩囩▼浣跨敤鐨勬槸鎭掔瓑鈥?==鈥?     * @param { Array } array 闇€瑕佹煡鎵剧殑鏁扮粍瀵硅薄
+     * @param { * } item 闇€瑕佸湪鐩爣鏁扮粍涓煡鎵剧殑鍊?     * @param { int } start 鎼滅储鐨勮捣濮嬩綅缃?     * @return { int } 杩斿洖item鍦ㄧ洰鏍囨暟缁刟rray涓殑start浣嶇疆涔嬪悗棣栨鍑虹幇鐨勪綅缃紝 濡傛灉鍦ㄦ暟缁勪腑鏈壘鍒癷tem锛?鍒欒繑鍥?1
      * @example
      * ```javascript
      * var item = 1,
@@ -649,12 +604,11 @@ var utils = UE.utils = {
     },
 
     /**
-     * 移除数组array中所有的元素item
+     * 绉婚櫎鏁扮粍array涓墍鏈夌殑鍏冪礌item
      * @method removeItem
-     * @param { Array } array 要移除元素的目标数组
-     * @param { * } item 将要被移除的元素
-     * @remind 该方法的匹配过程使用的是恒等“===”
-     * @example
+     * @param { Array } array 瑕佺Щ闄ゅ厓绱犵殑鐩爣鏁扮粍
+     * @param { * } item 灏嗚琚Щ闄ょ殑鍏冪礌
+     * @remind 璇ユ柟娉曠殑鍖归厤杩囩▼浣跨敤鐨勬槸鎭掔瓑鈥?==鈥?     * @example
      * ```javascript
      * var arr = [ 4, 5, 7, 1, 3, 4, 6 ];
      *
@@ -674,11 +628,8 @@ var utils = UE.utils = {
     },
 
     /**
-     * 删除字符串str的首尾空格
-     * @method trim
-     * @param { String } str 需要删除首尾空格的字符串
-     * @return { String } 删除了首尾的空格后的字符串
-     * @example
+     * 鍒犻櫎瀛楃涓瞫tr鐨勯灏剧┖鏍?     * @method trim
+     * @param { String } str 闇€瑕佸垹闄ら灏剧┖鏍肩殑瀛楃涓?     * @return { String } 鍒犻櫎浜嗛灏剧殑绌烘牸鍚庣殑瀛楃涓?     * @example
      * ```javascript
      *
      * var str = " UEdtior ";
@@ -699,11 +650,10 @@ var utils = UE.utils = {
     },
 
     /**
-     * 将字符串str以','分隔成数组后，将该数组转换成哈希对象， 其生成的hash对象的key为数组中的元素， value为1
+     * 灏嗗瓧绗︿覆str浠?,'鍒嗛殧鎴愭暟缁勫悗锛屽皢璇ユ暟缁勮浆鎹㈡垚鍝堝笇瀵硅薄锛?鍏剁敓鎴愮殑hash瀵硅薄鐨刱ey涓烘暟缁勪腑鐨勫厓绱狅紝 value涓?
      * @method listToMap
-     * @warning 该方法在生成的hash对象中，会为每一个key同时生成一个另一个全大写的key。
-     * @param { String } str 该字符串将被以','分割为数组， 然后进行转化
-     * @return { Object } 转化之后的hash对象
+     * @warning 璇ユ柟娉曞湪鐢熸垚鐨刪ash瀵硅薄涓紝浼氫负姣忎竴涓猭ey鍚屾椂鐢熸垚涓€涓彟涓€涓叏澶у啓鐨刱ey銆?     * @param { String } str 璇ュ瓧绗︿覆灏嗚浠?,'鍒嗗壊涓烘暟缁勶紝 鐒跺悗杩涜杞寲
+     * @return { Object } 杞寲涔嬪悗鐨刪ash瀵硅薄
      * @example
      * ```javascript
      *
@@ -714,11 +664,9 @@ var utils = UE.utils = {
      */
 
     /**
-     * 将字符串数组转换成哈希对象， 其生成的hash对象的key为数组中的元素， value为1
+     * 灏嗗瓧绗︿覆鏁扮粍杞崲鎴愬搱甯屽璞★紝 鍏剁敓鎴愮殑hash瀵硅薄鐨刱ey涓烘暟缁勪腑鐨勫厓绱狅紝 value涓?
      * @method listToMap
-     * @warning 该方法在生成的hash对象中，会为每一个key同时生成一个另一个全大写的key。
-     * @param { Array } arr 字符串数组
-     * @return { Object } 转化之后的hash对象
+     * @warning 璇ユ柟娉曞湪鐢熸垚鐨刪ash瀵硅薄涓紝浼氫负姣忎竴涓猭ey鍚屾椂鐢熸垚涓€涓彟涓€涓叏澶у啓鐨刱ey銆?     * @param { Array } arr 瀛楃涓叉暟缁?     * @return { Object } 杞寲涔嬪悗鐨刪ash瀵硅薄
      * @example
      * ```javascript
      *
@@ -737,11 +685,8 @@ var utils = UE.utils = {
     },
 
     /**
-     * 将str中的html符号转义,将转义“'，&，<，"，>”五个字符
-     * @method unhtml
-     * @param { String } str 需要转义的字符串
-     * @return { String } 转义后的字符串
-     * @example
+     * 灏唖tr涓殑html绗﹀彿杞箟,灏嗚浆涔夆€?锛?锛?锛?锛?鈥濅簲涓瓧绗?     * @method unhtml
+     * @param { String } str 闇€瑕佽浆涔夌殑瀛楃涓?     * @return { String } 杞箟鍚庣殑瀛楃涓?     * @example
      * ```javascript
      * var html = '<body>&</body>';
      *
@@ -767,11 +712,9 @@ var utils = UE.utils = {
         }) : '';
     },
     /**
-     * 将url中的html字符转义， 仅转义  ', ", <, > 四个字符
-     * @param  { String } str 需要转义的字符串
-     * @param  { RegExp } reg 自定义的正则
-     * @return { String }     转义后的字符串
-     */
+     * 灏唘rl涓殑html瀛楃杞箟锛?浠呰浆涔? ', ", <, > 鍥涗釜瀛楃
+     * @param  { String } str 闇€瑕佽浆涔夌殑瀛楃涓?     * @param  { RegExp } reg 鑷畾涔夌殑姝ｅ垯
+     * @return { String }     杞箟鍚庣殑瀛楃涓?     */
     unhtmlForUrl:function (str, reg) {
         return str ? str.replace(reg || /[<">']/g, function (a) {
             return {
@@ -786,11 +729,10 @@ var utils = UE.utils = {
     },
 
     /**
-     * 将str中的转义字符还原成html字符
+     * 灏唖tr涓殑杞箟瀛楃杩樺師鎴恏tml瀛楃
      * @see UE.utils.unhtml(String);
      * @method html
-     * @param { String } str 需要逆转义的字符串
-     * @return { String } 逆转义后的字符串
+     * @param { String } str 闇€瑕侀€嗚浆涔夌殑瀛楃涓?     * @return { String } 閫嗚浆涔夊悗鐨勫瓧绗︿覆
      * @example
      * ```javascript
      *
@@ -815,11 +757,9 @@ var utils = UE.utils = {
     },
 
     /**
-     * 将css样式转换为驼峰的形式
+     * 灏哻ss鏍峰紡杞崲涓洪┘宄扮殑褰㈠紡
      * @method cssStyleToDomStyle
-     * @param { String } cssName 需要转换的css样式名
-     * @return { String } 转换成驼峰形式后的css样式名
-     * @example
+     * @param { String } cssName 闇€瑕佽浆鎹㈢殑css鏍峰紡鍚?     * @return { String } 杞崲鎴愰┘宄板舰寮忓悗鐨刢ss鏍峰紡鍚?     * @example
      * ```javascript
      *
      * var str = 'border-top';
@@ -843,11 +783,9 @@ var utils = UE.utils = {
     }(),
 
     /**
-     * 动态加载文件到doc中
-     * @method loadFile
-     * @param { DomDocument } document 需要加载资源文件的文档对象
-     * @param { Object } options 加载资源文件的属性集合， 取值请参考代码示例
-     * @example
+     * 鍔ㄦ€佸姞杞芥枃浠跺埌doc涓?     * @method loadFile
+     * @param { DomDocument } document 闇€瑕佸姞杞借祫婧愭枃浠剁殑鏂囨。瀵硅薄
+     * @param { Object } options 鍔犺浇璧勬簮鏂囦欢鐨勫睘鎬ч泦鍚堬紝 鍙栧€艰鍙傝€冧唬鐮佺ず渚?     * @example
      * ```javascript
      *
      * UE.utils.loadFile( document, {
@@ -861,14 +799,10 @@ var utils = UE.utils = {
      */
 
     /**
-     * 动态加载文件到doc中，加载成功后执行的回调函数fn
+     * 鍔ㄦ€佸姞杞芥枃浠跺埌doc涓紝鍔犺浇鎴愬姛鍚庢墽琛岀殑鍥炶皟鍑芥暟fn
      * @method loadFile
-     * @param { DomDocument } document 需要加载资源文件的文档对象
-     * @param { Object } options 加载资源文件的属性集合， 该集合支持的值是script标签和style标签支持的所有属性。
-     * @param { Function } fn 资源文件加载成功之后执行的回调
-     * @warning 对于在同一个文档中多次加载同一URL的文件， 该方法会在第一次加载之后缓存该请求，
-     *           在此之后的所有同一URL的请求， 将会直接触发回调。
-     * @example
+     * @param { DomDocument } document 闇€瑕佸姞杞借祫婧愭枃浠剁殑鏂囨。瀵硅薄
+     * @param { Object } options 鍔犺浇璧勬簮鏂囦欢鐨勫睘鎬ч泦鍚堬紝 璇ラ泦鍚堟敮鎸佺殑鍊兼槸script鏍囩鍜宻tyle鏍囩鏀寔鐨勬墍鏈夊睘鎬с€?     * @param { Function } fn 璧勬簮鏂囦欢鍔犺浇鎴愬姛涔嬪悗鎵ц鐨勫洖璋?     * @warning 瀵逛簬鍦ㄥ悓涓€涓枃妗ｄ腑澶氭鍔犺浇鍚屼竴URL鐨勬枃浠讹紝 璇ユ柟娉曚細鍦ㄧ涓€娆″姞杞戒箣鍚庣紦瀛樿璇锋眰锛?     *           鍦ㄦ涔嬪悗鐨勬墍鏈夊悓涓€URL鐨勮姹傦紝 灏嗕細鐩存帴瑙﹀彂鍥炶皟銆?     * @example
      * ```javascript
      *
      * UE.utils.loadFile( document, {
@@ -877,7 +811,7 @@ var utils = UE.utils = {
      *     type:"text/javascript",
      *     defer:"defer"
      * }, function () {
-     *     console.log('加载成功');
+     *     console.log('鍔犺浇鎴愬姛');
      * } );
      *
      * ```
@@ -950,12 +884,11 @@ var utils = UE.utils = {
     }(),
 
     /**
-     * 判断obj对象是否为空
+     * 鍒ゆ柇obj瀵硅薄鏄惁涓虹┖
      * @method isEmptyObject
-     * @param { * } obj 需要判断的对象
-     * @remind 如果判断的对象是NULL， 将直接返回true， 如果是数组且为空， 返回true， 如果是字符串， 且字符串为空，
-     *          返回true， 如果是普通对象， 且该对象没有任何实例属性， 返回true
-     * @return { Boolean } 对象是否为空
+     * @param { * } obj 闇€瑕佸垽鏂殑瀵硅薄
+     * @remind 濡傛灉鍒ゆ柇鐨勫璞℃槸NULL锛?灏嗙洿鎺ヨ繑鍥瀟rue锛?濡傛灉鏄暟缁勪笖涓虹┖锛?杩斿洖true锛?濡傛灉鏄瓧绗︿覆锛?涓斿瓧绗︿覆涓虹┖锛?     *          杩斿洖true锛?濡傛灉鏄櫘閫氬璞★紝 涓旇瀵硅薄娌℃湁浠讳綍瀹炰緥灞炴€э紝 杩斿洖true
+     * @return { Boolean } 瀵硅薄鏄惁涓虹┖
      * @example
      * ```javascript
      *
@@ -987,10 +920,9 @@ var utils = UE.utils = {
     },
 
     /**
-     * 把rgb格式的颜色值转换成16进制格式
+     * 鎶妑gb鏍煎紡鐨勯鑹插€艰浆鎹㈡垚16杩涘埗鏍煎紡
      * @method fixColor
-     * @param { String } rgb格式的颜色值
-     * @param { String }
+     * @param { String } rgb鏍煎紡鐨勯鑹插€?     * @param { String }
      * @example
      * rgb(255,255,255)  => "#ffffff"
      */
@@ -1009,11 +941,10 @@ var utils = UE.utils = {
         return  value;
     },
     /**
-     * 只针对border,padding,margin做了处理，因为性能问题
+     * 鍙拡瀵筨order,padding,margin鍋氫簡澶勭悊锛屽洜涓烘€ц兘闂
      * @public
      * @function
-     * @param {String}    val style字符串
-     */
+     * @param {String}    val style瀛楃涓?     */
     optCss:function (val) {
         var padding, margin, border;
         val = val.replace(/(padding|margin|border)\-([^:]+):([^;]+);?/gi, function (str, key, name, val) {
@@ -1060,18 +991,14 @@ var utils = UE.utils = {
     },
 
     /**
-     * 克隆对象
+     * 鍏嬮殕瀵硅薄
      * @method clone
-     * @param { Object } source 源对象
-     * @return { Object } source的一个副本
-     */
+     * @param { Object } source 婧愬璞?     * @return { Object } source鐨勪竴涓壇鏈?     */
 
     /**
-     * 深度克隆对象，将source的属性克隆到target对象， 会覆盖target重名的属性。
-     * @method clone
-     * @param { Object } source 源对象
-     * @param { Object } target 目标对象
-     * @return { Object } 附加了source对象所有属性的target对象
+     * 娣卞害鍏嬮殕瀵硅薄锛屽皢source鐨勫睘鎬у厠闅嗗埌target瀵硅薄锛?浼氳鐩杢arget閲嶅悕鐨勫睘鎬с€?     * @method clone
+     * @param { Object } source 婧愬璞?     * @param { Object } target 鐩爣瀵硅薄
+     * @return { Object } 闄勫姞浜唖ource瀵硅薄鎵€鏈夊睘鎬х殑target瀵硅薄
      */
     clone:function (source, target) {
         var tmp;
@@ -1091,11 +1018,8 @@ var utils = UE.utils = {
     },
 
     /**
-     * 把cm／pt为单位的值转换为px为单位的值
-     * @method transUnitToPx
-     * @param { String } 待转换的带单位的字符串
-     * @return { String } 转换为px为计量单位的值的字符串
-     * @example
+     * 鎶奵m锛弍t涓哄崟浣嶇殑鍊艰浆鎹负px涓哄崟浣嶇殑鍊?     * @method transUnitToPx
+     * @param { String } 寰呰浆鎹㈢殑甯﹀崟浣嶇殑瀛楃涓?     * @return { String } 杞崲涓簆x涓鸿閲忓崟浣嶇殑鍊肩殑瀛楃涓?     * @example
      * ```javascript
      *
      * //output: 500px
@@ -1126,11 +1050,8 @@ var utils = UE.utils = {
     },
 
     /**
-     * 在dom树ready之后执行给定的回调函数
-     * @method domReady
-     * @remind 如果在执行该方法的时候， dom树已经ready， 那么回调函数将立刻执行
-     * @param { Function } fn dom树ready之后的回调函数
-     * @example
+     * 鍦╠om鏍憆eady涔嬪悗鎵ц缁欏畾鐨勫洖璋冨嚱鏁?     * @method domReady
+     * @remind 濡傛灉鍦ㄦ墽琛岃鏂规硶鐨勬椂鍊欙紝 dom鏍戝凡缁弐eady锛?閭ｄ箞鍥炶皟鍑芥暟灏嗙珛鍒绘墽琛?     * @param { Function } fn dom鏍憆eady涔嬪悗鐨勫洖璋冨嚱鏁?     * @example
      * ```javascript
      *
      * UE.utils.domReady( function () {
@@ -1146,8 +1067,7 @@ var utils = UE.utils = {
         var fnArr = [];
 
         function doReady(doc) {
-            //确保onready只执行一次
-            doc.isReady = true;
+            //纭繚onready鍙墽琛屼竴娆?            doc.isReady = true;
             for (var ci; ci = fnArr.pop(); ci()) {
             }
         }
@@ -1189,19 +1109,19 @@ var utils = UE.utils = {
     }(),
 
     /**
-     * 动态添加css样式
+     * 鍔ㄦ€佹坊鍔燾ss鏍峰紡
      * @method cssRule
-     * @param { String } 节点名称
-     * @grammar UE.utils.cssRule('添加的样式的节点名称',['样式'，'放到哪个document上'])
-     * @grammar UE.utils.cssRule('body','body{background:#ccc}') => null  //给body添加背景颜色
-     * @grammar UE.utils.cssRule('body') =>样式的字符串  //取得key值为body的样式的内容,如果没有找到key值先关的样式将返回空，例如刚才那个背景颜色，将返回 body{background:#ccc}
-     * @grammar UE.utils.cssRule('body',document) => 返回指定key的样式，并且指定是哪个document
-     * @grammar UE.utils.cssRule('body','') =>null //清空给定的key值的背景颜色
+     * @param { String } 鑺傜偣鍚嶇О
+     * @grammar UE.utils.cssRule('娣诲姞鐨勬牱寮忕殑鑺傜偣鍚嶇О',['鏍峰紡'锛?鏀惧埌鍝釜document涓?])
+     * @grammar UE.utils.cssRule('body','body{background:#ccc}') => null  //缁檅ody娣诲姞鑳屾櫙棰滆壊
+     * @grammar UE.utils.cssRule('body') =>鏍峰紡鐨勫瓧绗︿覆  //鍙栧緱key鍊间负body鐨勬牱寮忕殑鍐呭,濡傛灉娌℃湁鎵惧埌key鍊煎厛鍏崇殑鏍峰紡灏嗚繑鍥炵┖锛屼緥濡傚垰鎵嶉偅涓儗鏅鑹诧紝灏嗚繑鍥?body{background:#ccc}
+     * @grammar UE.utils.cssRule('body',document) => 杩斿洖鎸囧畾key鐨勬牱寮忥紝骞朵笖鎸囧畾鏄摢涓猟ocument
+     * @grammar UE.utils.cssRule('body','') =>null //娓呯┖缁欏畾鐨刱ey鍊肩殑鑳屾櫙棰滆壊
      */
     cssRule:browser.ie && browser.version != 11 ? function (key, style, doc) {
         var indexList, index;
         if(style === undefined || style && style.nodeType && style.nodeType == 9){
-            //获取样式
+            //鑾峰彇鏍峰紡
             doc = style && style.nodeType && style.nodeType == 9 ? style : (doc || document);
             indexList = doc.indexList || (doc.indexList = {});
             index = indexList[key];
@@ -1213,7 +1133,7 @@ var utils = UE.utils = {
         doc = doc || document;
         indexList = doc.indexList || (doc.indexList = {});
         index = indexList[key];
-        //清除样式
+        //娓呴櫎鏍峰紡
         if(style === ''){
             if(index!== undefined){
                 doc.styleSheets[index].cssText = '';
@@ -1223,7 +1143,7 @@ var utils = UE.utils = {
             return false;
         }
 
-        //添加样式
+        //娣诲姞鏍峰紡
         if(index!== undefined){
             sheetStyle =  doc.styleSheets[index];
         }else{
@@ -1234,7 +1154,7 @@ var utils = UE.utils = {
     }: function (key, style, doc) {
         var head, node;
         if(style === undefined || style && style.nodeType && style.nodeType == 9){
-            //获取样式
+            //鑾峰彇鏍峰紡
             doc = style && style.nodeType && style.nodeType == 9 ? style : (doc || document);
             node = doc.getElementById(key);
             return node ? node.innerHTML : undefined;
@@ -1242,7 +1162,7 @@ var utils = UE.utils = {
         doc = doc || document;
         node = doc.getElementById(key);
 
-        //清除样式
+        //娓呴櫎鏍峰紡
         if(style === ''){
             if(node){
                 node.parentNode.removeChild(node);
@@ -1251,7 +1171,7 @@ var utils = UE.utils = {
             return false;
         }
 
-        //添加样式
+        //娣诲姞鏍峰紡
         if(node){
             node.innerHTML = style;
         }else{
@@ -1277,14 +1197,11 @@ var utils = UE.utils = {
     serializeParam:function (json) {
         var strArr = [];
         for (var i in json) {
-            //忽略默认的几个参数
-            if(i=="method" || i=="timeout" || i=="async") continue;
-            //传递过来的对象和函数不在提交之列
-            if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
+            //蹇界暐榛樿鐨勫嚑涓弬鏁?            if(i=="method" || i=="timeout" || i=="async") continue;
+            //浼犻€掕繃鏉ョ殑瀵硅薄鍜屽嚱鏁颁笉鍦ㄦ彁浜や箣鍒?            if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
                 strArr.push( encodeURIComponent(i) + "="+encodeURIComponent(json[i]) );
             } else if (utils.isArray(json[i])) {
-                //支持传数组内容
-                for(var j = 0; j < json[i].length; j++) {
+                //鏀寔浼犳暟缁勫唴瀹?                for(var j = 0; j < json[i].length; j++) {
                     strArr.push( encodeURIComponent(i) + "[]="+encodeURIComponent(json[i][j]) );
                 }
             }
@@ -1455,46 +1372,41 @@ var utils = UE.utils = {
 
 };
 /**
- * 判断给定的对象是否是字符串
- * @method isString
- * @param { * } object 需要判断的对象
- * @return { Boolean } 给定的对象是否是字符串
- */
+ * 鍒ゆ柇缁欏畾鐨勫璞℃槸鍚︽槸瀛楃涓? * @method isString
+ * @param { * } object 闇€瑕佸垽鏂殑瀵硅薄
+ * @return { Boolean } 缁欏畾鐨勫璞℃槸鍚︽槸瀛楃涓? */
 
 /**
- * 判断给定的对象是否是数组
+ * 鍒ゆ柇缁欏畾鐨勫璞℃槸鍚︽槸鏁扮粍
  * @method isArray
- * @param { * } object 需要判断的对象
- * @return { Boolean } 给定的对象是否是数组
+ * @param { * } object 闇€瑕佸垽鏂殑瀵硅薄
+ * @return { Boolean } 缁欏畾鐨勫璞℃槸鍚︽槸鏁扮粍
  */
 
 /**
- * 判断给定的对象是否是一个Function
+ * 鍒ゆ柇缁欏畾鐨勫璞℃槸鍚︽槸涓€涓狥unction
  * @method isFunction
- * @param { * } object 需要判断的对象
- * @return { Boolean } 给定的对象是否是Function
+ * @param { * } object 闇€瑕佸垽鏂殑瀵硅薄
+ * @return { Boolean } 缁欏畾鐨勫璞℃槸鍚︽槸Function
  */
 
 /**
- * 判断给定的对象是否是Number
+ * 鍒ゆ柇缁欏畾鐨勫璞℃槸鍚︽槸Number
  * @method isNumber
- * @param { * } object 需要判断的对象
- * @return { Boolean } 给定的对象是否是Number
+ * @param { * } object 闇€瑕佸垽鏂殑瀵硅薄
+ * @return { Boolean } 缁欏畾鐨勫璞℃槸鍚︽槸Number
  */
 
 /**
- * 判断给定的对象是否是一个正则表达式
+ * 鍒ゆ柇缁欏畾鐨勫璞℃槸鍚︽槸涓€涓鍒欒〃杈惧紡
  * @method isRegExp
- * @param { * } object 需要判断的对象
- * @return { Boolean } 给定的对象是否是正则表达式
- */
+ * @param { * } object 闇€瑕佸垽鏂殑瀵硅薄
+ * @return { Boolean } 缁欏畾鐨勫璞℃槸鍚︽槸姝ｅ垯琛ㄨ揪寮? */
 
 /**
- * 判断给定的对象是否是一个普通对象
- * @method isObject
- * @param { * } object 需要判断的对象
- * @return { Boolean } 给定的对象是否是普通对象
- */
+ * 鍒ゆ柇缁欏畾鐨勫璞℃槸鍚︽槸涓€涓櫘閫氬璞? * @method isObject
+ * @param { * } object 闇€瑕佸垽鏂殑瀵硅薄
+ * @return { Boolean } 缁欏畾鐨勫璞℃槸鍚︽槸鏅€氬璞? */
 utils.each(['String', 'Function', 'Array', 'Number', 'RegExp', 'Object', 'Date'], function (v) {
     UE.utils['is' + v] = function (obj) {
         return Object.prototype.toString.apply(obj) == '[object ' + v + ']';
@@ -1504,30 +1416,26 @@ utils.each(['String', 'Function', 'Array', 'Number', 'RegExp', 'Object', 'Date']
 
 // core/EventBase.js
 /**
- * UE采用的事件基类
- * @file
+ * UE閲囩敤鐨勪簨浠跺熀绫? * @file
  * @module UE
  * @class EventBase
  * @since 1.2.6.1
  */
 
 /**
- * UEditor公用空间，UEditor所有的功能都挂载在该空间下
+ * UEditor鍏敤绌洪棿锛孶Editor鎵€鏈夌殑鍔熻兘閮芥寕杞藉湪璇ョ┖闂翠笅
  * @unfile
  * @module UE
  */
 
 /**
- * UE采用的事件基类，继承此类的对应类将获取addListener,removeListener,fireEvent方法。
- * 在UE中，Editor以及所有ui实例都继承了该类，故可以在对应的ui对象以及editor对象上使用上述方法。
- * @unfile
+ * UE閲囩敤鐨勪簨浠跺熀绫伙紝缁ф壙姝ょ被鐨勫搴旂被灏嗚幏鍙朼ddListener,removeListener,fireEvent鏂规硶銆? * 鍦║E涓紝Editor浠ュ強鎵€鏈塽i瀹炰緥閮界户鎵夸簡璇ョ被锛屾晠鍙互鍦ㄥ搴旂殑ui瀵硅薄浠ュ強editor瀵硅薄涓婁娇鐢ㄤ笂杩版柟娉曘€? * @unfile
  * @module UE
  * @class EventBase
  */
 
 /**
- * 通过此构造器，子类可以继承EventBase获取事件监听的方法
- * @constructor
+ * 閫氳繃姝ゆ瀯閫犲櫒锛屽瓙绫诲彲浠ョ户鎵縀ventBase鑾峰彇浜嬩欢鐩戝惉鐨勬柟娉? * @constructor
  * @example
  * ```javascript
  * UE.EventBase.call(editor);
@@ -1538,15 +1446,14 @@ var EventBase = UE.EventBase = function () {};
 EventBase.prototype = {
 
     /**
-     * 注册事件监听器
-     * @method addListener
-     * @param { String } types 监听的事件名称，同时监听多个事件使用空格分隔
-     * @param { Function } fn 监听的事件被触发时，会执行该回调函数
-     * @waining 事件被触发时，监听的函数假如返回的值恒等于true，回调函数的队列中后面的函数将不执行
+     * 娉ㄥ唽浜嬩欢鐩戝惉鍣?     * @method addListener
+     * @param { String } types 鐩戝惉鐨勪簨浠跺悕绉帮紝鍚屾椂鐩戝惉澶氫釜浜嬩欢浣跨敤绌烘牸鍒嗛殧
+     * @param { Function } fn 鐩戝惉鐨勪簨浠惰瑙﹀彂鏃讹紝浼氭墽琛岃鍥炶皟鍑芥暟
+     * @waining 浜嬩欢琚Е鍙戞椂锛岀洃鍚殑鍑芥暟鍋囧杩斿洖鐨勫€兼亽绛変簬true锛屽洖璋冨嚱鏁扮殑闃熷垪涓悗闈㈢殑鍑芥暟灏嗕笉鎵ц
      * @example
      * ```javascript
      * editor.addListener('selectionchange',function(){
-     *      console.log("选区已经变化！");
+     *      console.log("閫夊尯宸茬粡鍙樺寲锛?);
      * })
      * editor.addListener('beforegetcontent aftergetcontent',function(type){
      *         if(type == 'beforegetcontent'){
@@ -1554,7 +1461,7 @@ EventBase.prototype = {
      *         }else{
      *             //do something
      *         }
-     *         console.log(this.getContent) // this是注册的事件的编辑器实例
+     *         console.log(this.getContent) // this鏄敞鍐岀殑浜嬩欢鐨勭紪杈戝櫒瀹炰緥
      * })
      * ```
      * @see UE.EventBase:fireEvent(String)
@@ -1576,13 +1483,11 @@ EventBase.prototype = {
         return this.fireEvent.apply(this,arguments);
     },
     /**
-     * 移除事件监听器
-     * @method removeListener
-     * @param { String } types 移除的事件名称，同时移除多个事件使用空格分隔
-     * @param { Function } fn 移除监听事件的函数引用
-     * @example
+     * 绉婚櫎浜嬩欢鐩戝惉鍣?     * @method removeListener
+     * @param { String } types 绉婚櫎鐨勪簨浠跺悕绉帮紝鍚屾椂绉婚櫎澶氫釜浜嬩欢浣跨敤绌烘牸鍒嗛殧
+     * @param { Function } fn 绉婚櫎鐩戝惉浜嬩欢鐨勫嚱鏁板紩鐢?     * @example
      * ```javascript
-     * //changeCallback为方法体
+     * //changeCallback涓烘柟娉曚綋
      * editor.removeListener("selectionchange",changeCallback);
      * ```
      */
@@ -1594,24 +1499,21 @@ EventBase.prototype = {
     },
 
     /**
-     * 触发事件
+     * 瑙﹀彂浜嬩欢
      * @method fireEvent
-     * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
-     * @remind 该方法会触发addListener
-     * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
-     * @example
+     * @param { String } types 瑙﹀彂鐨勪簨浠跺悕绉帮紝鍚屾椂瑙﹀彂澶氫釜浜嬩欢浣跨敤绌烘牸鍒嗛殧
+     * @remind 璇ユ柟娉曚細瑙﹀彂addListener
+     * @return { * } 杩斿洖瑙﹀彂浜嬩欢鐨勯槦鍒椾腑锛屾渶鍚庢墽琛岀殑鍥炶皟鍑芥暟鐨勮繑鍥炲€?     * @example
      * ```javascript
      * editor.fireEvent("selectionchange");
      * ```
      */
 
     /**
-     * 触发事件
+     * 瑙﹀彂浜嬩欢
      * @method fireEvent
-     * @param { String } types 触发的事件名称，同时触发多个事件使用空格分隔
-     * @param { *... } options 可选参数，可以传入一个或多个参数，会传给事件触发的回调函数
-     * @return { * } 返回触发事件的队列中，最后执行的回调函数的返回值
-     * @example
+     * @param { String } types 瑙﹀彂鐨勪簨浠跺悕绉帮紝鍚屾椂瑙﹀彂澶氫釜浜嬩欢浣跨敤绌烘牸鍒嗛殧
+     * @param { *... } options 鍙€夊弬鏁帮紝鍙互浼犲叆涓€涓垨澶氫釜鍙傛暟锛屼細浼犵粰浜嬩欢瑙﹀彂鐨勫洖璋冨嚱鏁?     * @return { * } 杩斿洖瑙﹀彂浜嬩欢鐨勯槦鍒椾腑锛屾渶鍚庢墽琛岀殑鍥炶皟鍑芥暟鐨勮繑鍥炲€?     * @example
      * ```javascript
      *
      * editor.addListener( "selectionchange", function ( type, arg1, arg2 ) {
@@ -1620,8 +1522,7 @@ EventBase.prototype = {
      *
      * } );
      *
-     * //触发selectionchange事件， 会执行上面的事件监听器
-     * //output: Hello World
+     * //瑙﹀彂selectionchange浜嬩欢锛?浼氭墽琛屼笂闈㈢殑浜嬩欢鐩戝惉鍣?     * //output: Hello World
      * editor.fireEvent("selectionchange", "Hello", "World");
      * ```
      */
@@ -1652,17 +1553,15 @@ EventBase.prototype = {
     }
 };
 /**
- * 获得对象所拥有监听类型的所有监听器
+ * 鑾峰緱瀵硅薄鎵€鎷ユ湁鐩戝惉绫诲瀷鐨勬墍鏈夌洃鍚櫒
  * @unfile
  * @module UE
  * @since 1.2.6.1
  * @method getListener
  * @public
- * @param { Object } obj  查询监听器的对象
- * @param { String } type 事件类型
- * @param { Boolean } force  为true且当前所有type类型的侦听器不存在时，创建一个空监听器数组
- * @return { Array } 监听器数组
- */
+ * @param { Object } obj  鏌ヨ鐩戝惉鍣ㄧ殑瀵硅薄
+ * @param { String } type 浜嬩欢绫诲瀷
+ * @param { Boolean } force  涓簍rue涓斿綋鍓嶆墍鏈塼ype绫诲瀷鐨勪睛鍚櫒涓嶅瓨鍦ㄦ椂锛屽垱寤轰竴涓┖鐩戝惉鍣ㄦ暟缁? * @return { Array } 鐩戝惉鍣ㄦ暟缁? */
 function getListener(obj, type, force) {
     var allListeners;
     type = type.toLowerCase();
@@ -1677,8 +1576,7 @@ function getListener(obj, type, force) {
 ///import core/dom/dom.js
 ///import core/utils.js
 /**
- * dtd html语义化的体现类
- * @constructor
+ * dtd html璇箟鍖栫殑浣撶幇绫? * @constructor
  * @namespace dtd
  */
 var dtd = dom.dtd = (function() {
@@ -1701,8 +1599,7 @@ var dtd = dom.dtd = (function() {
         J = X( _({iframe:1}), H, B ),
         K = _({img:1,embed:1,noscript:1,br:1,kbd:1,center:1,button:1,basefont:1,h5:1,h4:1,samp:1,h6:1,ol:1,h1:1,h3:1,h2:1,form:1,font:1,'#':1,select:1,menu:1,ins:1,abbr:1,label:1,code:1,table:1,script:1,cite:1,input:1,iframe:1,strong:1,textarea:1,noframes:1,big:1,small:1,span:1,hr:1,sub:1,bdo:1,'var':1,div:1,object:1,sup:1,strike:1,dir:1,map:1,dl:1,applet:1,del:1,isindex:1,fieldset:1,ul:1,b:1,acronym:1,a:1,blockquote:1,i:1,u:1,s:1,tt:1,address:1,q:1,pre:1,p:1,em:1,dfn:1}),
 
-        L = X( _({a:0}), J ),//a不能被切开，所以把他
-        M = _({tr:1}),
+        L = X( _({a:0}), J ),//a涓嶈兘琚垏寮€锛屾墍浠ユ妸浠?        M = _({tr:1}),
         N = _({'#':1}),
         O = X( _({param:1}), K ),
         P = X( _({form:1}), A, D, E, I ),
@@ -1719,15 +1616,13 @@ var dtd = dom.dtd = (function() {
 
     return  _({
 
-        // $ 表示自定的属性
-
-        // body外的元素列表.
+        // $ 琛ㄧず鑷畾鐨勫睘鎬?
+        // body澶栫殑鍏冪礌鍒楄〃.
         $nonBodyContent: X( V, U, S ),
 
-        //块结构元素列表
-        $block : block,
+        //鍧楃粨鏋勫厓绱犲垪琛?        $block : block,
 
-        //内联元素列表
+        //鍐呰仈鍏冪礌鍒楄〃
         $inline : L,
 
         $inlineWithA : X(_({a:1}),L),
@@ -1736,28 +1631,25 @@ var dtd = dom.dtd = (function() {
 
         $cdata : _({script:1,style:1}),
 
-        //自闭和元素
-        $empty : empty,
+        //鑷棴鍜屽厓绱?        $empty : empty,
 
-        //不是自闭合，但不能让range选中里边
+        //涓嶆槸鑷棴鍚堬紝浣嗕笉鑳借range閫変腑閲岃竟
         $nonChild : _({iframe:1,textarea:1}),
-        //列表元素列表
+        //鍒楄〃鍏冪礌鍒楄〃
         $listItem : _({dd:1,dt:1,li:1}),
 
-        //列表根元素列表
-        $list: _({ul:1,ol:1,dl:1}),
+        //鍒楄〃鏍瑰厓绱犲垪琛?        $list: _({ul:1,ol:1,dl:1}),
 
-        //不能认为是空的元素
-        $isNotEmpty : _({table:1,ul:1,ol:1,dl:1,iframe:1,area:1,base:1,col:1,hr:1,img:1,embed:1,input:1,link:1,meta:1,param:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1}),
+        //涓嶈兘璁や负鏄┖鐨勫厓绱?        $isNotEmpty : _({table:1,ul:1,ol:1,dl:1,iframe:1,area:1,base:1,col:1,hr:1,img:1,embed:1,input:1,link:1,meta:1,param:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1}),
 
-        //如果没有子节点就可以删除的元素列表，像span,a
+        //濡傛灉娌℃湁瀛愯妭鐐瑰氨鍙互鍒犻櫎鐨勫厓绱犲垪琛紝鍍弒pan,a
         $removeEmpty : _({a:1,abbr:1,acronym:1,address:1,b:1,bdo:1,big:1,cite:1,code:1,del:1,dfn:1,em:1,font:1,i:1,ins:1,label:1,kbd:1,q:1,s:1,samp:1,small:1,span:1,strike:1,strong:1,sub:1,sup:1,tt:1,u:1,'var':1}),
 
         $removeEmptyBlock : _({'p':1,'div':1}),
 
-        //在table元素里的元素列表
+        //鍦╰able鍏冪礌閲岀殑鍏冪礌鍒楄〃
         $tableContent : _({caption:1,col:1,colgroup:1,tbody:1,td:1,tfoot:1,th:1,thead:1,tr:1,table:1}),
-        //不转换的标签
+        //涓嶈浆鎹㈢殑鏍囩
         $notTransContent : _({pre:1,script:1,style:1,textarea:1}),
         html: U,
         head: T,
@@ -1856,15 +1748,13 @@ var dtd = dom.dtd = (function() {
 
 // core/domUtils.js
 /**
- * Dom操作工具包
- * @file
+ * Dom鎿嶄綔宸ュ叿鍖? * @file
  * @module UE.dom.domUtils
  * @since 1.2.6.1
  */
 
 /**
- * Dom操作工具包
- * @unfile
+ * Dom鎿嶄綔宸ュ叿鍖? * @unfile
  * @module UE.dom.domUtils
  */
 function getDomNode(node, start, ltr, startFromChild, fn, guard) {
@@ -1906,23 +1796,22 @@ var attrFix = ie && browser.version < 9 ? {
         'table-cell' , 'table-caption'
     ]);
 var domUtils = dom.domUtils = {
-    //节点常量
+    //鑺傜偣甯搁噺
     NODE_ELEMENT:1,
     NODE_DOCUMENT:9,
     NODE_TEXT:3,
     NODE_COMMENT:8,
     NODE_DOCUMENT_FRAGMENT:11,
 
-    //位置关系
+    //浣嶇疆鍏崇郴
     POSITION_IDENTICAL:0,
     POSITION_DISCONNECTED:1,
     POSITION_FOLLOWING:2,
     POSITION_PRECEDING:4,
     POSITION_IS_CONTAINED:8,
     POSITION_CONTAINS:16,
-    //ie6使用其他的会有一段空白出现
-    fillChar:ie && browser.version == '6' ? '\ufeff' : '\u200B',
-    //-------------------------Node部分--------------------------------
+    //ie6浣跨敤鍏朵粬鐨勪細鏈変竴娈电┖鐧藉嚭鐜?    fillChar:ie && browser.version == '6' ? '\ufeff' : '\u200B',
+    //-------------------------Node閮ㄥ垎--------------------------------
     keys:{
         /*Backspace*/ 8:1, /*Delete*/ 46:1,
         /*Shift*/ 16:1, /*Ctrl*/ 17:1, /*Alt*/ 18:1,
@@ -1930,12 +1819,10 @@ var domUtils = dom.domUtils = {
         13:1 /*enter*/
     },
     /**
-     * 获取节点A相对于节点B的位置关系
-     * @method getPosition
-     * @param { Node } nodeA 需要查询位置关系的节点A
-     * @param { Node } nodeB 需要查询位置关系的节点B
-     * @return { Number } 节点A与节点B的关系
-     * @example
+     * 鑾峰彇鑺傜偣A鐩稿浜庤妭鐐笲鐨勪綅缃叧绯?     * @method getPosition
+     * @param { Node } nodeA 闇€瑕佹煡璇綅缃叧绯荤殑鑺傜偣A
+     * @param { Node } nodeB 闇€瑕佹煡璇綅缃叧绯荤殑鑺傜偣B
+     * @return { Number } 鑺傜偣A涓庤妭鐐笲鐨勫叧绯?     * @example
      * ```javascript
      * //output: 20
      * var position = UE.dom.domUtils.getPosition( document.documentElement, document.body );
@@ -1944,41 +1831,40 @@ var domUtils = dom.domUtils = {
      *
      *      //0
      *      case UE.dom.domUtils.POSITION_IDENTICAL:
-     *          console.log('元素相同');
+     *          console.log('鍏冪礌鐩稿悓');
      *          break;
      *      //1
      *      case UE.dom.domUtils.POSITION_DISCONNECTED:
-     *          console.log('两个节点在不同的文档中');
+     *          console.log('涓や釜鑺傜偣鍦ㄤ笉鍚岀殑鏂囨。涓?);
      *          break;
      *      //2
      *      case UE.dom.domUtils.POSITION_FOLLOWING:
-     *          console.log('节点A在节点B之后');
+     *          console.log('鑺傜偣A鍦ㄨ妭鐐笲涔嬪悗');
      *          break;
      *      //4
      *      case UE.dom.domUtils.POSITION_PRECEDING;
-     *          console.log('节点A在节点B之前');
+     *          console.log('鑺傜偣A鍦ㄨ妭鐐笲涔嬪墠');
      *          break;
      *      //8
      *      case UE.dom.domUtils.POSITION_IS_CONTAINED:
-     *          console.log('节点A被节点B包含');
+     *          console.log('鑺傜偣A琚妭鐐笲鍖呭惈');
      *          break;
      *      case 10:
-     *          console.log('节点A被节点B包含且节点A在节点B之后');
+     *          console.log('鑺傜偣A琚妭鐐笲鍖呭惈涓旇妭鐐笰鍦ㄨ妭鐐笲涔嬪悗');
      *          break;
      *      //16
      *      case UE.dom.domUtils.POSITION_CONTAINS:
-     *          console.log('节点A包含节点B');
+     *          console.log('鑺傜偣A鍖呭惈鑺傜偣B');
      *          break;
      *      case 20:
-     *          console.log('节点A包含节点B且节点A在节点B之前');
+     *          console.log('鑺傜偣A鍖呭惈鑺傜偣B涓旇妭鐐笰鍦ㄨ妭鐐笲涔嬪墠');
      *          break;
      *
      * }
      * ```
      */
     getPosition:function (nodeA, nodeB) {
-        // 如果两个节点是同一个节点
-        if (nodeA === nodeB) {
+        // 濡傛灉涓や釜鑺傜偣鏄悓涓€涓妭鐐?        if (nodeA === nodeB) {
             // domUtils.POSITION_IDENTICAL
             return 0;
         }
@@ -1987,8 +1873,7 @@ var domUtils = dom.domUtils = {
             parentsB = [nodeB];
         node = nodeA;
         while (node = node.parentNode) {
-            // 如果nodeB是nodeA的祖先节点
-            if (node === nodeB) {
+            // 濡傛灉nodeB鏄痭odeA鐨勭鍏堣妭鐐?            if (node === nodeB) {
                 // domUtils.POSITION_IS_CONTAINED + domUtils.POSITION_FOLLOWING
                 return 10;
             }
@@ -1996,8 +1881,7 @@ var domUtils = dom.domUtils = {
         }
         node = nodeB;
         while (node = node.parentNode) {
-            // 如果nodeA是nodeB的祖先节点
-            if (node === nodeA) {
+            // 濡傛灉nodeA鏄痭odeB鐨勭鍏堣妭鐐?            if (node === nodeA) {
                 // domUtils.POSITION_CONTAINS + domUtils.POSITION_PRECEDING
                 return 20;
             }
@@ -2025,20 +1909,16 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 检测节点node在父节点中的索引位置
+     * 妫€娴嬭妭鐐筺ode鍦ㄧ埗鑺傜偣涓殑绱㈠紩浣嶇疆
      * @method getNodeIndex
-     * @param { Node } node 需要检测的节点对象
-     * @return { Number } 该节点在父节点中的位置
-     * @see UE.dom.domUtils.getNodeIndex(Node,Boolean)
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Number } 璇ヨ妭鐐瑰湪鐖惰妭鐐逛腑鐨勪綅缃?     * @see UE.dom.domUtils.getNodeIndex(Node,Boolean)
      */
 
     /**
-     * 检测节点node在父节点中的索引位置， 根据给定的mergeTextNode参数决定是否要合并多个连续的文本节点为一个节点
-     * @method getNodeIndex
-     * @param { Node } node 需要检测的节点对象
-     * @param { Boolean } mergeTextNode 是否合并多个连续的文本节点为一个节点
-     * @return { Number } 该节点在父节点中的位置
-     * @example
+     * 妫€娴嬭妭鐐筺ode鍦ㄧ埗鑺傜偣涓殑绱㈠紩浣嶇疆锛?鏍规嵁缁欏畾鐨刴ergeTextNode鍙傛暟鍐冲畾鏄惁瑕佸悎骞跺涓繛缁殑鏂囨湰鑺傜偣涓轰竴涓妭鐐?     * @method getNodeIndex
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @param { Boolean } mergeTextNode 鏄惁鍚堝苟澶氫釜杩炵画鐨勬枃鏈妭鐐逛负涓€涓妭鐐?     * @return { Number } 璇ヨ妭鐐瑰湪鐖惰妭鐐逛腑鐨勪綅缃?     * @example
      * ```javascript
      *
      *      var node = document.createElement("div");
@@ -2071,11 +1951,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 检测节点node是否在给定的document对象上
-     * @method inDoc
-     * @param { Node } node 需要检测的节点对象
-     * @param { DomDocument } doc 需要检测的document对象
-     * @return { Boolean } 该节点node是否在给定的document的dom树上
+     * 妫€娴嬭妭鐐筺ode鏄惁鍦ㄧ粰瀹氱殑document瀵硅薄涓?     * @method inDoc
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @param { DomDocument } doc 闇€瑕佹娴嬬殑document瀵硅薄
+     * @return { Boolean } 璇ヨ妭鐐筺ode鏄惁鍦ㄧ粰瀹氱殑document鐨刣om鏍戜笂
      * @example
      * ```javascript
      *
@@ -2095,20 +1974,16 @@ var domUtils = dom.domUtils = {
         return domUtils.getPosition(node, doc) == 10;
     },
     /**
-     * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
-     * 查找的起点是给定node节点的父节点。
-     * @method findParent
-     * @param { Node } node 需要查找的节点
-     * @param { Function } filterFn 自定义的过滤方法。
-     * @warning 查找的终点是到body节点为止
-     * @remind 自定义的过滤方法filterFn接受一个Node对象作为参数， 该对象代表当前执行检测的祖先节点。 如果该
-     *          节点满足过滤条件， 则要求返回true， 这时将直接返回该节点作为findParent()的结果， 否则， 请返回false。
-     * @return { Node | Null } 如果找到符合过滤条件的节点， 就返回该节点， 否则返回NULL
+     * 鏍规嵁缁欏畾鐨勮繃婊よ鍒檉ilterFn锛?鏌ユ壘绗﹀悎璇ヨ繃婊よ鍒欑殑node鑺傜偣鐨勭涓€涓鍏堣妭鐐癸紝
+     * 鏌ユ壘鐨勮捣鐐规槸缁欏畾node鑺傜偣鐨勭埗鑺傜偣銆?     * @method findParent
+     * @param { Node } node 闇€瑕佹煡鎵剧殑鑺傜偣
+     * @param { Function } filterFn 鑷畾涔夌殑杩囨护鏂规硶銆?     * @warning 鏌ユ壘鐨勭粓鐐规槸鍒癰ody鑺傜偣涓烘
+     * @remind 鑷畾涔夌殑杩囨护鏂规硶filterFn鎺ュ彈涓€涓狽ode瀵硅薄浣滀负鍙傛暟锛?璇ュ璞′唬琛ㄥ綋鍓嶆墽琛屾娴嬬殑绁栧厛鑺傜偣銆?濡傛灉璇?     *          鑺傜偣婊¤冻杩囨护鏉′欢锛?鍒欒姹傝繑鍥瀟rue锛?杩欐椂灏嗙洿鎺ヨ繑鍥炶鑺傜偣浣滀负findParent()鐨勭粨鏋滐紝 鍚﹀垯锛?璇疯繑鍥瀎alse銆?     * @return { Node | Null } 濡傛灉鎵惧埌绗﹀悎杩囨护鏉′欢鐨勮妭鐐癸紝 灏辫繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @example
      * ```javascript
      * var filterNode = UE.dom.domUtils.findParent( document.body.firstChild, function ( node ) {
      *
-     *     //由于查找的终点是body节点， 所以永远也不会匹配当前过滤器的条件， 即这里永远会返回false
+     *     //鐢变簬鏌ユ壘鐨勭粓鐐规槸body鑺傜偣锛?鎵€浠ユ案杩滀篃涓嶄細鍖归厤褰撳墠杩囨护鍣ㄧ殑鏉′欢锛?鍗宠繖閲屾案杩滀細杩斿洖false
      *     return node.tagName === "HTML";
      *
      * } );
@@ -2119,18 +1994,13 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 根据给定的过滤规则filterFn， 查找符合该过滤规则的node节点的第一个祖先节点，
-     * 如果includeSelf的值为true，则查找的起点是给定的节点node， 否则， 起点是node的父节点
+     * 鏍规嵁缁欏畾鐨勮繃婊よ鍒檉ilterFn锛?鏌ユ壘绗﹀悎璇ヨ繃婊よ鍒欑殑node鑺傜偣鐨勭涓€涓鍏堣妭鐐癸紝
+     * 濡傛灉includeSelf鐨勫€间负true锛屽垯鏌ユ壘鐨勮捣鐐规槸缁欏畾鐨勮妭鐐筺ode锛?鍚﹀垯锛?璧风偣鏄痭ode鐨勭埗鑺傜偣
      * @method findParent
-     * @param { Node } node 需要查找的节点
-     * @param { Function } filterFn 自定义的过滤方法。
-     * @param { Boolean } includeSelf 查找过程是否包含自身
-     * @warning 查找的终点是到body节点为止
-     * @remind 自定义的过滤方法filterFn接受一个Node对象作为参数， 该对象代表当前执行检测的祖先节点。 如果该
-     *          节点满足过滤条件， 则要求返回true， 这时将直接返回该节点作为findParent()的结果， 否则， 请返回false。
-     * @remind 如果includeSelf为true， 则过滤器第一次执行时的参数会是节点本身。
-     *          反之， 过滤器第一次执行时的参数将是该节点的父节点。
-     * @return { Node | Null } 如果找到符合过滤条件的节点， 就返回该节点， 否则返回NULL
+     * @param { Node } node 闇€瑕佹煡鎵剧殑鑺傜偣
+     * @param { Function } filterFn 鑷畾涔夌殑杩囨护鏂规硶銆?     * @param { Boolean } includeSelf 鏌ユ壘杩囩▼鏄惁鍖呭惈鑷韩
+     * @warning 鏌ユ壘鐨勭粓鐐规槸鍒癰ody鑺傜偣涓烘
+     * @remind 鑷畾涔夌殑杩囨护鏂规硶filterFn鎺ュ彈涓€涓狽ode瀵硅薄浣滀负鍙傛暟锛?璇ュ璞′唬琛ㄥ綋鍓嶆墽琛屾娴嬬殑绁栧厛鑺傜偣銆?濡傛灉璇?     *          鑺傜偣婊¤冻杩囨护鏉′欢锛?鍒欒姹傝繑鍥瀟rue锛?杩欐椂灏嗙洿鎺ヨ繑鍥炶鑺傜偣浣滀负findParent()鐨勭粨鏋滐紝 鍚﹀垯锛?璇疯繑鍥瀎alse銆?     * @remind 濡傛灉includeSelf涓簍rue锛?鍒欒繃婊ゅ櫒绗竴娆℃墽琛屾椂鐨勫弬鏁颁細鏄妭鐐规湰韬€?     *          鍙嶄箣锛?杩囨护鍣ㄧ涓€娆℃墽琛屾椂鐨勫弬鏁板皢鏄鑺傜偣鐨勭埗鑺傜偣銆?     * @return { Node | Null } 濡傛灉鎵惧埌绗﹀悎杩囨护鏉′欢鐨勮妭鐐癸紝 灏辫繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @example
      * ```html
      * <body>
@@ -2165,12 +2035,11 @@ var domUtils = dom.domUtils = {
         return null;
     },
     /**
-     * 查找node的节点名为tagName的第一个祖先节点， 查找的起点是node节点的父节点。
-     * @method findParentByTagName
-     * @param { Node } node 需要查找的节点对象
-     * @param { Array } tagNames 需要查找的父节点的名称数组
-     * @warning 查找的终点是到body节点为止
-     * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
+     * 鏌ユ壘node鐨勮妭鐐瑰悕涓簍agName鐨勭涓€涓鍏堣妭鐐癸紝 鏌ユ壘鐨勮捣鐐规槸node鑺傜偣鐨勭埗鑺傜偣銆?     * @method findParentByTagName
+     * @param { Node } node 闇€瑕佹煡鎵剧殑鑺傜偣瀵硅薄
+     * @param { Array } tagNames 闇€瑕佹煡鎵剧殑鐖惰妭鐐圭殑鍚嶇О鏁扮粍
+     * @warning 鏌ユ壘鐨勭粓鐐规槸鍒癰ody鑺傜偣涓烘
+     * @return { Node | NULL } 濡傛灉鎵惧埌绗﹀悎鏉′欢鐨勮妭鐐癸紝 鍒欒繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @example
      * ```javascript
      * var node = UE.dom.domUtils.findParentByTagName( document.getElementsByTagName("div")[0], [ "BODY" ] );
@@ -2180,14 +2049,12 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 查找node的节点名为tagName的祖先节点， 如果includeSelf的值为true，则查找的起点是给定的节点node，
-     * 否则， 起点是node的父节点。
-     * @method findParentByTagName
-     * @param { Node } node 需要查找的节点对象
-     * @param { Array } tagNames 需要查找的父节点的名称数组
-     * @param { Boolean } includeSelf 查找过程是否包含node节点自身
-     * @warning 查找的终点是到body节点为止
-     * @return { Node | NULL } 如果找到符合条件的节点， 则返回该节点， 否则返回NULL
+     * 鏌ユ壘node鐨勮妭鐐瑰悕涓簍agName鐨勭鍏堣妭鐐癸紝 濡傛灉includeSelf鐨勫€间负true锛屽垯鏌ユ壘鐨勮捣鐐规槸缁欏畾鐨勮妭鐐筺ode锛?     * 鍚﹀垯锛?璧风偣鏄痭ode鐨勭埗鑺傜偣銆?     * @method findParentByTagName
+     * @param { Node } node 闇€瑕佹煡鎵剧殑鑺傜偣瀵硅薄
+     * @param { Array } tagNames 闇€瑕佹煡鎵剧殑鐖惰妭鐐圭殑鍚嶇О鏁扮粍
+     * @param { Boolean } includeSelf 鏌ユ壘杩囩▼鏄惁鍖呭惈node鑺傜偣鑷韩
+     * @warning 鏌ユ壘鐨勭粓鐐规槸鍒癰ody鑺傜偣涓烘
+     * @return { Node | NULL } 濡傛灉鎵惧埌绗﹀悎鏉′欢鐨勮妭鐐癸紝 鍒欒繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @example
      * ```javascript
      * var queryTarget = document.getElementsByTagName("div")[0];
@@ -2203,24 +2070,16 @@ var domUtils = dom.domUtils = {
         }, includeSelf);
     },
     /**
-     * 查找节点node的祖先节点集合， 查找的起点是给定节点的父节点，结果集中不包含给定的节点。
-     * @method findParents
-     * @param { Node } node 需要查找的节点对象
-     * @return { Array } 给定节点的祖先节点数组
-     * @grammar UE.dom.domUtils.findParents(node)  => Array  //返回一个祖先节点数组集合，不包含自身
-     * @grammar UE.dom.domUtils.findParents(node,includeSelf)  => Array  //返回一个祖先节点数组集合，includeSelf指定是否包含自身
-     * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn)  => Array  //返回一个祖先节点数组集合，filterFn指定过滤条件，返回true的node将被选取
-     * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn,closerFirst)  => Array  //返回一个祖先节点数组集合，closerFirst为true的话，node的直接父亲节点是数组的第0个
-     */
+     * 鏌ユ壘鑺傜偣node鐨勭鍏堣妭鐐归泦鍚堬紝 鏌ユ壘鐨勮捣鐐规槸缁欏畾鑺傜偣鐨勭埗鑺傜偣锛岀粨鏋滈泦涓笉鍖呭惈缁欏畾鐨勮妭鐐广€?     * @method findParents
+     * @param { Node } node 闇€瑕佹煡鎵剧殑鑺傜偣瀵硅薄
+     * @return { Array } 缁欏畾鑺傜偣鐨勭鍏堣妭鐐规暟缁?     * @grammar UE.dom.domUtils.findParents(node)  => Array  //杩斿洖涓€涓鍏堣妭鐐规暟缁勯泦鍚堬紝涓嶅寘鍚嚜韬?     * @grammar UE.dom.domUtils.findParents(node,includeSelf)  => Array  //杩斿洖涓€涓鍏堣妭鐐规暟缁勯泦鍚堬紝includeSelf鎸囧畾鏄惁鍖呭惈鑷韩
+     * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn)  => Array  //杩斿洖涓€涓鍏堣妭鐐规暟缁勯泦鍚堬紝filterFn鎸囧畾杩囨护鏉′欢锛岃繑鍥瀟rue鐨刵ode灏嗚閫夊彇
+     * @grammar UE.dom.domUtils.findParents(node,includeSelf,filterFn,closerFirst)  => Array  //杩斿洖涓€涓鍏堣妭鐐规暟缁勯泦鍚堬紝closerFirst涓簍rue鐨勮瘽锛宯ode鐨勭洿鎺ョ埗浜茶妭鐐规槸鏁扮粍鐨勭0涓?     */
 
     /**
-     * 查找节点node的祖先节点集合， 如果includeSelf的值为true，
-     * 则返回的结果集中允许出现当前给定的节点， 否则， 该节点不会出现在其结果集中。
-     * @method findParents
-     * @param { Node } node 需要查找的节点对象
-     * @param { Boolean } includeSelf 查找的结果中是否允许包含当前查找的节点对象
-     * @return { Array } 给定节点的祖先节点数组
-     */
+     * 鏌ユ壘鑺傜偣node鐨勭鍏堣妭鐐归泦鍚堬紝 濡傛灉includeSelf鐨勫€间负true锛?     * 鍒欒繑鍥炵殑缁撴灉闆嗕腑鍏佽鍑虹幇褰撳墠缁欏畾鐨勮妭鐐癸紝 鍚﹀垯锛?璇ヨ妭鐐逛笉浼氬嚭鐜板湪鍏剁粨鏋滈泦涓€?     * @method findParents
+     * @param { Node } node 闇€瑕佹煡鎵剧殑鑺傜偣瀵硅薄
+     * @param { Boolean } includeSelf 鏌ユ壘鐨勭粨鏋滀腑鏄惁鍏佽鍖呭惈褰撳墠鏌ユ壘鐨勮妭鐐瑰璞?     * @return { Array } 缁欏畾鑺傜偣鐨勭鍏堣妭鐐规暟缁?     */
     findParents:function (node, includeSelf, filterFn, closerFirst) {
         var parents = includeSelf && ( filterFn && filterFn(node) || !filterFn ) ? [node] : [];
         while (node = domUtils.findParent(node, filterFn)) {
@@ -2230,11 +2089,11 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 在节点node后面插入新节点newNode
+     * 鍦ㄨ妭鐐筺ode鍚庨潰鎻掑叆鏂拌妭鐐筺ewNode
      * @method insertAfter
-     * @param { Node } node 目标节点
-     * @param { Node } newNode 新插入的节点， 该节点将置于目标节点之后
-     * @return { Node } 新插入的节点
+     * @param { Node } node 鐩爣鑺傜偣
+     * @param { Node } newNode 鏂版彃鍏ョ殑鑺傜偣锛?璇ヨ妭鐐瑰皢缃簬鐩爣鑺傜偣涔嬪悗
+     * @return { Node } 鏂版彃鍏ョ殑鑺傜偣
      */
     insertAfter:function (node, newNode) {
         return node.nextSibling ? node.parentNode.insertBefore(newNode, node.nextSibling):
@@ -2242,14 +2101,13 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 删除节点node及其下属的所有节点
-     * @method remove
-     * @param { Node } node 需要删除的节点对象
-     * @return { Node } 返回刚删除的节点对象
+     * 鍒犻櫎鑺傜偣node鍙婂叾涓嬪睘鐨勬墍鏈夎妭鐐?     * @method remove
+     * @param { Node } node 闇€瑕佸垹闄ょ殑鑺傜偣瀵硅薄
+     * @return { Node } 杩斿洖鍒氬垹闄ょ殑鑺傜偣瀵硅薄
      * @example
      * ```html
      * <div id="test">
-     *     <div id="child">你好</div>
+     *     <div id="child">浣犲ソ</div>
      * </div>
      * <script>
      *     UE.dom.domUtils.remove( document.body, false );
@@ -2260,15 +2118,15 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 删除节点node，并根据keepChildren的值决定是否保留子节点
+     * 鍒犻櫎鑺傜偣node锛屽苟鏍规嵁keepChildren鐨勫€煎喅瀹氭槸鍚︿繚鐣欏瓙鑺傜偣
      * @method remove
-     * @param { Node } node 需要删除的节点对象
-     * @param { Boolean } keepChildren 是否需要保留子节点
-     * @return { Node } 返回刚删除的节点对象
+     * @param { Node } node 闇€瑕佸垹闄ょ殑鑺傜偣瀵硅薄
+     * @param { Boolean } keepChildren 鏄惁闇€瑕佷繚鐣欏瓙鑺傜偣
+     * @return { Node } 杩斿洖鍒氬垹闄ょ殑鑺傜偣瀵硅薄
      * @example
      * ```html
      * <div id="test">
-     *     <div id="child">你好</div>
+     *     <div id="child">浣犲ソ</div>
      * </div>
      * <script>
      *     UE.dom.domUtils.remove( document.body, true );
@@ -2292,11 +2150,9 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 取得node节点的下一个兄弟节点， 如果该节点其后没有兄弟节点， 则递归查找其父节点之后的第一个兄弟节点，
-     * 直到找到满足条件的节点或者递归到BODY节点之后才会结束。
-     * @method getNextDomNode
-     * @param { Node } node 需要获取其后的兄弟节点的节点对象
-     * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
+     * 鍙栧緱node鑺傜偣鐨勪笅涓€涓厔寮熻妭鐐癸紝 濡傛灉璇ヨ妭鐐瑰叾鍚庢病鏈夊厔寮熻妭鐐癸紝 鍒欓€掑綊鏌ユ壘鍏剁埗鑺傜偣涔嬪悗鐨勭涓€涓厔寮熻妭鐐癸紝
+     * 鐩村埌鎵惧埌婊¤冻鏉′欢鐨勮妭鐐规垨鑰呴€掑綊鍒癇ODY鑺傜偣涔嬪悗鎵嶄細缁撴潫銆?     * @method getNextDomNode
+     * @param { Node } node 闇€瑕佽幏鍙栧叾鍚庣殑鍏勫紵鑺傜偣鐨勮妭鐐瑰璞?     * @return { Node | NULL } 濡傛灉鎵炬弧瓒虫潯浠剁殑鑺傜偣锛?鍒欒繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @example
      * ```html
      *     <body>
@@ -2307,7 +2163,7 @@ var domUtils = dom.domUtils = {
      * </body>
      * <script>
      *
-     *     //output: i节点
+     *     //output: i鑺傜偣
      *     console.log( UE.dom.domUtils.getNextDomNode( document.getElementById( "test" ) ) );
      *
      * </script>
@@ -2323,8 +2179,8 @@ var domUtils = dom.domUtils = {
      * </body>
      * <script>
      *
-     *     //由于id为test的i节点之后没有兄弟节点， 则查找其父节点（div）后面的兄弟节点
-     *     //output: b节点
+     *     //鐢变簬id涓簍est鐨刬鑺傜偣涔嬪悗娌℃湁鍏勫紵鑺傜偣锛?鍒欐煡鎵惧叾鐖惰妭鐐癸紙div锛夊悗闈㈢殑鍏勫紵鑺傜偣
+     *     //output: b鑺傜偣
      *     console.log( UE.dom.domUtils.getNextDomNode( document.getElementById( "test" ) ) );
      *
      * </script>
@@ -2332,13 +2188,9 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 取得node节点的下一个兄弟节点， 如果startFromChild的值为ture，则先获取其子节点，
-     * 如果有子节点则直接返回第一个子节点；如果没有子节点或者startFromChild的值为false，
-     * 则执行<a href="#UE.dom.domUtils.getNextDomNode(Node)">getNextDomNode(Node node)</a>的查找过程。
-     * @method getNextDomNode
-     * @param { Node } node 需要获取其后的兄弟节点的节点对象
-     * @param { Boolean } startFromChild 查找过程是否从其子节点开始
-     * @return { Node | NULL } 如果找满足条件的节点， 则返回该节点， 否则返回NULL
+     * 鍙栧緱node鑺傜偣鐨勪笅涓€涓厔寮熻妭鐐癸紝 濡傛灉startFromChild鐨勫€间负ture锛屽垯鍏堣幏鍙栧叾瀛愯妭鐐癸紝
+     * 濡傛灉鏈夊瓙鑺傜偣鍒欑洿鎺ヨ繑鍥炵涓€涓瓙鑺傜偣锛涘鏋滄病鏈夊瓙鑺傜偣鎴栬€卻tartFromChild鐨勫€间负false锛?     * 鍒欐墽琛?a href="#UE.dom.domUtils.getNextDomNode(Node)">getNextDomNode(Node node)</a>鐨勬煡鎵捐繃绋嬨€?     * @method getNextDomNode
+     * @param { Node } node 闇€瑕佽幏鍙栧叾鍚庣殑鍏勫紵鑺傜偣鐨勮妭鐐瑰璞?     * @param { Boolean } startFromChild 鏌ユ壘杩囩▼鏄惁浠庡叾瀛愯妭鐐瑰紑濮?     * @return { Node | NULL } 濡傛灉鎵炬弧瓒虫潯浠剁殑鑺傜偣锛?鍒欒繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @see UE.dom.domUtils.getNextDomNode(Node)
      */
     getNextDomNode:function (node, startFromChild, filterFn, guard) {
@@ -2348,11 +2200,11 @@ var domUtils = dom.domUtils = {
         return getDomNode(node, 'lastChild', 'previousSibling', startFromChild, filterFn, guard);
     },
     /**
-     * 检测节点node是否属是UEditor定义的bookmark节点
+     * 妫€娴嬭妭鐐筺ode鏄惁灞炴槸UEditor瀹氫箟鐨刡ookmark鑺傜偣
      * @method isBookmarkNode
      * @private
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 是否是bookmark节点
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Boolean } 鏄惁鏄痓ookmark鑺傜偣
      * @example
      * ```html
      * <span id="_baidu_bookmark_1"></span>
@@ -2367,10 +2219,10 @@ var domUtils = dom.domUtils = {
         return node.nodeType == 1 && node.id && /^_baidu_bookmark_/i.test(node.id);
     },
     /**
-     * 获取节点node所属的window对象
+     * 鑾峰彇鑺傜偣node鎵€灞炵殑window瀵硅薄
      * @method  getWindow
-     * @param { Node } node 节点对象
-     * @return { Window } 当前节点所属的window对象
+     * @param { Node } node 鑺傜偣瀵硅薄
+     * @return { Window } 褰撳墠鑺傜偣鎵€灞炵殑window瀵硅薄
      * @example
      * ```javascript
      * //output: true
@@ -2382,13 +2234,8 @@ var domUtils = dom.domUtils = {
         return doc.defaultView || doc.parentWindow;
     },
     /**
-     * 获取离nodeA与nodeB最近的公共的祖先节点
-     * @method  getCommonAncestor
-     * @param { Node } nodeA 第一个节点
-     * @param { Node } nodeB 第二个节点
-     * @remind 如果给定的两个节点是同一个节点， 将直接返回该节点。
-     * @return { Node | NULL } 如果未找到公共节点， 返回NULL， 否则返回最近的公共祖先节点。
-     * @example
+     * 鑾峰彇绂籲odeA涓巒odeB鏈€杩戠殑鍏叡鐨勭鍏堣妭鐐?     * @method  getCommonAncestor
+     * @param { Node } nodeA 绗竴涓妭鐐?     * @param { Node } nodeB 绗簩涓妭鐐?     * @remind 濡傛灉缁欏畾鐨勪袱涓妭鐐规槸鍚屼竴涓妭鐐癸紝 灏嗙洿鎺ヨ繑鍥炶鑺傜偣銆?     * @return { Node | NULL } 濡傛灉鏈壘鍒板叕鍏辫妭鐐癸紝 杩斿洖NULL锛?鍚﹀垯杩斿洖鏈€杩戠殑鍏叡绁栧厛鑺傜偣銆?     * @example
      * ```javascript
      * var commonAncestor = UE.dom.domUtils.getCommonAncestor( document.body, document.body.firstChild );
      * //output: true
@@ -2419,13 +2266,9 @@ var domUtils = dom.domUtils = {
 
     },
     /**
-     * 清除node节点左右连续为空的兄弟inline节点
+     * 娓呴櫎node鑺傜偣宸﹀彸杩炵画涓虹┖鐨勫厔寮焛nline鑺傜偣
      * @method clearEmptySibling
-     * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
-     * 则这些兄弟节点将被删除
-     * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext)  //ignoreNext指定是否忽略右边空节点
-     * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext,ignorePre)  //ignorePre指定是否忽略左边空节点
-     * @example
+     * @param { Node } node 鎵ц鐨勮妭鐐瑰璞★紝 濡傛灉璇ヨ妭鐐圭殑宸﹀彸杩炵画鐨勫厔寮熻妭鐐规槸绌虹殑inline鑺傜偣锛?     * 鍒欒繖浜涘厔寮熻妭鐐瑰皢琚垹闄?     * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext)  //ignoreNext鎸囧畾鏄惁蹇界暐鍙宠竟绌鸿妭鐐?     * @grammar UE.dom.domUtils.clearEmptySibling(node,ignoreNext,ignorePre)  //ignorePre鎸囧畾鏄惁蹇界暐宸﹁竟绌鸿妭鐐?     * @example
      * ```html
      * <body>
      *     <div></div>
@@ -2447,30 +2290,19 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 清除node节点左右连续为空的兄弟inline节点， 如果ignoreNext的值为true，
-     * 则忽略对右边兄弟节点的操作。
-     * @method clearEmptySibling
-     * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
-     * @param { Boolean } ignoreNext 是否忽略忽略对右边的兄弟节点的操作
-     * 则这些兄弟节点将被删除
-     * @see UE.dom.domUtils.clearEmptySibling(Node)
+     * 娓呴櫎node鑺傜偣宸﹀彸杩炵画涓虹┖鐨勫厔寮焛nline鑺傜偣锛?濡傛灉ignoreNext鐨勫€间负true锛?     * 鍒欏拷鐣ュ鍙宠竟鍏勫紵鑺傜偣鐨勬搷浣溿€?     * @method clearEmptySibling
+     * @param { Node } node 鎵ц鐨勮妭鐐瑰璞★紝 濡傛灉璇ヨ妭鐐圭殑宸﹀彸杩炵画鐨勫厔寮熻妭鐐规槸绌虹殑inline鑺傜偣锛?     * @param { Boolean } ignoreNext 鏄惁蹇界暐蹇界暐瀵瑰彸杈圭殑鍏勫紵鑺傜偣鐨勬搷浣?     * 鍒欒繖浜涘厔寮熻妭鐐瑰皢琚垹闄?     * @see UE.dom.domUtils.clearEmptySibling(Node)
      */
 
     /**
-     * 清除node节点左右连续为空的兄弟inline节点， 如果ignoreNext的值为true，
-     * 则忽略对右边兄弟节点的操作， 如果ignorePre的值为true，则忽略对左边兄弟节点的操作。
-     * @method clearEmptySibling
-     * @param { Node } node 执行的节点对象， 如果该节点的左右连续的兄弟节点是空的inline节点，
-     * @param { Boolean } ignoreNext 是否忽略忽略对右边的兄弟节点的操作
-     * @param { Boolean } ignorePre 是否忽略忽略对左边的兄弟节点的操作
-     * 则这些兄弟节点将被删除
-     * @see UE.dom.domUtils.clearEmptySibling(Node)
+     * 娓呴櫎node鑺傜偣宸﹀彸杩炵画涓虹┖鐨勫厔寮焛nline鑺傜偣锛?濡傛灉ignoreNext鐨勫€间负true锛?     * 鍒欏拷鐣ュ鍙宠竟鍏勫紵鑺傜偣鐨勬搷浣滐紝 濡傛灉ignorePre鐨勫€间负true锛屽垯蹇界暐瀵瑰乏杈瑰厔寮熻妭鐐圭殑鎿嶄綔銆?     * @method clearEmptySibling
+     * @param { Node } node 鎵ц鐨勮妭鐐瑰璞★紝 濡傛灉璇ヨ妭鐐圭殑宸﹀彸杩炵画鐨勫厔寮熻妭鐐规槸绌虹殑inline鑺傜偣锛?     * @param { Boolean } ignoreNext 鏄惁蹇界暐蹇界暐瀵瑰彸杈圭殑鍏勫紵鑺傜偣鐨勬搷浣?     * @param { Boolean } ignorePre 鏄惁蹇界暐蹇界暐瀵瑰乏杈圭殑鍏勫紵鑺傜偣鐨勬搷浣?     * 鍒欒繖浜涘厔寮熻妭鐐瑰皢琚垹闄?     * @see UE.dom.domUtils.clearEmptySibling(Node)
      */
     clearEmptySibling:function (node, ignoreNext, ignorePre) {
         function clear(next, dir) {
             var tmpNode;
             while (next && !domUtils.isBookmarkNode(next) && (domUtils.isEmptyInlineElement(next)
-                //这里不能把空格算进来会吧空格干掉，出现文字间的空格丢掉了
+                //杩欓噷涓嶈兘鎶婄┖鏍肩畻杩涙潵浼氬惂绌烘牸骞叉帀锛屽嚭鐜版枃瀛楅棿鐨勭┖鏍间涪鎺変簡
                 || !new RegExp('[^\t\n\r' + domUtils.fillChar + ']').test(next.nodeValue) )) {
                 tmpNode = next[dir];
                 domUtils.remove(next);
@@ -2481,12 +2313,10 @@ var domUtils = dom.domUtils = {
         !ignorePre && clear(node.previousSibling, 'previousSibling');
     },
     /**
-     * 将一个文本节点textNode拆分成两个文本节点，offset指定拆分位置
+     * 灏嗕竴涓枃鏈妭鐐箃extNode鎷嗗垎鎴愪袱涓枃鏈妭鐐癸紝offset鎸囧畾鎷嗗垎浣嶇疆
      * @method split
-     * @param { Node } textNode 需要拆分的文本节点对象
-     * @param { int } offset 需要拆分的位置， 位置计算从0开始
-     * @return { Node } 拆分后形成的新节点
-     * @example
+     * @param { Node } textNode 闇€瑕佹媶鍒嗙殑鏂囨湰鑺傜偣瀵硅薄
+     * @param { int } offset 闇€瑕佹媶鍒嗙殑浣嶇疆锛?浣嶇疆璁＄畻浠?寮€濮?     * @return { Node } 鎷嗗垎鍚庡舰鎴愮殑鏂拌妭鐐?     * @example
      * ```html
      * <div id="test">abcdef</div>
      * <script>
@@ -2503,7 +2333,7 @@ var domUtils = dom.domUtils = {
             return domUtils.insertAfter(node, next);
         }
         var retval = node.splitText(offset);
-        //ie8下splitText不会跟新childNodes,我们手动触发他的更新
+        //ie8涓媠plitText涓嶄細璺熸柊childNodes,鎴戜滑鎵嬪姩瑙﹀彂浠栫殑鏇存柊
         if (browser.ie8) {
             var tmpNode = doc.createTextNode('');
             domUtils.insertAfter(retval, tmpNode);
@@ -2513,10 +2343,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 检测文本节点textNode是否为空节点（包括空格、换行、占位符等字符）
+     * 妫€娴嬫枃鏈妭鐐箃extNode鏄惁涓虹┖鑺傜偣锛堝寘鎷┖鏍笺€佹崲琛屻€佸崰浣嶇绛夊瓧绗︼級
      * @method  isWhitespace
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 检测的节点是否为空
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Boolean } 妫€娴嬬殑鑺傜偣鏄惁涓虹┖
      * @example
      * ```html
      * <div id="test">
@@ -2532,17 +2362,14 @@ var domUtils = dom.domUtils = {
         return !new RegExp('[^ \t\n\r' + domUtils.fillChar + ']').test(node.nodeValue);
     },
     /**
-     * 获取元素element相对于viewport的位置坐标
-     * @method getXY
-     * @param { Node } element 需要计算位置的节点对象
-     * @return { Object } 返回形如{x:left,y:top}的一个key-value映射对象， 其中键x代表水平偏移距离，
-     *                          y代表垂直偏移距离。
-     *
+     * 鑾峰彇鍏冪礌element鐩稿浜巚iewport鐨勪綅缃潗鏍?     * @method getXY
+     * @param { Node } element 闇€瑕佽绠椾綅缃殑鑺傜偣瀵硅薄
+     * @return { Object } 杩斿洖褰㈠{x:left,y:top}鐨勪竴涓猭ey-value鏄犲皠瀵硅薄锛?鍏朵腑閿畑浠ｈ〃姘村钩鍋忕Щ璺濈锛?     *                          y浠ｈ〃鍨傜洿鍋忕Щ璺濈銆?     *
      * @example
      * ```javascript
      * var location = UE.dom.domUtils.getXY( document.getElementById("test") );
-     * //output: test的坐标为: 12, 24
-     * console.log( 'test的坐标为： ', location.x, ',', location.y );
+     * //output: test鐨勫潗鏍囦负: 12, 24
+     * console.log( 'test鐨勫潗鏍囦负锛?', location.x, ',', location.y );
      * ```
      */
     getXY:function (element) {
@@ -2555,29 +2382,23 @@ var domUtils = dom.domUtils = {
         return { 'x':x, 'y':y};
     },
     /**
-     * 为元素element绑定原生DOM事件，type为事件类型，handler为处理函数
-     * @method on
-     * @param { Node } element 需要绑定事件的节点对象
-     * @param { String } type 绑定的事件类型
-     * @param { Function } handler 事件处理器
-     * @example
+     * 涓哄厓绱爀lement缁戝畾鍘熺敓DOM浜嬩欢锛宼ype涓轰簨浠剁被鍨嬶紝handler涓哄鐞嗗嚱鏁?     * @method on
+     * @param { Node } element 闇€瑕佺粦瀹氫簨浠剁殑鑺傜偣瀵硅薄
+     * @param { String } type 缁戝畾鐨勪簨浠剁被鍨?     * @param { Function } handler 浜嬩欢澶勭悊鍣?     * @example
      * ```javascript
      * UE.dom.domUtils.on(document.body,"click",function(e){
-     *     //e为事件对象，this为被点击元素对戏那个
+     *     //e涓轰簨浠跺璞★紝this涓鸿鐐瑰嚮鍏冪礌瀵规垙閭ｄ釜
      * });
      * ```
      */
 
     /**
-     * 为元素element绑定原生DOM事件，type为事件类型，handler为处理函数
-     * @method on
-     * @param { Node } element 需要绑定事件的节点对象
-     * @param { Array } type 绑定的事件类型数组
-     * @param { Function } handler 事件处理器
-     * @example
+     * 涓哄厓绱爀lement缁戝畾鍘熺敓DOM浜嬩欢锛宼ype涓轰簨浠剁被鍨嬶紝handler涓哄鐞嗗嚱鏁?     * @method on
+     * @param { Node } element 闇€瑕佺粦瀹氫簨浠剁殑鑺傜偣瀵硅薄
+     * @param { Array } type 缁戝畾鐨勪簨浠剁被鍨嬫暟缁?     * @param { Function } handler 浜嬩欢澶勭悊鍣?     * @example
      * ```javascript
      * UE.dom.domUtils.on(document.body,["click","mousedown"],function(evt){
-     *     //evt为事件对象，this为被点击元素对象
+     *     //evt涓轰簨浠跺璞★紝this涓鸿鐐瑰嚮鍏冪礌瀵硅薄
      * });
      * ```
      */
@@ -2614,29 +2435,29 @@ var domUtils = dom.domUtils = {
         element = null;
     },
     /**
-     * 解除DOM事件绑定
+     * 瑙ｉ櫎DOM浜嬩欢缁戝畾
      * @method un
-     * @param { Node } element 需要解除事件绑定的节点对象
-     * @param { String } type 需要接触绑定的事件类型
-     * @param { Function } handler 对应的事件处理器
+     * @param { Node } element 闇€瑕佽В闄や簨浠剁粦瀹氱殑鑺傜偣瀵硅薄
+     * @param { String } type 闇€瑕佹帴瑙︾粦瀹氱殑浜嬩欢绫诲瀷
+     * @param { Function } handler 瀵瑰簲鐨勪簨浠跺鐞嗗櫒
      * @example
      * ```javascript
      * UE.dom.domUtils.un(document.body,"click",function(evt){
-     *     //evt为事件对象，this为被点击元素对象
+     *     //evt涓轰簨浠跺璞★紝this涓鸿鐐瑰嚮鍏冪礌瀵硅薄
      * });
      * ```
      */
 
     /**
-     * 解除DOM事件绑定
+     * 瑙ｉ櫎DOM浜嬩欢缁戝畾
      * @method un
-     * @param { Node } element 需要解除事件绑定的节点对象
-     * @param { Array } type 需要接触绑定的事件类型数组
-     * @param { Function } handler 对应的事件处理器
+     * @param { Node } element 闇€瑕佽В闄や簨浠剁粦瀹氱殑鑺傜偣瀵硅薄
+     * @param { Array } type 闇€瑕佹帴瑙︾粦瀹氱殑浜嬩欢绫诲瀷鏁扮粍
+     * @param { Function } handler 瀵瑰簲鐨勪簨浠跺鐞嗗櫒
      * @example
      * ```javascript
      * UE.dom.domUtils.un(document.body, ["click","mousedown"],function(evt){
-     *     //evt为事件对象，this为被点击元素对象
+     *     //evt涓轰簨浠跺璞★紝this涓鸿鐐瑰嚮鍏冪礌瀵硅薄
      * });
      * ```
      */
@@ -2664,12 +2485,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 比较节点nodeA与节点nodeB是否具有相同的标签名、属性名以及属性值
-     * @method  isSameElement
-     * @param { Node } nodeA 需要比较的节点
-     * @param { Node } nodeB 需要比较的节点
-     * @return { Boolean } 两个节点是否具有相同的标签名、属性名以及属性值
-     * @example
+     * 姣旇緝鑺傜偣nodeA涓庤妭鐐筺odeB鏄惁鍏锋湁鐩稿悓鐨勬爣绛惧悕銆佸睘鎬у悕浠ュ強灞炴€у€?     * @method  isSameElement
+     * @param { Node } nodeA 闇€瑕佹瘮杈冪殑鑺傜偣
+     * @param { Node } nodeB 闇€瑕佹瘮杈冪殑鑺傜偣
+     * @return { Boolean } 涓や釜鑺傜偣鏄惁鍏锋湁鐩稿悓鐨勬爣绛惧悕銆佸睘鎬у悕浠ュ強灞炴€у€?     * @example
      * ```html
      * <span style="font-size:12px">ssss</span>
      * <span style="font-size:12px">bbbbb</span>
@@ -2724,8 +2543,7 @@ var domUtils = dom.domUtils = {
                 return false;
             }
         }
-        // 有可能attrB的属性包含了attrA的属性之外还有自己的属性
-        if (ie) {
+        // 鏈夊彲鑳絘ttrB鐨勫睘鎬у寘鍚簡attrA鐨勫睘鎬т箣澶栬繕鏈夎嚜宸辩殑灞炴€?        if (ie) {
             for (i = 0; attrB = otherAttrs[i++];) {
                 if (attrB.specified) {
                     bl++;
@@ -2739,12 +2557,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 判断节点nodeA与节点nodeB的元素的style属性是否一致
-     * @method isSameStyle
-     * @param { Node } nodeA 需要比较的节点
-     * @param { Node } nodeB 需要比较的节点
-     * @return { Boolean } 两个节点是否具有相同的style属性值
-     * @example
+     * 鍒ゆ柇鑺傜偣nodeA涓庤妭鐐筺odeB鐨勫厓绱犵殑style灞炴€ф槸鍚︿竴鑷?     * @method isSameStyle
+     * @param { Node } nodeA 闇€瑕佹瘮杈冪殑鑺傜偣
+     * @param { Node } nodeB 闇€瑕佹瘮杈冪殑鑺傜偣
+     * @return { Boolean } 涓や釜鑺傜偣鏄惁鍏锋湁鐩稿悓鐨剆tyle灞炴€у€?     * @example
      * ```html
      * <span style="font-size:12px">ssss</span>
      * <span style="font-size:12px">bbbbb</span>
@@ -2798,13 +2614,11 @@ var domUtils = dom.domUtils = {
         return true;
     },
     /**
-     * 检查节点node是否为block元素
+     * 妫€鏌ヨ妭鐐筺ode鏄惁涓篵lock鍏冪礌
      * @method isBlockElm
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 是否是block元素节点
-     * @warning 该方法的判断规则如下： 如果该元素原本是block元素， 则不论该元素当前的css样式是什么都会返回true；
-     *          否则，检测该元素的css样式， 如果该元素当前是block元素， 则返回true。 其余情况下都返回false。
-     * @example
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Boolean } 鏄惁鏄痓lock鍏冪礌鑺傜偣
+     * @warning 璇ユ柟娉曠殑鍒ゆ柇瑙勫垯濡備笅锛?濡傛灉璇ュ厓绱犲師鏈槸block鍏冪礌锛?鍒欎笉璁鸿鍏冪礌褰撳墠鐨刢ss鏍峰紡鏄粈涔堥兘浼氳繑鍥瀟rue锛?     *          鍚﹀垯锛屾娴嬭鍏冪礌鐨刢ss鏍峰紡锛?濡傛灉璇ュ厓绱犲綋鍓嶆槸block鍏冪礌锛?鍒欒繑鍥瀟rue銆?鍏朵綑鎯呭喌涓嬮兘杩斿洖false銆?     * @example
      * ```html
      * <span id="test1" style="display: block"></span>
      * <span id="test2"></span>
@@ -2828,10 +2642,10 @@ var domUtils = dom.domUtils = {
         return node.nodeType == 1 && (dtd.$block[node.tagName] || styleBlock[domUtils.getComputedStyle(node, 'display')]) && !dtd.$nonChild[node.tagName];
     },
     /**
-     * 检测node节点是否为body节点
+     * 妫€娴媙ode鑺傜偣鏄惁涓篵ody鑺傜偣
      * @method isBody
-     * @param { Element } node 需要检测的dom元素
-     * @return { Boolean } 给定的元素是否是body元素
+     * @param { Element } node 闇€瑕佹娴嬬殑dom鍏冪礌
+     * @return { Boolean } 缁欏畾鐨勫厓绱犳槸鍚︽槸body鍏冪礌
      * @example
      * ```javascript
      * //output: true
@@ -2842,12 +2656,9 @@ var domUtils = dom.domUtils = {
         return  node && node.nodeType == 1 && node.tagName.toLowerCase() == 'body';
     },
     /**
-     * 以node节点为分界，将该节点的指定祖先节点parent拆分成两个独立的节点，
-     * 拆分形成的两个节点之间是node节点
+     * 浠ode鑺傜偣涓哄垎鐣岋紝灏嗚鑺傜偣鐨勬寚瀹氱鍏堣妭鐐筽arent鎷嗗垎鎴愪袱涓嫭绔嬬殑鑺傜偣锛?     * 鎷嗗垎褰㈡垚鐨勪袱涓妭鐐逛箣闂存槸node鑺傜偣
      * @method breakParent
-     * @param { Node } node 作为分界的节点对象
-     * @param { Node } parent 该节点必须是node节点的祖先节点， 且是block节点。
-     * @return { Node } 给定的node分界节点
+     * @param { Node } node 浣滀负鍒嗙晫鐨勮妭鐐瑰璞?     * @param { Node } parent 璇ヨ妭鐐瑰繀椤绘槸node鑺傜偣鐨勭鍏堣妭鐐癸紝 涓旀槸block鑺傜偣銆?     * @return { Node } 缁欏畾鐨刵ode鍒嗙晫鑺傜偣
      * @example
      * ```javascript
      *
@@ -2858,14 +2669,12 @@ var domUtils = dom.domUtils = {
      *      parent.appendChild( node );
      *      wrapNode.appendChild( parent );
      *
-     *      //拆分前
-     *      //output: <p><span></span></p>
+     *      //鎷嗗垎鍓?     *      //output: <p><span></span></p>
      *      console.log( wrapNode.innerHTML );
      *
      *
      *      UE.dom.domUtils.breakParent( node, parent );
-     *      //拆分后
-     *      //output: <p></p><span></span><p></p>
+     *      //鎷嗗垎鍚?     *      //output: <p></p><span></span><p></p>
      *      console.log( wrapNode.innerHTML );
      *
      * ```
@@ -2905,11 +2714,10 @@ var domUtils = dom.domUtils = {
         return node;
     },
     /**
-     * 检查节点node是否是空inline节点
+     * 妫€鏌ヨ妭鐐筺ode鏄惁鏄┖inline鑺傜偣
      * @method  isEmptyInlineElement
-     * @param { Node } node 需要检测的节点对象
-     * @return { Number }  如果给定的节点是空的inline节点， 则返回1, 否则返回0。
-     * @example
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Number }  濡傛灉缁欏畾鐨勮妭鐐规槸绌虹殑inline鑺傜偣锛?鍒欒繑鍥?, 鍚﹀垯杩斿洖0銆?     * @example
      * ```html
      * <b><i></i></b> => 1
      * <b><i></i><u></u></b> => 1
@@ -2923,8 +2731,7 @@ var domUtils = dom.domUtils = {
         }
         node = node.firstChild;
         while (node) {
-            //如果是创建的bookmark就跳过
-            if (domUtils.isBookmarkNode(node)) {
+            //濡傛灉鏄垱寤虹殑bookmark灏辫烦杩?            if (domUtils.isBookmarkNode(node)) {
                 return 0;
             }
             if (node.nodeType == 1 && !domUtils.isEmptyInlineElement(node) ||
@@ -2939,9 +2746,8 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 删除node节点下首尾两端的空白文本子节点
-     * @method trimWhiteTextNode
-     * @param { Element } node 需要执行删除操作的元素对象
+     * 鍒犻櫎node鑺傜偣涓嬮灏句袱绔殑绌虹櫧鏂囨湰瀛愯妭鐐?     * @method trimWhiteTextNode
+     * @param { Element } node 闇€瑕佹墽琛屽垹闄ゆ搷浣滅殑鍏冪礌瀵硅薄
      * @example
      * ```javascript
      *      var node = document.createElement("div");
@@ -2973,10 +2779,9 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 合并node节点下相同的子节点
-     * @name mergeChild
+     * 鍚堝苟node鑺傜偣涓嬬浉鍚岀殑瀛愯妭鐐?     * @name mergeChild
      * @desc
-     * UE.dom.domUtils.mergeChild(node,tagName) //tagName要合并的子节点的标签
+     * UE.dom.domUtils.mergeChild(node,tagName) //tagName瑕佸悎骞剁殑瀛愯妭鐐圭殑鏍囩
      * @example
      * <p><span style="font-size:12px;">xx<span style="font-size:12px;">aa</span>xx</span></p>
      * ==> UE.dom.domUtils.mergeChild(node,'span')
@@ -2988,7 +2793,7 @@ var domUtils = dom.domUtils = {
             if (!ci.parentNode || domUtils.isBookmarkNode(ci)) {
                 continue;
             }
-            //span单独处理
+            //span鍗曠嫭澶勭悊
             if (ci.tagName.toLowerCase() == 'span') {
                 if (node === ci.parentNode) {
                     domUtils.trimWhiteTextNode(node);
@@ -3020,12 +2825,9 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 原生方法getElementsByTagName的封装
-     * @method getElementsByTagName
-     * @param { Node } node 目标节点对象
-     * @param { String } tagName 需要查找的节点的tagName， 多个tagName以空格分割
-     * @return { Array } 符合条件的节点集合
-     */
+     * 鍘熺敓鏂规硶getElementsByTagName鐨勫皝瑁?     * @method getElementsByTagName
+     * @param { Node } node 鐩爣鑺傜偣瀵硅薄
+     * @param { String } tagName 闇€瑕佹煡鎵剧殑鑺傜偣鐨則agName锛?澶氫釜tagName浠ョ┖鏍煎垎鍓?     * @return { Array } 绗﹀悎鏉′欢鐨勮妭鐐归泦鍚?     */
     getElementsByTagName:function (node, name,filter) {
         if(filter && utils.isString(filter)){
            var className = filter;
@@ -3044,9 +2846,8 @@ var domUtils = dom.domUtils = {
         return arr;
     },
     /**
-     * 将节点node提取到父节点上
-     * @method mergeToParent
-     * @param { Element } node 需要提取的元素对象
+     * 灏嗚妭鐐筺ode鎻愬彇鍒扮埗鑺傜偣涓?     * @method mergeToParent
+     * @param { Element } node 闇€瑕佹彁鍙栫殑鍏冪礌瀵硅薄
      * @example
      * ```html
      * <div id="parent">
@@ -3073,9 +2874,9 @@ var domUtils = dom.domUtils = {
     mergeToParent:function (node) {
         var parent = node.parentNode;
         while (parent && dtd.$removeEmpty[parent.tagName]) {
-            if (parent.tagName == node.tagName || parent.tagName == 'A') {//针对a标签单独处理
+            if (parent.tagName == node.tagName || parent.tagName == 'A') {//閽堝a鏍囩鍗曠嫭澶勭悊
                 domUtils.trimWhiteTextNode(parent);
-                //span需要特殊处理  不处理这样的情况 <span stlye="color:#fff">xxx<span style="color:#ccc">xxx</span>xxx</span>
+                //span闇€瑕佺壒娈婂鐞? 涓嶅鐞嗚繖鏍风殑鎯呭喌 <span stlye="color:#fff">xxx<span style="color:#ccc">xxx</span>xxx</span>
                 if (parent.tagName == 'SPAN' && !domUtils.isSameStyle(parent, node)
                     || (parent.tagName == 'A' && node.tagName == 'SPAN')) {
                     if (parent.childNodes.length > 1 || parent !== node.parentNode) {
@@ -3084,7 +2885,7 @@ var domUtils = dom.domUtils = {
                         continue;
                     } else {
                         parent.style.cssText += ";" + node.style.cssText;
-                        //trace:952 a标签要保持下划线
+                        //trace:952 a鏍囩瑕佷繚鎸佷笅鍒掔嚎
                         if (parent.tagName == 'A') {
                             parent.style.textDecoration = 'underline';
                         }
@@ -3099,9 +2900,8 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 合并节点node的左右兄弟节点
-     * @method mergeSibling
-     * @param { Element } node 需要合并的目标节点
+     * 鍚堝苟鑺傜偣node鐨勫乏鍙冲厔寮熻妭鐐?     * @method mergeSibling
+     * @param { Element } node 闇€瑕佸悎骞剁殑鐩爣鑺傜偣
      * @example
      * ```html
      * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
@@ -3116,11 +2916,9 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 合并节点node的左右兄弟节点， 可以根据给定的条件选择是否忽略合并左节点。
-     * @method mergeSibling
-     * @param { Element } node 需要合并的目标节点
-     * @param { Boolean } ignorePre 是否忽略合并左节点
-     * @example
+     * 鍚堝苟鑺傜偣node鐨勫乏鍙冲厔寮熻妭鐐癸紝 鍙互鏍规嵁缁欏畾鐨勬潯浠堕€夋嫨鏄惁蹇界暐鍚堝苟宸﹁妭鐐广€?     * @method mergeSibling
+     * @param { Element } node 闇€瑕佸悎骞剁殑鐩爣鑺傜偣
+     * @param { Boolean } ignorePre 鏄惁蹇界暐鍚堝苟宸﹁妭鐐?     * @example
      * ```html
      * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
      *
@@ -3134,13 +2932,9 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 合并节点node的左右兄弟节点，可以根据给定的条件选择是否忽略合并左右节点。
-     * @method mergeSibling
-     * @param { Element } node 需要合并的目标节点
-     * @param { Boolean } ignorePre 是否忽略合并左节点
-     * @param { Boolean } ignoreNext 是否忽略合并右节点
-     * @remind 如果同时忽略左右节点， 则该操作什么也不会做
-     * @example
+     * 鍚堝苟鑺傜偣node鐨勫乏鍙冲厔寮熻妭鐐癸紝鍙互鏍规嵁缁欏畾鐨勬潯浠堕€夋嫨鏄惁蹇界暐鍚堝苟宸﹀彸鑺傜偣銆?     * @method mergeSibling
+     * @param { Element } node 闇€瑕佸悎骞剁殑鐩爣鑺傜偣
+     * @param { Boolean } ignorePre 鏄惁蹇界暐鍚堝苟宸﹁妭鐐?     * @param { Boolean } ignoreNext 鏄惁蹇界暐鍚堝苟鍙宠妭鐐?     * @remind 濡傛灉鍚屾椂蹇界暐宸﹀彸鑺傜偣锛?鍒欒鎿嶄綔浠€涔堜篃涓嶄細鍋?     * @example
      * ```html
      * <b>xxxx</b><b id="test">ooo</b><b>xxxx</b>
      *
@@ -3171,10 +2965,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 设置节点node及其子节点不会被选中
+     * 璁剧疆鑺傜偣node鍙婂叾瀛愯妭鐐逛笉浼氳閫変腑
      * @method unSelectable
-     * @param { Element } node 需要执行操作的dom元素
-     * @remind 执行该操作后的节点， 将不能被鼠标选中
+     * @param { Element } node 闇€瑕佹墽琛屾搷浣滅殑dom鍏冪礌
+     * @remind 鎵ц璇ユ搷浣滃悗鐨勮妭鐐癸紝 灏嗕笉鑳借榧犳爣閫変腑
      * @example
      * ```javascript
      * UE.dom.domUtils.unSelectable( document.body );
@@ -3209,11 +3003,9 @@ var domUtils = dom.domUtils = {
                     node.style.KhtmlUserSelect = 'none';
     },
     /**
-     * 删除节点node上的指定属性名称的属性
-     * @method  removeAttributes
-     * @param { Node } node 需要删除属性的节点对象
-     * @param { String } attrNames 可以是空格隔开的多个属性名称，该操作将会依次删除相应的属性
-     * @example
+     * 鍒犻櫎鑺傜偣node涓婄殑鎸囧畾灞炴€у悕绉扮殑灞炴€?     * @method  removeAttributes
+     * @param { Node } node 闇€瑕佸垹闄ゅ睘鎬х殑鑺傜偣瀵硅薄
+     * @param { String } attrNames 鍙互鏄┖鏍奸殧寮€鐨勫涓睘鎬у悕绉帮紝璇ユ搷浣滃皢浼氫緷娆″垹闄ょ浉搴旂殑灞炴€?     * @example
      * ```html
      * <div id="wrap">
      *      <span style="font-size:14px;" id="test" name="followMe">xxxxx</span>
@@ -3231,10 +3023,9 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 删除节点node上的指定属性名称的属性
-     * @method  removeAttributes
-     * @param { Node } node 需要删除属性的节点对象
-     * @param { Array } attrNames 需要删除的属性名数组
+     * 鍒犻櫎鑺傜偣node涓婄殑鎸囧畾灞炴€у悕绉扮殑灞炴€?     * @method  removeAttributes
+     * @param { Node } node 闇€瑕佸垹闄ゅ睘鎬х殑鑺傜偣瀵硅薄
+     * @param { Array } attrNames 闇€瑕佸垹闄ょ殑灞炴€у悕鏁扮粍
      * @example
      * ```html
      * <div id="wrap">
@@ -3268,12 +3059,11 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 在doc下创建一个标签名为tag，属性为attrs的元素
-     * @method createElement
-     * @param { DomDocument } doc 新创建的元素属于该document节点创建
-     * @param { String } tagName 需要创建的元素的标签名
-     * @param { Object } attrs 新创建的元素的属性key-value集合
-     * @return { Element } 新创建的元素对象
+     * 鍦╠oc涓嬪垱寤轰竴涓爣绛惧悕涓簍ag锛屽睘鎬т负attrs鐨勫厓绱?     * @method createElement
+     * @param { DomDocument } doc 鏂板垱寤虹殑鍏冪礌灞炰簬璇ocument鑺傜偣鍒涘缓
+     * @param { String } tagName 闇€瑕佸垱寤虹殑鍏冪礌鐨勬爣绛惧悕
+     * @param { Object } attrs 鏂板垱寤虹殑鍏冪礌鐨勫睘鎬ey-value闆嗗悎
+     * @return { Element } 鏂板垱寤虹殑鍏冪礌瀵硅薄
      * @example
      * ```javascript
      * var ele = UE.dom.domUtils.createElement( document, 'div', {
@@ -3292,11 +3082,11 @@ var domUtils = dom.domUtils = {
         return domUtils.setAttributes(doc.createElement(tag), attrs)
     },
     /**
-     * 为节点node添加属性attrs，attrs为属性键值对
+     * 涓鸿妭鐐筺ode娣诲姞灞炴€ttrs锛宎ttrs涓哄睘鎬ч敭鍊煎
      * @method setAttributes
-     * @param { Element } node 需要设置属性的元素对象
-     * @param { Object } attrs 需要设置的属性名-值对
-     * @return { Element } 设置属性的元素对象
+     * @param { Element } node 闇€瑕佽缃睘鎬х殑鍏冪礌瀵硅薄
+     * @param { Object } attrs 闇€瑕佽缃殑灞炴€у悕-鍊煎
+     * @return { Element } 璁剧疆灞炴€х殑鍏冪礌瀵硅薄
      * @example
      * ```html
      * <span id="test"></span>
@@ -3319,7 +3109,7 @@ var domUtils = dom.domUtils = {
                 var value = attrs[attr];
                 switch (attr) {
                     case 'class':
-                        //ie下要这样赋值，setAttribute不起作用
+                        //ie涓嬭杩欐牱璧嬪€硷紝setAttribute涓嶈捣浣滅敤
                         node.className = value;
                         break;
                     case 'style' :
@@ -3340,12 +3130,9 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 获取元素element经过计算后的样式值
-     * @method getComputedStyle
-     * @param { Element } element 需要获取样式的元素对象
-     * @param { String } styleName 需要获取的样式名
-     * @return { String } 获取到的样式值
-     * @example
+     * 鑾峰彇鍏冪礌element缁忚繃璁＄畻鍚庣殑鏍峰紡鍊?     * @method getComputedStyle
+     * @param { Element } element 闇€瑕佽幏鍙栨牱寮忕殑鍏冪礌瀵硅薄
+     * @param { String } styleName 闇€瑕佽幏鍙栫殑鏍峰紡鍚?     * @return { String } 鑾峰彇鍒扮殑鏍峰紡鍊?     * @example
      * ```html
      * <style type="text/css">
      *      #test {
@@ -3362,17 +3149,16 @@ var domUtils = dom.domUtils = {
      * ```
      */
     getComputedStyle:function (element, styleName) {
-        //一下的属性单独处理
-        var pros = 'width height top left';
+        //涓€涓嬬殑灞炴€у崟鐙鐞?        var pros = 'width height top left';
 
         if(pros.indexOf(styleName) > -1){
             return element['offset' + styleName.replace(/^\w/,function(s){return s.toUpperCase()})] + 'px';
         }
-        //忽略文本节点
+        //蹇界暐鏂囨湰鑺傜偣
         if (element.nodeType == 3) {
             element = element.parentNode;
         }
-        //ie下font-size若body下定义了font-size，则从currentStyle里会取到这个font-size. 取不到实际值，故此修改.
+        //ie涓媐ont-size鑻ody涓嬪畾涔変簡font-size锛屽垯浠巆urrentStyle閲屼細鍙栧埌杩欎釜font-size. 鍙栦笉鍒板疄闄呭€硷紝鏁呮淇敼.
         if (browser.ie && browser.version < 9 && styleName == 'font-size' && !element.style.fontSize &&
             !dtd.$empty[element.tagName] && !dtd.$nonChild[element.tagName]) {
             var span = element.ownerDocument.createElement('span');
@@ -3395,10 +3181,9 @@ var domUtils = dom.domUtils = {
         return utils.transUnitToPx(utils.fixColor(styleName, value));
     },
     /**
-     * 删除元素element指定的className
+     * 鍒犻櫎鍏冪礌element鎸囧畾鐨刢lassName
      * @method removeClasses
-     * @param { Element } ele 需要删除class的元素节点
-     * @param { String } classNames 需要删除的className， 多个className之间以空格分开
+     * @param { Element } ele 闇€瑕佸垹闄lass鐨勫厓绱犺妭鐐?     * @param { String } classNames 闇€瑕佸垹闄ょ殑className锛?澶氫釜className涔嬮棿浠ョ┖鏍煎垎寮€
      * @example
      * ```html
      * <span id="test" class="test1 test2 test3">xxx</span>
@@ -3416,10 +3201,9 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 删除元素element指定的className
+     * 鍒犻櫎鍏冪礌element鎸囧畾鐨刢lassName
      * @method removeClasses
-     * @param { Element } ele 需要删除class的元素节点
-     * @param { Array } classNames 需要删除的className数组
+     * @param { Element } ele 闇€瑕佸垹闄lass鐨勫厓绱犺妭鐐?     * @param { Array } classNames 闇€瑕佸垹闄ょ殑className鏁扮粍
      * @example
      * ```html
      * <span id="test" class="test1 test2 test3">xxx</span>
@@ -3449,11 +3233,9 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 给元素element添加className
+     * 缁欏厓绱爀lement娣诲姞className
      * @method addClass
-     * @param { Node } ele 需要增加className的元素
-     * @param { String } classNames 需要添加的className， 多个className之间以空格分割
-     * @remind 相同的类名不会被重复添加
+     * @param { Node } ele 闇€瑕佸鍔燾lassName鐨勫厓绱?     * @param { String } classNames 闇€瑕佹坊鍔犵殑className锛?澶氫釜className涔嬮棿浠ョ┖鏍煎垎鍓?     * @remind 鐩稿悓鐨勭被鍚嶄笉浼氳閲嶅娣诲姞
      * @example
      * ```html
      * <span id="test" class="cls1 cls2"></span>
@@ -3471,11 +3253,9 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 给元素element添加className
+     * 缁欏厓绱爀lement娣诲姞className
      * @method addClass
-     * @param { Node } ele 需要增加className的元素
-     * @param { Array } classNames 需要添加的className的数组
-     * @remind 相同的类名不会被重复添加
+     * @param { Node } ele 闇€瑕佸鍔燾lassName鐨勫厓绱?     * @param { Array } classNames 闇€瑕佹坊鍔犵殑className鐨勬暟缁?     * @remind 鐩稿悓鐨勭被鍚嶄笉浼氳閲嶅娣诲姞
      * @example
      * ```html
      * <span id="test" class="cls1 cls2"></span>
@@ -3502,11 +3282,10 @@ var domUtils = dom.domUtils = {
         elm.className = utils.trim(cls);
     },
     /**
-     * 判断元素element是否包含给定的样式类名className
+     * 鍒ゆ柇鍏冪礌element鏄惁鍖呭惈缁欏畾鐨勬牱寮忕被鍚峜lassName
      * @method hasClass
-     * @param { Node } ele 需要检测的元素
-     * @param { String } classNames 需要检测的className， 多个className之间用空格分割
-     * @return { Boolean } 元素是否包含所有给定的className
+     * @param { Node } ele 闇€瑕佹娴嬬殑鍏冪礌
+     * @param { String } classNames 闇€瑕佹娴嬬殑className锛?澶氫釜className涔嬮棿鐢ㄧ┖鏍煎垎鍓?     * @return { Boolean } 鍏冪礌鏄惁鍖呭惈鎵€鏈夌粰瀹氱殑className
      * @example
      * ```html
      * <span id="test1" class="cls1 cls2"></span>
@@ -3524,11 +3303,11 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 判断元素element是否包含给定的样式类名className
+     * 鍒ゆ柇鍏冪礌element鏄惁鍖呭惈缁欏畾鐨勬牱寮忕被鍚峜lassName
      * @method hasClass
-     * @param { Node } ele 需要检测的元素
-     * @param { Array } classNames 需要检测的className数组
-     * @return { Boolean } 元素是否包含所有给定的className
+     * @param { Node } ele 闇€瑕佹娴嬬殑鍏冪礌
+     * @param { Array } classNames 闇€瑕佹娴嬬殑className鏁扮粍
+     * @return { Boolean } 鍏冪礌鏄惁鍖呭惈鎵€鏈夌粰瀹氱殑className
      * @example
      * ```html
      * <span id="test1" class="cls1 cls2"></span>
@@ -3558,9 +3337,9 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 阻止事件默认行为
+     * 闃绘浜嬩欢榛樿琛屼负
      * @method preventDefault
-     * @param { Event } evt 需要阻止默认行为的事件对象
+     * @param { Event } evt 闇€瑕侀樆姝㈤粯璁よ涓虹殑浜嬩欢瀵硅薄
      * @example
      * ```javascript
      * UE.dom.domUtils.preventDefault( evt );
@@ -3570,11 +3349,9 @@ var domUtils = dom.domUtils = {
         evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     },
     /**
-     * 删除元素element指定的样式
-     * @method removeStyle
-     * @param { Element } element 需要删除样式的元素
-     * @param { String } styleName 需要删除的样式名
-     * @example
+     * 鍒犻櫎鍏冪礌element鎸囧畾鐨勬牱寮?     * @method removeStyle
+     * @param { Element } element 闇€瑕佸垹闄ゆ牱寮忕殑鍏冪礌
+     * @param { String } styleName 闇€瑕佸垹闄ょ殑鏍峰紡鍚?     * @example
      * ```html
      * <span id="test" style="color: red; background: blue;"></span>
      *
@@ -3592,8 +3369,7 @@ var domUtils = dom.domUtils = {
      */
     removeStyle:function (element, name) {
         if(browser.ie ){
-            //针对color先单独处理一下
-            if(name == 'color'){
+            //閽堝color鍏堝崟鐙鐞嗕竴涓?            if(name == 'color'){
                 name = '(^|;)' + name;
             }
             element.style.cssText = element.style.cssText.replace(new RegExp(name + '[^:]*:[^;]+;?','ig'),'')
@@ -3611,13 +3387,9 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 获取元素element的style属性的指定值
-     * @method getStyle
-     * @param { Element } element 需要获取属性值的元素
-     * @param { String } styleName 需要获取的style的名称
-     * @warning 该方法仅获取元素style属性中所标明的值
-     * @return { String } 该元素包含指定的style属性值
-     * @example
+     * 鑾峰彇鍏冪礌element鐨剆tyle灞炴€х殑鎸囧畾鍊?     * @method getStyle
+     * @param { Element } element 闇€瑕佽幏鍙栧睘鎬у€肩殑鍏冪礌
+     * @param { String } styleName 闇€瑕佽幏鍙栫殑style鐨勫悕绉?     * @warning 璇ユ柟娉曚粎鑾峰彇鍏冪礌style灞炴€т腑鎵€鏍囨槑鐨勫€?     * @return { String } 璇ュ厓绱犲寘鍚寚瀹氱殑style灞炴€у€?     * @example
      * ```html
      * <div id="test" style="color: red;"></div>
      *
@@ -3639,12 +3411,9 @@ var domUtils = dom.domUtils = {
         return utils.fixColor(name, value);
     },
     /**
-     * 为元素element设置样式属性值
-     * @method setStyle
-     * @param { Element } element 需要设置样式的元素
-     * @param { String } styleName 样式名
-     * @param { String } styleValue 样式值
-     * @example
+     * 涓哄厓绱爀lement璁剧疆鏍峰紡灞炴€у€?     * @method setStyle
+     * @param { Element } element 闇€瑕佽缃牱寮忕殑鍏冪礌
+     * @param { String } styleName 鏍峰紡鍚?     * @param { String } styleValue 鏍峰紡鍊?     * @example
      * ```html
      * <div id="test"></div>
      *
@@ -3669,10 +3438,9 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 为元素element设置多个样式属性值
-     * @method setStyles
-     * @param { Element } element 需要设置样式的元素
-     * @param { Object } styles 样式名值对
+     * 涓哄厓绱爀lement璁剧疆澶氫釜鏍峰紡灞炴€у€?     * @method setStyles
+     * @param { Element } element 闇€瑕佽缃牱寮忕殑鍏冪礌
+     * @param { Object } styles 鏍峰紡鍚嶅€煎
      * @example
      * ```html
      * <div id="test"></div>
@@ -3701,8 +3469,7 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 删除_moz_dirty属性
-     * @private
+     * 鍒犻櫎_moz_dirty灞炴€?     * @private
      * @method removeDirtyAttr
      */
     removeDirtyAttr:function (node) {
@@ -3712,10 +3479,10 @@ var domUtils = dom.domUtils = {
         node.removeAttribute('_moz_dirty');
     },
     /**
-     * 获取子节点的数量
+     * 鑾峰彇瀛愯妭鐐圭殑鏁伴噺
      * @method getChildCount
-     * @param { Element } node 需要检测的元素
-     * @return { Number } 给定的node元素的子节点数量
+     * @param { Element } node 闇€瑕佹娴嬬殑鍏冪礌
+     * @return { Number } 缁欏畾鐨刵ode鍏冪礌鐨勫瓙鑺傜偣鏁伴噺
      * @example
      * ```html
      * <div id="test">
@@ -3732,11 +3499,10 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 根据给定的过滤规则， 获取符合条件的子节点的数量
-     * @method getChildCount
-     * @param { Element } node 需要检测的元素
-     * @param { Function } fn 过滤器， 要求对符合条件的子节点返回true， 反之则要求返回false
-     * @return { Number } 符合过滤条件的node元素的子节点数量
+     * 鏍规嵁缁欏畾鐨勮繃婊よ鍒欙紝 鑾峰彇绗﹀悎鏉′欢鐨勫瓙鑺傜偣鐨勬暟閲?     * @method getChildCount
+     * @param { Element } node 闇€瑕佹娴嬬殑鍏冪礌
+     * @param { Function } fn 杩囨护鍣紝 瑕佹眰瀵圭鍚堟潯浠剁殑瀛愯妭鐐硅繑鍥瀟rue锛?鍙嶄箣鍒欒姹傝繑鍥瀎alse
+     * @return { Number } 绗﹀悎杩囨护鏉′欢鐨刵ode鍏冪礌鐨勫瓙鑺傜偣鏁伴噺
      * @example
      * ```html
      * <div id="test">
@@ -3770,10 +3536,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 判断给定节点是否为空节点
+     * 鍒ゆ柇缁欏畾鑺傜偣鏄惁涓虹┖鑺傜偣
      * @method isEmptyNode
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 节点是否为空
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Boolean } 鑺傜偣鏄惁涓虹┖
      * @example
      * ```javascript
      * UE.dom.domUtils.isEmptyNode( document.body );
@@ -3791,11 +3557,10 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 将显示区域滚动到指定节点的位置
-     * @method scrollToView
-     * @param    {Node}   node    节点
-     * @param    {window}   win      window对象
-     * @param    {Number}    offsetTop    距离上方的偏移量
+     * 灏嗘樉绀哄尯鍩熸粴鍔ㄥ埌鎸囧畾鑺傜偣鐨勪綅缃?     * @method scrollToView
+     * @param    {Node}   node    鑺傜偣
+     * @param    {window}   win      window瀵硅薄
+     * @param    {Number}    offsetTop    璺濈涓婃柟鐨勫亸绉婚噺
      */
     scrollToView:function (node, win, offsetTop) {
         var getViewPaneSize = function () {
@@ -3832,22 +3597,19 @@ var domUtils = dom.domUtils = {
         }
     },
     /**
-     * 判断给定节点是否为br
+     * 鍒ゆ柇缁欏畾鑺傜偣鏄惁涓篵r
      * @method isBr
-     * @param { Node } node 需要判断的节点对象
-     * @return { Boolean } 给定的节点是否是br节点
+     * @param { Node } node 闇€瑕佸垽鏂殑鑺傜偣瀵硅薄
+     * @return { Boolean } 缁欏畾鐨勮妭鐐规槸鍚︽槸br鑺傜偣
      */
     isBr:function (node) {
         return node.nodeType == 1 && node.tagName == 'BR';
     },
     /**
-     * 判断给定的节点是否是一个“填充”节点
-     * @private
+     * 鍒ゆ柇缁欏畾鐨勮妭鐐规槸鍚︽槸涓€涓€滃～鍏呪€濊妭鐐?     * @private
      * @method isFillChar
-     * @param { Node } node 需要判断的节点
-     * @param { Boolean } isInStart 是否从节点内容的开始位置匹配
-     * @returns { Boolean } 节点是否是填充节点
-     */
+     * @param { Node } node 闇€瑕佸垽鏂殑鑺傜偣
+     * @param { Boolean } isInStart 鏄惁浠庤妭鐐瑰唴瀹圭殑寮€濮嬩綅缃尮閰?     * @returns { Boolean } 鑺傜偣鏄惁鏄～鍏呰妭鐐?     */
     isFillChar:function (node,isInStart) {
         if(node.nodeType != 3)
             return false;
@@ -3912,10 +3674,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 判断给定的元素是否是一个空元素
+     * 鍒ゆ柇缁欏畾鐨勫厓绱犳槸鍚︽槸涓€涓┖鍏冪礌
      * @method isEmptyBlock
-     * @param { Element } node 需要判断的元素
-     * @return { Boolean } 是否是空元素
+     * @param { Element } node 闇€瑕佸垽鏂殑鍏冪礌
+     * @return { Boolean } 鏄惁鏄┖鍏冪礌
      * @example
      * ```html
      * <div id="test"></div>
@@ -3928,11 +3690,10 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 根据指定的判断规则判断给定的元素是否是一个空元素
+     * 鏍规嵁鎸囧畾鐨勫垽鏂鍒欏垽鏂粰瀹氱殑鍏冪礌鏄惁鏄竴涓┖鍏冪礌
      * @method isEmptyBlock
-     * @param { Element } node 需要判断的元素
-     * @param { RegExp } reg 对内容执行判断的正则表达式对象
-     * @return { Boolean } 是否是空元素
+     * @param { Element } node 闇€瑕佸垽鏂殑鍏冪礌
+     * @param { RegExp } reg 瀵瑰唴瀹规墽琛屽垽鏂殑姝ｅ垯琛ㄨ揪寮忓璞?     * @return { Boolean } 鏄惁鏄┖鍏冪礌
      */
     isEmptyBlock:function (node,reg) {
         if(node.nodeType != 1)
@@ -3951,13 +3712,9 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 移动元素使得该元素的位置移动指定的偏移量的距离
-     * @method setViewportOffset
-     * @param { Element } element 需要设置偏移量的元素
-     * @param { Object } offset 偏移量， 形如{ left: 100, top: 50 }的一个键值对， 表示该元素将在
-     *                                  现有的位置上向水平方向偏移offset.left的距离， 在竖直方向上偏移
-     *                                  offset.top的距离
-     * @example
+     * 绉诲姩鍏冪礌浣垮緱璇ュ厓绱犵殑浣嶇疆绉诲姩鎸囧畾鐨勫亸绉婚噺鐨勮窛绂?     * @method setViewportOffset
+     * @param { Element } element 闇€瑕佽缃亸绉婚噺鐨勫厓绱?     * @param { Object } offset 鍋忕Щ閲忥紝 褰㈠{ left: 100, top: 50 }鐨勪竴涓敭鍊煎锛?琛ㄧず璇ュ厓绱犲皢鍦?     *                                  鐜版湁鐨勪綅缃笂鍚戞按骞虫柟鍚戝亸绉籵ffset.left鐨勮窛绂伙紝 鍦ㄧ珫鐩存柟鍚戜笂鍋忕Щ
+     *                                  offset.top鐨勮窛绂?     * @example
      * ```html
      * <div id="test" style="top: 100px; left: 50px; position: absolute;"></div>
      *
@@ -3991,11 +3748,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 用“填充字符”填充节点
-     * @method fillNode
+     * 鐢ㄢ€滃～鍏呭瓧绗︹€濆～鍏呰妭鐐?     * @method fillNode
      * @private
-     * @param { DomDocument } doc 填充的节点所在的docment对象
-     * @param { Node } node 需要填充的节点对象
+     * @param { DomDocument } doc 濉厖鐨勮妭鐐规墍鍦ㄧ殑docment瀵硅薄
+     * @param { Node } node 闇€瑕佸～鍏呯殑鑺傜偣瀵硅薄
      * @example
      * ```html
      * <div id="test"></div>
@@ -4021,11 +3777,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 把节点src的所有子节点追加到另一个节点tag上去
+     * 鎶婅妭鐐箂rc鐨勬墍鏈夊瓙鑺傜偣杩藉姞鍒板彟涓€涓妭鐐箃ag涓婂幓
      * @method moveChild
-     * @param { Node } src 源节点， 该节点下的所有子节点将被移除
-     * @param { Node } tag 目标节点， 从源节点移除的子节点将被追加到该节点下
-     * @example
+     * @param { Node } src 婧愯妭鐐癸紝 璇ヨ妭鐐逛笅鐨勬墍鏈夊瓙鑺傜偣灏嗚绉婚櫎
+     * @param { Node } tag 鐩爣鑺傜偣锛?浠庢簮鑺傜偣绉婚櫎鐨勫瓙鑺傜偣灏嗚杩藉姞鍒拌鑺傜偣涓?     * @example
      * ```html
      * <div id="test1">
      *      <span></span>
@@ -4041,7 +3796,7 @@ var domUtils = dom.domUtils = {
      *
      *     UE.dom.domUtils.moveChild( test1, test2 );
      *
-     *     //output: ""（空字符串）
+     *     //output: ""锛堢┖瀛楃涓诧級
      *     console.log( test1.innerHTML );
      *
      *     //output: "<div></div><span></span>"
@@ -4052,11 +3807,9 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 把节点src的所有子节点移动到另一个节点tag上去, 可以通过dir参数控制附加的行为是“追加”还是“插入顶部”
-     * @method moveChild
-     * @param { Node } src 源节点， 该节点下的所有子节点将被移除
-     * @param { Node } tag 目标节点， 从源节点移除的子节点将被附加到该节点下
-     * @param { Boolean } dir 附加方式， 如果为true， 则附加进去的节点将被放到目标节点的顶部， 反之，则放到末尾
+     * 鎶婅妭鐐箂rc鐨勬墍鏈夊瓙鑺傜偣绉诲姩鍒板彟涓€涓妭鐐箃ag涓婂幓, 鍙互閫氳繃dir鍙傛暟鎺у埗闄勫姞鐨勮涓烘槸鈥滆拷鍔犫€濊繕鏄€滄彃鍏ラ《閮ㄢ€?     * @method moveChild
+     * @param { Node } src 婧愯妭鐐癸紝 璇ヨ妭鐐逛笅鐨勬墍鏈夊瓙鑺傜偣灏嗚绉婚櫎
+     * @param { Node } tag 鐩爣鑺傜偣锛?浠庢簮鑺傜偣绉婚櫎鐨勫瓙鑺傜偣灏嗚闄勫姞鍒拌鑺傜偣涓?     * @param { Boolean } dir 闄勫姞鏂瑰紡锛?濡傛灉涓簍rue锛?鍒欓檮鍔犺繘鍘荤殑鑺傜偣灏嗚鏀惧埌鐩爣鑺傜偣鐨勯《閮紝 鍙嶄箣锛屽垯鏀惧埌鏈熬
      * @example
      * ```html
      * <div id="test1">
@@ -4073,7 +3826,7 @@ var domUtils = dom.domUtils = {
      *
      *     UE.dom.domUtils.moveChild( test1, test2, true );
      *
-     *     //output: ""（空字符串）
+     *     //output: ""锛堢┖瀛楃涓诧級
      *     console.log( test1.innerHTML );
      *
      *     //output: "<span></span><div></div>"
@@ -4093,12 +3846,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 判断节点的标签上是否不存在任何属性
-     * @method hasNoAttributes
+     * 鍒ゆ柇鑺傜偣鐨勬爣绛句笂鏄惁涓嶅瓨鍦ㄤ换浣曞睘鎬?     * @method hasNoAttributes
      * @private
-     * @param { Node } node 需要检测的节点对象
-     * @return { Boolean } 节点是否不包含任何属性
-     * @example
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Boolean } 鑺傜偣鏄惁涓嶅寘鍚换浣曞睘鎬?     * @example
      * ```html
      * <div id="test"><span>xxxx</span></div>
      *
@@ -4118,24 +3869,20 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 检测节点是否是UEditor所使用的辅助节点
-     * @method isCustomeNode
+     * 妫€娴嬭妭鐐规槸鍚︽槸UEditor鎵€浣跨敤鐨勮緟鍔╄妭鐐?     * @method isCustomeNode
      * @private
-     * @param { Node } node 需要检测的节点
-     * @remind 辅助节点是指编辑器要完成工作临时添加的节点， 在输出的时候将会从编辑器内移除， 不会影响最终的结果。
-     * @return { Boolean } 给定的节点是否是一个辅助节点
-     */
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣
+     * @remind 杈呭姪鑺傜偣鏄寚缂栬緫鍣ㄨ瀹屾垚宸ヤ綔涓存椂娣诲姞鐨勮妭鐐癸紝 鍦ㄨ緭鍑虹殑鏃跺€欏皢浼氫粠缂栬緫鍣ㄥ唴绉婚櫎锛?涓嶄細褰卞搷鏈€缁堢殑缁撴灉銆?     * @return { Boolean } 缁欏畾鐨勮妭鐐规槸鍚︽槸涓€涓緟鍔╄妭鐐?     */
     isCustomeNode:function (node) {
         return node.nodeType == 1 && node.getAttribute('_ue_custom_node_');
     },
 
     /**
-     * 检测节点的标签是否是给定的标签
+     * 妫€娴嬭妭鐐圭殑鏍囩鏄惁鏄粰瀹氱殑鏍囩
      * @method isTagNode
-     * @param { Node } node 需要检测的节点对象
-     * @param { String } tagName 标签
-     * @return { Boolean } 节点的标签是否是给定的标签
-     * @example
+     * @param { Node } node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @param { String } tagName 鏍囩
+     * @return { Boolean } 鑺傜偣鐨勬爣绛炬槸鍚︽槸缁欏畾鐨勬爣绛?     * @example
      * ```html
      * <div id="test"></div>
      *
@@ -4152,11 +3899,10 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 给定一个节点数组，在通过指定的过滤器过滤后， 获取其中满足过滤条件的第一个节点
-     * @method filterNodeList
-     * @param { Array } nodeList 需要过滤的节点数组
-     * @param { Function } fn 过滤器， 对符合条件的节点， 执行结果返回true， 反之则返回false
-     * @return { Node | NULL } 如果找到符合过滤条件的节点， 则返回该节点， 否则返回NULL
+     * 缁欏畾涓€涓妭鐐规暟缁勶紝鍦ㄩ€氳繃鎸囧畾鐨勮繃婊ゅ櫒杩囨护鍚庯紝 鑾峰彇鍏朵腑婊¤冻杩囨护鏉′欢鐨勭涓€涓妭鐐?     * @method filterNodeList
+     * @param { Array } nodeList 闇€瑕佽繃婊ょ殑鑺傜偣鏁扮粍
+     * @param { Function } fn 杩囨护鍣紝 瀵圭鍚堟潯浠剁殑鑺傜偣锛?鎵ц缁撴灉杩斿洖true锛?鍙嶄箣鍒欒繑鍥瀎alse
+     * @return { Node | NULL } 濡傛灉鎵惧埌绗﹀悎杩囨护鏉′欢鐨勮妭鐐癸紝 鍒欒繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @example
      * ```javascript
      * var divNodes = document.getElementsByTagName("div");
@@ -4170,11 +3916,10 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 给定一个节点数组nodeList和一组标签名tagNames， 获取其中能够匹配标签名的节点集合中的第一个节点
-     * @method filterNodeList
-     * @param { Array } nodeList 需要过滤的节点数组
-     * @param { String } tagNames 需要匹配的标签名， 多个标签名之间用空格分割
-     * @return { Node | NULL } 如果找到标签名匹配的节点， 则返回该节点， 否则返回NULL
+     * 缁欏畾涓€涓妭鐐规暟缁刵odeList鍜屼竴缁勬爣绛惧悕tagNames锛?鑾峰彇鍏朵腑鑳藉鍖归厤鏍囩鍚嶇殑鑺傜偣闆嗗悎涓殑绗竴涓妭鐐?     * @method filterNodeList
+     * @param { Array } nodeList 闇€瑕佽繃婊ょ殑鑺傜偣鏁扮粍
+     * @param { String } tagNames 闇€瑕佸尮閰嶇殑鏍囩鍚嶏紝 澶氫釜鏍囩鍚嶄箣闂寸敤绌烘牸鍒嗗壊
+     * @return { Node | NULL } 濡傛灉鎵惧埌鏍囩鍚嶅尮閰嶇殑鑺傜偣锛?鍒欒繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
      * @example
      * ```javascript
      * var divNodes = document.getElementsByTagName("div");
@@ -4186,21 +3931,16 @@ var domUtils = dom.domUtils = {
      */
 
     /**
-     * 给定一个节点数组，在通过指定的过滤器过滤后， 如果参数forAll为true， 则会返回所有满足过滤
-     * 条件的节点集合， 否则， 返回满足条件的节点集合中的第一个节点
-     * @method filterNodeList
-     * @param { Array } nodeList 需要过滤的节点数组
-     * @param { Function } fn 过滤器， 对符合条件的节点， 执行结果返回true， 反之则返回false
-     * @param { Boolean } forAll 是否返回整个节点数组, 如果该参数为false， 则返回节点集合中的第一个节点
-     * @return { Array | Node | NULL } 如果找到符合过滤条件的节点， 则根据参数forAll的值决定返回满足
-     *                                      过滤条件的节点数组或第一个节点， 否则返回NULL
+     * 缁欏畾涓€涓妭鐐规暟缁勶紝鍦ㄩ€氳繃鎸囧畾鐨勮繃婊ゅ櫒杩囨护鍚庯紝 濡傛灉鍙傛暟forAll涓簍rue锛?鍒欎細杩斿洖鎵€鏈夋弧瓒宠繃婊?     * 鏉′欢鐨勮妭鐐归泦鍚堬紝 鍚﹀垯锛?杩斿洖婊¤冻鏉′欢鐨勮妭鐐归泦鍚堜腑鐨勭涓€涓妭鐐?     * @method filterNodeList
+     * @param { Array } nodeList 闇€瑕佽繃婊ょ殑鑺傜偣鏁扮粍
+     * @param { Function } fn 杩囨护鍣紝 瀵圭鍚堟潯浠剁殑鑺傜偣锛?鎵ц缁撴灉杩斿洖true锛?鍙嶄箣鍒欒繑鍥瀎alse
+     * @param { Boolean } forAll 鏄惁杩斿洖鏁翠釜鑺傜偣鏁扮粍, 濡傛灉璇ュ弬鏁颁负false锛?鍒欒繑鍥炶妭鐐归泦鍚堜腑鐨勭涓€涓妭鐐?     * @return { Array | Node | NULL } 濡傛灉鎵惧埌绗﹀悎杩囨护鏉′欢鐨勮妭鐐癸紝 鍒欐牴鎹弬鏁癴orAll鐨勫€煎喅瀹氳繑鍥炴弧瓒?     *                                      杩囨护鏉′欢鐨勮妭鐐规暟缁勬垨绗竴涓妭鐐癸紝 鍚﹀垯杩斿洖NULL
      * @example
      * ```javascript
      * var divNodes = document.getElementsByTagName("div");
      * divNodes = [].slice.call( divNodes, 0 );
      *
-     * //output: 3（假定有3个div）
-     * console.log( divNodes.length );
+     * //output: 3锛堝亣瀹氭湁3涓猟iv锛?     * console.log( divNodes.length );
      *
      * var nodes = UE.dom.domUtils.filterNodeList( divNodes, function ( node ) {
      *     return node.tagName.toLowerCase() === 'div';
@@ -4232,11 +3972,11 @@ var domUtils = dom.domUtils = {
     },
 
     /**
-     * 查询给定的range选区是否在给定的node节点内，且在该节点的最末尾
+     * 鏌ヨ缁欏畾鐨剅ange閫夊尯鏄惁鍦ㄧ粰瀹氱殑node鑺傜偣鍐咃紝涓斿湪璇ヨ妭鐐圭殑鏈€鏈熬
      * @method isInNodeEndBoundary
-     * @param { UE.dom.Range } rng 需要判断的range对象， 该对象的startContainer不能为NULL
-     * @param node 需要检测的节点对象
-     * @return { Number } 如果给定的选取range对象是在node内部的最末端， 则返回1, 否则返回0
+     * @param { UE.dom.Range } rng 闇€瑕佸垽鏂殑range瀵硅薄锛?璇ュ璞＄殑startContainer涓嶈兘涓篘ULL
+     * @param node 闇€瑕佹娴嬬殑鑺傜偣瀵硅薄
+     * @return { Number } 濡傛灉缁欏畾鐨勯€夊彇range瀵硅薄鏄湪node鍐呴儴鐨勬渶鏈锛?鍒欒繑鍥?, 鍚﹀垯杩斿洖0
      */
     isInNodeEndBoundary : function (rng,node){
         var start = rng.startContainer;
@@ -4271,7 +4011,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 
 // core/Range.js
 /**
- * Range封装
+ * Range灏佽
  * @file
  * @module UE.dom
  * @class Range
@@ -4279,14 +4019,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
  */
 
 /**
- * dom操作封装
+ * dom鎿嶄綔灏佽
  * @unfile
  * @module UE.dom
  */
 
 /**
- * Range实现类，本类是UEditor底层核心类，封装不同浏览器之间的Range操作。
- * @unfile
+ * Range瀹炵幇绫伙紝鏈被鏄疷Editor搴曞眰鏍稿績绫伙紝灏佽涓嶅悓娴忚鍣ㄤ箣闂寸殑Range鎿嶄綔銆? * @unfile
  * @module UE.dom
  * @class Range
  */
@@ -4298,8 +4037,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         fillData;
 
     /**
-     * 更新range的collapse状态
-     * @param  {Range}   range    range对象
+     * 鏇存柊range鐨刢ollapse鐘舵€?     * @param  {Range}   range    range瀵硅薄
      */
     function updateCollapse(range) {
         range.collapsed =
@@ -4312,8 +4050,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         return !rng.collapsed && rng.startContainer.nodeType == 1 && rng.startContainer === rng.endContainer && rng.endOffset - rng.startOffset == 1
     }
     function setEndPoint(toStart, node, offset, range) {
-        //如果node是自闭合标签要处理
-        if (node.nodeType == 1 && (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])) {
+        //濡傛灉node鏄嚜闂悎鏍囩瑕佸鐞?        if (node.nodeType == 1 && (dtd.$empty[node.tagName] || dtd.$nonChild[node.tagName])) {
             offset = domUtils.getNodeIndex(node) + (toStart ? 0 : 1);
             node = node.parentNode;
         }
@@ -4335,7 +4072,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     }
 
     function execContentsAction(range, action) {
-        //调整边界
+        //璋冩暣杈圭晫
         //range.includeBookmark();
         var start = range.startContainer,
             end = range.endContainer,
@@ -4411,8 +4148,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 currentLevel = ei.cloneNode(false);
                 clone.appendChild(currentLevel);
             }
-            //如果两端同级，右边第一次已经被开始做了
-            if (j != i || !startParents[i]) {
+            //濡傛灉涓ょ鍚岀骇锛屽彸杈圭涓€娆″凡缁忚寮€濮嬪仛浜?            if (j != i || !startParents[i]) {
                 while (current) {
                     if (current === start) {
                         break;
@@ -4433,39 +4169,36 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     }
 
     /**
-     * 创建一个跟document绑定的空的Range实例
+     * 鍒涘缓涓€涓窡document缁戝畾鐨勭┖鐨凴ange瀹炰緥
      * @constructor
-     * @param { Document } document 新建的选区所属的文档对象
+     * @param { Document } document 鏂板缓鐨勯€夊尯鎵€灞炵殑鏂囨。瀵硅薄
      */
 
     /**
-     * @property { Node } startContainer 当前Range的开始边界的容器节点, 可以是一个元素节点或者是文本节点
+     * @property { Node } startContainer 褰撳墠Range鐨勫紑濮嬭竟鐣岀殑瀹瑰櫒鑺傜偣, 鍙互鏄竴涓厓绱犺妭鐐规垨鑰呮槸鏂囨湰鑺傜偣
      */
 
     /**
-     * @property { Node } startOffset 当前Range的开始边界容器节点的偏移量, 如果是元素节点，
-     *                              该值就是childNodes中的第几个节点， 如果是文本节点就是文本内容的第几个字符
+     * @property { Node } startOffset 褰撳墠Range鐨勫紑濮嬭竟鐣屽鍣ㄨ妭鐐圭殑鍋忕Щ閲? 濡傛灉鏄厓绱犺妭鐐癸紝
+     *                              璇ュ€煎氨鏄痗hildNodes涓殑绗嚑涓妭鐐癸紝 濡傛灉鏄枃鏈妭鐐瑰氨鏄枃鏈唴瀹圭殑绗嚑涓瓧绗?     */
+
+    /**
+     * @property { Node } endContainer 褰撳墠Range鐨勭粨鏉熻竟鐣岀殑瀹瑰櫒鑺傜偣, 鍙互鏄竴涓厓绱犺妭鐐规垨鑰呮槸鏂囨湰鑺傜偣
      */
 
     /**
-     * @property { Node } endContainer 当前Range的结束边界的容器节点, 可以是一个元素节点或者是文本节点
-     */
+     * @property { Node } endOffset 褰撳墠Range鐨勭粨鏉熻竟鐣屽鍣ㄨ妭鐐圭殑鍋忕Щ閲? 濡傛灉鏄厓绱犺妭鐐癸紝
+     *                              璇ュ€煎氨鏄痗hildNodes涓殑绗嚑涓妭鐐癸紝 濡傛灉鏄枃鏈妭鐐瑰氨鏄枃鏈唴瀹圭殑绗嚑涓瓧绗?     */
 
     /**
-     * @property { Node } endOffset 当前Range的结束边界容器节点的偏移量, 如果是元素节点，
-     *                              该值就是childNodes中的第几个节点， 如果是文本节点就是文本内容的第几个字符
-     */
-
-    /**
-     * @property { Boolean } collapsed 当前Range是否闭合
+     * @property { Boolean } collapsed 褰撳墠Range鏄惁闂悎
      * @default true
-     * @remind Range是闭合的时候， startContainer === endContainer && startOffset === endOffset
+     * @remind Range鏄棴鍚堢殑鏃跺€欙紝 startContainer === endContainer && startOffset === endOffset
      */
 
     /**
-     * @property { Document } document 当前Range所属的Document对象
-     * @remind 不同range的的document属性可以是不同的
-     */
+     * @property { Document } document 褰撳墠Range鎵€灞炵殑Document瀵硅薄
+     * @remind 涓嶅悓range鐨勭殑document灞炴€у彲浠ユ槸涓嶅悓鐨?     */
     var Range = dom.Range = function (document) {
         var me = this;
         me.startContainer =
@@ -4477,7 +4210,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     };
 
     /**
-     * 删除fillData
+     * 鍒犻櫎fillData
      * @param doc
      * @param excludeNode
      */
@@ -4488,7 +4221,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     var tmpNode = fillData.parentNode;
                     domUtils.remove(fillData);
                     while (tmpNode && domUtils.isEmptyInlineElement(tmpNode) &&
-                        //safari的contains有bug
+                        //safari鐨刢ontains鏈塨ug
                         (browser.safari ? !(domUtils.getPosition(tmpNode,excludeNode) & domUtils.POSITION_CONTAINS) : !tmpNode.contains(excludeNode))
                         ) {
                         fillData = tmpNode.parentNode;
@@ -4520,17 +4253,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     Range.prototype = {
 
         /**
-         * 克隆选区的内容到一个DocumentFragment里
-         * @method cloneContents
-         * @return { DocumentFragment | NULL } 如果选区是闭合的将返回null， 否则， 返回包含所clone内容的DocumentFragment元素
+         * 鍏嬮殕閫夊尯鐨勫唴瀹瑰埌涓€涓狣ocumentFragment閲?         * @method cloneContents
+         * @return { DocumentFragment | NULL } 濡傛灉閫夊尯鏄棴鍚堢殑灏嗚繑鍥瀗ull锛?鍚﹀垯锛?杩斿洖鍖呭惈鎵€clone鍐呭鐨凞ocumentFragment鍏冪礌
          * @example
          * ```html
          * <body>
-         *      <!-- 中括号表示选区 -->
+         *      <!-- 涓嫭鍙疯〃绀洪€夊尯 -->
          *      <b>x<i>x[x</i>xx]x</b>
          *
          *      <script>
-         *          //range是已选中的选区
+         *          //range鏄凡閫変腑鐨勯€夊尯
          *          var fragment = range.cloneContents(),
          *              node = document.createElement("div");
          *
@@ -4548,25 +4280,23 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 删除当前选区范围中的所有内容
-         * @method deleteContents
-         * @remind 执行完该操作后， 当前Range对象变成了闭合状态
-         * @return { UE.dom.Range } 当前操作的Range对象
+         * 鍒犻櫎褰撳墠閫夊尯鑼冨洿涓殑鎵€鏈夊唴瀹?         * @method deleteContents
+         * @remind 鎵ц瀹岃鎿嶄綔鍚庯紝 褰撳墠Range瀵硅薄鍙樻垚浜嗛棴鍚堢姸鎬?         * @return { UE.dom.Range } 褰撳墠鎿嶄綔鐨凴ange瀵硅薄
          * @example
          * ```html
          * <body>
-         *      <!-- 中括号表示选区 -->
+         *      <!-- 涓嫭鍙疯〃绀洪€夊尯 -->
          *      <b>x<i>x[x</i>xx]x</b>
          *
          *      <script>
-         *          //range是已选中的选区
+         *          //range鏄凡閫変腑鐨勯€夊尯
          *          range.deleteContents();
          *
-         *          //竖线表示闭合后的选区位置
+         *          //绔栫嚎琛ㄧず闂悎鍚庣殑閫夊尯浣嶇疆
          *          //output: <b>x<i>x</i>|x</b>
          *          console.log( document.body.innerHTML );
          *
-         *          //此时， range的各项属性为
+         *          //姝ゆ椂锛?range鐨勫悇椤瑰睘鎬т负
          *          //output: B
          *          console.log( range.startContainer.tagName );
          *          //output: 2
@@ -4598,32 +4328,30 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 将当前选区的内容提取到一个DocumentFragment里
-         * @method extractContents
-         * @remind 执行该操作后， 选区将变成闭合状态
-         * @warning 执行该操作后， 原来选区所选中的内容将从dom树上剥离出来
-         * @return { DocumentFragment } 返回包含所提取内容的DocumentFragment对象
+         * 灏嗗綋鍓嶉€夊尯鐨勫唴瀹规彁鍙栧埌涓€涓狣ocumentFragment閲?         * @method extractContents
+         * @remind 鎵ц璇ユ搷浣滃悗锛?閫夊尯灏嗗彉鎴愰棴鍚堢姸鎬?         * @warning 鎵ц璇ユ搷浣滃悗锛?鍘熸潵閫夊尯鎵€閫変腑鐨勫唴瀹瑰皢浠巇om鏍戜笂鍓ョ鍑烘潵
+         * @return { DocumentFragment } 杩斿洖鍖呭惈鎵€鎻愬彇鍐呭鐨凞ocumentFragment瀵硅薄
          * @example
          * ```html
          * <body>
-         *      <!-- 中括号表示选区 -->
+         *      <!-- 涓嫭鍙疯〃绀洪€夊尯 -->
          *      <b>x<i>x[x</i>xx]x</b>
          *
          *      <script>
-         *          //range是已选中的选区
+         *          //range鏄凡閫変腑鐨勯€夊尯
          *          var fragment = range.extractContents(),
          *              node = document.createElement( "div" );
          *
          *          node.appendChild( fragment );
          *
-         *          //竖线表示闭合后的选区位置
+         *          //绔栫嚎琛ㄧず闂悎鍚庣殑閫夊尯浣嶇疆
          *
          *          //output: <b>x<i>x</i>|x</b>
          *          console.log( document.body.innerHTML );
          *          //output: <i>x</i>xx
          *          console.log( node.innerHTML );
          *
-         *          //此时， range的各项属性为
+         *          //姝ゆ椂锛?range鐨勫悇椤瑰睘鎬т负
          *          //output: B
          *          console.log( range.startContainer.tagName );
          *          //output: 2
@@ -4643,43 +4371,37 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 设置Range的开始容器节点和偏移量
-         * @method  setStart
-         * @remind 如果给定的节点是元素节点，那么offset指的是其子元素中索引为offset的元素，
-         *          如果是文本节点，那么offset指的是其文本内容的第offset个字符
-         * @remind 如果提供的容器节点是一个不能包含子元素的节点， 则该选区的开始容器将被设置
-         *          为该节点的父节点， 此时， 其距离开始容器的偏移量也变成了该节点在其父节点
-         *          中的索引
-         * @param { Node } node 将被设为当前选区开始边界容器的节点对象
-         * @param { int } offset 选区的开始位置偏移量
-         * @return { UE.dom.Range } 当前range对象
+         * 璁剧疆Range鐨勫紑濮嬪鍣ㄨ妭鐐瑰拰鍋忕Щ閲?         * @method  setStart
+         * @remind 濡傛灉缁欏畾鐨勮妭鐐规槸鍏冪礌鑺傜偣锛岄偅涔坥ffset鎸囩殑鏄叾瀛愬厓绱犱腑绱㈠紩涓簅ffset鐨勫厓绱狅紝
+         *          濡傛灉鏄枃鏈妭鐐癸紝閭ｄ箞offset鎸囩殑鏄叾鏂囨湰鍐呭鐨勭offset涓瓧绗?         * @remind 濡傛灉鎻愪緵鐨勫鍣ㄨ妭鐐规槸涓€涓笉鑳藉寘鍚瓙鍏冪礌鐨勮妭鐐癸紝 鍒欒閫夊尯鐨勫紑濮嬪鍣ㄥ皢琚缃?         *          涓鸿鑺傜偣鐨勭埗鑺傜偣锛?姝ゆ椂锛?鍏惰窛绂诲紑濮嬪鍣ㄧ殑鍋忕Щ閲忎篃鍙樻垚浜嗚鑺傜偣鍦ㄥ叾鐖惰妭鐐?         *          涓殑绱㈠紩
+         * @param { Node } node 灏嗚璁句负褰撳墠閫夊尯寮€濮嬭竟鐣屽鍣ㄧ殑鑺傜偣瀵硅薄
+         * @param { int } offset 閫夊尯鐨勫紑濮嬩綅缃亸绉婚噺
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
-         * <!-- 选区 -->
+         * <!-- 閫夊尯 -->
          * <b>xxx<i>x<span>xx</span>xx<em>xx</em>xxx</i>[xxx]</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.setStart( document.getElementsByTagName("i")[0], 1 );
          *
-         *     //此时， 选区变成了
-         *     //<b>xxx<i>x[<span>xx</span>xx<em>xx</em>xxx</i>xxx]</b>
+         *     //姝ゆ椂锛?閫夊尯鍙樻垚浜?         *     //<b>xxx<i>x[<span>xx</span>xx<em>xx</em>xxx</i>xxx]</b>
          *
          * </script>
          * ```
          * @example
          * ```html
-         * <!-- 选区 -->
+         * <!-- 閫夊尯 -->
          * <b>xxx<img>[xx]x</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.setStart( document.getElementsByTagName("img")[0], 3 );
          *
-         *     //此时， 选区变成了
-         *     //<b>xxx[<img>xx]x</b>
+         *     //姝ゆ椂锛?閫夊尯鍙樻垚浜?         *     //<b>xxx[<img>xx]x</b>
          *
          * </script>
          * ```
@@ -4689,34 +4411,31 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 设置Range的结束容器和偏移量
-         * @method  setEnd
-         * @param { Node } node 作为当前选区结束边界容器的节点对象
-         * @param { int } offset 结束边界的偏移量
+         * 璁剧疆Range鐨勭粨鏉熷鍣ㄥ拰鍋忕Щ閲?         * @method  setEnd
+         * @param { Node } node 浣滀负褰撳墠閫夊尯缁撴潫杈圭晫瀹瑰櫒鐨勮妭鐐瑰璞?         * @param { int } offset 缁撴潫杈圭晫鐨勫亸绉婚噺
          * @see UE.dom.Range:setStart(Node,int)
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         setEnd:function (node, offset) {
             return setEndPoint(false, node, offset, this);
         },
 
         /**
-         * 将Range开始位置设置到node节点之后
+         * 灏哛ange寮€濮嬩綅缃缃埌node鑺傜偣涔嬪悗
          * @method  setStartAfter
-         * @remind 该操作将会把给定节点的父节点作为range的开始容器， 且偏移量是该节点在其父节点中的位置索引+1
-         * @param { Node } node 选区的开始边界将紧接着该节点之后
-         * @return { UE.dom.Range } 当前range对象
+         * @remind 璇ユ搷浣滃皢浼氭妸缁欏畾鑺傜偣鐨勭埗鑺傜偣浣滀负range鐨勫紑濮嬪鍣紝 涓斿亸绉婚噺鏄鑺傜偣鍦ㄥ叾鐖惰妭鐐逛腑鐨勪綅缃储寮?1
+         * @param { Node } node 閫夊尯鐨勫紑濮嬭竟鐣屽皢绱ф帴鐫€璇ヨ妭鐐逛箣鍚?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>xx<i>xxx</i><span>xx[x</span>xxx]</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.setStartAfter( document.getElementsByTagName("i")[0] );
          *
-         *     //结果选区
+         *     //缁撴灉閫夊尯
          *     //<b>xx<i>xxx</i>[<span>xxx</span>xxx]</b>
          *
          * </script>
@@ -4727,35 +4446,33 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 将Range开始位置设置到node节点之前
+         * 灏哛ange寮€濮嬩綅缃缃埌node鑺傜偣涔嬪墠
          * @method  setStartBefore
-         * @remind 该操作将会把给定节点的父节点作为range的开始容器， 且偏移量是该节点在其父节点中的位置索引
-         * @param { Node } node 新的选区开始位置在该节点之前
-         * @see UE.dom.Range:setStartAfter(Node)
-         * @return { UE.dom.Range } 当前range对象
+         * @remind 璇ユ搷浣滃皢浼氭妸缁欏畾鑺傜偣鐨勭埗鑺傜偣浣滀负range鐨勫紑濮嬪鍣紝 涓斿亸绉婚噺鏄鑺傜偣鍦ㄥ叾鐖惰妭鐐逛腑鐨勪綅缃储寮?         * @param { Node } node 鏂扮殑閫夊尯寮€濮嬩綅缃湪璇ヨ妭鐐逛箣鍓?         * @see UE.dom.Range:setStartAfter(Node)
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         setStartBefore:function (node) {
             return this.setStart(node.parentNode, domUtils.getNodeIndex(node));
         },
 
         /**
-         * 将Range结束位置设置到node节点之后
+         * 灏哛ange缁撴潫浣嶇疆璁剧疆鍒皀ode鑺傜偣涔嬪悗
          * @method  setEndAfter
-         * @remind 该操作将会把给定节点的父节点作为range的结束容器， 且偏移量是该节点在其父节点中的位置索引+1
-         * @param { Node } node 目标节点
+         * @remind 璇ユ搷浣滃皢浼氭妸缁欏畾鑺傜偣鐨勭埗鑺傜偣浣滀负range鐨勭粨鏉熷鍣紝 涓斿亸绉婚噺鏄鑺傜偣鍦ㄥ叾鐖惰妭鐐逛腑鐨勪綅缃储寮?1
+         * @param { Node } node 鐩爣鑺傜偣
          * @see UE.dom.Range:setStartAfter(Node)
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>[xx<i>xxx</i><span>xx]x</span>xxx</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.setStartAfter( document.getElementsByTagName("span")[0] );
          *
-         *     //结果选区
+         *     //缁撴灉閫夊尯
          *     //<b>[xx<i>xxx</i><span>xxx</span>]xxx</b>
          *
          * </script>
@@ -4766,36 +4483,34 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 将Range结束位置设置到node节点之前
+         * 灏哛ange缁撴潫浣嶇疆璁剧疆鍒皀ode鑺傜偣涔嬪墠
          * @method  setEndBefore
-         * @remind 该操作将会把给定节点的父节点作为range的结束容器， 且偏移量是该节点在其父节点中的位置索引
-         * @param { Node } node 目标节点
+         * @remind 璇ユ搷浣滃皢浼氭妸缁欏畾鑺傜偣鐨勭埗鑺傜偣浣滀负range鐨勭粨鏉熷鍣紝 涓斿亸绉婚噺鏄鑺傜偣鍦ㄥ叾鐖惰妭鐐逛腑鐨勪綅缃储寮?         * @param { Node } node 鐩爣鑺傜偣
          * @see UE.dom.Range:setEndAfter(Node)
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         setEndBefore:function (node) {
             return this.setEnd(node.parentNode, domUtils.getNodeIndex(node));
         },
 
         /**
-         * 设置Range的开始位置到node节点内的第一个子节点之前
+         * 璁剧疆Range鐨勫紑濮嬩綅缃埌node鑺傜偣鍐呯殑绗竴涓瓙鑺傜偣涔嬪墠
          * @method  setStartAtFirst
-         * @remind 选区的开始容器将变成给定的节点， 且偏移量为0
-         * @remind 如果给定的节点是元素节点， 则该节点必须是允许包含子节点的元素。
-         * @param { Node } node 目标节点
+         * @remind 閫夊尯鐨勫紑濮嬪鍣ㄥ皢鍙樻垚缁欏畾鐨勮妭鐐癸紝 涓斿亸绉婚噺涓?
+         * @remind 濡傛灉缁欏畾鐨勮妭鐐规槸鍏冪礌鑺傜偣锛?鍒欒鑺傜偣蹇呴』鏄厑璁稿寘鍚瓙鑺傜偣鐨勫厓绱犮€?         * @param { Node } node 鐩爣鑺傜偣
          * @see UE.dom.Range:setStartBefore(Node)
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.setStartAtFirst( document.getElementsByTagName("i")[0] );
          *
-         *     //结果选区
+         *     //缁撴灉閫夊尯
          *     //<b>xx<i>[xxx</i><span>xx]x</span>xxx</b>
          *
          * </script>
@@ -4806,62 +4521,53 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 设置Range的开始位置到node节点内的最后一个节点之后
-         * @method setStartAtLast
-         * @remind 选区的开始容器将变成给定的节点， 且偏移量为该节点的子节点数
-         * @remind 如果给定的节点是元素节点， 则该节点必须是允许包含子节点的元素。
-         * @param { Node } node 目标节点
+         * 璁剧疆Range鐨勫紑濮嬩綅缃埌node鑺傜偣鍐呯殑鏈€鍚庝竴涓妭鐐逛箣鍚?         * @method setStartAtLast
+         * @remind 閫夊尯鐨勫紑濮嬪鍣ㄥ皢鍙樻垚缁欏畾鐨勮妭鐐癸紝 涓斿亸绉婚噺涓鸿鑺傜偣鐨勫瓙鑺傜偣鏁?         * @remind 濡傛灉缁欏畾鐨勮妭鐐规槸鍏冪礌鑺傜偣锛?鍒欒鑺傜偣蹇呴』鏄厑璁稿寘鍚瓙鑺傜偣鐨勫厓绱犮€?         * @param { Node } node 鐩爣鑺傜偣
          * @see UE.dom.Range:setStartAtFirst(Node)
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         setStartAtLast:function (node) {
             return this.setStart(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
         },
 
         /**
-         * 设置Range的结束位置到node节点内的第一个节点之前
-         * @method  setEndAtFirst
-         * @param { Node } node 目标节点
-         * @remind 选区的结束容器将变成给定的节点， 且偏移量为0
-         * @remind node必须是一个元素节点， 且必须是允许包含子节点的元素。
-         * @see UE.dom.Range:setStartAtFirst(Node)
-         * @return { UE.dom.Range } 当前range对象
+         * 璁剧疆Range鐨勭粨鏉熶綅缃埌node鑺傜偣鍐呯殑绗竴涓妭鐐逛箣鍓?         * @method  setEndAtFirst
+         * @param { Node } node 鐩爣鑺傜偣
+         * @remind 閫夊尯鐨勭粨鏉熷鍣ㄥ皢鍙樻垚缁欏畾鐨勮妭鐐癸紝 涓斿亸绉婚噺涓?
+         * @remind node蹇呴』鏄竴涓厓绱犺妭鐐癸紝 涓斿繀椤绘槸鍏佽鍖呭惈瀛愯妭鐐圭殑鍏冪礌銆?         * @see UE.dom.Range:setStartAtFirst(Node)
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         setEndAtFirst:function (node) {
             return this.setEnd(node, 0);
         },
 
         /**
-         * 设置Range的结束位置到node节点内的最后一个节点之后
-         * @method  setEndAtLast
-         * @param { Node } node 目标节点
-         * @remind 选区的结束容器将变成给定的节点， 且偏移量为该节点的子节点数量
-         * @remind node必须是一个元素节点， 且必须是允许包含子节点的元素。
-         * @see UE.dom.Range:setStartAtFirst(Node)
-         * @return { UE.dom.Range } 当前range对象
+         * 璁剧疆Range鐨勭粨鏉熶綅缃埌node鑺傜偣鍐呯殑鏈€鍚庝竴涓妭鐐逛箣鍚?         * @method  setEndAtLast
+         * @param { Node } node 鐩爣鑺傜偣
+         * @remind 閫夊尯鐨勭粨鏉熷鍣ㄥ皢鍙樻垚缁欏畾鐨勮妭鐐癸紝 涓斿亸绉婚噺涓鸿鑺傜偣鐨勫瓙鑺傜偣鏁伴噺
+         * @remind node蹇呴』鏄竴涓厓绱犺妭鐐癸紝 涓斿繀椤绘槸鍏佽鍖呭惈瀛愯妭鐐圭殑鍏冪礌銆?         * @see UE.dom.Range:setStartAtFirst(Node)
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         setEndAtLast:function (node) {
             return this.setEnd(node, node.nodeType == 3 ? node.nodeValue.length : node.childNodes.length);
         },
 
         /**
-         * 选中给定节点
+         * 閫変腑缁欏畾鑺傜偣
          * @method  selectNode
-         * @remind 此时， 选区的开始容器和结束容器都是该节点的父节点， 其startOffset是该节点在父节点中的位置索引，
-         *          而endOffset为startOffset+1
-         * @param { Node } node 需要选中的节点
-         * @return { UE.dom.Range } 当前range对象，此时的range仅包含当前给定的节点对象
+         * @remind 姝ゆ椂锛?閫夊尯鐨勫紑濮嬪鍣ㄥ拰缁撴潫瀹瑰櫒閮芥槸璇ヨ妭鐐圭殑鐖惰妭鐐癸紝 鍏秙tartOffset鏄鑺傜偣鍦ㄧ埗鑺傜偣涓殑浣嶇疆绱㈠紩锛?         *          鑰宔ndOffset涓簊tartOffset+1
+         * @param { Node } node 闇€瑕侀€変腑鐨勮妭鐐?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄锛屾鏃剁殑range浠呭寘鍚綋鍓嶇粰瀹氱殑鑺傜偣瀵硅薄
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.selectNode( document.getElementsByTagName("i")[0] );
          *
-         *     //结果选区
+         *     //缁撴灉閫夊尯
          *     //<b>xx[<i>xxx</i>]<span>xxx</span>xxx</b>
          *
          * </script>
@@ -4872,23 +4578,19 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 选中给定节点内部的所有节点
-         * @method  selectNodeContents
-         * @remind 此时， 选区的开始容器和结束容器都是该节点， 其startOffset为0，
-         *          而endOffset是该节点的子节点数。
-         * @param { Node } node 目标节点， 当前range将包含该节点内的所有节点
-         * @return { UE.dom.Range } 当前range对象， 此时range仅包含给定节点的所有子节点
+         * 閫変腑缁欏畾鑺傜偣鍐呴儴鐨勬墍鏈夎妭鐐?         * @method  selectNodeContents
+         * @remind 姝ゆ椂锛?閫夊尯鐨勫紑濮嬪鍣ㄥ拰缁撴潫瀹瑰櫒閮芥槸璇ヨ妭鐐癸紝 鍏秙tartOffset涓?锛?         *          鑰宔ndOffset鏄鑺傜偣鐨勫瓙鑺傜偣鏁般€?         * @param { Node } node 鐩爣鑺傜偣锛?褰撳墠range灏嗗寘鍚鑺傜偣鍐呯殑鎵€鏈夎妭鐐?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄锛?姝ゆ椂range浠呭寘鍚粰瀹氳妭鐐圭殑鎵€鏈夊瓙鑺傜偣
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.selectNode( document.getElementsByTagName("b")[0] );
          *
-         *     //结果选区
+         *     //缁撴灉閫夊尯
          *     //<b>[xx<i>xxx</i><span>xxx</span>xxx]</b>
          *
          * </script>
@@ -4899,11 +4601,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * clone当前Range对象
+         * clone褰撳墠Range瀵硅薄
          * @method  cloneRange
-         * @remind 返回的range是一个全新的range对象， 其内部所有属性与当前被clone的range相同。
-         * @return { UE.dom.Range } 当前range对象的一个副本
-         */
+         * @remind 杩斿洖鐨剅ange鏄竴涓叏鏂扮殑range瀵硅薄锛?鍏跺唴閮ㄦ墍鏈夊睘鎬т笌褰撳墠琚玞lone鐨剅ange鐩稿悓銆?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄鐨勪竴涓壇鏈?         */
         cloneRange:function () {
             var me = this;
             return new Range(me.document).setStart(me.startContainer, me.startOffset).setEnd(me.endContainer, me.endOffset);
@@ -4911,47 +4611,42 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 向当前选区的结束处闭合选区
+         * 鍚戝綋鍓嶉€夊尯鐨勭粨鏉熷闂悎閫夊尯
          * @method  collapse
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.collapse();
          *
-         *     //结果选区
-         *     //“|”表示选区已闭合
-         *     //<b>xx<i>xxx</i><span>xx|x</span>xxx</b>
+         *     //缁撴灉閫夊尯
+         *     //鈥渱鈥濊〃绀洪€夊尯宸查棴鍚?         *     //<b>xx<i>xxx</i><span>xx|x</span>xxx</b>
          *
          * </script>
          * ```
          */
 
         /**
-         * 闭合当前选区，根据给定的toStart参数项决定是向当前选区开始处闭合还是向结束处闭合，
-         * 如果toStart的值为true，则向开始位置闭合， 反之，向结束位置闭合。
-         * @method  collapse
-         * @param { Boolean } toStart 是否向选区开始处闭合
-         * @return { UE.dom.Range } 当前range对象，此时range对象处于闭合状态
-         * @see UE.dom.Range:collapse()
+         * 闂悎褰撳墠閫夊尯锛屾牴鎹粰瀹氱殑toStart鍙傛暟椤瑰喅瀹氭槸鍚戝綋鍓嶉€夊尯寮€濮嬪闂悎杩樻槸鍚戠粨鏉熷闂悎锛?         * 濡傛灉toStart鐨勫€间负true锛屽垯鍚戝紑濮嬩綅缃棴鍚堬紝 鍙嶄箣锛屽悜缁撴潫浣嶇疆闂悎銆?         * @method  collapse
+         * @param { Boolean } toStart 鏄惁鍚戦€夊尯寮€濮嬪闂悎
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄锛屾鏃秗ange瀵硅薄澶勪簬闂悎鐘舵€?         * @see UE.dom.Range:collapse()
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>xx<i>xxx</i><span>[xx]x</span>xxx</b>
          *
          * <script>
          *
-         *     //执行操作
+         *     //鎵ц鎿嶄綔
          *     range.collapse( true );
          *
-         *     //结果选区
-         *     //“|”表示选区已闭合
-         *     //<b>xx<i>xxx</i><span>|xxx</span>xxx</b>
+         *     //缁撴灉閫夊尯
+         *     //鈥渱鈥濊〃绀洪€夊尯宸查棴鍚?         *     //<b>xx<i>xxx</i><span>|xxx</span>xxx</b>
          *
          * </script>
          * ```
@@ -4970,9 +4665,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 调整range的开始位置和结束位置，使其"收缩"到最小的位置
+         * 璋冩暣range鐨勫紑濮嬩綅缃拰缁撴潫浣嶇疆锛屼娇鍏?鏀剁缉"鍒版渶灏忕殑浣嶇疆
          * @method  shrinkBoundary
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
          * <span>xx<b>xx[</b>xxxxx]</span> => <span>xx<b>xx</b>[xxxxx]</span>
@@ -4980,15 +4675,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          *
          * @example
          * ```html
-         * <!-- 选区示例 -->
+         * <!-- 閫夊尯绀轰緥 -->
          * <b>x[xx</b><i>]xxx</i>
          *
          * <script>
          *
-         *     //执行收缩
+         *     //鎵ц鏀剁缉
          *     range.shrinkBoundary();
          *
-         *     //结果选区
+         *     //缁撴灉閫夊尯
          *     //<b>x[xx]</b><i>xxx</i>
          * </script>
          * ```
@@ -5000,11 +4695,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 调整range的开始位置和结束位置，使其"收缩"到最小的位置，
-         * 如果ignoreEnd的值为true，则忽略对结束位置的调整
+         * 璋冩暣range鐨勫紑濮嬩綅缃拰缁撴潫浣嶇疆锛屼娇鍏?鏀剁缉"鍒版渶灏忕殑浣嶇疆锛?         * 濡傛灉ignoreEnd鐨勫€间负true锛屽垯蹇界暐瀵圭粨鏉熶綅缃殑璋冩暣
          * @method  shrinkBoundary
-         * @param { Boolean } ignoreEnd 是否忽略对结束位置的调整
-         * @return { UE.dom.Range } 当前range对象
+         * @param { Boolean } ignoreEnd 鏄惁蹇界暐瀵圭粨鏉熶綅缃殑璋冩暣
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @see UE.dom.domUtils.Range:shrinkBoundary()
          */
         shrinkBoundary:function (ignoreEnd) {
@@ -5013,8 +4707,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             function check(node){
                 return node.nodeType == 1 && !domUtils.isBookmarkNode(node) && !dtd.$empty[node.tagName] && !dtd.$nonChild[node.tagName]
             }
-            while (me.startContainer.nodeType == 1 //是element
-                && (child = me.startContainer.childNodes[me.startOffset]) //子节点也是element
+            while (me.startContainer.nodeType == 1 //鏄痚lement
+                && (child = me.startContainer.childNodes[me.startOffset]) //瀛愯妭鐐逛篃鏄痚lement
                 && check(child)) {
                 me.setStart(child, 0);
             }
@@ -5022,9 +4716,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 return me.collapse(true);
             }
             if (!ignoreEnd) {
-                while (me.endContainer.nodeType == 1//是element
-                    && me.endOffset > 0 //如果是空元素就退出 endOffset=0那么endOffst-1为负值，childNodes[endOffset]报错
-                    && (child = me.endContainer.childNodes[me.endOffset - 1]) //子节点也是element
+                while (me.endContainer.nodeType == 1//鏄痚lement
+                    && me.endOffset > 0 //濡傛灉鏄┖鍏冪礌灏遍€€鍑?endOffset=0閭ｄ箞endOffst-1涓鸿礋鍊硷紝childNodes[endOffset]鎶ラ敊
+                    && (child = me.endContainer.childNodes[me.endOffset - 1]) //瀛愯妭鐐逛篃鏄痚lement
                     && check(child)) {
                     me.setEnd(child, child.childNodes.length);
                 }
@@ -5033,20 +4727,18 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获取离当前选区内包含的所有节点最近的公共祖先节点，
-         * @method  getCommonAncestor
-         * @remind 返回的公共祖先节点一定不是range自身的容器节点， 但有可能是一个文本节点
-         * @return { Node } 当前range对象内所有节点的公共祖先节点
+         * 鑾峰彇绂诲綋鍓嶉€夊尯鍐呭寘鍚殑鎵€鏈夎妭鐐规渶杩戠殑鍏叡绁栧厛鑺傜偣锛?         * @method  getCommonAncestor
+         * @remind 杩斿洖鐨勫叕鍏辩鍏堣妭鐐逛竴瀹氫笉鏄痳ange鑷韩鐨勫鍣ㄨ妭鐐癸紝 浣嗘湁鍙兘鏄竴涓枃鏈妭鐐?         * @return { Node } 褰撳墠range瀵硅薄鍐呮墍鏈夎妭鐐圭殑鍏叡绁栧厛鑺傜偣
          * @example
          * ```html
-         * //选区示例
+         * //閫夊尯绀轰緥
          * <span>xxx<b>x[x<em>xx]x</em>xxx</b>xx</span>
          * <script>
          *
          *     var node = range.getCommonAncestor();
          *
-         *     //公共祖先节点是： b节点
-         *     //输出： B
+         *     //鍏叡绁栧厛鑺傜偣鏄細 b鑺傜偣
+         *     //杈撳嚭锛?B
          *     console.log(node.tagName);
          *
          * </script>
@@ -5054,26 +4746,23 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 获取当前选区所包含的所有节点的公共祖先节点， 可以根据给定的参数 includeSelf 决定获取到
-         * 的公共祖先节点是否可以是当前选区的startContainer或endContainer节点， 如果 includeSelf
-         * 的取值为true， 则返回的节点可以是自身的容器节点， 否则， 则不能是容器节点
+         * 鑾峰彇褰撳墠閫夊尯鎵€鍖呭惈鐨勬墍鏈夎妭鐐圭殑鍏叡绁栧厛鑺傜偣锛?鍙互鏍规嵁缁欏畾鐨勫弬鏁?includeSelf 鍐冲畾鑾峰彇鍒?         * 鐨勫叕鍏辩鍏堣妭鐐规槸鍚﹀彲浠ユ槸褰撳墠閫夊尯鐨剆tartContainer鎴杄ndContainer鑺傜偣锛?濡傛灉 includeSelf
+         * 鐨勫彇鍊间负true锛?鍒欒繑鍥炵殑鑺傜偣鍙互鏄嚜韬殑瀹瑰櫒鑺傜偣锛?鍚﹀垯锛?鍒欎笉鑳芥槸瀹瑰櫒鑺傜偣
          * @method  getCommonAncestor
-         * @param { Boolean } includeSelf 是否允许获取到的公共祖先节点是当前range对象的容器节点
-         * @return { Node } 当前range对象内所有节点的公共祖先节点
+         * @param { Boolean } includeSelf 鏄惁鍏佽鑾峰彇鍒扮殑鍏叡绁栧厛鑺傜偣鏄綋鍓峳ange瀵硅薄鐨勫鍣ㄨ妭鐐?         * @return { Node } 褰撳墠range瀵硅薄鍐呮墍鏈夎妭鐐圭殑鍏叡绁栧厛鑺傜偣
          * @see UE.dom.Range:getCommonAncestor()
          * @example
          * ```html
          * <body>
          *
-         *     <!-- 选区示例 -->
+         *     <!-- 閫夊尯绀轰緥 -->
          *     <b>xxx<i>xxxx<span>xx[x</span>xx]x</i>xxxxxxx</b>
          *
          *     <script>
          *
          *         var node = range.getCommonAncestor( false );
          *
-         *         //这里的公共祖先节点是B而不是I， 是因为参数限制了获取到的节点不能是容器节点
-         *         //output: B
+         *         //杩欓噷鐨勫叕鍏辩鍏堣妭鐐规槸B鑰屼笉鏄疘锛?鏄洜涓哄弬鏁伴檺鍒朵簡鑾峰彇鍒扮殑鑺傜偣涓嶈兘鏄鍣ㄨ妭鐐?         *         //output: B
          *         console.log( node.tagName );
          *
          *     </script>
@@ -5083,21 +4772,18 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 获取当前选区所包含的所有节点的公共祖先节点， 可以根据给定的参数 includeSelf 决定获取到
-         * 的公共祖先节点是否可以是当前选区的startContainer或endContainer节点， 如果 includeSelf
-         * 的取值为true， 则返回的节点可以是自身的容器节点， 否则， 则不能是容器节点； 同时可以根据
-         * ignoreTextNode 参数的取值决定是否忽略类型为文本节点的祖先节点。
-         * @method  getCommonAncestor
-         * @param { Boolean } includeSelf 是否允许获取到的公共祖先节点是当前range对象的容器节点
-         * @param { Boolean } ignoreTextNode 获取祖先节点的过程中是否忽略类型为文本节点的祖先节点
-         * @return { Node } 当前range对象内所有节点的公共祖先节点
+         * 鑾峰彇褰撳墠閫夊尯鎵€鍖呭惈鐨勬墍鏈夎妭鐐圭殑鍏叡绁栧厛鑺傜偣锛?鍙互鏍规嵁缁欏畾鐨勫弬鏁?includeSelf 鍐冲畾鑾峰彇鍒?         * 鐨勫叕鍏辩鍏堣妭鐐规槸鍚﹀彲浠ユ槸褰撳墠閫夊尯鐨剆tartContainer鎴杄ndContainer鑺傜偣锛?濡傛灉 includeSelf
+         * 鐨勫彇鍊间负true锛?鍒欒繑鍥炵殑鑺傜偣鍙互鏄嚜韬殑瀹瑰櫒鑺傜偣锛?鍚﹀垯锛?鍒欎笉鑳芥槸瀹瑰櫒鑺傜偣锛?鍚屾椂鍙互鏍规嵁
+         * ignoreTextNode 鍙傛暟鐨勫彇鍊煎喅瀹氭槸鍚﹀拷鐣ョ被鍨嬩负鏂囨湰鑺傜偣鐨勭鍏堣妭鐐广€?         * @method  getCommonAncestor
+         * @param { Boolean } includeSelf 鏄惁鍏佽鑾峰彇鍒扮殑鍏叡绁栧厛鑺傜偣鏄綋鍓峳ange瀵硅薄鐨勫鍣ㄨ妭鐐?         * @param { Boolean } ignoreTextNode 鑾峰彇绁栧厛鑺傜偣鐨勮繃绋嬩腑鏄惁蹇界暐绫诲瀷涓烘枃鏈妭鐐圭殑绁栧厛鑺傜偣
+         * @return { Node } 褰撳墠range瀵硅薄鍐呮墍鏈夎妭鐐圭殑鍏叡绁栧厛鑺傜偣
          * @see UE.dom.Range:getCommonAncestor()
          * @see UE.dom.Range:getCommonAncestor(Boolean)
          * @example
          * ```html
          * <body>
          *
-         *     <!-- 选区示例 -->
+         *     <!-- 閫夊尯绀轰緥 -->
          *     <b>xxx<i>xxxx<span>x[x]x</span>xxx</i>xxxxxxx</b>
          *
          *     <script>
@@ -5122,53 +4808,51 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     if(start.nodeType == 1)
                         return start;
                 }
-                //只有在上来就相等的情况下才会出现是文本的情况
+                //鍙湁鍦ㄤ笂鏉ュ氨鐩哥瓑鐨勬儏鍐典笅鎵嶄細鍑虹幇鏄枃鏈殑鎯呭喌
                 return ignoreTextNode && start.nodeType == 3 ? start.parentNode : start;
             }
             return domUtils.getCommonAncestor(start, end);
         },
 
         /**
-         * 调整当前Range的开始和结束边界容器，如果是容器节点是文本节点,就调整到包含该文本节点的父节点上
+         * 璋冩暣褰撳墠Range鐨勫紑濮嬪拰缁撴潫杈圭晫瀹瑰櫒锛屽鏋滄槸瀹瑰櫒鑺傜偣鏄枃鏈妭鐐?灏辫皟鏁村埌鍖呭惈璇ユ枃鏈妭鐐圭殑鐖惰妭鐐逛笂
          * @method trimBoundary
-         * @remind 该操作有可能会引起文本节点被切开
-         * @return { UE.dom.Range } 当前range对象
+         * @remind 璇ユ搷浣滄湁鍙兘浼氬紩璧锋枃鏈妭鐐硅鍒囧紑
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
          *
-         * //选区示例
+         * //閫夊尯绀轰緥
          * <b>xxx<i>[xxxxx]</i>xxx</b>
          *
          * <script>
-         *     //未调整前， 选区的开始容器和结束都是文本节点
-         *     //执行调整
+         *     //鏈皟鏁村墠锛?閫夊尯鐨勫紑濮嬪鍣ㄥ拰缁撴潫閮芥槸鏂囨湰鑺傜偣
+         *     //鎵ц璋冩暣
          *     range.trimBoundary();
          *
-         *     //调整之后， 容器节点变成了i节点
+         *     //璋冩暣涔嬪悗锛?瀹瑰櫒鑺傜偣鍙樻垚浜唅鑺傜偣
          *     //<b>xxx[<i>xxxxx</i>]xxx</b>
          * </script>
          * ```
          */
 
         /**
-         * 调整当前Range的开始和结束边界容器，如果是容器节点是文本节点,就调整到包含该文本节点的父节点上，
-         * 可以根据 ignoreEnd 参数的值决定是否调整对结束边界的调整
-         * @method trimBoundary
-         * @param { Boolean } ignoreEnd 是否忽略对结束边界的调整
-         * @return { UE.dom.Range } 当前range对象
+         * 璋冩暣褰撳墠Range鐨勫紑濮嬪拰缁撴潫杈圭晫瀹瑰櫒锛屽鏋滄槸瀹瑰櫒鑺傜偣鏄枃鏈妭鐐?灏辫皟鏁村埌鍖呭惈璇ユ枃鏈妭鐐圭殑鐖惰妭鐐逛笂锛?         * 鍙互鏍规嵁 ignoreEnd 鍙傛暟鐨勫€煎喅瀹氭槸鍚﹁皟鏁村缁撴潫杈圭晫鐨勮皟鏁?         * @method trimBoundary
+         * @param { Boolean } ignoreEnd 鏄惁蹇界暐瀵圭粨鏉熻竟鐣岀殑璋冩暣
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
          *
-         * //选区示例
+         * //閫夊尯绀轰緥
          * <b>xxx<i>[xxxxx]</i>xxx</b>
          *
          * <script>
-         *     //未调整前， 选区的开始容器和结束都是文本节点
-         *     //执行调整
+         *     //鏈皟鏁村墠锛?閫夊尯鐨勫紑濮嬪鍣ㄥ拰缁撴潫閮芥槸鏂囨湰鑺傜偣
+         *     //鎵ц璋冩暣
          *     range.trimBoundary( true );
          *
-         *     //调整之后， 开始容器节点变成了i节点
-         *     //但是， 结束容器没有发生变化
+         *     //璋冩暣涔嬪悗锛?寮€濮嬪鍣ㄨ妭鐐瑰彉鎴愪簡i鑺傜偣
+         *     //浣嗘槸锛?缁撴潫瀹瑰櫒娌℃湁鍙戠敓鍙樺寲
          *     //<b>xxx[<i>xxxxx]</i>xxx</b>
          * </script>
          * ```
@@ -5187,7 +4871,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                         this.setStartAfter(start);
                     } else {
                         var textNode = domUtils.split(start, offset);
-                        //跟新结束边界
+                        //璺熸柊缁撴潫杈圭晫
                         if (start === end) {
                             this.setEnd(textNode, this.endOffset - offset);
                         } else if (start.parentNode === end) {
@@ -5216,19 +4900,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 如果选区在文本的边界上，就扩展选区到文本的父节点上, 如果当前选区是闭合的， 则什么也不做
+         * 濡傛灉閫夊尯鍦ㄦ枃鏈殑杈圭晫涓婏紝灏辨墿灞曢€夊尯鍒版枃鏈殑鐖惰妭鐐逛笂, 濡傛灉褰撳墠閫夊尯鏄棴鍚堢殑锛?鍒欎粈涔堜篃涓嶅仛
          * @method txtToElmBoundary
-         * @remind 该操作不会修改dom节点
-         * @return { UE.dom.Range } 当前range对象
+         * @remind 璇ユ搷浣滀笉浼氫慨鏀筪om鑺傜偣
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
 
         /**
-         * 如果选区在文本的边界上，就扩展选区到文本的父节点上, 如果当前选区是闭合的， 则根据参数项
-         * ignoreCollapsed 的值决定是否执行该调整
+         * 濡傛灉閫夊尯鍦ㄦ枃鏈殑杈圭晫涓婏紝灏辨墿灞曢€夊尯鍒版枃鏈殑鐖惰妭鐐逛笂, 濡傛灉褰撳墠閫夊尯鏄棴鍚堢殑锛?鍒欐牴鎹弬鏁伴」
+         * ignoreCollapsed 鐨勫€煎喅瀹氭槸鍚︽墽琛岃璋冩暣
          * @method txtToElmBoundary
-         * @param { Boolean } ignoreCollapsed 是否忽略选区的闭合状态， 如果该参数取值为true， 则
-         *                      不论选区是否闭合， 都会执行该操作， 反之， 则不会对闭合的选区执行该操作
-         * @return { UE.dom.Range } 当前range对象
+         * @param { Boolean } ignoreCollapsed 鏄惁蹇界暐閫夊尯鐨勯棴鍚堢姸鎬侊紝 濡傛灉璇ュ弬鏁板彇鍊间负true锛?鍒?         *                      涓嶈閫夊尯鏄惁闂悎锛?閮戒細鎵ц璇ユ搷浣滐紝 鍙嶄箣锛?鍒欎笉浼氬闂悎鐨勯€夊尯鎵ц璇ユ搷浣?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         txtToElmBoundary:function (ignoreCollapsed) {
             function adjust(r, c) {
@@ -5255,11 +4937,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 在当前选区的开始位置前插入节点，新插入的节点会被该range包含
+         * 鍦ㄥ綋鍓嶉€夊尯鐨勫紑濮嬩綅缃墠鎻掑叆鑺傜偣锛屾柊鎻掑叆鐨勮妭鐐逛細琚range鍖呭惈
          * @method  insertNode
-         * @param { Node } node 需要插入的节点
-         * @remind 插入的节点可以是一个DocumentFragment依次插入多个节点
-         * @return { UE.dom.Range } 当前range对象
+         * @param { Node } node 闇€瑕佹彃鍏ョ殑鑺傜偣
+         * @remind 鎻掑叆鐨勮妭鐐瑰彲浠ユ槸涓€涓狣ocumentFragment渚濇鎻掑叆澶氫釜鑺傜偣
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         insertNode:function (node) {
             var first = node, length = 1;
@@ -5283,18 +4965,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 闭合选区到当前选区的开始位置， 并且定位光标到闭合后的位置
-         * @method  setCursor
-         * @return { UE.dom.Range } 当前range对象
+         * 闂悎閫夊尯鍒板綋鍓嶉€夊尯鐨勫紑濮嬩綅缃紝 骞朵笖瀹氫綅鍏夋爣鍒伴棴鍚堝悗鐨勪綅缃?         * @method  setCursor
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @see UE.dom.Range:collapse()
          */
 
         /**
-         * 闭合选区，可以根据参数toEnd的值控制选区是向前闭合还是向后闭合， 并且定位光标到闭合后的位置。
-         * @method  setCursor
-         * @param { Boolean } toEnd 是否向后闭合， 如果为true， 则闭合选区时， 将向结束容器方向闭合，
-         *                      反之，则向开始容器方向闭合
-         * @return { UE.dom.Range } 当前range对象
+         * 闂悎閫夊尯锛屽彲浠ユ牴鎹弬鏁皌oEnd鐨勫€兼帶鍒堕€夊尯鏄悜鍓嶉棴鍚堣繕鏄悜鍚庨棴鍚堬紝 骞朵笖瀹氫綅鍏夋爣鍒伴棴鍚堝悗鐨勪綅缃€?         * @method  setCursor
+         * @param { Boolean } toEnd 鏄惁鍚戝悗闂悎锛?濡傛灉涓簍rue锛?鍒欓棴鍚堥€夊尯鏃讹紝 灏嗗悜缁撴潫瀹瑰櫒鏂瑰悜闂悎锛?         *                      鍙嶄箣锛屽垯鍚戝紑濮嬪鍣ㄦ柟鍚戦棴鍚?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @see UE.dom.Range:collapse(Boolean)
          */
         setCursor:function (toEnd, noFillData) {
@@ -5302,13 +4980,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 创建当前range的一个书签，记录下当前range的位置，方便当dom树改变时，还能找回原来的选区位置
+         * 鍒涘缓褰撳墠range鐨勪竴涓功绛撅紝璁板綍涓嬪綋鍓峳ange鐨勪綅缃紝鏂逛究褰揹om鏍戞敼鍙樻椂锛岃繕鑳芥壘鍥炲師鏉ョ殑閫夊尯浣嶇疆
          * @method createBookmark
-         * @param { Boolean } serialize 控制返回的标记位置是对当前位置的引用还是ID，如果该值为true，则
-         *                              返回标记位置的ID， 反之则返回标记位置节点的引用
-         * @return { Object } 返回一个书签记录键值对， 其包含的key有： start => 开始标记的ID或者引用，
-         *                          end => 结束标记的ID或引用， id => 当前标记的类型， 如果为true，则表示
-         *                          返回的记录的类型为ID， 反之则为引用
+         * @param { Boolean } serialize 鎺у埗杩斿洖鐨勬爣璁颁綅缃槸瀵瑰綋鍓嶄綅缃殑寮曠敤杩樻槸ID锛屽鏋滆鍊间负true锛屽垯
+         *                              杩斿洖鏍囪浣嶇疆鐨処D锛?鍙嶄箣鍒欒繑鍥炴爣璁颁綅缃妭鐐圭殑寮曠敤
+         * @return { Object } 杩斿洖涓€涓功绛捐褰曢敭鍊煎锛?鍏跺寘鍚殑key鏈夛細 start => 寮€濮嬫爣璁扮殑ID鎴栬€呭紩鐢紝
+         *                          end => 缁撴潫鏍囪鐨処D鎴栧紩鐢紝 id => 褰撳墠鏍囪鐨勭被鍨嬶紝 濡傛灉涓簍rue锛屽垯琛ㄧず
+         *                          杩斿洖鐨勮褰曠殑绫诲瀷涓篒D锛?鍙嶄箣鍒欎负寮曠敤
          */
         createBookmark:function (serialize, same) {
             var endNode,
@@ -5334,10 +5012,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         *  调整当前range的边界到书签位置，并删除该书签对象所标记的位置内的节点
-         *  @method  moveToBookmark
-         *  @param { BookMark } bookmark createBookmark所创建的标签对象
-         *  @return { UE.dom.Range } 当前range对象
+         *  璋冩暣褰撳墠range鐨勮竟鐣屽埌涔︾浣嶇疆锛屽苟鍒犻櫎璇ヤ功绛惧璞℃墍鏍囪鐨勪綅缃唴鐨勮妭鐐?         *  @method  moveToBookmark
+         *  @param { BookMark } bookmark createBookmark鎵€鍒涘缓鐨勬爣绛惧璞?         *  @return { UE.dom.Range } 褰撳墠range瀵硅薄
          *  @see UE.dom.Range:createBookmark(Boolean)
          */
         moveToBookmark:function (bookmark) {
@@ -5355,18 +5031,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 调整range的边界，使其"放大"到最近的父节点
-         * @method  enlarge
-         * @remind 会引起选区的变化
-         * @return { UE.dom.Range } 当前range对象
+         * 璋冩暣range鐨勮竟鐣岋紝浣垮叾"鏀惧ぇ"鍒版渶杩戠殑鐖惰妭鐐?         * @method  enlarge
+         * @remind 浼氬紩璧烽€夊尯鐨勫彉鍖?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
 
         /**
-         * 调整range的边界，使其"放大"到最近的父节点，根据参数 toBlock 的取值， 可以
-         * 要求扩大之后的父节点是block节点
+         * 璋冩暣range鐨勮竟鐣岋紝浣垮叾"鏀惧ぇ"鍒版渶杩戠殑鐖惰妭鐐癸紝鏍规嵁鍙傛暟 toBlock 鐨勫彇鍊硷紝 鍙互
+         * 瑕佹眰鎵╁ぇ涔嬪悗鐨勭埗鑺傜偣鏄痓lock鑺傜偣
          * @method  enlarge
-         * @param { Boolean } toBlock 是否要求扩大之后的父节点必须是block节点
-         * @return { UE.dom.Range } 当前range对象
+         * @param { Boolean } toBlock 鏄惁瑕佹眰鎵╁ぇ涔嬪悗鐨勭埗鑺傜偣蹇呴』鏄痓lock鑺傜偣
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          */
         enlarge:function (toBlock, stopFn) {
             var isBody = domUtils.isBody,
@@ -5424,8 +5098,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 domUtils.remove(tmp);
             }
 
-            // 扩展边界到最大
-            if (!this.collapsed) {
+            // 鎵╁睍杈圭晫鍒版渶澶?            if (!this.collapsed) {
                 while (this.startOffset == 0) {
                     if (stopFn && stopFn(this.startContainer)) {
                         break;
@@ -5459,9 +5132,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             return this;
         },
         /**
-         * 调整Range的边界，使其"缩小"到最合适的位置
+         * 璋冩暣Range鐨勮竟鐣岋紝浣垮叾"缂╁皬"鍒版渶鍚堥€傜殑浣嶇疆
          * @method adjustmentBoundary
-         * @return { UE.dom.Range } 当前range对象
+         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @see UE.dom.Range:shrinkBoundary()
          */
         adjustmentBoundary:function () {
@@ -5483,28 +5156,24 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 给range选区中的内容添加给定的inline标签
+         * 缁檙ange閫夊尯涓殑鍐呭娣诲姞缁欏畾鐨刬nline鏍囩
          * @method applyInlineStyle
-         * @param { String } tagName 需要添加的标签名
-         * @example
+         * @param { String } tagName 闇€瑕佹坊鍔犵殑鏍囩鍚?         * @example
          * ```html
          * <p>xxxx[xxxx]x</p>  ==>  range.applyInlineStyle("strong")  ==>  <p>xxxx[<strong>xxxx</strong>]x</p>
          * ```
          */
 
         /**
-         * 给range选区中的内容添加给定的inline标签， 并且为标签附加上一些初始化属性。
-         * @method applyInlineStyle
-         * @param { String } tagName 需要添加的标签名
-         * @param { Object } attrs 跟随新添加的标签的属性
-         * @return { UE.dom.Range } 当前选区
+         * 缁檙ange閫夊尯涓殑鍐呭娣诲姞缁欏畾鐨刬nline鏍囩锛?骞朵笖涓烘爣绛鹃檮鍔犱笂涓€浜涘垵濮嬪寲灞炴€с€?         * @method applyInlineStyle
+         * @param { String } tagName 闇€瑕佹坊鍔犵殑鏍囩鍚?         * @param { Object } attrs 璺熼殢鏂版坊鍔犵殑鏍囩鐨勫睘鎬?         * @return { UE.dom.Range } 褰撳墠閫夊尯
          * @example
          * ```html
          * <p>xxxx[xxxx]x</p>
          *
          * ==>
          *
-         * <!-- 执行操作 -->
+         * <!-- 鎵ц鎿嶄綔 -->
          * range.applyInlineStyle("strong",{"style":"font-size:12px"})
          *
          * ==>
@@ -5554,7 +5223,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     }
                     elm.appendChild(frag);
                     range.insertNode(list ? top : elm);
-                    //处理下滑线在a上的情况
+                    //澶勭悊涓嬫粦绾垮湪a涓婄殑鎯呭喌
                     var aNode;
                     if (tagName == 'span' && attrs.style && /text\-decoration/.test(attrs.style) && (aNode = domUtils.findParentByTagName(elm, 'a', true))) {
                         domUtils.setAttributes(aNode, attrs);
@@ -5564,7 +5233,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                         domUtils.mergeSibling(elm);
                         domUtils.clearEmptySibling(elm);
                     }
-                    //去除子节点相同的
+                    //鍘婚櫎瀛愯妭鐐圭浉鍚岀殑
                     domUtils.mergeChild(elm, attrs);
                     current = domUtils.getNextDomNode(elm, false, filterFn);
                     domUtils.mergeToParent(elm);
@@ -5579,10 +5248,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 移除当前选区内指定的inline标签，但保留其中的内容
-         * @method removeInlineStyle
-         * @param { String } tagName 需要移除的标签名
-         * @return { UE.dom.Range } 当前的range对象
+         * 绉婚櫎褰撳墠閫夊尯鍐呮寚瀹氱殑inline鏍囩锛屼絾淇濈暀鍏朵腑鐨勫唴瀹?         * @method removeInlineStyle
+         * @param { String } tagName 闇€瑕佺Щ闄ょ殑鏍囩鍚?         * @return { UE.dom.Range } 褰撳墠鐨剅ange瀵硅薄
          * @example
          * ```html
          * xx[x<span>xxx<em>yyy</em>zz]z</span>  => range.removeInlineStyle(["em"])  => xx[x<span>xxxyyyzz]z</span>
@@ -5590,10 +5257,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 移除当前选区内指定的一组inline标签，但保留其中的内容
-         * @method removeInlineStyle
-         * @param { Array } tagNameArr 需要移除的标签名的数组
-         * @return { UE.dom.Range } 当前的range对象
+         * 绉婚櫎褰撳墠閫夊尯鍐呮寚瀹氱殑涓€缁刬nline鏍囩锛屼絾淇濈暀鍏朵腑鐨勫唴瀹?         * @method removeInlineStyle
+         * @param { Array } tagNameArr 闇€瑕佺Щ闄ょ殑鏍囩鍚嶇殑鏁扮粍
+         * @return { UE.dom.Range } 褰撳墠鐨剅ange瀵硅薄
          * @see UE.dom.Range:removeInlineStyle(String)
          */
         removeInlineStyle:function (tagNames) {
@@ -5658,9 +5324,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获取当前选中的自闭合的节点
-         * @method  getClosedNode
-         * @return { Node | NULL } 如果当前选中的是自闭合节点， 则返回该节点， 否则返回NULL
+         * 鑾峰彇褰撳墠閫変腑鐨勮嚜闂悎鐨勮妭鐐?         * @method  getClosedNode
+         * @return { Node | NULL } 濡傛灉褰撳墠閫変腑鐨勬槸鑷棴鍚堣妭鐐癸紝 鍒欒繑鍥炶鑺傜偣锛?鍚﹀垯杩斿洖NULL
          */
         getClosedNode:function () {
             var node;
@@ -5677,11 +5342,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 在页面上高亮range所表示的选区
+         * 鍦ㄩ〉闈笂楂樹寒range鎵€琛ㄧず鐨勯€夊尯
          * @method select
-         * @return { UE.dom.Range } 返回当前Range对象
+         * @return { UE.dom.Range } 杩斿洖褰撳墠Range瀵硅薄
          */
-            //这里不区分ie9以上，trace:3824
+            //杩欓噷涓嶅尯鍒唅e9浠ヤ笂锛宼race:3824
         select:browser.ie ? function (noFillData, textRange) {
             var nativeRange;
             if (!this.collapsed)
@@ -5708,13 +5373,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 nativeRange.setEndPoint('EndToEnd', nativeRangeEnd);
             } else {
                 if (!noFillData && this.startContainer.nodeType != 3) {
-                    //使用<span>|x<span>固定住光标
-                    var tmpText = this.document.createTextNode(fillChar),
+                    //浣跨敤<span>|x<span>鍥哄畾浣忓厜鏍?                    var tmpText = this.document.createTextNode(fillChar),
                         tmp = this.document.createElement('span');
                     tmp.appendChild(this.document.createTextNode(fillChar));
                     start.parentNode.insertBefore(tmp, start);
                     start.parentNode.insertBefore(tmpText, start);
-                    //当点b,i,u时，不能清除i上边的b
+                    //褰撶偣b,i,u鏃讹紝涓嶈兘娓呴櫎i涓婅竟鐨刡
                     removeFillData(this.document, tmpText);
                     fillData = tmpText;
                     mergeSibling(tmp, 'previousSibling');
@@ -5725,8 +5389,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             }
             this.moveToBookmark(bookmark);
             tmp && domUtils.remove(tmp);
-            //IE在隐藏状态下不支持range操作，catch一下
-            try {
+            //IE鍦ㄩ殣钘忕姸鎬佷笅涓嶆敮鎸乺ange鎿嶄綔锛宑atch涓€涓?            try {
                 nativeRange.select();
             } catch (e) {
             }
@@ -5745,23 +5408,19 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             var win = domUtils.getWindow(this.document),
                 sel = win.getSelection(),
                 txtNode;
-            //FF下关闭自动长高时滚动条在关闭dialog时会跳
-            //ff下如果不body.focus将不能定位闭合光标到编辑器内
+            //FF涓嬪叧闂嚜鍔ㄩ暱楂樻椂婊氬姩鏉″湪鍏抽棴dialog鏃朵細璺?            //ff涓嬪鏋滀笉body.focus灏嗕笉鑳藉畾浣嶉棴鍚堝厜鏍囧埌缂栬緫鍣ㄥ唴
             browser.gecko ? this.document.body.focus() : win.focus();
             if (sel) {
                 sel.removeAllRanges();
-                // trace:870 chrome/safari后边是br对于闭合得range不能定位 所以去掉了判断
+                // trace:870 chrome/safari鍚庤竟鏄痓r瀵逛簬闂悎寰梤ange涓嶈兘瀹氫綅 鎵€浠ュ幓鎺変簡鍒ゆ柇
                 // this.startContainer.nodeType != 3 &&! ((child = this.startContainer.childNodes[this.startOffset]) && child.nodeType == 1 && child.tagName == 'BR'
                 if (this.collapsed && !notInsertFillData) {
-//                    //opear如果没有节点接着，原生的不能够定位,不能在body的第一级插入空白节点
-//                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType == 1) {
+//                    //opear濡傛灉娌℃湁鑺傜偣鎺ョ潃锛屽師鐢熺殑涓嶈兘澶熷畾浣?涓嶈兘鍦╞ody鐨勭涓€绾ф彃鍏ョ┖鐧借妭鐐?//                    if (notInsertFillData && browser.opera && !domUtils.isBody(this.startContainer) && this.startContainer.nodeType == 1) {
 //                        var tmp = this.document.createTextNode('');
 //                        this.insertNode(tmp).setStart(tmp, 0).collapse(true);
 //                    }
 //
-                    //处理光标落在文本节点的情况
-                    //处理以下的情况
-                    //<b>|xxxx</b>
+                    //澶勭悊鍏夋爣钀藉湪鏂囨湰鑺傜偣鐨勬儏鍐?                    //澶勭悊浠ヤ笅鐨勬儏鍐?                    //<b>|xxxx</b>
                     //<b>xxxx</b>|xxxx
                     //xxxx<b>|</b>
                     var start = this.startContainer,child = start;
@@ -5777,8 +5436,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                         )
                     ){
                         txtNode = this.document.createTextNode(fillChar);
-                        //跟着前边走
-                        this.insertNode(txtNode);
+                        //璺熺潃鍓嶈竟璧?                        this.insertNode(txtNode);
                         removeFillData(this.document, txtNode);
                         mergeSibling(txtNode, 'previousSibling');
                         mergeSibling(txtNode, 'nextSibling');
@@ -5790,13 +5448,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 if(this.collapsed && browser.opera && this.startContainer.nodeType == 1){
                     var child = this.startContainer.childNodes[this.startOffset];
                     if(!child){
-                        //往前靠拢
-                        child = this.startContainer.lastChild;
+                        //寰€鍓嶉潬鎷?                        child = this.startContainer.lastChild;
                         if( child && domUtils.isBr(child)){
                             this.setStartBefore(child).collapse(true);
                         }
                     }else{
-                        //向后靠拢
+                        //鍚戝悗闈犳嫝
                         while(child && domUtils.isBlockElm(child)){
                             if(child.nodeType == 1 && child.childNodes[0]){
                                 child = child.childNodes[0]
@@ -5808,7 +5465,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     }
 
                 }
-                //是createAddress最后一位算的不准，现在这里进行微调
+                //鏄痗reateAddress鏈€鍚庝竴浣嶇畻鐨勪笉鍑嗭紝鐜板湪杩欓噷杩涜寰皟
                 checkOffset(this);
                 nativeRange.setStart(this.startContainer, this.startOffset);
                 nativeRange.setEnd(this.endContainer, this.endOffset);
@@ -5818,18 +5475,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 滚动到当前range开始的位置
+         * 婊氬姩鍒板綋鍓峳ange寮€濮嬬殑浣嶇疆
          * @method scrollToView
-         * @param { Window } win 当前range对象所属的window对象
-         * @return { UE.dom.Range } 当前Range对象
+         * @param { Window } win 褰撳墠range瀵硅薄鎵€灞炵殑window瀵硅薄
+         * @return { UE.dom.Range } 褰撳墠Range瀵硅薄
          */
 
         /**
-         * 滚动到距离当前range开始位置 offset 的位置处
+         * 婊氬姩鍒拌窛绂诲綋鍓峳ange寮€濮嬩綅缃?offset 鐨勪綅缃
          * @method scrollToView
-         * @param { Window } win 当前range对象所属的window对象
-         * @param { Number } offset 距离range开始位置处的偏移量， 如果为正数， 则向下偏移， 反之， 则向上偏移
-         * @return { UE.dom.Range } 当前Range对象
+         * @param { Window } win 褰撳墠range瀵硅薄鎵€灞炵殑window瀵硅薄
+         * @param { Number } offset 璺濈range寮€濮嬩綅缃鐨勫亸绉婚噺锛?濡傛灉涓烘鏁帮紝 鍒欏悜涓嬪亸绉伙紝 鍙嶄箣锛?鍒欏悜涓婂亸绉?         * @return { UE.dom.Range } 褰撳墠Range瀵硅薄
          */
         scrollToView:function (win, offset) {
             win = win ? window : domUtils.getWindow(this.document);
@@ -5844,10 +5500,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 判断当前选区内容是否占位符
-         * @private
+         * 鍒ゆ柇褰撳墠閫夊尯鍐呭鏄惁鍗犱綅绗?         * @private
          * @method inFillChar
-         * @return { Boolean } 如果是占位符返回true，否则返回false
+         * @return { Boolean } 濡傛灉鏄崰浣嶇杩斿洖true锛屽惁鍒欒繑鍥瀎alse
          */
         inFillChar : function(){
             var start = this.startContainer;
@@ -5860,19 +5515,18 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 保存
+         * 淇濆瓨
          * @method createAddress
          * @private
-         * @return { Boolean } 返回开始和结束的位置
-         * @example
+         * @return { Boolean } 杩斿洖寮€濮嬪拰缁撴潫鐨勪綅缃?         * @example
          * ```html
          * <body>
          *     <p>
          *         aaaa
          *         <em>
-         *             <!-- 选区开始 -->
+         *             <!-- 閫夊尯寮€濮?-->
          *             bbbb
-         *             <!-- 选区结束 -->
+         *             <!-- 閫夊尯缁撴潫 -->
          *         </em>
          *     </p>
          *
@@ -5944,19 +5598,18 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 保存
+         * 淇濆瓨
          * @method createAddress
          * @private
-         * @return { Boolean } 返回开始和结束的位置
-         * @example
+         * @return { Boolean } 杩斿洖寮€濮嬪拰缁撴潫鐨勪綅缃?         * @example
          * ```html
          * <body>
          *     <p>
          *         aaaa
          *         <em>
-         *             <!-- 选区开始 -->
+         *             <!-- 閫夊尯寮€濮?-->
          *             bbbb
-         *             <!-- 选区结束 -->
+         *             <!-- 閫夊尯缁撴潫 -->
          *         </em>
          *     </p>
          *
@@ -6004,10 +5657,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 判断给定的Range对象是否和当前Range对象表示的是同一个选区
+         * 鍒ゆ柇缁欏畾鐨凴ange瀵硅薄鏄惁鍜屽綋鍓峈ange瀵硅薄琛ㄧず鐨勬槸鍚屼竴涓€夊尯
          * @method equals
-         * @param { UE.dom.Range } 需要判断的Range对象
-         * @return { Boolean } 如果给定的Range对象与当前Range对象表示的是同一个选区， 则返回true， 否则返回false
+         * @param { UE.dom.Range } 闇€瑕佸垽鏂殑Range瀵硅薄
+         * @return { Boolean } 濡傛灉缁欏畾鐨凴ange瀵硅薄涓庡綋鍓峈ange瀵硅薄琛ㄧず鐨勬槸鍚屼竴涓€夊尯锛?鍒欒繑鍥瀟rue锛?鍚﹀垯杩斿洖false
          */
         equals : function(rng){
             for(var p in this){
@@ -6021,20 +5674,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 遍历range内的节点。每当遍历一个节点时， 都会执行参数项 doFn 指定的函数， 该函数的接受当前遍历的节点
-         * 作为其参数。
-         * @method traversal
-         * @param { Function }  doFn 对每个遍历的节点要执行的方法， 该方法接受当前遍历的节点作为其参数
-         * @return { UE.dom.Range } 当前range对象
+         * 閬嶅巻range鍐呯殑鑺傜偣銆傛瘡褰撻亶鍘嗕竴涓妭鐐规椂锛?閮戒細鎵ц鍙傛暟椤?doFn 鎸囧畾鐨勫嚱鏁帮紝 璇ュ嚱鏁扮殑鎺ュ彈褰撳墠閬嶅巻鐨勮妭鐐?         * 浣滀负鍏跺弬鏁般€?         * @method traversal
+         * @param { Function }  doFn 瀵规瘡涓亶鍘嗙殑鑺傜偣瑕佹墽琛岀殑鏂规硶锛?璇ユ柟娉曟帴鍙楀綋鍓嶉亶鍘嗙殑鑺傜偣浣滀负鍏跺弬鏁?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @example
          * ```html
          *
          * <body>
          *
-         *     <!-- 选区开始 -->
+         *     <!-- 閫夊尯寮€濮?-->
          *     <span></span>
          *     <a></a>
-         *     <!-- 选区结束 -->
+         *     <!-- 閫夊尯缁撴潫 -->
          * </body>
          *
          * <script>
@@ -6058,27 +5708,19 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 遍历range内的节点。
-         * 每当遍历一个节点时， 都会执行参数项 doFn 指定的函数， 该函数的接受当前遍历的节点
-         * 作为其参数。
-         * 可以通过参数项 filterFn 来指定一个过滤器， 只有符合该过滤器过滤规则的节点才会触
-         * 发doFn函数的执行
-         * @method traversal
-         * @param { Function } doFn 对每个遍历的节点要执行的方法， 该方法接受当前遍历的节点作为其参数
-         * @param { Function } filterFn 过滤器， 该函数接受当前遍历的节点作为参数， 如果该节点满足过滤
-         *                      规则， 请返回true， 该节点会触发doFn， 否则， 请返回false， 则该节点不
-         *                      会触发doFn。
-         * @return { UE.dom.Range } 当前range对象
+         * 閬嶅巻range鍐呯殑鑺傜偣銆?         * 姣忓綋閬嶅巻涓€涓妭鐐规椂锛?閮戒細鎵ц鍙傛暟椤?doFn 鎸囧畾鐨勫嚱鏁帮紝 璇ュ嚱鏁扮殑鎺ュ彈褰撳墠閬嶅巻鐨勮妭鐐?         * 浣滀负鍏跺弬鏁般€?         * 鍙互閫氳繃鍙傛暟椤?filterFn 鏉ユ寚瀹氫竴涓繃婊ゅ櫒锛?鍙湁绗﹀悎璇ヨ繃婊ゅ櫒杩囨护瑙勫垯鐨勮妭鐐规墠浼氳Е
+         * 鍙慸oFn鍑芥暟鐨勬墽琛?         * @method traversal
+         * @param { Function } doFn 瀵规瘡涓亶鍘嗙殑鑺傜偣瑕佹墽琛岀殑鏂规硶锛?璇ユ柟娉曟帴鍙楀綋鍓嶉亶鍘嗙殑鑺傜偣浣滀负鍏跺弬鏁?         * @param { Function } filterFn 杩囨护鍣紝 璇ュ嚱鏁版帴鍙楀綋鍓嶉亶鍘嗙殑鑺傜偣浣滀负鍙傛暟锛?濡傛灉璇ヨ妭鐐规弧瓒宠繃婊?         *                      瑙勫垯锛?璇疯繑鍥瀟rue锛?璇ヨ妭鐐逛細瑙﹀彂doFn锛?鍚﹀垯锛?璇疯繑鍥瀎alse锛?鍒欒鑺傜偣涓?         *                      浼氳Е鍙慸oFn銆?         * @return { UE.dom.Range } 褰撳墠range瀵硅薄
          * @see UE.dom.Range:traversal(Function)
          * @example
          * ```html
          *
          * <body>
          *
-         *     <!-- 选区开始 -->
+         *     <!-- 閫夊尯寮€濮?-->
          *     <span></span>
          *     <a></a>
-         *     <!-- 选区结束 -->
+         *     <!-- 閫夊尯缁撴潫 -->
          * </body>
          *
          * <script>
@@ -6118,7 +5760,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 
 // core/Selection.js
 /**
- * 选集
+ * 閫夐泦
  * @file
  * @module UE.dom
  * @class Selection
@@ -6126,7 +5768,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
  */
 
 /**
- * 选区集合
+ * 閫夊尯闆嗗悎
  * @unfile
  * @module UE.dom
  * @class Selection
@@ -6138,8 +5780,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         range = range.duplicate();
         range.collapse( start );
         var parent = range.parentElement();
-        //如果节点里没有子节点，直接退出
-        if ( !parent.hasChildNodes() ) {
+        //濡傛灉鑺傜偣閲屾病鏈夊瓙鑺傜偣锛岀洿鎺ラ€€鍑?        if ( !parent.hasChildNodes() ) {
             return  {container:parent, offset:0};
         }
         var siblings = parent.children,
@@ -6198,10 +5839,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     }
 
     /**
-     * 将ieRange转换为Range对象
-     * @param {Range}   ieRange    ieRange对象
-     * @param {Range}   range      Range对象
-     * @return  {Range}  range       返回转换后的Range对象
+     * 灏唅eRange杞崲涓篟ange瀵硅薄
+     * @param {Range}   ieRange    ieRange瀵硅薄
+     * @param {Range}   range      Range瀵硅薄
+     * @return  {Range}  range       杩斿洖杞崲鍚庣殑Range瀵硅薄
      */
     function transformIERangeToRange( ieRange, range ) {
         if ( ieRange.item ) {
@@ -6218,13 +5859,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     }
 
     /**
-     * 获得ieRange
-     * @param {Selection} sel    Selection对象
-     * @return {ieRange}    得到ieRange
+     * 鑾峰緱ieRange
+     * @param {Selection} sel    Selection瀵硅薄
+     * @return {ieRange}    寰楀埌ieRange
      */
     function _getIERange( sel ) {
         var ieRange;
-        //ie下有可能报错
+        //ie涓嬫湁鍙兘鎶ラ敊
         try {
             ieRange = sel.getNative().createRange();
         } catch ( e ) {
@@ -6267,9 +5908,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获取原生seleciton对象
+         * 鑾峰彇鍘熺敓seleciton瀵硅薄
          * @method getNative
-         * @return { Object } 获得selection对象
+         * @return { Object } 鑾峰緱selection瀵硅薄
          * @example
          * ```javascript
          * editor.selection.getNative();
@@ -6285,9 +5926,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获得ieRange
+         * 鑾峰緱ieRange
          * @method getIERange
-         * @return { Object } 返回ie原生的Range
+         * @return { Object } 杩斿洖ie鍘熺敓鐨凴ange
          * @example
          * ```javascript
          * editor.selection.getIERange();
@@ -6304,8 +5945,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 缓存当前选区的range和选区的开始节点
-         * @method cache
+         * 缂撳瓨褰撳墠閫夊尯鐨剅ange鍜岄€夊尯鐨勫紑濮嬭妭鐐?         * @method cache
          */
         cache:function () {
             this.clear();
@@ -6315,10 +5955,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获取选区开始位置的父节点到body
+         * 鑾峰彇閫夊尯寮€濮嬩綅缃殑鐖惰妭鐐瑰埌body
          * @method getStartElementPath
-         * @return { Array } 返回父节点集合
-         * @example
+         * @return { Array } 杩斿洖鐖惰妭鐐归泦鍚?         * @example
          * ```javascript
          * editor.selection.getStartElementPath();
          * ```
@@ -6335,7 +5974,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 清空缓存
+         * 娓呯┖缂撳瓨
          * @method clear
          */
         clear:function () {
@@ -6343,7 +5982,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 编辑器是否得到了选区
+         * 缂栬緫鍣ㄦ槸鍚﹀緱鍒颁簡閫夊尯
          * @method isFocus
          */
         isFocus:function () {
@@ -6362,9 +6001,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获取选区对应的Range
+         * 鑾峰彇閫夊尯瀵瑰簲鐨凴ange
          * @method getRange
-         * @return { Object } 得到Range对象
+         * @return { Object } 寰楀埌Range瀵硅薄
          * @example
          * ```javascript
          * editor.selection.getRange();
@@ -6395,8 +6034,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             if ( browser.ie9below ) {
                 var nativeRange = me.getIERange();
                 if ( nativeRange ) {
-                    //备份的_bakIERange可能已经实效了，dom树发生了变化比如从源码模式切回来，所以try一下，实效就放到body开始位置
-                    try{
+                    //澶囦唤鐨刜bakIERange鍙兘宸茬粡瀹炴晥浜嗭紝dom鏍戝彂鐢熶簡鍙樺寲姣斿浠庢簮鐮佹ā寮忓垏鍥炴潵锛屾墍浠ry涓€涓嬶紝瀹炴晥灏辨斁鍒癰ody寮€濮嬩綅缃?                    try{
                         transformIERangeToRange( nativeRange, range );
                     }catch(e){
                         optimze( range );
@@ -6415,8 +6053,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                         optimze( range );
                     }
                 } else {
-                    //trace:1734 有可能已经不在dom树上了，标识的节点
-                    if ( this._bakRange && domUtils.inDoc( this._bakRange.startContainer, this.document ) ){
+                    //trace:1734 鏈夊彲鑳藉凡缁忎笉鍦╠om鏍戜笂浜嗭紝鏍囪瘑鐨勮妭鐐?                    if ( this._bakRange && domUtils.inDoc( this._bakRange.startContainer, this.document ) ){
                         return this._bakRange;
                     }
                     optimze( range );
@@ -6426,10 +6063,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获取开始元素，用于状态反射
-         * @method getStart
-         * @return { Element } 获得开始元素
-         * @example
+         * 鑾峰彇寮€濮嬪厓绱狅紝鐢ㄤ簬鐘舵€佸弽灏?         * @method getStart
+         * @return { Element } 鑾峰緱寮€濮嬪厓绱?         * @example
          * ```javascript
          * editor.selection.getStart();
          * ```
@@ -6443,15 +6078,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 start, tmp, parent;
             if ( browser.ie9below ) {
                 if ( !range ) {
-                    //todo 给第一个值可能会有问题
-                    return this.document.body.firstChild;
+                    //todo 缁欑涓€涓€煎彲鑳戒細鏈夐棶棰?                    return this.document.body.firstChild;
                 }
-                //control元素
+                //control鍏冪礌
                 if ( range.item ){
                     return range.item( 0 );
                 }
                 tmpRange = range.duplicate();
-                //修正ie下<b>x</b>[xx] 闭合后 <b>x|</b>xx
+                //淇ie涓?b>x</b>[xx] 闂悎鍚?<b>x|</b>xx
                 tmpRange.text.length > 0 && tmpRange.moveStart( 'character', 1 );
                 tmpRange.collapse( 1 );
                 start = tmpRange.parentElement();
@@ -6476,9 +6110,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 得到选区中的文本
+         * 寰楀埌閫夊尯涓殑鏂囨湰
          * @method getText
-         * @return { String } 选区中包含的文本
+         * @return { String } 閫夊尯涓寘鍚殑鏂囨湰
          * @example
          * ```javascript
          * editor.selection.getText();
@@ -6494,7 +6128,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 清除选区
+         * 娓呴櫎閫夊尯
          * @method clearRange
          * @example
          * ```javascript
@@ -6509,22 +6143,20 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 
 // core/Editor.js
 /**
- * 编辑器主类，包含编辑器提供的大部分公用接口
- * @file
+ * 缂栬緫鍣ㄤ富绫伙紝鍖呭惈缂栬緫鍣ㄦ彁渚涚殑澶ч儴鍒嗗叕鐢ㄦ帴鍙? * @file
  * @module UE
  * @class Editor
  * @since 1.2.6.1
  */
 
 /**
- * UEditor公用空间，UEditor所有的功能都挂载在该空间下
+ * UEditor鍏敤绌洪棿锛孶Editor鎵€鏈夌殑鍔熻兘閮芥寕杞藉湪璇ョ┖闂翠笅
  * @unfile
  * @module UE
  */
 
 /**
- * UEditor的核心类，为用户提供与编辑器交互的接口。
- * @unfile
+ * UEditor鐨勬牳蹇冪被锛屼负鐢ㄦ埛鎻愪緵涓庣紪杈戝櫒浜や簰鐨勬帴鍙ｃ€? * @unfile
  * @module UE
  * @class Editor
  */
@@ -6533,11 +6165,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     var uid = 0, _selectionChangeTimer;
 
     /**
-     * 获取编辑器的html内容，赋值到编辑器所在表单的textarea文本域里面
-     * @private
+     * 鑾峰彇缂栬緫鍣ㄧ殑html鍐呭锛岃祴鍊煎埌缂栬緫鍣ㄦ墍鍦ㄨ〃鍗曠殑textarea鏂囨湰鍩熼噷闈?     * @private
      * @method setValue
-     * @param { UE.Editor } editor 编辑器事例
-     */
+     * @param { UE.Editor } editor 缂栬緫鍣ㄤ簨渚?     */
     function setValue(form, editor) {
         var textarea;
         if (editor.textarea) {
@@ -6558,7 +6188,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 'id': 'ueditor_textarea_' + editor.options.textarea,
                 'style': "display:none"
             }));
-            //不要产生多个textarea
+            //涓嶈浜х敓澶氫釜textarea
             editor.textarea = textarea;
         }
         !textarea.getAttribute('name') && textarea.setAttribute('name', editor.options.textarea );
@@ -6567,8 +6197,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             ''
     }
     function loadPlugins(me){
-        //初始化插件
-        for (var pi in UE.plugins) {
+        //鍒濆鍖栨彃浠?        for (var pi in UE.plugins) {
             UE.plugins[pi].call(me);
         }
 
@@ -6586,125 +6215,121 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
     }
 
     /**
-     * 编辑器准备就绪后会触发该事件
+     * 缂栬緫鍣ㄥ噯澶囧氨缁悗浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event ready
-     * @remind render方法执行完成之后,会触发该事件
+     * @remind render鏂规硶鎵ц瀹屾垚涔嬪悗,浼氳Е鍙戣浜嬩欢
      * @remind
      * @example
      * ```javascript
      * editor.addListener( 'ready', function( editor ) {
-     *     editor.execCommand( 'focus' ); //编辑器家在完成后，让编辑器拿到焦点
-     * } );
+     *     editor.execCommand( 'focus' ); //缂栬緫鍣ㄥ鍦ㄥ畬鎴愬悗锛岃缂栬緫鍣ㄦ嬁鍒扮劍鐐?     * } );
      * ```
      */
     /**
-     * 执行destroy方法,会触发该事件
+     * 鎵цdestroy鏂规硶,浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event destroy
      * @see UE.Editor:destroy()
      */
     /**
-     * 执行reset方法,会触发该事件
+     * 鎵цreset鏂规硶,浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event reset
      * @see UE.Editor:reset()
      */
     /**
-     * 执行focus方法,会触发该事件
+     * 鎵цfocus鏂规硶,浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event focus
      * @see UE.Editor:focus(Boolean)
      */
     /**
-     * 语言加载完成会触发该事件
+     * 璇█鍔犺浇瀹屾垚浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event langReady
      */
     /**
-     * 运行命令之后会触发该命令
+     * 杩愯鍛戒护涔嬪悗浼氳Е鍙戣鍛戒护
      * @module UE
      * @class Editor
      * @event beforeExecCommand
      */
     /**
-     * 运行命令之后会触发该命令
+     * 杩愯鍛戒护涔嬪悗浼氳Е鍙戣鍛戒护
      * @module UE
      * @class Editor
      * @event afterExecCommand
      */
     /**
-     * 运行命令之前会触发该命令
+     * 杩愯鍛戒护涔嬪墠浼氳Е鍙戣鍛戒护
      * @module UE
      * @class Editor
      * @event firstBeforeExecCommand
      */
     /**
-     * 在getContent方法执行之前会触发该事件
+     * 鍦╣etContent鏂规硶鎵ц涔嬪墠浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event beforeGetContent
      * @see UE.Editor:getContent()
      */
     /**
-     * 在getContent方法执行之后会触发该事件
+     * 鍦╣etContent鏂规硶鎵ц涔嬪悗浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event afterGetContent
      * @see UE.Editor:getContent()
      */
     /**
-     * 在getAllHtml方法执行时会触发该事件
-     * @module UE
+     * 鍦╣etAllHtml鏂规硶鎵ц鏃朵細瑙﹀彂璇ヤ簨浠?     * @module UE
      * @class Editor
      * @event getAllHtml
      * @see UE.Editor:getAllHtml()
      */
     /**
-     * 在setContent方法执行之前会触发该事件
+     * 鍦╯etContent鏂规硶鎵ц涔嬪墠浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event beforeSetContent
      * @see UE.Editor:setContent(String)
      */
     /**
-     * 在setContent方法执行之后会触发该事件
+     * 鍦╯etContent鏂规硶鎵ц涔嬪悗浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event afterSetContent
      * @see UE.Editor:setContent(String)
      */
     /**
-     * 每当编辑器内部选区发生改变时，将触发该事件
+     * 姣忓綋缂栬緫鍣ㄥ唴閮ㄩ€夊尯鍙戠敓鏀瑰彉鏃讹紝灏嗚Е鍙戣浜嬩欢
      * @event selectionchange
-     * @warning 该事件的触发非常频繁，不建议在该事件的处理过程中做重量级的处理
-     * @example
+     * @warning 璇ヤ簨浠剁殑瑙﹀彂闈炲父棰戠箒锛屼笉寤鸿鍦ㄨ浜嬩欢鐨勫鐞嗚繃绋嬩腑鍋氶噸閲忕骇鐨勫鐞?     * @example
      * ```javascript
      * editor.addListener( 'selectionchange', function( editor ) {
-     *     console.log('选区发生改变');
+     *     console.log('閫夊尯鍙戠敓鏀瑰彉');
      * }
      */
     /**
-     * 在所有selectionchange的监听函数执行之前，会触发该事件
+     * 鍦ㄦ墍鏈塻electionchange鐨勭洃鍚嚱鏁版墽琛屼箣鍓嶏紝浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event beforeSelectionChange
      * @see UE.Editor:selectionchange
      */
     /**
-     * 在所有selectionchange的监听函数执行完之后，会触发该事件
-     * @module UE
+     * 鍦ㄦ墍鏈塻electionchange鐨勭洃鍚嚱鏁版墽琛屽畬涔嬪悗锛屼細瑙﹀彂璇ヤ簨浠?     * @module UE
      * @class Editor
      * @event afterSelectionChange
      * @see UE.Editor:selectionchange
      */
     /**
-     * 编辑器内容发生改变时会触发该事件
+     * 缂栬緫鍣ㄥ唴瀹瑰彂鐢熸敼鍙樻椂浼氳Е鍙戣浜嬩欢
      * @module UE
      * @class Editor
      * @event contentChange
@@ -6712,9 +6337,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 
 
     /**
-     * 以默认参数构建一个编辑器实例
+     * 浠ラ粯璁ゅ弬鏁版瀯寤轰竴涓紪杈戝櫒瀹炰緥
      * @constructor
-     * @remind 通过 改构造方法实例化的编辑器,不带ui层.需要render到一个容器,编辑器实例才能正常渲染到页面
+     * @remind 閫氳繃 鏀规瀯閫犳柟娉曞疄渚嬪寲鐨勭紪杈戝櫒,涓嶅甫ui灞?闇€瑕乺ender鍒颁竴涓鍣?缂栬緫鍣ㄥ疄渚嬫墠鑳芥甯告覆鏌撳埌椤甸潰
      * @example
      * ```javascript
      * var editor = new UE.Editor();
@@ -6724,10 +6349,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
      */
 
     /**
-     * 以给定的参数集合创建一个编辑器实例，对于未指定的参数，将应用默认参数。
-     * @constructor
-     * @remind 通过 改构造方法实例化的编辑器,不带ui层.需要render到一个容器,编辑器实例才能正常渲染到页面
-     * @param { Object } setting 创建编辑器的参数
+     * 浠ョ粰瀹氱殑鍙傛暟闆嗗悎鍒涘缓涓€涓紪杈戝櫒瀹炰緥锛屽浜庢湭鎸囧畾鐨勫弬鏁帮紝灏嗗簲鐢ㄩ粯璁ゅ弬鏁般€?     * @constructor
+     * @remind 閫氳繃 鏀规瀯閫犳柟娉曞疄渚嬪寲鐨勭紪杈戝櫒,涓嶅甫ui灞?闇€瑕乺ender鍒颁竴涓鍣?缂栬緫鍣ㄥ疄渚嬫墠鑳芥甯告覆鏌撳埌椤甸潰
+     * @param { Object } setting 鍒涘缓缂栬緫鍣ㄧ殑鍙傛暟
      * @example
      * ```javascript
      * var editor = new UE.Editor();
@@ -6744,14 +6368,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         me.shortcutkeys = {};
         me.inputRules = [];
         me.outputRules = [];
-        //设置默认的常用属性
-        me.setOpt(Editor.defaultOptions(me));
+        //璁剧疆榛樿鐨勫父鐢ㄥ睘鎬?        me.setOpt(Editor.defaultOptions(me));
 
-        /* 尝试异步加载后台配置 */
+        /* 灏濊瘯寮傛鍔犺浇鍚庡彴閰嶇疆 */
         me.loadServerConfig();
 
         if(!utils.isEmptyObject(UE.I18N)){
-            //修改默认的语言类型
+            //淇敼榛樿鐨勮瑷€绫诲瀷
             me.options.lang = checkCurLang(UE.I18N);
             UE.plugin.load(me);
             langReadied(me);
@@ -6775,15 +6398,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             this.commands[name] = obj;
          },
         /**
-         * 编辑器对外提供的监听ready事件的接口， 通过调用该方法，达到的效果与监听ready事件是一致的
+         * 缂栬緫鍣ㄥ澶栨彁渚涚殑鐩戝惉ready浜嬩欢鐨勬帴鍙ｏ紝 閫氳繃璋冪敤璇ユ柟娉曪紝杈惧埌鐨勬晥鏋滀笌鐩戝惉ready浜嬩欢鏄竴鑷寸殑
          * @method ready
-         * @param { Function } fn 编辑器ready之后所执行的回调, 如果在注册事件之前编辑器已经ready，将会
-         * 立即触发该回调。
-         * @remind 需要等待编辑器加载完成后才能执行的代码,可以使用该方法传入
-         * @example
+         * @param { Function } fn 缂栬緫鍣╮eady涔嬪悗鎵€鎵ц鐨勫洖璋? 濡傛灉鍦ㄦ敞鍐屼簨浠朵箣鍓嶇紪杈戝櫒宸茬粡ready锛屽皢浼?         * 绔嬪嵆瑙﹀彂璇ュ洖璋冦€?         * @remind 闇€瑕佺瓑寰呯紪杈戝櫒鍔犺浇瀹屾垚鍚庢墠鑳芥墽琛岀殑浠ｇ爜,鍙互浣跨敤璇ユ柟娉曚紶鍏?         * @example
          * ```javascript
          * editor.ready( function( editor ) {
-         *     editor.setContent('初始化完毕');
+         *     editor.setContent('鍒濆鍖栧畬姣?);
          * } );
          * ```
          * @see UE.Editor.event:ready
@@ -6796,28 +6416,21 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 该方法是提供给插件里面使用，设置配置项默认值
-         * @method setOpt
-         * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
-         * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
-         * @param { String } key 编辑器的可接受的选项名称
-         * @param { * } val  该选项可接受的值
-         * @example
+         * 璇ユ柟娉曟槸鎻愪緵缁欐彃浠堕噷闈娇鐢紝璁剧疆閰嶇疆椤归粯璁ゅ€?         * @method setOpt
+         * @warning 涓夊璁剧疆閰嶇疆椤圭殑浼樺厛绾? 瀹炰緥鍖栨椂浼犲叆鍙傛暟 > setOpt()璁剧疆 > config鏂囦欢閲岃缃?         * @warning 璇ユ柟娉曚粎渚涚紪杈戝櫒鎻掍欢鍐呴儴鍜岀紪杈戝櫒鍒濆鍖栨椂璋冪敤锛屽叾浠栧湴鏂逛笉鑳借皟鐢ㄣ€?         * @param { String } key 缂栬緫鍣ㄧ殑鍙帴鍙楃殑閫夐」鍚嶇О
+         * @param { * } val  璇ラ€夐」鍙帴鍙楃殑鍊?         * @example
          * ```javascript
-         * editor.setOpt( 'initContent', '欢迎使用编辑器' );
+         * editor.setOpt( 'initContent', '娆㈣繋浣跨敤缂栬緫鍣? );
          * ```
          */
 
         /**
-         * 该方法是提供给插件里面使用，以{key:value}集合的方式设置插件内用到的配置项默认值
-         * @method setOpt
-         * @warning 三处设置配置项的优先级: 实例化时传入参数 > setOpt()设置 > config文件里设置
-         * @warning 该方法仅供编辑器插件内部和编辑器初始化时调用，其他地方不能调用。
-         * @param { Object } options 将要设置的选项的键值对对象
+         * 璇ユ柟娉曟槸鎻愪緵缁欐彃浠堕噷闈娇鐢紝浠key:value}闆嗗悎鐨勬柟寮忚缃彃浠跺唴鐢ㄥ埌鐨勯厤缃」榛樿鍊?         * @method setOpt
+         * @warning 涓夊璁剧疆閰嶇疆椤圭殑浼樺厛绾? 瀹炰緥鍖栨椂浼犲叆鍙傛暟 > setOpt()璁剧疆 > config鏂囦欢閲岃缃?         * @warning 璇ユ柟娉曚粎渚涚紪杈戝櫒鎻掍欢鍐呴儴鍜岀紪杈戝櫒鍒濆鍖栨椂璋冪敤锛屽叾浠栧湴鏂逛笉鑳借皟鐢ㄣ€?         * @param { Object } options 灏嗚璁剧疆鐨勯€夐」鐨勯敭鍊煎瀵硅薄
          * @example
          * ```javascript
          * editor.setOpt( {
-         *     'initContent': '欢迎使用编辑器'
+         *     'initContent': '娆㈣繋浣跨敤缂栬緫鍣?
          * } );
          * ```
          */
@@ -6834,7 +6447,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             return this.options[key]
         },
         /**
-         * 销毁编辑器实例，使用textarea代替
+         * 閿€姣佺紪杈戝櫒瀹炰緥锛屼娇鐢╰extarea浠ｆ浛
          * @method destroy
          * @example
          * ```javascript
@@ -6871,20 +6484,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 渲染编辑器的DOM到指定容器
-         * @method render
-         * @param { String } containerId 指定一个容器ID
-         * @remind 执行该方法,会触发ready事件
-         * @warning 必须且只能调用一次
-         */
+         * 娓叉煋缂栬緫鍣ㄧ殑DOM鍒版寚瀹氬鍣?         * @method render
+         * @param { String } containerId 鎸囧畾涓€涓鍣↖D
+         * @remind 鎵ц璇ユ柟娉?浼氳Е鍙憆eady浜嬩欢
+         * @warning 蹇呴』涓斿彧鑳借皟鐢ㄤ竴娆?         */
 
         /**
-         * 渲染编辑器的DOM到指定容器
-         * @method render
-         * @param { Element } containerDom 直接指定容器对象
-         * @remind 执行该方法,会触发ready事件
-         * @warning 必须且只能调用一次
-         */
+         * 娓叉煋缂栬緫鍣ㄧ殑DOM鍒版寚瀹氬鍣?         * @method render
+         * @param { Element } containerDom 鐩存帴鎸囧畾瀹瑰櫒瀵硅薄
+         * @remind 鎵ц璇ユ柟娉?浼氳Е鍙憆eady浜嬩欢
+         * @warning 蹇呴』涓斿彧鑳借皟鐢ㄤ竴娆?         */
         render: function (container) {
             var me = this,
                 options = me.options,
@@ -6916,12 +6525,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 var html = ( ie && browser.version < 9  ? '' : '<!DOCTYPE html>') +
                     '<html xmlns=\'http://www.w3.org/1999/xhtml\' class=\'view\' ><head>' +
                     '<style type=\'text/css\'>' +
-                    //设置四周的留边
-                    '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
-                    //设置默认字体和字号
-                    //font-family不能呢随便改，在safari下fillchar会有解析问题
+                    //璁剧疆鍥涘懆鐨勭暀杈?                    '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
+                    //璁剧疆榛樿瀛椾綋鍜屽瓧鍙?                    //font-family涓嶈兘鍛㈤殢渚挎敼锛屽湪safari涓媐illchar浼氭湁瑙ｆ瀽闂
                     'body{margin:8px;font-family:sans-serif;font-size:16px;}' +
-                    //设置段落间距
+                    //璁剧疆娈佃惤闂磋窛
                     'p{margin:5px 0;}</style>' +
                     ( options.iframeCssUrl ? '<link rel=\'stylesheet\' type=\'text/css\' href=\'' + utils.unhtml(options.iframeCssUrl) + '\'/>' : '' ) +
                     (options.initialStyle ? '<style>' + options.initialStyle + '</style>' : '') +
@@ -6934,17 +6541,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     width: "100%",
                     height: "100%",
                     frameborder: "0",
-                    //先注释掉了，加的原因忘记了，但开启会直接导致全屏模式下内容多时不会出现滚动条
+                    //鍏堟敞閲婃帀浜嗭紝鍔犵殑鍘熷洜蹇樿浜嗭紝浣嗗紑鍚細鐩存帴瀵艰嚧鍏ㄥ睆妯″紡涓嬪唴瀹瑰鏃朵笉浼氬嚭鐜版粴鍔ㄦ潯
 //                    scrolling :'no',
                     src: 'javascript:void(function(){document.open();' + (options.customDomain && document.domain != location.hostname ?  'document.domain="' + document.domain + '";' : '') +
                         'document.write("' + html + '");document.close();}())'
                 }));
                 container.style.overflow = 'hidden';
-                //解决如果是给定的百分比，会导致高度算不对的问题
-                setTimeout(function(){
+                //瑙ｅ喅濡傛灉鏄粰瀹氱殑鐧惧垎姣旓紝浼氬鑷撮珮搴︾畻涓嶅鐨勯棶棰?                setTimeout(function(){
                     if( /%$/.test(options.initialFrameWidth)){
                         options.minFrameWidth = options.initialFrameWidth = container.offsetWidth;
-                        //如果这里给定宽度，会导致ie在拖动窗口大小时，编辑区域不随着变化
+                        //濡傛灉杩欓噷缁欏畾瀹藉害锛屼細瀵艰嚧ie鍦ㄦ嫋鍔ㄧ獥鍙ｅぇ灏忔椂锛岀紪杈戝尯鍩熶笉闅忕潃鍙樺寲
 //                        container.style.width = options.initialFrameWidth + 'px';
                     }
                     if(/%$/.test(options.initialFrameHeight)){
@@ -6956,10 +6562,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 编辑器初始化
+         * 缂栬緫鍣ㄥ垵濮嬪寲
          * @method _setup
          * @private
-         * @param { Element } doc 编辑器Iframe中的文档对象
+         * @param { Element } doc 缂栬緫鍣↖frame涓殑鏂囨。瀵硅薄
          */
         _setup: function (doc) {
 
@@ -6978,13 +6584,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             me.iframe = me.window.frameElement;
             me.body = doc.body;
             me.selection = new dom.Selection(doc);
-            //gecko初始化就能得到range,无法判断isFocus了
-            var geckoSel;
+            //gecko鍒濆鍖栧氨鑳藉緱鍒皉ange,鏃犳硶鍒ゆ柇isFocus浜?            var geckoSel;
             if (browser.gecko && (geckoSel = this.selection.getNative())) {
                 geckoSel.removeAllRanges();
             }
             this._initEvents();
-            //为form提交提供一个隐藏的textarea
+            //涓篺orm鎻愪氦鎻愪緵涓€涓殣钘忕殑textarea
             for (var form = this.iframe.parentNode; !domUtils.isBody(form); form = form.parentNode) {
                 if (form.tagName == 'FORM') {
                     me.form = form;
@@ -7012,16 +6617,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     this.setContent(options.initialContent, false, true);
             }
 
-            //编辑器不能为空内容
-
+            //缂栬緫鍣ㄤ笉鑳戒负绌哄唴瀹?
             if (domUtils.isEmptyNode(me.body)) {
                 me.body.innerHTML = '<p>' + (browser.ie ? '' : '<br/>') + '</p>';
             }
-            //如果要求focus, 就把光标定位到内容开始
-            if (options.focus) {
+            //濡傛灉瑕佹眰focus, 灏辨妸鍏夋爣瀹氫綅鍒板唴瀹瑰紑濮?            if (options.focus) {
                 setTimeout(function () {
                     me.focus(me.options.focusInEnd);
-                    //如果自动清除开着，就不需要做selectionchange;
+                    //濡傛灉鑷姩娓呴櫎寮€鐫€锛屽氨涓嶉渶瑕佸仛selectionchange;
                     !me.options.autoClearinitialContent && me._selectionChange();
                 }, 0);
             }
@@ -7045,14 +6648,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             } catch (e) {
             }
 
-            //挂接快捷键
-            me._bindshortcutKeys();
+            //鎸傛帴蹇嵎閿?            me._bindshortcutKeys();
             me.isReady = 1;
             me.fireEvent('ready');
             options.onready && options.onready.call(me);
             if (!browser.ie9below) {
                 domUtils.on(me.window, ['blur', 'focus'], function (e) {
-                    //chrome下会出现alt+tab切换时，导致选区位置不对
+                    //chrome涓嬩細鍑虹幇alt+tab鍒囨崲鏃讹紝瀵艰嚧閫夊尯浣嶇疆涓嶅
                     if (e.type == 'blur') {
                         me._bakRange = me.selection.getRange();
                         try {
@@ -7070,9 +6672,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     }
                 });
             }
-            //trace:1518 ff3.6body不够寛，会导致点击空白处无法获得焦点
+            //trace:1518 ff3.6body涓嶅瀵涳紝浼氬鑷寸偣鍑荤┖鐧藉鏃犳硶鑾峰緱鐒︾偣
             if (browser.gecko && browser.version <= 10902) {
-                //修复ff3.6初始化进来，不能点击获得焦点
+                //淇ff3.6鍒濆鍖栬繘鏉ワ紝涓嶈兘鐐瑰嚮鑾峰緱鐒︾偣
                 me.body.contentEditable = false;
                 setTimeout(function () {
                     me.body.contentEditable = true;
@@ -7087,23 +6689,20 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 同步数据到编辑器所在的form
-         * 从编辑器的容器节点向上查找form元素，若找到，就同步编辑内容到找到的form里，为提交数据做准备，主要用于是手动提交的情况
-         * 后台取得数据的键值，使用你容器上的name属性，如果没有就使用参数里的textarea项
-         * @method sync
+         * 鍚屾鏁版嵁鍒扮紪杈戝櫒鎵€鍦ㄧ殑form
+         * 浠庣紪杈戝櫒鐨勫鍣ㄨ妭鐐瑰悜涓婃煡鎵緁orm鍏冪礌锛岃嫢鎵惧埌锛屽氨鍚屾缂栬緫鍐呭鍒版壘鍒扮殑form閲岋紝涓烘彁浜ゆ暟鎹仛鍑嗗锛屼富瑕佺敤浜庢槸鎵嬪姩鎻愪氦鐨勬儏鍐?         * 鍚庡彴鍙栧緱鏁版嵁鐨勯敭鍊硷紝浣跨敤浣犲鍣ㄤ笂鐨刵ame灞炴€э紝濡傛灉娌℃湁灏变娇鐢ㄥ弬鏁伴噷鐨則extarea椤?         * @method sync
          * @example
          * ```javascript
          * editor.sync();
-         * form.sumbit(); //form变量已经指向了form元素
+         * form.sumbit(); //form鍙橀噺宸茬粡鎸囧悜浜唂orm鍏冪礌
          * ```
          */
 
         /**
-         * 根据传入的formId，在页面上查找要同步数据的表单，若找到，就同步编辑内容到找到的form里，为提交数据做准备
-         * 后台取得数据的键值，该键值默认使用给定的编辑器容器的name属性，如果没有name属性则使用参数项里给定的“textarea”项
+         * 鏍规嵁浼犲叆鐨刦ormId锛屽湪椤甸潰涓婃煡鎵捐鍚屾鏁版嵁鐨勮〃鍗曪紝鑻ユ壘鍒帮紝灏卞悓姝ョ紪杈戝唴瀹瑰埌鎵惧埌鐨刦orm閲岋紝涓烘彁浜ゆ暟鎹仛鍑嗗
+         * 鍚庡彴鍙栧緱鏁版嵁鐨勯敭鍊硷紝璇ラ敭鍊奸粯璁や娇鐢ㄧ粰瀹氱殑缂栬緫鍣ㄥ鍣ㄧ殑name灞炴€э紝濡傛灉娌℃湁name灞炴€у垯浣跨敤鍙傛暟椤归噷缁欏畾鐨勨€渢extarea鈥濋」
          * @method sync
-         * @param { String } formID 指定一个要同步数据的form的id,编辑器的数据会同步到你指定form下
-         */
+         * @param { String } formID 鎸囧畾涓€涓鍚屾鏁版嵁鐨刦orm鐨刬d,缂栬緫鍣ㄧ殑鏁版嵁浼氬悓姝ュ埌浣犳寚瀹歠orm涓?         */
         sync: function (formId) {
             var me = this,
                 form = formId ? document.getElementById(formId) :
@@ -7114,10 +6713,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 设置编辑器高度
-         * @method setHeight
-         * @remind 当配置项autoHeightEnabled为真时,该方法无效
-         * @param { Number } number 设置的高度值，纯数值，不带单位
+         * 璁剧疆缂栬緫鍣ㄩ珮搴?         * @method setHeight
+         * @remind 褰撻厤缃」autoHeightEnabled涓虹湡鏃?璇ユ柟娉曟棤鏁?         * @param { Number } number 璁剧疆鐨勯珮搴﹀€硷紝绾暟鍊硷紝涓嶅甫鍗曚綅
          * @example
          * ```javascript
          * editor.setHeight(number);
@@ -7133,11 +6730,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 为编辑器的编辑命令提供快捷键
-         * 这个接口是为插件扩展提供的接口,主要是为新添加的插件，如果需要添加快捷键，所提供的接口
-         * @method addshortcutkey
-         * @param { Object } keyset 命令名和快捷键键值对对象，多个按钮的快捷键用“＋”分隔
-         * @example
+         * 涓虹紪杈戝櫒鐨勭紪杈戝懡浠ゆ彁渚涘揩鎹烽敭
+         * 杩欎釜鎺ュ彛鏄负鎻掍欢鎵╁睍鎻愪緵鐨勬帴鍙?涓昏鏄负鏂版坊鍔犵殑鎻掍欢锛屽鏋滈渶瑕佹坊鍔犲揩鎹烽敭锛屾墍鎻愪緵鐨勬帴鍙?         * @method addshortcutkey
+         * @param { Object } keyset 鍛戒护鍚嶅拰蹇嵎閿敭鍊煎瀵硅薄锛屽涓寜閽殑蹇嵎閿敤鈥滐紜鈥濆垎闅?         * @example
          * ```javascript
          * editor.addshortcutkey({
          *     "Bold" : "ctrl+66",//^B
@@ -7146,11 +6741,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          * ```
          */
         /**
-         * 这个接口是为插件扩展提供的接口,主要是为新添加的插件，如果需要添加快捷键，所提供的接口
-         * @method addshortcutkey
-         * @param { String } cmd 触发快捷键时，响应的命令
-         * @param { String } keys 快捷键的字符串，多个按钮用“＋”分隔
-         * @example
+         * 杩欎釜鎺ュ彛鏄负鎻掍欢鎵╁睍鎻愪緵鐨勬帴鍙?涓昏鏄负鏂版坊鍔犵殑鎻掍欢锛屽鏋滈渶瑕佹坊鍔犲揩鎹烽敭锛屾墍鎻愪緵鐨勬帴鍙?         * @method addshortcutkey
+         * @param { String } cmd 瑙﹀彂蹇嵎閿椂锛屽搷搴旂殑鍛戒护
+         * @param { String } keys 蹇嵎閿殑瀛楃涓诧紝澶氫釜鎸夐挳鐢ㄢ€滐紜鈥濆垎闅?         * @example
          * ```javascript
          * editor.addshortcutkey("Underline", "ctrl+85"); //^U
          * ```
@@ -7166,8 +6759,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 对编辑器设置keydown事件监听，绑定快捷键和命令，当快捷键组合触发成功，会响应对应的命令
-         * @method _bindshortcutKeys
+         * 瀵圭紪杈戝櫒璁剧疆keydown浜嬩欢鐩戝惉锛岀粦瀹氬揩鎹烽敭鍜屽懡浠わ紝褰撳揩鎹烽敭缁勫悎瑙﹀彂鎴愬姛锛屼細鍝嶅簲瀵瑰簲鐨勫懡浠?         * @method _bindshortcutKeys
          * @private
          */
         _bindshortcutKeys: function () {
@@ -7198,32 +6790,27 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 获取编辑器的内容
+         * 鑾峰彇缂栬緫鍣ㄧ殑鍐呭
          * @method getContent
-         * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @return { String } 编辑器的内容字符串, 如果编辑器的内容为空，或者是空的标签内容（如:”&lt;p&gt;&lt;br/&gt;&lt;/p&gt;“）， 则返回空字符串
-         * @example
+         * @warning 璇ユ柟娉曡幏鍙栧埌鐨勬槸缁忚繃缂栬緫鍣ㄥ唴缃殑杩囨护瑙勫垯杩涜杩囨护鍚庡緱鍒扮殑鍐呭
+         * @return { String } 缂栬緫鍣ㄧ殑鍐呭瀛楃涓? 濡傛灉缂栬緫鍣ㄧ殑鍐呭涓虹┖锛屾垨鑰呮槸绌虹殑鏍囩鍐呭锛堝:鈥?lt;p&gt;&lt;br/&gt;&lt;/p&gt;鈥滐級锛?鍒欒繑鍥炵┖瀛楃涓?         * @example
          * ```javascript
-         * //编辑器html内容:<p>1<strong>2<em>34</em>5</strong>6</p>
-         * var content = editor.getContent(); //返回值:<p>1<strong>2<em>34</em>5</strong>6</p>
+         * //缂栬緫鍣╤tml鍐呭:<p>1<strong>2<em>34</em>5</strong>6</p>
+         * var content = editor.getContent(); //杩斿洖鍊?<p>1<strong>2<em>34</em>5</strong>6</p>
          * ```
          */
 
         /**
-         * 获取编辑器的内容。 可以通过参数定义编辑器内置的判空规则
+         * 鑾峰彇缂栬緫鍣ㄧ殑鍐呭銆?鍙互閫氳繃鍙傛暟瀹氫箟缂栬緫鍣ㄥ唴缃殑鍒ょ┖瑙勫垯
          * @method getContent
-         * @param { Function } fn 自定的判空规则， 要求该方法返回一个boolean类型的值，
-         *                      代表当前编辑器的内容是否空，
-         *                      如果返回true， 则该方法将直接返回空字符串；如果返回false，则编辑器将返回
-         *                      经过内置过滤规则处理后的内容。
-         * @remind 该方法在处理包含有初始化内容的时候能起到很好的作用。
-         * @warning 该方法获取到的是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @return { String } 编辑器的内容字符串
-         * @example
+         * @param { Function } fn 鑷畾鐨勫垽绌鸿鍒欙紝 瑕佹眰璇ユ柟娉曡繑鍥炰竴涓猙oolean绫诲瀷鐨勫€硷紝
+         *                      浠ｈ〃褰撳墠缂栬緫鍣ㄧ殑鍐呭鏄惁绌猴紝
+         *                      濡傛灉杩斿洖true锛?鍒欒鏂规硶灏嗙洿鎺ヨ繑鍥炵┖瀛楃涓诧紱濡傛灉杩斿洖false锛屽垯缂栬緫鍣ㄥ皢杩斿洖
+         *                      缁忚繃鍐呯疆杩囨护瑙勫垯澶勭悊鍚庣殑鍐呭銆?         * @remind 璇ユ柟娉曞湪澶勭悊鍖呭惈鏈夊垵濮嬪寲鍐呭鐨勬椂鍊欒兘璧峰埌寰堝ソ鐨勪綔鐢ㄣ€?         * @warning 璇ユ柟娉曡幏鍙栧埌鐨勬槸缁忚繃缂栬緫鍣ㄥ唴缃殑杩囨护瑙勫垯杩涜杩囨护鍚庡緱鍒扮殑鍐呭
+         * @return { String } 缂栬緫鍣ㄧ殑鍐呭瀛楃涓?         * @example
          * ```javascript
-         * // editor 是一个编辑器的实例
-         * var content = editor.getContent( function ( editor ) {
-         *      return editor.body.innerHTML === '欢迎使用UEditor'; //返回空字符串
+         * // editor 鏄竴涓紪杈戝櫒鐨勫疄渚?         * var content = editor.getContent( function ( editor ) {
+         *      return editor.body.innerHTML === '娆㈣繋浣跨敤UEditor'; //杩斿洖绌哄瓧绗︿覆
          * } );
          * ```
          */
@@ -7244,12 +6831,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 取得完整的html代码，可以直接显示成完整的html文档
+         * 鍙栧緱瀹屾暣鐨刪tml浠ｇ爜锛屽彲浠ョ洿鎺ユ樉绀烘垚瀹屾暣鐨刪tml鏂囨。
          * @method getAllHtml
-         * @return { String } 编辑器的内容html文档字符串
-         * @eaxmple
+         * @return { String } 缂栬緫鍣ㄧ殑鍐呭html鏂囨。瀛楃涓?         * @eaxmple
          * ```javascript
-         * editor.getAllHtml(); //返回格式大致是: <html><head>...</head><body>...</body></html>
+         * editor.getAllHtml(); //杩斿洖鏍煎紡澶ц嚧鏄? <html><head>...</head><body>...</body></html>
          * ```
          */
         getAllHtml: function () {
@@ -7273,50 +6859,48 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 得到编辑器的纯文本内容，但会保留段落格式
+         * 寰楀埌缂栬緫鍣ㄧ殑绾枃鏈唴瀹癸紝浣嗕細淇濈暀娈佃惤鏍煎紡
          * @method getPlainTxt
-         * @return { String } 编辑器带段落格式的纯文本内容字符串
-         * @example
+         * @return { String } 缂栬緫鍣ㄥ甫娈佃惤鏍煎紡鐨勭函鏂囨湰鍐呭瀛楃涓?         * @example
          * ```javascript
-         * //编辑器html内容:<p><strong>1</strong></p><p><strong>2</strong></p>
-         * console.log(editor.getPlainTxt()); //输出:"1\n2\n
+         * //缂栬緫鍣╤tml鍐呭:<p><strong>1</strong></p><p><strong>2</strong></p>
+         * console.log(editor.getPlainTxt()); //杈撳嚭:"1\n2\n
          * ```
          */
         getPlainTxt: function () {
             var reg = new RegExp(domUtils.fillChar, 'g'),
-                html = this.body.innerHTML.replace(/[\n\r]/g, '');//ie要先去了\n在处理
-            html = html.replace(/<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, '\n')
+                html = this.body.innerHTML.replace(/[\n\r]/g, '');//ie瑕佸厛鍘讳簡\n鍦ㄥ鐞?            html = html.replace(/<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, '\n')
                 .replace(/<br\/?>/gi, '\n')
                 .replace(/<[^>/]+>/g, '')
                 .replace(/(\n)?<\/([^>]+)>/g, function (a, b, c) {
                     return dtd.$block[c] ? '\n' : b ? b : '';
                 });
-            //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
+            //鍙栧嚭鏉ョ殑绌烘牸浼氭湁c2a0浼氬彉鎴愪贡鐮侊紝澶勭悊杩欑鎯呭喌\u00a0
             return html.replace(reg, '').replace(/\u00a0/g, ' ').replace(/&nbsp;/g, ' ');
         },
 
         /**
-         * 获取编辑器中的纯文本内容,没有段落格式
+         * 鑾峰彇缂栬緫鍣ㄤ腑鐨勭函鏂囨湰鍐呭,娌℃湁娈佃惤鏍煎紡
          * @method getContentTxt
-         * @return { String } 编辑器不带段落格式的纯文本内容字符串
+         * @return { String } 缂栬緫鍣ㄤ笉甯︽钀芥牸寮忕殑绾枃鏈唴瀹瑰瓧绗︿覆
          * @example
          * ```javascript
-         * //编辑器html内容:<p><strong>1</strong></p><p><strong>2</strong></p>
-         * console.log(editor.getPlainTxt()); //输出:"12
+         * //缂栬緫鍣╤tml鍐呭:<p><strong>1</strong></p><p><strong>2</strong></p>
+         * console.log(editor.getPlainTxt()); //杈撳嚭:"12
          * ```
          */
         getContentTxt: function () {
             var reg = new RegExp(domUtils.fillChar, 'g');
-            //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
+            //鍙栧嚭鏉ョ殑绌烘牸浼氭湁c2a0浼氬彉鎴愪贡鐮侊紝澶勭悊杩欑鎯呭喌\u00a0
             return this.body[browser.ie ? 'innerText' : 'textContent'].replace(reg, '').replace(/\u00a0/g, ' ');
         },
 
         /**
-         * 设置编辑器的内容，可修改编辑器当前的html内容
+         * 璁剧疆缂栬緫鍣ㄧ殑鍐呭锛屽彲淇敼缂栬緫鍣ㄥ綋鍓嶇殑html鍐呭
          * @method setContent
-         * @warning 通过该方法插入的内容，是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @warning 该方法会触发selectionchange事件
-         * @param { String } html 要插入的html内容
+         * @warning 閫氳繃璇ユ柟娉曟彃鍏ョ殑鍐呭锛屾槸缁忚繃缂栬緫鍣ㄥ唴缃殑杩囨护瑙勫垯杩涜杩囨护鍚庡緱鍒扮殑鍐呭
+         * @warning 璇ユ柟娉曚細瑙﹀彂selectionchange浜嬩欢
+         * @param { String } html 瑕佹彃鍏ョ殑html鍐呭
          * @example
          * ```javascript
          * editor.getContent('<p>test</p>');
@@ -7324,16 +6908,16 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 设置编辑器的内容，可修改编辑器当前的html内容
+         * 璁剧疆缂栬緫鍣ㄧ殑鍐呭锛屽彲淇敼缂栬緫鍣ㄥ綋鍓嶇殑html鍐呭
          * @method setContent
-         * @warning 通过该方法插入的内容，是经过编辑器内置的过滤规则进行过滤后得到的内容
-         * @warning 该方法会触发selectionchange事件
-         * @param { String } html 要插入的html内容
-         * @param { Boolean } isAppendTo 若传入true，不清空原来的内容，在最后插入内容，否则，清空内容再插入
+         * @warning 閫氳繃璇ユ柟娉曟彃鍏ョ殑鍐呭锛屾槸缁忚繃缂栬緫鍣ㄥ唴缃殑杩囨护瑙勫垯杩涜杩囨护鍚庡緱鍒扮殑鍐呭
+         * @warning 璇ユ柟娉曚細瑙﹀彂selectionchange浜嬩欢
+         * @param { String } html 瑕佹彃鍏ョ殑html鍐呭
+         * @param { Boolean } isAppendTo 鑻ヤ紶鍏rue锛屼笉娓呯┖鍘熸潵鐨勫唴瀹癸紝鍦ㄦ渶鍚庢彃鍏ュ唴瀹癸紝鍚﹀垯锛屾竻绌哄唴瀹瑰啀鎻掑叆
          * @example
          * ```javascript
-         * //假设设置前的编辑器内容是 <p>old text</p>
-         * editor.setContent('<p>new text</p>', true); //插入的结果是<p>old text</p><p>new text</p>
+         * //鍋囪璁剧疆鍓嶇殑缂栬緫鍣ㄥ唴瀹规槸 <p>old text</p>
+         * editor.setContent('<p>new text</p>', true); //鎻掑叆鐨勭粨鏋滄槸<p>old text</p><p>new text</p>
          * ```
          */
         setContent: function (html, isAppendTo, notFireSelectionchange) {
@@ -7350,7 +6934,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             function isCdataDiv(node){
                 return  node.tagName == 'DIV' && node.getAttribute('cdata_tag');
             }
-            //给文本或者inline节点套p标签
+            //缁欐枃鏈垨鑰卛nline鑺傜偣濂梡鏍囩
             if (me.options.enterTag == 'p') {
 
                 var child = this.body.firstChild, tmpNode;
@@ -7386,10 +6970,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             me.fireEvent('contentchange');
 
             !notFireSelectionchange && me._selectionChange();
-            //清除保存的选区
+            //娓呴櫎淇濆瓨鐨勯€夊尯
             me._bakRange = me._bakIERange = me._bakNativeRange = null;
-            //trace:1742 setContent后gecko能得到焦点问题
-            var geckoSel;
+            //trace:1742 setContent鍚巊ecko鑳藉緱鍒扮劍鐐归棶棰?            var geckoSel;
             if (browser.gecko && (geckoSel = this.selection.getNative())) {
                 geckoSel.removeAllRanges();
             }
@@ -7399,7 +6982,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 让编辑器获得焦点，默认focus到编辑器头部
+         * 璁╃紪杈戝櫒鑾峰緱鐒︾偣锛岄粯璁ocus鍒扮紪杈戝櫒澶撮儴
          * @method focus
          * @example
          * ```javascript
@@ -7408,10 +6991,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 让编辑器获得焦点，toEnd确定focus位置
+         * 璁╃紪杈戝櫒鑾峰緱鐒︾偣锛宼oEnd纭畾focus浣嶇疆
          * @method focus
-         * @param { Boolean } toEnd 默认focus到编辑器头部，toEnd为true时focus到内容尾部
-         * @example
+         * @param { Boolean } toEnd 榛樿focus鍒扮紪杈戝櫒澶撮儴锛宼oEnd涓簍rue鏃秄ocus鍒板唴瀹瑰熬閮?         * @example
          * ```javascript
          * editor.focus(true)
          * ```
@@ -7466,8 +7048,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             //this.fireEvent('blur selectionchange');
         },
         /**
-         * 初始化UE事件及部分事件代理
-         * @method _initEvents
+         * 鍒濆鍖朥E浜嬩欢鍙婇儴鍒嗕簨浠朵唬鐞?         * @method _initEvents
          * @private
          */
         _initEvents: function () {
@@ -7478,12 +7059,12 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             domUtils.on(doc, ['click', 'contextmenu', 'mousedown', 'keydown', 'keyup', 'keypress', 'mouseup', 'mouseover', 'mouseout', 'selectstart'], me._proxyDomEvent);
             domUtils.on(win, ['focus', 'blur'], me._proxyDomEvent);
             domUtils.on(me.body,'drop',function(e){
-                //阻止ff下默认的弹出新页面打开图片
+                //闃绘ff涓嬮粯璁ょ殑寮瑰嚭鏂伴〉闈㈡墦寮€鍥剧墖
                 if(browser.gecko && e.stopPropagation) { e.stopPropagation(); }
                 me.fireEvent('contentchange')
             });
             domUtils.on(doc, ['mouseup', 'keydown'], function (evt) {
-                //特殊键不触发selectionchange
+                //鐗规畩閿笉瑙﹀彂selectionchange
                 if (evt.type == 'keydown' && (evt.ctrlKey || evt.metaKey || evt.shiftKey || evt.altKey)) {
                     return;
                 }
@@ -7492,11 +7073,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             });
         },
         /**
-         * 触发事件代理
+         * 瑙﹀彂浜嬩欢浠ｇ悊
          * @method _proxyDomEvent
          * @private
-         * @return { * } fireEvent的返回值
-         * @see UE.EventBase:fireEvent(String)
+         * @return { * } fireEvent鐨勮繑鍥炲€?         * @see UE.EventBase:fireEvent(String)
          */
         _proxyDomEvent: function (evt) {
             if(this.fireEvent('before' + evt.type.replace(/^on/, '').toLowerCase()) === false){
@@ -7508,14 +7088,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             return this.fireEvent('after' + evt.type.replace(/^on/, '').toLowerCase())
         },
         /**
-         * 变化选区
+         * 鍙樺寲閫夊尯
          * @method _selectionChange
          * @private
          */
         _selectionChange: function (delay, evt) {
             var me = this;
-            //有光标才做selectionchange 为了解决未focus时点击source不能触发更改工具栏状态的问题（source命令notNeedUndo=1）
-//            if ( !me.selection.isFocus() ){
+            //鏈夊厜鏍囨墠鍋歴electionchange 涓轰簡瑙ｅ喅鏈猣ocus鏃剁偣鍑籹ource涓嶈兘瑙﹀彂鏇存敼宸ュ叿鏍忕姸鎬佺殑闂锛坰ource鍛戒护notNeedUndo=1锛?//            if ( !me.selection.isFocus() ){
 //                return;
 //            }
 
@@ -7535,9 +7114,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 if (!me.selection || !me.selection.getNative()) {
                     return;
                 }
-                //修复一个IE下的bug: 鼠标点击一段已选择的文本中间时，可能在mouseup后的一段时间内取到的range是在selection的type为None下的错误值.
-                //IE下如果用户是拖拽一段已选择文本，则不会触发mouseup事件，所以这里的特殊处理不会对其有影响
-                var ieRange;
+                //淇涓€涓狪E涓嬬殑bug: 榧犳爣鐐瑰嚮涓€娈靛凡閫夋嫨鐨勬枃鏈腑闂存椂锛屽彲鑳藉湪mouseup鍚庣殑涓€娈垫椂闂村唴鍙栧埌鐨剅ange鏄湪selection鐨則ype涓篘one涓嬬殑閿欒鍊?
+                //IE涓嬪鏋滅敤鎴锋槸鎷栨嫿涓€娈靛凡閫夋嫨鏂囨湰锛屽垯涓嶄細瑙﹀彂mouseup浜嬩欢锛屾墍浠ヨ繖閲岀殑鐗规畩澶勭悊涓嶄細瀵瑰叾鏈夊奖鍝?                var ieRange;
                 if (hackForMouseUp && me.selection.getNative().type == 'None') {
                     ieRange = me.document.body.createTextRange();
                     try {
@@ -7559,7 +7137,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 }
                 if (me.selection._cachedRange && me.selection._cachedStartElement) {
                     me.fireEvent('beforeselectionchange');
-                    // 第二个参数causeByUi为true代表由用户交互造成的selectionchange.
+                    // 绗簩涓弬鏁癱auseByUi涓簍rue浠ｈ〃鐢辩敤鎴蜂氦浜掗€犳垚鐨剆electionchange.
                     me.fireEvent('selectionchange', !!evt);
                     me.fireEvent('afterselectionchange');
                     me.selection.clear();
@@ -7568,19 +7146,17 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 执行编辑命令
+         * 鎵ц缂栬緫鍛戒护
          * @method _callCmdFn
          * @private
-         * @param { String } fnName 函数名称
-         * @param { * } args 传给命令函数的参数
-         * @return { * } 返回命令函数运行的返回值
-         */
+         * @param { String } fnName 鍑芥暟鍚嶇О
+         * @param { * } args 浼犵粰鍛戒护鍑芥暟鐨勫弬鏁?         * @return { * } 杩斿洖鍛戒护鍑芥暟杩愯鐨勮繑鍥炲€?         */
         _callCmdFn: function (fnName, args) {
             var cmdName = args[0].toLowerCase(),
                 cmd, cmdFn;
             cmd = this.commands[cmdName] || UE.commands[cmdName];
             cmdFn = cmd && cmd[fnName];
-            //没有querycommandstate或者没有command的都默认返回0
+            //娌℃湁querycommandstate鎴栬€呮病鏈塩ommand鐨勯兘榛樿杩斿洖0
             if ((!cmd || !cmdFn) && fnName == 'queryCommandState') {
                 return 0;
             } else if (cmdFn) {
@@ -7589,12 +7165,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 执行编辑命令cmdName，完成富文本编辑效果
+         * 鎵ц缂栬緫鍛戒护cmdName锛屽畬鎴愬瘜鏂囨湰缂栬緫鏁堟灉
          * @method execCommand
-         * @param { String } cmdName 需要执行的命令
-         * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
-         * @return { * } 返回命令函数运行的返回值
-         * @example
+         * @param { String } cmdName 闇€瑕佹墽琛岀殑鍛戒护
+         * @remind 鍏蜂綋鍛戒护鐨勪娇鐢ㄨ鍙傝€?a href="#COMMAND.LIST">鍛戒护鍒楄〃</a>
+         * @return { * } 杩斿洖鍛戒护鍑芥暟杩愯鐨勮繑鍥炲€?         * @example
          * ```javascript
          * editor.execCommand(cmdName);
          * ```
@@ -7613,7 +7188,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                     me.fireEvent('saveScene');
                     me.fireEvent.apply(me, ['beforeexeccommand', cmdName].concat(arguments));
                     result = this._callCmdFn('execCommand', arguments);
-                    //保存场景时，做了内容对比，再看是否进行contentchange触发，这里多触发了一次，去掉
+                    //淇濆瓨鍦烘櫙鏃讹紝鍋氫簡鍐呭瀵规瘮锛屽啀鐪嬫槸鍚﹁繘琛宑ontentchange瑙﹀彂锛岃繖閲屽瑙﹀彂浜嗕竴娆★紝鍘绘帀
 //                    (!cmd.ignoreContentChange && !me._ignoreContentChange) && me.fireEvent('contentchange');
                     me.fireEvent.apply(me, ['afterexeccommand', cmdName].concat(arguments));
                     me.fireEvent('saveScene');
@@ -7628,11 +7203,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 根据传入的command命令，查选编辑器当前的选区，返回命令的状态
-         * @method  queryCommandState
-         * @param { String } cmdName 需要查询的命令名称
-         * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
-         * @return { Number } number 返回放前命令的状态，返回值三种情况：(-1|0|1)
+         * 鏍规嵁浼犲叆鐨刢ommand鍛戒护锛屾煡閫夌紪杈戝櫒褰撳墠鐨勯€夊尯锛岃繑鍥炲懡浠ょ殑鐘舵€?         * @method  queryCommandState
+         * @param { String } cmdName 闇€瑕佹煡璇㈢殑鍛戒护鍚嶇О
+         * @remind 鍏蜂綋鍛戒护鐨勪娇鐢ㄨ鍙傝€?a href="#COMMAND.LIST">鍛戒护鍒楄〃</a>
+         * @return { Number } number 杩斿洖鏀惧墠鍛戒护鐨勭姸鎬侊紝杩斿洖鍊间笁绉嶆儏鍐碉細(-1|0|1)
          * @example
          * ```javascript
          * editor.queryCommandState(cmdName)  => (-1|0|1)
@@ -7644,13 +7218,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 根据传入的command命令，查选编辑器当前的选区，根据命令返回相关的值
-         * @method queryCommandValue
-         * @param { String } cmdName 需要查询的命令名称
-         * @remind 具体命令的使用请参考<a href="#COMMAND.LIST">命令列表</a>
-         * @remind 只有部分插件有此方法
-         * @return { * } 返回每个命令特定的当前状态值
-         * @grammar editor.queryCommandValue(cmdName)  =>  {*}
+         * 鏍规嵁浼犲叆鐨刢ommand鍛戒护锛屾煡閫夌紪杈戝櫒褰撳墠鐨勯€夊尯锛屾牴鎹懡浠よ繑鍥炵浉鍏崇殑鍊?         * @method queryCommandValue
+         * @param { String } cmdName 闇€瑕佹煡璇㈢殑鍛戒护鍚嶇О
+         * @remind 鍏蜂綋鍛戒护鐨勪娇鐢ㄨ鍙傝€?a href="#COMMAND.LIST">鍛戒护鍒楄〃</a>
+         * @remind 鍙湁閮ㄥ垎鎻掍欢鏈夋鏂规硶
+         * @return { * } 杩斿洖姣忎釜鍛戒护鐗瑰畾鐨勫綋鍓嶇姸鎬佸€?         * @grammar editor.queryCommandValue(cmdName)  =>  {*}
          * @see COMMAND.LIST
          */
         queryCommandValue: function (cmdName) {
@@ -7658,11 +7230,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 检查编辑区域中是否有内容
-         * @method  hasContents
-         * @remind 默认有文本内容，或者有以下节点都不认为是空
+         * 妫€鏌ョ紪杈戝尯鍩熶腑鏄惁鏈夊唴瀹?         * @method  hasContents
+         * @remind 榛樿鏈夋枃鏈唴瀹癸紝鎴栬€呮湁浠ヤ笅鑺傜偣閮戒笉璁や负鏄┖
          * table,ul,ol,dl,iframe,area,base,col,hr,img,embed,input,link,meta,param
-         * @return { Boolean } 检查有内容返回true，否则返回false
+         * @return { Boolean } 妫€鏌ユ湁鍐呭杩斿洖true锛屽惁鍒欒繑鍥瀎alse
          * @example
          * ```javascript
          * editor.hasContents()
@@ -7670,10 +7241,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
 
         /**
-         * 检查编辑区域中是否有内容，若包含参数tags中的节点类型，直接返回true
+         * 妫€鏌ョ紪杈戝尯鍩熶腑鏄惁鏈夊唴瀹癸紝鑻ュ寘鍚弬鏁皌ags涓殑鑺傜偣绫诲瀷锛岀洿鎺ヨ繑鍥瀟rue
          * @method  hasContents
-         * @param { Array } tags 传入数组判断时用到的节点类型
-         * @return { Boolean } 若文档中包含tags数组里对应的tag，返回true，否则返回false
+         * @param { Array } tags 浼犲叆鏁扮粍鍒ゆ柇鏃剁敤鍒扮殑鑺傜偣绫诲瀷
+         * @return { Boolean } 鑻ユ枃妗ｄ腑鍖呭惈tags鏁扮粍閲屽搴旂殑tag锛岃繑鍥瀟rue锛屽惁鍒欒繑鍥瀎alse
          * @example
          * ```javascript
          * editor.hasContents(['span']);
@@ -7690,7 +7261,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             if (!domUtils.isEmptyBlock(this.body)) {
                 return true
             }
-            //随时添加,定义的特殊标签如果存在，不能认为是空
+            //闅忔椂娣诲姞,瀹氫箟鐨勭壒娈婃爣绛惧鏋滃瓨鍦紝涓嶈兘璁や负鏄┖
             tags = ['div'];
             for (i = 0; ci = tags[i++];) {
                 var nodes = domUtils.getElementsByTagName(this.document, ci);
@@ -7704,9 +7275,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 重置编辑器，可用来做多个tab使用同一个编辑器实例
+         * 閲嶇疆缂栬緫鍣紝鍙敤鏉ュ仛澶氫釜tab浣跨敤鍚屼竴涓紪杈戝櫒瀹炰緥
          * @method  reset
-         * @remind 此方法会清空编辑器内容，清空回退列表，会触发reset事件
+         * @remind 姝ゆ柟娉曚細娓呯┖缂栬緫鍣ㄥ唴瀹癸紝娓呯┖鍥為€€鍒楄〃锛屼細瑙﹀彂reset浜嬩欢
          * @example
          * ```javascript
          * editor.reset()
@@ -7717,7 +7288,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 设置当前编辑区域可以编辑
+         * 璁剧疆褰撳墠缂栬緫鍖哄煙鍙互缂栬緫
          * @method setEnabled
          * @example
          * ```javascript
@@ -7729,7 +7300,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             if (me.body.contentEditable == 'false') {
                 me.body.contentEditable = true;
                 range = me.selection.getRange();
-                //有可能内容丢失了
+                //鏈夊彲鑳藉唴瀹逛涪澶变簡
                 try {
                     range.moveToBookmark(me.lastBk);
                     delete me.lastBk
@@ -7752,28 +7323,25 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             return this.setEnabled();
         },
 
-        /** 设置当前编辑区域不可编辑
+        /** 璁剧疆褰撳墠缂栬緫鍖哄煙涓嶅彲缂栬緫
          * @method setDisabled
          */
 
-        /** 设置当前编辑区域不可编辑,except中的命令除外
+        /** 璁剧疆褰撳墠缂栬緫鍖哄煙涓嶅彲缂栬緫,except涓殑鍛戒护闄ゅ
          * @method setDisabled
-         * @param { String } except 例外命令的字符串
-         * @remind 即使设置了disable，此处配置的例外命令仍然可以执行
+         * @param { String } except 渚嬪鍛戒护鐨勫瓧绗︿覆
+         * @remind 鍗充娇璁剧疆浜哾isable锛屾澶勯厤缃殑渚嬪鍛戒护浠嶇劧鍙互鎵ц
          * @example
          * ```javascript
-         * editor.setDisabled('bold'); //禁用工具栏中除加粗之外的所有功能
-         * ```
+         * editor.setDisabled('bold'); //绂佺敤宸ュ叿鏍忎腑闄ゅ姞绮椾箣澶栫殑鎵€鏈夊姛鑳?         * ```
          */
 
-        /** 设置当前编辑区域不可编辑,except中的命令除外
+        /** 璁剧疆褰撳墠缂栬緫鍖哄煙涓嶅彲缂栬緫,except涓殑鍛戒护闄ゅ
          * @method setDisabled
-         * @param { Array } except 例外命令的字符串数组，数组中的命令仍然可以执行
-         * @remind 即使设置了disable，此处配置的例外命令仍然可以执行
+         * @param { Array } except 渚嬪鍛戒护鐨勫瓧绗︿覆鏁扮粍锛屾暟缁勪腑鐨勫懡浠や粛鐒跺彲浠ユ墽琛?         * @remind 鍗充娇璁剧疆浜哾isable锛屾澶勯厤缃殑渚嬪鍛戒护浠嶇劧鍙互鎵ц
          * @example
          * ```javascript
-         * editor.setDisabled(['bold','insertimage']); //禁用工具栏中除加粗和插入图片之外的所有功能
-         * ```
+         * editor.setDisabled(['bold','insertimage']); //绂佺敤宸ュ叿鏍忎腑闄ゅ姞绮楀拰鎻掑叆鍥剧墖涔嬪鐨勬墍鏈夊姛鑳?         * ```
          */
         setDisabled: function (except) {
             var me = this;
@@ -7805,10 +7373,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 设置默认内容
+         * 璁剧疆榛樿鍐呭
          * @method _setDefaultContent
          * @private
-         * @param  { String } cont 要存入的内容
+         * @param  { String } cont 瑕佸瓨鍏ョ殑鍐呭
          */
         _setDefaultContent: function () {
             function clear() {
@@ -7832,8 +7400,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         }(),
 
         /**
-         * 显示编辑器
-         * @method setShow
+         * 鏄剧ず缂栬緫鍣?         * @method setShow
          * @example
          * ```javascript
          * editor.setShow()
@@ -7842,14 +7409,14 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         setShow: function () {
             var me = this, range = me.selection.getRange();
             if (me.container.style.display == 'none') {
-                //有可能内容丢失了
+                //鏈夊彲鑳藉唴瀹逛涪澶变簡
                 try {
                     range.moveToBookmark(me.lastBk);
                     delete me.lastBk
                 } catch (e) {
                     range.setStartAtFirst(me.body).collapse(true)
                 }
-                //ie下focus实效，所以做了个延迟
+                //ie涓媐ocus瀹炴晥锛屾墍浠ュ仛浜嗕釜寤惰繜
                 setTimeout(function () {
                     range.select(true);
                 }, 100);
@@ -7861,8 +7428,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             return this.setShow();
         },
         /**
-         * 隐藏编辑器
-         * @method setHide
+         * 闅愯棌缂栬緫鍣?         * @method setHide
          * @example
          * ```javascript
          * editor.setHide()
@@ -7880,13 +7446,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 根据指定的路径，获取对应的语言资源
+         * 鏍规嵁鎸囧畾鐨勮矾寰勶紝鑾峰彇瀵瑰簲鐨勮瑷€璧勬簮
          * @method getLang
-         * @param { String } path 路径根据的是lang目录下的语言文件的路径结构
-         * @return { Object | String } 根据路径返回语言资源的Json格式对象或者语言字符串
-         * @example
+         * @param { String } path 璺緞鏍规嵁鐨勬槸lang鐩綍涓嬬殑璇█鏂囦欢鐨勮矾寰勭粨鏋?         * @return { Object | String } 鏍规嵁璺緞杩斿洖璇█璧勬簮鐨凧son鏍煎紡瀵硅薄鎴栬€呰瑷€瀛楃涓?         * @example
          * ```javascript
-         * editor.getLang('contextMenu.delete'); //如果当前是中文，那返回是的是'删除'
+         * editor.getLang('contextMenu.delete'); //濡傛灉褰撳墠鏄腑鏂囷紝閭ｈ繑鍥炴槸鐨勬槸'鍒犻櫎'
          * ```
          */
         getLang: function (path) {
@@ -7903,24 +7467,21 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 计算编辑器html内容字符串的长度
+         * 璁＄畻缂栬緫鍣╤tml鍐呭瀛楃涓茬殑闀垮害
          * @method  getContentLength
-         * @return { Number } 返回计算的长度
-         * @example
+         * @return { Number } 杩斿洖璁＄畻鐨勯暱搴?         * @example
          * ```javascript
-         * //编辑器html内容<p><strong>132</strong></p>
-         * editor.getContentLength() //返回27
+         * //缂栬緫鍣╤tml鍐呭<p><strong>132</strong></p>
+         * editor.getContentLength() //杩斿洖27
          * ```
          */
         /**
-         * 计算编辑器当前纯文本内容的长度
-         * @method  getContentLength
-         * @param { Boolean } ingoneHtml 传入true时，只按照纯文本来计算
-         * @return { Number } 返回计算的长度，内容中有hr/img/iframe标签，长度加1
+         * 璁＄畻缂栬緫鍣ㄥ綋鍓嶇函鏂囨湰鍐呭鐨勯暱搴?         * @method  getContentLength
+         * @param { Boolean } ingoneHtml 浼犲叆true鏃讹紝鍙寜鐓х函鏂囨湰鏉ヨ绠?         * @return { Number } 杩斿洖璁＄畻鐨勯暱搴︼紝鍐呭涓湁hr/img/iframe鏍囩锛岄暱搴﹀姞1
          * @example
          * ```javascript
-         * //编辑器html内容<p><strong>132</strong></p>
-         * editor.getContentLength() //返回3
+         * //缂栬緫鍣╤tml鍐呭<p><strong>132</strong></p>
+         * editor.getContentLength() //杩斿洖3
          * ```
          */
         getContentLength: function (ingoneHtml, tagNames) {
@@ -7936,9 +7497,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 注册输入过滤规则
+         * 娉ㄥ唽杈撳叆杩囨护瑙勫垯
          * @method  addInputRule
-         * @param { Function } rule 要添加的过滤规则
+         * @param { Function } rule 瑕佹坊鍔犵殑杩囨护瑙勫垯
          * @example
          * ```javascript
          * editor.addInputRule(function(root){
@@ -7953,10 +7514,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 执行注册的过滤规则
-         * @method  filterInputRule
-         * @param { UE.uNode } root 要过滤的uNode节点
-         * @remind 执行editor.setContent方法和执行'inserthtml'命令后，会运行该过滤函数
+         * 鎵ц娉ㄥ唽鐨勮繃婊よ鍒?         * @method  filterInputRule
+         * @param { UE.uNode } root 瑕佽繃婊ょ殑uNode鑺傜偣
+         * @remind 鎵цeditor.setContent鏂规硶鍜屾墽琛?inserthtml'鍛戒护鍚庯紝浼氳繍琛岃杩囨护鍑芥暟
          * @example
          * ```javascript
          * editor.filterInputRule(editor.body);
@@ -7970,9 +7530,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 注册输出过滤规则
+         * 娉ㄥ唽杈撳嚭杩囨护瑙勫垯
          * @method  addOutputRule
-         * @param { Function } rule 要添加的过滤规则
+         * @param { Function } rule 瑕佹坊鍔犵殑杩囨护瑙勫垯
          * @example
          * ```javascript
          * editor.addOutputRule(function(root){
@@ -7987,10 +7547,9 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 根据输出过滤规则，过滤编辑器内容
+         * 鏍规嵁杈撳嚭杩囨护瑙勫垯锛岃繃婊ょ紪杈戝櫒鍐呭
          * @method  filterOutputRule
-         * @remind 执行editor.getContent方法的时候，会先运行该过滤函数
-         * @param { UE.uNode } root 要过滤的uNode节点
+         * @remind 鎵цeditor.getContent鏂规硶鐨勬椂鍊欙紝浼氬厛杩愯璇ヨ繃婊ゅ嚱鏁?         * @param { UE.uNode } root 瑕佽繃婊ょ殑uNode鑺傜偣
          * @example
          * ```javascript
          * editor.filterOutputRule(editor.body);
@@ -8004,16 +7563,15 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         },
 
         /**
-         * 根据action名称获取请求的路径
-         * @method  getActionUrl
-         * @remind 假如没有设置serverUrl,会根据imageUrl设置默认的controller路径
-         * @param { String } action action名称
+         * 鏍规嵁action鍚嶇О鑾峰彇璇锋眰鐨勮矾寰?         * @method  getActionUrl
+         * @remind 鍋囧娌℃湁璁剧疆serverUrl,浼氭牴鎹甶mageUrl璁剧疆榛樿鐨刢ontroller璺緞
+         * @param { String } action action鍚嶇О
          * @example
          * ```javascript
-         * editor.getActionUrl('config'); //返回 "/ueditor/php/controller.php?action=config"
-         * editor.getActionUrl('image'); //返回 "/ueditor/php/controller.php?action=uplaodimage"
-         * editor.getActionUrl('scrawl'); //返回 "/ueditor/php/controller.php?action=uplaodscrawl"
-         * editor.getActionUrl('imageManager'); //返回 "/ueditor/php/controller.php?action=listimage"
+         * editor.getActionUrl('config'); //杩斿洖 "/ueditor/php/controller.php?action=config"
+         * editor.getActionUrl('image'); //杩斿洖 "/ueditor/php/controller.php?action=uplaodimage"
+         * editor.getActionUrl('scrawl'); //杩斿洖 "/ueditor/php/controller.php?action=uplaodscrawl"
+         * editor.getActionUrl('imageManager'); //杩斿洖 "/ueditor/php/controller.php?action=listimage"
          * ```
          */
         getActionUrl: function(action){
@@ -8038,8 +7596,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
 
 
 // core/Editor.defaultoptions.js
-//维护编辑器一下默认的不在插件中的配置项
-UE.Editor.defaultOptions = function(editor){
+//缁存姢缂栬緫鍣ㄤ竴涓嬮粯璁ょ殑涓嶅湪鎻掍欢涓殑閰嶇疆椤?UE.Editor.defaultOptions = function(editor){
 
     var _url = editor.options.UEDITOR_HOME_URL;
     return {
@@ -8082,7 +7639,7 @@ UE.Editor.defaultOptions = function(editor){
                 var configUrl = me.getActionUrl('config'),
                     isJsonp = utils.isCrossDomainUrl(configUrl);
 
-                /* 发出ajax请求 */
+                /* 鍙戝嚭ajax璇锋眰 */
                 me._serverConfigLoaded = false;
 
                 configUrl && UE.ajax.request(configUrl,{
@@ -8147,12 +7704,11 @@ UE.Editor.defaultOptions = function(editor){
  */
 
 /**
- * 提供对ajax请求的支持
- * @module UE.ajax
+ * 鎻愪緵瀵筧jax璇锋眰鐨勬敮鎸? * @module UE.ajax
  */
 UE.ajax = function() {
 
-    //创建一个ajaxRequest对象
+    //鍒涘缓涓€涓猘jaxRequest瀵硅薄
     var fnStr = 'XMLHttpRequest()';
     try {
         new ActiveXObject("Msxml2.XMLHTTP");
@@ -8168,22 +7724,18 @@ UE.ajax = function() {
 
 
     /**
-     * 将json参数转化成适合ajax提交的参数列表
-     * @param json
+     * 灏唈son鍙傛暟杞寲鎴愰€傚悎ajax鎻愪氦鐨勫弬鏁板垪琛?     * @param json
      */
     function json2str(json) {
         var strArr = [];
         for (var i in json) {
-            //忽略默认的几个参数
-            if(i=="method" || i=="timeout" || i=="async" || i=="dataType" || i=="callback") continue;
-            //忽略控制
+            //蹇界暐榛樿鐨勫嚑涓弬鏁?            if(i=="method" || i=="timeout" || i=="async" || i=="dataType" || i=="callback") continue;
+            //蹇界暐鎺у埗
             if(json[i] == undefined || json[i] == null) continue;
-            //传递过来的对象和函数不在提交之列
-            if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
+            //浼犻€掕繃鏉ョ殑瀵硅薄鍜屽嚱鏁颁笉鍦ㄦ彁浜や箣鍒?            if (!((typeof json[i]).toLowerCase() == "function" || (typeof json[i]).toLowerCase() == "object")) {
                 strArr.push( encodeURIComponent(i) + "="+encodeURIComponent(json[i]) );
             } else if (utils.isArray(json[i])) {
-            //支持传数组内容
-                for(var j = 0; j < json[i].length; j++) {
+            //鏀寔浼犳暟缁勫唴瀹?                for(var j = 0; j < json[i].length; j++) {
                     strArr.push( encodeURIComponent(i) + "[]="+encodeURIComponent(json[i][j]) );
                 }
             }
@@ -8193,15 +7745,14 @@ UE.ajax = function() {
 
     function doAjax(url, ajaxOptions) {
         var xhr = creatAjaxRequest(),
-        //是否超时
+        //鏄惁瓒呮椂
             timeIsOut = false,
-        //默认参数
+        //榛樿鍙傛暟
             defaultAjaxOptions = {
                 method:"POST",
                 timeout:5000,
                 async:true,
-                data:{},//需要传递对象的话只能覆盖
-                onsuccess:function() {
+                data:{},//闇€瑕佷紶閫掑璞＄殑璇濆彧鑳借鐩?                onsuccess:function() {
                 },
                 onerror:function() {
                 }
@@ -8215,12 +7766,11 @@ UE.ajax = function() {
         var ajaxOpts = ajaxOptions ? utils.extend(defaultAjaxOptions,ajaxOptions) : defaultAjaxOptions;
 
         var submitStr = json2str(ajaxOpts);  // { name:"Jim",city:"Beijing" } --> "name=Jim&city=Beijing"
-        //如果用户直接通过data参数传递json对象过来，则也要将此json对象转化为字符串
+        //濡傛灉鐢ㄦ埛鐩存帴閫氳繃data鍙傛暟浼犻€抝son瀵硅薄杩囨潵锛屽垯涔熻灏嗘json瀵硅薄杞寲涓哄瓧绗︿覆
         if (!utils.isEmptyObject(ajaxOpts.data)){
             submitStr += (submitStr? "&":"") + json2str(ajaxOpts.data);
         }
-        //超时检测
-        var timerID = setTimeout(function() {
+        //瓒呮椂妫€娴?        var timerID = setTimeout(function() {
             if (xhr.readyState != 4) {
                 timeIsOut = true;
                 xhr.abort();
@@ -8279,7 +7829,7 @@ UE.ajax = function() {
         }
 
         var queryStr = json2str(opts);  // { name:"Jim",city:"Beijing" } --> "name=Jim&city=Beijing"
-        //如果用户直接通过data参数传递json对象过来，则也要将此json对象转化为字符串
+        //濡傛灉鐢ㄦ埛鐩存帴閫氳繃data鍙傛暟浼犻€抝son瀵硅薄杩囨潵锛屽垯涔熻灏嗘json瀵硅薄杞寲涓哄瓧绗︿覆
         if (!utils.isEmptyObject(opts.data)){
             queryStr += (queryStr? "&":"") + json2str(opts.data);
         }
@@ -8328,38 +7878,32 @@ UE.ajax = function() {
 
     return {
         /**
-         * 根据给定的参数项，向指定的url发起一个ajax请求。 ajax请求完成后，会根据请求结果调用相应回调： 如果请求
-         * 成功， 则调用onsuccess回调， 失败则调用 onerror 回调
+         * 鏍规嵁缁欏畾鐨勫弬鏁伴」锛屽悜鎸囧畾鐨剈rl鍙戣捣涓€涓猘jax璇锋眰銆?ajax璇锋眰瀹屾垚鍚庯紝浼氭牴鎹姹傜粨鏋滆皟鐢ㄧ浉搴斿洖璋冿細 濡傛灉璇锋眰
+         * 鎴愬姛锛?鍒欒皟鐢╫nsuccess鍥炶皟锛?澶辫触鍒欒皟鐢?onerror 鍥炶皟
          * @method request
-         * @param { URLString } url ajax请求的url地址
-         * @param { Object } ajaxOptions ajax请求选项的键值对，支持的选项如下：
-         * @example
+         * @param { URLString } url ajax璇锋眰鐨剈rl鍦板潃
+         * @param { Object } ajaxOptions ajax璇锋眰閫夐」鐨勯敭鍊煎锛屾敮鎸佺殑閫夐」濡備笅锛?         * @example
          * ```javascript
-         * //向sayhello.php发起一个异步的Ajax GET请求, 请求超时时间为10s， 请求完成后执行相应的回调。
-         * UE.ajax.requeset( 'sayhello.php', {
+         * //鍚憇ayhello.php鍙戣捣涓€涓紓姝ョ殑Ajax GET璇锋眰, 璇锋眰瓒呮椂鏃堕棿涓?0s锛?璇锋眰瀹屾垚鍚庢墽琛岀浉搴旂殑鍥炶皟銆?         * UE.ajax.requeset( 'sayhello.php', {
          *
-         *     //请求方法。可选值： 'GET', 'POST'，默认值是'POST'
+         *     //璇锋眰鏂规硶銆傚彲閫夊€硷細 'GET', 'POST'锛岄粯璁ゅ€兼槸'POST'
          *     method: 'GET',
          *
-         *     //超时时间。 默认为5000， 单位是ms
+         *     //瓒呮椂鏃堕棿銆?榛樿涓?000锛?鍗曚綅鏄痬s
          *     timeout: 10000,
          *
-         *     //是否是异步请求。 true为异步请求， false为同步请求
-         *     async: true,
+         *     //鏄惁鏄紓姝ヨ姹傘€?true涓哄紓姝ヨ姹傦紝 false涓哄悓姝ヨ姹?         *     async: true,
          *
-         *     //请求携带的数据。如果请求为GET请求， data会经过stringify后附加到请求url之后。
-         *     data: {
+         *     //璇锋眰鎼哄甫鐨勬暟鎹€傚鏋滆姹備负GET璇锋眰锛?data浼氱粡杩噑tringify鍚庨檮鍔犲埌璇锋眰url涔嬪悗銆?         *     data: {
          *         name: 'ueditor'
          *     },
          *
-         *     //请求成功后的回调， 该回调接受当前的XMLHttpRequest对象作为参数。
-         *     onsuccess: function ( xhr ) {
+         *     //璇锋眰鎴愬姛鍚庣殑鍥炶皟锛?璇ュ洖璋冩帴鍙楀綋鍓嶇殑XMLHttpRequest瀵硅薄浣滀负鍙傛暟銆?         *     onsuccess: function ( xhr ) {
          *         console.log( xhr.responseText );
          *     },
          *
-         *     //请求失败或者超时后的回调。
-         *     onerror: function ( xhr ) {
-         *          alert( 'Ajax请求失败' );
+         *     //璇锋眰澶辫触鎴栬€呰秴鏃跺悗鐨勫洖璋冦€?         *     onerror: function ( xhr ) {
+         *          alert( 'Ajax璇锋眰澶辫触' );
          *     }
          *
          * } );
@@ -8367,19 +7911,14 @@ UE.ajax = function() {
          */
 
         /**
-         * 根据给定的参数项发起一个ajax请求， 参数项里必须包含一个url地址。 ajax请求完成后，会根据请求结果调用相应回调： 如果请求
-         * 成功， 则调用onsuccess回调， 失败则调用 onerror 回调。
-         * @method request
-         * @warning 如果在参数项里未提供一个key为“url”的地址值，则该请求将直接退出。
-         * @param { Object } ajaxOptions ajax请求选项的键值对，支持的选项如下：
-         * @example
+         * 鏍规嵁缁欏畾鐨勫弬鏁伴」鍙戣捣涓€涓猘jax璇锋眰锛?鍙傛暟椤归噷蹇呴』鍖呭惈涓€涓猽rl鍦板潃銆?ajax璇锋眰瀹屾垚鍚庯紝浼氭牴鎹姹傜粨鏋滆皟鐢ㄧ浉搴斿洖璋冿細 濡傛灉璇锋眰
+         * 鎴愬姛锛?鍒欒皟鐢╫nsuccess鍥炶皟锛?澶辫触鍒欒皟鐢?onerror 鍥炶皟銆?         * @method request
+         * @warning 濡傛灉鍦ㄥ弬鏁伴」閲屾湭鎻愪緵涓€涓猭ey涓衡€渦rl鈥濈殑鍦板潃鍊硷紝鍒欒璇锋眰灏嗙洿鎺ラ€€鍑恒€?         * @param { Object } ajaxOptions ajax璇锋眰閫夐」鐨勯敭鍊煎锛屾敮鎸佺殑閫夐」濡備笅锛?         * @example
          * ```javascript
          *
-         * //向sayhello.php发起一个异步的Ajax POST请求, 请求超时时间为5s， 请求完成后不执行任何回调。
-         * UE.ajax.requeset( 'sayhello.php', {
+         * //鍚憇ayhello.php鍙戣捣涓€涓紓姝ョ殑Ajax POST璇锋眰, 璇锋眰瓒呮椂鏃堕棿涓?s锛?璇锋眰瀹屾垚鍚庝笉鎵ц浠讳綍鍥炶皟銆?         * UE.ajax.requeset( 'sayhello.php', {
          *
-         *     //请求的地址， 该项是必须的。
-         *     url: 'sayhello.php'
+         *     //璇锋眰鐨勫湴鍧€锛?璇ラ」鏄繀椤荤殑銆?         *     url: 'sayhello.php'
          *
          * } );
          * ```
@@ -8406,23 +7945,21 @@ UE.ajax = function() {
 
 // core/filterword.js
 /**
- * UE过滤word的静态方法
- * @file
+ * UE杩囨护word鐨勯潤鎬佹柟娉? * @file
  */
 
 /**
- * UEditor公用空间，UEditor所有的功能都挂载在该空间下
+ * UEditor鍏敤绌洪棿锛孶Editor鎵€鏈夌殑鍔熻兘閮芥寕杞藉湪璇ョ┖闂翠笅
  * @module UE
  */
 
 
 /**
- * 根据传入html字符串过滤word
+ * 鏍规嵁浼犲叆html瀛楃涓茶繃婊ord
  * @module UE
  * @since 1.2.6.1
  * @method filterWord
- * @param { String } html html字符串
- * @return { String } 已过滤后的结果字符串
+ * @param { String } html html瀛楃涓? * @return { String } 宸茶繃婊ゅ悗鐨勭粨鏋滃瓧绗︿覆
  * @example
  * ```javascript
  * UE.filterWord(html);
@@ -8430,11 +7967,10 @@ UE.ajax = function() {
  */
 var filterWord = UE.filterWord = function () {
 
-    //是否是word过来的内容
-    function isWordDocument( str ) {
+    //鏄惁鏄痺ord杩囨潵鐨勫唴瀹?    function isWordDocument( str ) {
         return /(class="?Mso|style="[^"]*\bmso\-|w:WordDocument|<(v|o):|lang=)/ig.test( str );
     }
-    //去掉小数
+    //鍘绘帀灏忔暟
     function transUnit( v ) {
         v = v.replace( /[\d.]+\w+/g, function ( m ) {
             return utils.transUnitToPx(m);
@@ -8445,15 +7981,13 @@ var filterWord = UE.filterWord = function () {
     function filterPasteWord( str ) {
         return str.replace(/[\t\r\n]+/g,' ')
                 .replace( /<!--[\s\S]*?-->/ig, "" )
-                //转换图片
+                //杞崲鍥剧墖
                 .replace(/<v:shape [^>]*>[\s\S]*?.<\/v:shape>/gi,function(str){
-                    //opera能自己解析出image所这里直接返回空
-                    if(browser.opera){
+                    //opera鑳借嚜宸辫В鏋愬嚭image鎵€杩欓噷鐩存帴杩斿洖绌?                    if(browser.opera){
                         return '';
                     }
                     try{
-                        //有可能是bitmap占为图，无用，直接过滤掉，主要体现在粘贴excel表格中
-                        if(/Bitmap/i.test(str)){
+                        //鏈夊彲鑳芥槸bitmap鍗犱负鍥撅紝鏃犵敤锛岀洿鎺ヨ繃婊ゆ帀锛屼富瑕佷綋鐜板湪绮樿创excel琛ㄦ牸涓?                        if(/Bitmap/i.test(str)){
                             return '';
                         }
                         var width = str.match(/width:([ \d.]*p[tx])/i)[1],
@@ -8464,23 +7998,18 @@ var filterWord = UE.filterWord = function () {
                         return '';
                     }
                 })
-                //针对wps添加的多余标签处理
-                .replace(/<\/?div[^>]*>/g,'')
-                //去掉多余的属性
-                .replace( /v:\w+=(["']?)[^'"]+\1/g, '' )
+                //閽堝wps娣诲姞鐨勫浣欐爣绛惧鐞?                .replace(/<\/?div[^>]*>/g,'')
+                //鍘绘帀澶氫綑鐨勫睘鎬?                .replace( /v:\w+=(["']?)[^'"]+\1/g, '' )
                 .replace( /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|xml|meta|link|style|\w+:\w+)(?=[\s\/>]))[^>]*>/gi, "" )
                 .replace( /<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>" )
-                //去掉多余的属性
-                .replace( /\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/ig, function(str,name,marks,val){
-                    //保留list的标示
-                    return name == 'class' && val == 'MsoListParagraph' ? str : ''
+                //鍘绘帀澶氫綑鐨勫睘鎬?                .replace( /\s+(class|lang|align)\s*=\s*(['"]?)([\w-]+)\2/ig, function(str,name,marks,val){
+                    //淇濈暀list鐨勬爣绀?                    return name == 'class' && val == 'MsoListParagraph' ? str : ''
                 })
-                //清除多余的font/span不能匹配&nbsp;有可能是空格
+                //娓呴櫎澶氫綑鐨刦ont/span涓嶈兘鍖归厤&nbsp;鏈夊彲鑳芥槸绌烘牸
                 .replace( /<(font|span)[^>]*>(\s*)<\/\1>/gi, function(a,b,c){
                     return c.replace(/[\t\r\n ]+/g,' ')
                 })
-                //处理style的问题
-                .replace( /(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function( str, tag, tmp, style ) {
+                //澶勭悊style鐨勯棶棰?                .replace( /(<[a-z][^>]*)\sstyle=(["'])([^\2]*?)\2/gi, function( str, tag, tmp, style ) {
                     var n = [],
                         s = style.replace( /^\s+|\s+$/, '' )
                             .replace(/&#39;/g,'\'')
@@ -8516,13 +8045,12 @@ var filterWord = UE.filterWord = function () {
                                 case "mso-margin-right-alt":
                                 case "mso-margin-bottom-alt":
                                 case "mso-margin-left-alt":
-                                //ie下会出现挤到一起的情况
+                                //ie涓嬩細鍑虹幇鎸ゅ埌涓€璧风殑鎯呭喌
                                //case "mso-table-layout-alt":
                                 case "mso-height":
                                 case "mso-width":
                                 case "mso-vertical-align-alt":
-                                    //trace:1819 ff下会解析出padding在table上
-                                    if(!/<table/.test(tag))
+                                    //trace:1819 ff涓嬩細瑙ｆ瀽鍑簆adding鍦╰able涓?                                    if(!/<table/.test(tag))
                                         n[i] = name.replace( /^mso-|-alt$/g, "" ) + ":" + transUnit( value );
                                     continue;
                                 case "horiz-align":
@@ -8597,15 +8125,14 @@ var filterWord = UE.filterWord = function () {
 
 // core/node.js
 /**
- * 编辑器模拟的节点类
- * @file
+ * 缂栬緫鍣ㄦā鎷熺殑鑺傜偣绫? * @file
  * @module UE
  * @class uNode
  * @since 1.2.6.1
  */
 
 /**
- * UEditor公用空间，UEditor所有的功能都挂载在该空间下
+ * UEditor鍏敤绌洪棿锛孶Editor鎵€鏈夌殑鍔熻兘閮芥寕杞藉湪璇ョ┖闂翠笅
  * @unfile
  * @module UE
  */
@@ -8613,17 +8140,15 @@ var filterWord = UE.filterWord = function () {
 (function () {
 
     /**
-     * 编辑器模拟的节点类
-     * @unfile
+     * 缂栬緫鍣ㄦā鎷熺殑鑺傜偣绫?     * @unfile
      * @module UE
      * @class uNode
      */
 
     /**
-     * 通过一个键值对，创建一个uNode对象
+     * 閫氳繃涓€涓敭鍊煎锛屽垱寤轰竴涓猽Node瀵硅薄
      * @constructor
-     * @param { Object } attr 传入要创建的uNode的初始属性
-     * @example
+     * @param { Object } attr 浼犲叆瑕佸垱寤虹殑uNode鐨勫垵濮嬪睘鎬?     * @example
      * ```javascript
      * var node = new uNode({
      *     type:'element',
@@ -8663,14 +8188,13 @@ var filterWord = UE.filterWord = function () {
     }
 
     function insertIndent(arr, current) {
-        //插入缩进
+        //鎻掑叆缂╄繘
         for (var i = 0; i < current; i++) {
             arr.push(indentChar);
         }
     }
 
-    //创建uNode的静态方法
-    //支持标签和html
+    //鍒涘缓uNode鐨勯潤鎬佹柟娉?    //鏀寔鏍囩鍜宧tml
     uNode.createElement = function (html) {
         if (/[<>]/.test(html)) {
             return UE.htmlparser(html).children[0]
@@ -8692,7 +8216,7 @@ var filterWord = UE.filterWord = function () {
         switch (node.type) {
             case 'root':
                 for (var i = 0, ci; ci = node.children[i++];) {
-                    //插入新行
+                    //鎻掑叆鏂拌
                     if (formatter && ci.type == 'element' && !dtd.$inlineWithA[ci.tagName] && i > 1) {
                         insertLine(arr, current, true);
                         insertIndent(arr, current)
@@ -8714,8 +8238,7 @@ var filterWord = UE.filterWord = function () {
 
     function isText(node, arr) {
         if(node.parentNode.tagName == 'pre'){
-            //源码模式下输入html标签，不能做转换处理，直接输出
-            arr.push(node.data)
+            //婧愮爜妯″紡涓嬭緭鍏tml鏍囩锛屼笉鑳藉仛杞崲澶勭悊锛岀洿鎺ヨ緭鍑?            arr.push(node.data)
         }else{
             arr.push(notTransTagName[node.parentNode.tagName] ? utils.html(node.data) : node.data.replace(/[ ]{2}/g,' &nbsp;'))
         }
@@ -8728,11 +8251,9 @@ var filterWord = UE.filterWord = function () {
             attrhtml = [];
             var attrs = node.attrs;
             for (var a in attrs) {
-                //这里就针对
-                //<p>'<img src='http://nsclick.baidu.com/u.gif?&asdf=\"sdf&asdfasdfs;asdf'></p>
-                //这里边的\"做转换，要不用innerHTML直接被截断了，属性src
-                //有可能做的不够
-                attrhtml.push(a + (attrs[a] !== undefined ? '="' + (notTransAttrs[a] ? utils.html(attrs[a]).replace(/["]/g, function (a) {
+                //杩欓噷灏遍拡瀵?                //<p>'<img src='http://nsclick.baidu.com/u.gif?&asdf=\"sdf&asdfasdfs;asdf'></p>
+                //杩欓噷杈圭殑\"鍋氳浆鎹紝瑕佷笉鐢╥nnerHTML鐩存帴琚埅鏂簡锛屽睘鎬rc
+                //鏈夊彲鑳藉仛鐨勪笉澶?                attrhtml.push(a + (attrs[a] !== undefined ? '="' + (notTransAttrs[a] ? utils.html(attrs[a]).replace(/["]/g, function (a) {
                    return '&quot;'
                 }) : utils.unhtml(attrs[a])) + '"' : ''))
             }
@@ -8742,7 +8263,7 @@ var filterWord = UE.filterWord = function () {
             (attrhtml ? ' ' + attrhtml  : '') +
             (dtd.$empty[node.tagName] ? '\/' : '' ) + '>'
         );
-        //插入新行
+        //鎻掑叆鏂拌
         if (formatter  &&  !dtd.$inlineWithA[node.tagName] && node.tagName != 'pre') {
             if(node.children && node.children.length){
                 current = insertLine(arr, current, true);
@@ -8804,8 +8325,7 @@ var filterWord = UE.filterWord = function () {
         if(root.children && root.children.length){
             for(var i= 0,ci;ci=root.children[i];){
                 nodeTraversal(ci,fn);
-                //ci被替换的情况，这里就不再走 fn了
-                if(ci.parentNode ){
+                //ci琚浛鎹㈢殑鎯呭喌锛岃繖閲屽氨涓嶅啀璧?fn浜?                if(ci.parentNode ){
                     if(ci.children && ci.children.length){
                         fn(ci)
                     }
@@ -8820,21 +8340,18 @@ var filterWord = UE.filterWord = function () {
     uNode.prototype = {
 
         /**
-         * 当前节点对象，转换成html文本
+         * 褰撳墠鑺傜偣瀵硅薄锛岃浆鎹㈡垚html鏂囨湰
          * @method toHtml
-         * @return { String } 返回转换后的html字符串
-         * @example
+         * @return { String } 杩斿洖杞崲鍚庣殑html瀛楃涓?         * @example
          * ```javascript
          * node.toHtml();
          * ```
          */
 
         /**
-         * 当前节点对象，转换成html文本
+         * 褰撳墠鑺傜偣瀵硅薄锛岃浆鎹㈡垚html鏂囨湰
          * @method toHtml
-         * @param { Boolean } formatter 是否格式化返回值
-         * @return { String } 返回转换后的html字符串
-         * @example
+         * @param { Boolean } formatter 鏄惁鏍煎紡鍖栬繑鍥炲€?         * @return { String } 杩斿洖杞崲鍚庣殑html瀛楃涓?         * @example
          * ```javascript
          * node.toHtml( true );
          * ```
@@ -8846,10 +8363,10 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取节点的html内容
+         * 鑾峰彇鑺傜偣鐨刪tml鍐呭
          * @method innerHTML
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @return { String } 返回节点的html内容
+         * @warning 鍋囧鑺傜偣鐨則ype涓嶆槸'element'锛屾垨鑺傜偣鐨勬爣绛惧悕绉颁笉鍦╠td鍒楄〃閲岋紝鐩存帴杩斿洖褰撳墠鑺傜偣
+         * @return { String } 杩斿洖鑺傜偣鐨刪tml鍐呭
          * @example
          * ```javascript
          * var htmlstr = node.innerHTML();
@@ -8857,11 +8374,11 @@ var filterWord = UE.filterWord = function () {
          */
 
         /**
-         * 设置节点的html内容
+         * 璁剧疆鑺傜偣鐨刪tml鍐呭
          * @method innerHTML
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @param { String } htmlstr 传入要设置的html内容
-         * @return { UE.uNode } 返回节点本身
+         * @warning 鍋囧鑺傜偣鐨則ype涓嶆槸'element'锛屾垨鑺傜偣鐨勬爣绛惧悕绉颁笉鍦╠td鍒楄〃閲岋紝鐩存帴杩斿洖褰撳墠鑺傜偣
+         * @param { String } htmlstr 浼犲叆瑕佽缃殑html鍐呭
+         * @return { UE.uNode } 杩斿洖鑺傜偣鏈韩
          * @example
          * ```javascript
          * node.innerHTML('<span>text</span>');
@@ -8894,10 +8411,10 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取节点的纯文本内容
+         * 鑾峰彇鑺傜偣鐨勭函鏂囨湰鍐呭
          * @method innerText
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @return { String } 返回节点的存文本内容
+         * @warning 鍋囧鑺傜偣鐨則ype涓嶆槸'element'锛屾垨鑺傜偣鐨勬爣绛惧悕绉颁笉鍦╠td鍒楄〃閲岋紝鐩存帴杩斿洖褰撳墠鑺傜偣
+         * @return { String } 杩斿洖鑺傜偣鐨勫瓨鏂囨湰鍐呭
          * @example
          * ```javascript
          * var textStr = node.innerText();
@@ -8905,11 +8422,11 @@ var filterWord = UE.filterWord = function () {
          */
 
         /**
-         * 设置节点的纯文本内容
+         * 璁剧疆鑺傜偣鐨勭函鏂囨湰鍐呭
          * @method innerText
-         * @warning 假如节点的type不是'element'，或节点的标签名称不在dtd列表里，直接返回当前节点
-         * @param { String } textStr 传入要设置的文本内容
-         * @return { UE.uNode } 返回节点本身
+         * @warning 鍋囧鑺傜偣鐨則ype涓嶆槸'element'锛屾垨鑺傜偣鐨勬爣绛惧悕绉颁笉鍦╠td鍒楄〃閲岋紝鐩存帴杩斿洖褰撳墠鑺傜偣
+         * @param { String } textStr 浼犲叆瑕佽缃殑鏂囨湰鍐呭
+         * @return { UE.uNode } 杩斿洖鑺傜偣鏈韩
          * @example
          * ```javascript
          * node.innerText('<span>text</span>');
@@ -8934,10 +8451,8 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取当前对象的data属性
-         * @method getData
-         * @return { Object } 若节点的type值是elemenet，返回空字符串，否则返回节点的data属性
-         * @example
+         * 鑾峰彇褰撳墠瀵硅薄鐨刣ata灞炴€?         * @method getData
+         * @return { Object } 鑻ヨ妭鐐圭殑type鍊兼槸elemenet锛岃繑鍥炵┖瀛楃涓诧紝鍚﹀垯杩斿洖鑺傜偣鐨刣ata灞炴€?         * @example
          * ```javascript
          * node.getData();
          * ```
@@ -8949,12 +8464,12 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取当前节点下的第一个子节点
+         * 鑾峰彇褰撳墠鑺傜偣涓嬬殑绗竴涓瓙鑺傜偣
          * @method firstChild
-         * @return { UE.uNode } 返回第一个子节点
+         * @return { UE.uNode } 杩斿洖绗竴涓瓙鑺傜偣
          * @example
          * ```javascript
-         * node.firstChild(); //返回第一个子节点
+         * node.firstChild(); //杩斿洖绗竴涓瓙鑺傜偣
          * ```
          */
         firstChild:function () {
@@ -8965,12 +8480,12 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取当前节点下的最后一个子节点
+         * 鑾峰彇褰撳墠鑺傜偣涓嬬殑鏈€鍚庝竴涓瓙鑺傜偣
          * @method lastChild
-         * @return { UE.uNode } 返回最后一个子节点
+         * @return { UE.uNode } 杩斿洖鏈€鍚庝竴涓瓙鑺傜偣
          * @example
          * ```javascript
-         * node.lastChild(); //返回最后一个子节点
+         * node.lastChild(); //杩斿洖鏈€鍚庝竴涓瓙鑺傜偣
          * ```
          */
         lastChild:function () {
@@ -8981,12 +8496,10 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取和当前节点有相同父亲节点的前一个节点
-         * @method previousSibling
-         * @return { UE.uNode } 返回前一个节点
-         * @example
+         * 鑾峰彇鍜屽綋鍓嶈妭鐐规湁鐩稿悓鐖朵翰鑺傜偣鐨勫墠涓€涓妭鐐?         * @method previousSibling
+         * @return { UE.uNode } 杩斿洖鍓嶄竴涓妭鐐?         * @example
          * ```javascript
-         * node.children[2].previousSibling(); //返回子节点node.children[1]
+         * node.children[2].previousSibling(); //杩斿洖瀛愯妭鐐筺ode.children[1]
          * ```
          */
         previousSibling : function(){
@@ -9000,12 +8513,11 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取和当前节点有相同父亲节点的后一个节点
-         * @method nextSibling
-         * @return { UE.uNode } 返回后一个节点,找不到返回null
+         * 鑾峰彇鍜屽綋鍓嶈妭鐐规湁鐩稿悓鐖朵翰鑺傜偣鐨勫悗涓€涓妭鐐?         * @method nextSibling
+         * @return { UE.uNode } 杩斿洖鍚庝竴涓妭鐐?鎵句笉鍒拌繑鍥瀗ull
          * @example
          * ```javascript
-         * node.children[2].nextSibling(); //如果有，返回子节点node.children[3]
+         * node.children[2].nextSibling(); //濡傛灉鏈夛紝杩斿洖瀛愯妭鐐筺ode.children[3]
          * ```
          */
         nextSibling : function(){
@@ -9018,14 +8530,11 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 用新的节点替换当前节点
-         * @method replaceChild
-         * @param { UE.uNode } target 要替换成该节点参数
-         * @param { UE.uNode } source 要被替换掉的节点
-         * @return { UE.uNode } 返回替换之后的节点对象
-         * @example
+         * 鐢ㄦ柊鐨勮妭鐐规浛鎹㈠綋鍓嶈妭鐐?         * @method replaceChild
+         * @param { UE.uNode } target 瑕佹浛鎹㈡垚璇ヨ妭鐐瑰弬鏁?         * @param { UE.uNode } source 瑕佽鏇挎崲鎺夌殑鑺傜偣
+         * @return { UE.uNode } 杩斿洖鏇挎崲涔嬪悗鐨勮妭鐐瑰璞?         * @example
          * ```javascript
-         * node.replaceChild(newNode, childNode); //用newNode替换childNode,childNode是node的子节点
+         * node.replaceChild(newNode, childNode); //鐢╪ewNode鏇挎崲childNode,childNode鏄痭ode鐨勫瓙鑺傜偣
          * ```
          */
         replaceChild:function (target, source) {
@@ -9045,13 +8554,11 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 在节点的子节点列表最后位置插入一个节点
-         * @method appendChild
-         * @param { UE.uNode } node 要插入的节点
-         * @return { UE.uNode } 返回刚插入的子节点
-         * @example
+         * 鍦ㄨ妭鐐圭殑瀛愯妭鐐瑰垪琛ㄦ渶鍚庝綅缃彃鍏ヤ竴涓妭鐐?         * @method appendChild
+         * @param { UE.uNode } node 瑕佹彃鍏ョ殑鑺傜偣
+         * @return { UE.uNode } 杩斿洖鍒氭彃鍏ョ殑瀛愯妭鐐?         * @example
          * ```javascript
-         * node.appendChild( newNode ); //在node内插入子节点newNode
+         * node.appendChild( newNode ); //鍦╪ode鍐呮彃鍏ュ瓙鑺傜偣newNode
          * ```
          */
         appendChild:function (node) {
@@ -9077,14 +8584,12 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 在传入节点的前面插入一个节点
-         * @method insertBefore
-         * @param { UE.uNode } target 要插入的节点
-         * @param { UE.uNode } source 在该参数节点前面插入
-         * @return { UE.uNode } 返回刚插入的子节点
-         * @example
+         * 鍦ㄤ紶鍏ヨ妭鐐圭殑鍓嶉潰鎻掑叆涓€涓妭鐐?         * @method insertBefore
+         * @param { UE.uNode } target 瑕佹彃鍏ョ殑鑺傜偣
+         * @param { UE.uNode } source 鍦ㄨ鍙傛暟鑺傜偣鍓嶉潰鎻掑叆
+         * @return { UE.uNode } 杩斿洖鍒氭彃鍏ョ殑瀛愯妭鐐?         * @example
          * ```javascript
-         * node.parentNode.insertBefore(newNode, node); //在node节点后面插入newNode
+         * node.parentNode.insertBefore(newNode, node); //鍦╪ode鑺傜偣鍚庨潰鎻掑叆newNode
          * ```
          */
         insertBefore:function (target, source) {
@@ -9104,14 +8609,12 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 在传入节点的后面插入一个节点
-         * @method insertAfter
-         * @param { UE.uNode } target 要插入的节点
-         * @param { UE.uNode } source 在该参数节点后面插入
-         * @return { UE.uNode } 返回刚插入的子节点
-         * @example
+         * 鍦ㄤ紶鍏ヨ妭鐐圭殑鍚庨潰鎻掑叆涓€涓妭鐐?         * @method insertAfter
+         * @param { UE.uNode } target 瑕佹彃鍏ョ殑鑺傜偣
+         * @param { UE.uNode } source 鍦ㄨ鍙傛暟鑺傜偣鍚庨潰鎻掑叆
+         * @return { UE.uNode } 杩斿洖鍒氭彃鍏ョ殑瀛愯妭鐐?         * @example
          * ```javascript
-         * node.parentNode.insertAfter(newNode, node); //在node节点后面插入newNode
+         * node.parentNode.insertAfter(newNode, node); //鍦╪ode鑺傜偣鍚庨潰鎻掑叆newNode
          * ```
          */
         insertAfter:function (target, source) {
@@ -9131,14 +8634,12 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 从当前节点的子节点列表中，移除节点
-         * @method removeChild
-         * @param { UE.uNode } node 要移除的节点引用
-         * @param { Boolean } keepChildren 是否保留移除节点的子节点，若传入true，自动把移除节点的子节点插入到移除的位置
-         * @return { * } 返回刚移除的子节点
-         * @example
+         * 浠庡綋鍓嶈妭鐐圭殑瀛愯妭鐐瑰垪琛ㄤ腑锛岀Щ闄よ妭鐐?         * @method removeChild
+         * @param { UE.uNode } node 瑕佺Щ闄ょ殑鑺傜偣寮曠敤
+         * @param { Boolean } keepChildren 鏄惁淇濈暀绉婚櫎鑺傜偣鐨勫瓙鑺傜偣锛岃嫢浼犲叆true锛岃嚜鍔ㄦ妸绉婚櫎鑺傜偣鐨勫瓙鑺傜偣鎻掑叆鍒扮Щ闄ょ殑浣嶇疆
+         * @return { * } 杩斿洖鍒氱Щ闄ょ殑瀛愯妭鐐?         * @example
          * ```javascript
-         * node.removeChild(childNode,true); //在node的子节点列表中移除child节点，并且吧child的子节点插入到移除的位置
+         * node.removeChild(childNode,true); //鍦╪ode鐨勫瓙鑺傜偣鍒楄〃涓Щ闄hild鑺傜偣锛屽苟涓斿惂child鐨勫瓙鑺傜偣鎻掑叆鍒扮Щ闄ょ殑浣嶇疆
          * ```
          */
         removeChild:function (node,keepChildren) {
@@ -9161,11 +8662,8 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取当前节点所代表的元素属性，即获取attrs对象下的属性值
-         * @method getAttr
-         * @param { String } attrName 要获取的属性名称
-         * @return { * } 返回attrs对象下的属性值
-         * @example
+         * 鑾峰彇褰撳墠鑺傜偣鎵€浠ｈ〃鐨勫厓绱犲睘鎬э紝鍗宠幏鍙朼ttrs瀵硅薄涓嬬殑灞炴€у€?         * @method getAttr
+         * @param { String } attrName 瑕佽幏鍙栫殑灞炴€у悕绉?         * @return { * } 杩斿洖attrs瀵硅薄涓嬬殑灞炴€у€?         * @example
          * ```javascript
          * node.getAttr('title');
          * ```
@@ -9175,14 +8673,11 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 设置当前节点所代表的元素属性，即设置attrs对象下的属性值
-         * @method setAttr
-         * @param { String } attrName 要设置的属性名称
-         * @param { * } attrVal 要设置的属性值，类型视设置的属性而定
-         * @return { * } 返回attrs对象下的属性值
-         * @example
+         * 璁剧疆褰撳墠鑺傜偣鎵€浠ｈ〃鐨勫厓绱犲睘鎬э紝鍗宠缃產ttrs瀵硅薄涓嬬殑灞炴€у€?         * @method setAttr
+         * @param { String } attrName 瑕佽缃殑灞炴€у悕绉?         * @param { * } attrVal 瑕佽缃殑灞炴€у€硷紝绫诲瀷瑙嗚缃殑灞炴€ц€屽畾
+         * @return { * } 杩斿洖attrs瀵硅薄涓嬬殑灞炴€у€?         * @example
          * ```javascript
-         * node.setAttr('title','标题');
+         * node.setAttr('title','鏍囬');
          * ```
          */
         setAttr:function (attrName, attrVal) {
@@ -9212,9 +8707,9 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 获取当前节点在父节点下的位置索引
+         * 鑾峰彇褰撳墠鑺傜偣鍦ㄧ埗鑺傜偣涓嬬殑浣嶇疆绱㈠紩
          * @method getIndex
-         * @return { Number } 返回索引数值，如果没有父节点，返回-1
+         * @return { Number } 杩斿洖绱㈠紩鏁板€硷紝濡傛灉娌℃湁鐖惰妭鐐癸紝杩斿洖-1
          * @example
          * ```javascript
          * node.getIndex();
@@ -9231,11 +8726,10 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 在当前节点下，根据id查找节点
+         * 鍦ㄥ綋鍓嶈妭鐐逛笅锛屾牴鎹甶d鏌ユ壘鑺傜偣
          * @method getNodeById
-         * @param { String } id 要查找的id
-         * @return { UE.uNode } 返回找到的节点
-         * @example
+         * @param { String } id 瑕佹煡鎵剧殑id
+         * @return { UE.uNode } 杩斿洖鎵惧埌鐨勮妭鐐?         * @example
          * ```javascript
          * node.getNodeById('textId');
          * ```
@@ -9252,11 +8746,9 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 在当前节点下，根据元素名称查找节点列表
-         * @method getNodesByTagName
-         * @param { String } tagNames 要查找的元素名称
-         * @return { Array } 返回找到的节点列表
-         * @example
+         * 鍦ㄥ綋鍓嶈妭鐐逛笅锛屾牴鎹厓绱犲悕绉版煡鎵捐妭鐐瑰垪琛?         * @method getNodesByTagName
+         * @param { String } tagNames 瑕佹煡鎵剧殑鍏冪礌鍚嶇О
+         * @return { Array } 杩斿洖鎵惧埌鐨勮妭鐐瑰垪琛?         * @example
          * ```javascript
          * node.getNodesByTagName('span');
          * ```
@@ -9275,11 +8767,9 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 根据样式名称，获取节点的样式值
-         * @method getStyle
-         * @param { String } name 要获取的样式名称
-         * @return { String } 返回样式值
-         * @example
+         * 鏍规嵁鏍峰紡鍚嶇О锛岃幏鍙栬妭鐐圭殑鏍峰紡鍊?         * @method getStyle
+         * @param { String } name 瑕佽幏鍙栫殑鏍峰紡鍚嶇О
+         * @return { String } 杩斿洖鏍峰紡鍊?         * @example
          * ```javascript
          * node.getStyle('font-size');
          * ```
@@ -9298,11 +8788,8 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 给节点设置样式
-         * @method setStyle
-         * @param { String } name 要设置的的样式名称
-         * @param { String } val 要设置的的样值
-         * @example
+         * 缁欒妭鐐硅缃牱寮?         * @method setStyle
+         * @param { String } name 瑕佽缃殑鐨勬牱寮忓悕绉?         * @param { String } val 瑕佽缃殑鐨勬牱鍊?         * @example
          * ```javascript
          * node.setStyle('font-size', '12px');
          * ```
@@ -9332,9 +8819,8 @@ var filterWord = UE.filterWord = function () {
         },
 
         /**
-         * 传入一个函数，递归遍历当前节点下的所有节点
-         * @method traversal
-         * @param { Function } fn 遍历到节点的时，传入节点作为参数，运行此函数
+         * 浼犲叆涓€涓嚱鏁帮紝閫掑綊閬嶅巻褰撳墠鑺傜偣涓嬬殑鎵€鏈夎妭鐐?         * @method traversal
+         * @param { Function } fn 閬嶅巻鍒拌妭鐐圭殑鏃讹紝浼犲叆鑺傜偣浣滀负鍙傛暟锛岃繍琛屾鍑芥暟
          * @example
          * ```javascript
          * traversal(node, function(){
@@ -9354,24 +8840,22 @@ var filterWord = UE.filterWord = function () {
 
 // core/htmlparser.js
 /**
- * html字符串转换成uNode节点
+ * html瀛楃涓茶浆鎹㈡垚uNode鑺傜偣
  * @file
  * @module UE
  * @since 1.2.6.1
  */
 
 /**
- * UEditor公用空间，UEditor所有的功能都挂载在该空间下
+ * UEditor鍏敤绌洪棿锛孶Editor鎵€鏈夌殑鍔熻兘閮芥寕杞藉湪璇ョ┖闂翠笅
  * @unfile
  * @module UE
  */
 
 /**
- * html字符串转换成uNode节点的静态方法
- * @method htmlparser
- * @param { String } htmlstr 要转换的html代码
- * @param { Boolean } ignoreBlank 若设置为true，转换的时候忽略\n\r\t等空白字符
- * @return { uNode } 给定的html片段转换形成的uNode对象
+ * html瀛楃涓茶浆鎹㈡垚uNode鑺傜偣鐨勯潤鎬佹柟娉? * @method htmlparser
+ * @param { String } htmlstr 瑕佽浆鎹㈢殑html浠ｇ爜
+ * @param { Boolean } ignoreBlank 鑻ヨ缃负true锛岃浆鎹㈢殑鏃跺€欏拷鐣n\r\t绛夌┖鐧藉瓧绗? * @return { uNode } 缁欏畾鐨刪tml鐗囨杞崲褰㈡垚鐨剈Node瀵硅薄
  * @example
  * ```javascript
  * var root = UE.htmlparser('<p><b>htmlparser</b></p>', true);
@@ -9379,12 +8863,12 @@ var filterWord = UE.filterWord = function () {
  */
 
 var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
-    //todo 原来的方式  [^"'<>\/] 有\/就不能配对上 <TD vAlign=top background=../AAA.JPG> 这样的标签了
-    //先去掉了，加上的原因忘了，这里先记录
+    //todo 鍘熸潵鐨勬柟寮? [^"'<>\/] 鏈塡/灏变笉鑳介厤瀵逛笂 <TD vAlign=top background=../AAA.JPG> 杩欐牱鐨勬爣绛句簡
+    //鍏堝幓鎺変簡锛屽姞涓婄殑鍘熷洜蹇樹簡锛岃繖閲屽厛璁板綍
     var re_tag = /<(?:(?:\/([^>]+)>)|(?:!--([\S|\s]*?)-->)|(?:([^\s\/<>]+)\s*((?:(?:"[^"]*")|(?:'[^']*')|[^"'<>])*)\/?>))/g,
         re_attr = /([\w\-:.]+)(?:(?:\s*=\s*(?:(?:"([^"]*)")|(?:'([^']*)')|([^\s>]+)))|(?=\s|$))/g;
 
-    //ie下取得的html可能会有\n存在，要去掉，在处理replace(/[\t\r\n]*/g,'');代码高量的\n不能去除
+    //ie涓嬪彇寰楃殑html鍙兘浼氭湁\n瀛樺湪锛岃鍘绘帀锛屽湪澶勭悊replace(/[\t\r\n]*/g,'');浠ｇ爜楂橀噺鐨刓n涓嶈兘鍘婚櫎
     var allowEmptyTags = {
         b:1,code:1,i:1,u:1,strike:1,s:1,tt:1,strong:1,q:1,samp:1,em:1,span:1,
         sub:1,img:1,sup:1,font:1,big:1,small:1,iframe:1,a:1,br:1,pre:1
@@ -9392,7 +8876,7 @@ var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
     htmlstr = htmlstr.replace(new RegExp(domUtils.fillChar, 'g'), '');
     if(!ignoreBlank){
         htmlstr = htmlstr.replace(new RegExp('[\\r\\t\\n'+(ignoreBlank?'':' ')+']*<\/?(\\w+)\\s*(?:[^>]*)>[\\r\\t\\n'+(ignoreBlank?'':' ')+']*','g'), function(a,b){
-            //br暂时单独处理
+            //br鏆傛椂鍗曠嫭澶勭悊
             if(b && allowEmptyTags[b.toLowerCase()]){
                 return a.replace(/(^[\n\r]+)|([\n\r]+$)/g,'');
             }
@@ -9453,18 +8937,16 @@ var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
                 parent = element(parent, utils.isArray(needParentTag) ? needParentTag[0] : needParentTag)
             }
         }
-        //按dtd处理嵌套
+        //鎸塪td澶勭悊宓屽
 //        if(parent.type != 'root' && !dtd[parent.tagName][tagName])
 //            parent = parent.parentNode;
         var elm = new uNode({
             parentNode:parent,
             type:'element',
             tagName:tagName.toLowerCase(),
-            //是自闭合的处理一下
-            children:dtd.$empty[tagName] ? null : []
+            //鏄嚜闂悎鐨勫鐞嗕竴涓?            children:dtd.$empty[tagName] ? null : []
         });
-        //如果属性存在，处理属性
-        if (htmlattr) {
+        //濡傛灉灞炴€у瓨鍦紝澶勭悊灞炴€?        if (htmlattr) {
             var attrs = {}, match;
             while (match = re_attr.exec(htmlattr)) {
                 attrs[match[1].toLowerCase()] = notTransAttrs[match[1].toLowerCase()] ? (match[2] || match[3] || match[4]) : utils.unhtml(match[2] || match[3] || match[4])
@@ -9472,13 +8954,13 @@ var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
             elm.attrs = attrs;
         }
         //trace:3970
-//        //如果parent下不能放elm
+//        //濡傛灉parent涓嬩笉鑳芥斁elm
 //        if(dtd.$inline[parent.tagName] && dtd.$block[elm.tagName] && !dtd[parent.tagName][elm.tagName]){
 //            parent = parent.parentNode;
 //            elm.parentNode = parent;
 //        }
         parent.children.push(elm);
-        //如果是自闭合节点返回父亲节点
+        //濡傛灉鏄嚜闂悎鑺傜偣杩斿洖鐖朵翰鑺傜偣
         return  dtd.$empty[tagName] ? parent : elm
     }
 
@@ -9491,8 +8973,7 @@ var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
     }
 
     var match, currentIndex = 0, nextIndex = 0;
-    //设置根节点
-    var root = new uNode({
+    //璁剧疆鏍硅妭鐐?    var root = new uNode({
         type:'root',
         children:[]
     });
@@ -9543,8 +9024,7 @@ var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
         nextIndex = re_tag.lastIndex;
 
     }
-    //如果结束是文本，就有可能丢掉，所以这里手动判断一下
-    //例如 <li>sdfsdfsdf<li>sdfsdfsdfsdf
+    //濡傛灉缁撴潫鏄枃鏈紝灏辨湁鍙兘涓㈡帀锛屾墍浠ヨ繖閲屾墜鍔ㄥ垽鏂竴涓?    //渚嬪 <li>sdfsdfsdf<li>sdfsdfsdfsdf
     if (nextIndex < htmlstr.length) {
         text(currentParent, htmlstr.slice(nextIndex));
     }
@@ -9554,23 +9034,21 @@ var htmlparser = UE.htmlparser = function (htmlstr,ignoreBlank) {
 
 // core/filternode.js
 /**
- * UE过滤节点的静态方法
- * @file
+ * UE杩囨护鑺傜偣鐨勯潤鎬佹柟娉? * @file
  */
 
 /**
- * UEditor公用空间，UEditor所有的功能都挂载在该空间下
+ * UEditor鍏敤绌洪棿锛孶Editor鎵€鏈夌殑鍔熻兘閮芥寕杞藉湪璇ョ┖闂翠笅
  * @module UE
  */
 
 
 /**
- * 根据传入节点和过滤规则过滤相应节点
- * @module UE
+ * 鏍规嵁浼犲叆鑺傜偣鍜岃繃婊よ鍒欒繃婊ょ浉搴旇妭鐐? * @module UE
  * @since 1.2.6.1
  * @method filterNode
- * @param { Object } root 指定root节点
- * @param { Object } rules 过滤规则json对象
+ * @param { Object } root 鎸囧畾root鑺傜偣
+ * @param { Object } rules 杩囨护瑙勫垯json瀵硅薄
  * @example
  * ```javascript
  * UE.filterNode(root,editor.options.filterRules);
@@ -9615,7 +9093,7 @@ var filterNode = UE.filterNode = function () {
                            var tmpAttrs = {},tmpVal;
                            for(var a in attrs){
                                tmpVal = node.getAttr(a);
-                               //todo 只先对style单独处理
+                               //todo 鍙厛瀵箂tyle鍗曠嫭澶勭悊
                                if(a == 'style' && utils.isArray(attrs[a])){
                                    var tmpCssStyle = [];
                                    utils.each(attrs[a],function(v){
@@ -9643,7 +9121,7 @@ var filterNode = UE.filterNode = function () {
                        }
                    }
                 }else{
-                    //如果不在名单里扣出子节点并删除该节点,cdata除外
+                    //濡傛灉涓嶅湪鍚嶅崟閲屾墸鍑哄瓙鑺傜偣骞跺垹闄よ鑺傜偣,cdata闄ゅ
                     if(dtd.$cdata[node.tagName]){
                         node.parentNode.removeChild(node)
                     }else{
@@ -9703,8 +9181,7 @@ UE.plugin = function(){
             _plugins[pluginName] = {
                 optionName : oldOptionName || pluginName,
                 execFn : fn,
-                //当插件被禁用时执行
-                afterDisabled : afterDisabled
+                //褰撴彃浠惰绂佺敤鏃舵墽琛?                afterDisabled : afterDisabled
             }
         },
         load : function(editor){
@@ -9712,8 +9189,7 @@ UE.plugin = function(){
                 var _export = plugin.execFn.call(editor);
                 if(editor.options[plugin.optionName] !== false){
                     if(_export){
-                        //后边需要再做扩展
-                        utils.each(_export,function(v,k){
+                        //鍚庤竟闇€瑕佸啀鍋氭墿灞?                        utils.each(_export,function(v,k){
                             switch(k.toLowerCase()){
                                 case 'shortcutkey':
                                     editor.addshortcutkey(v);
@@ -9753,7 +9229,7 @@ UE.plugin = function(){
                 }
 
             });
-            //向下兼容
+            //鍚戜笅鍏煎
             utils.each(UE.plugins,function(plugin){
                 plugin.call(editor);
             });
@@ -9805,10 +9281,10 @@ var keymap = UE.keymap  = {
 
     "b":66,
     'i':73,
-    //回退
+    //鍥為€€
     'z':90,
     'y':89,
-    //粘贴
+    //绮樿创
     'v' : 86,
     'x' : 88,
 
@@ -9818,7 +9294,7 @@ var keymap = UE.keymap  = {
 };
 
 // core/localstorage.js
-//存储媒介封装
+//瀛樺偍濯掍粙灏佽
 var LocalStorage = UE.LocalStorage = (function () {
 
     var storage = window.localStorage || getUserData() || null,
@@ -9893,7 +9369,7 @@ var LocalStorage = UE.LocalStorage = (function () {
 
             },
 
-            //// 暂时没有用到
+            //// 鏆傛椂娌℃湁鐢ㄥ埌
             //clear: function () {
             //
             //    var expiresTime = new Date();
@@ -9962,7 +9438,7 @@ var LocalStorage = UE.LocalStorage = (function () {
 
 // plugins/defaultfilter.js
 ///import core
-///plugin 编辑器默认的过滤转换机制
+///plugin 缂栬緫鍣ㄩ粯璁ょ殑杩囨护杞崲鏈哄埗
 
 UE.plugins['defaultfilter'] = function () {
     var me = this;
@@ -9970,8 +9446,7 @@ UE.plugins['defaultfilter'] = function () {
         'allowDivTransToP':true,
         'disabledTableInTable':true
     });
-    //默认的过滤处理
-    //进入编辑器的内容处理
+    //榛樿鐨勮繃婊ゅ鐞?    //杩涘叆缂栬緫鍣ㄧ殑鍐呭澶勭悊
     me.addInputRule(function (root) {
         var allowDivTransToP = this.options.allowDivTransToP;
         var val;
@@ -9984,8 +9459,7 @@ UE.plugins['defaultfilter'] = function () {
             }
             return false;
         }
-        //进行默认的处理
-        root.traversal(function (node) {
+        //杩涜榛樿鐨勫鐞?        root.traversal(function (node) {
             if (node.type == 'element') {
                 if (!dtd.$cdata[node.tagName] && me.options.autoClearEmptyNode && dtd.$inline[node.tagName] && !dtd.$empty[node.tagName] && (!node.attrs || utils.isEmptyObject(node.attrs))) {
                     if (!node.firstChild()) node.parentNode.removeChild(node);
@@ -10011,7 +9485,7 @@ UE.plugins['defaultfilter'] = function () {
                         }
                         break;
                     case 'img':
-                        //todo base64暂时去掉，后边做远程图片上传后，干掉这个
+                        //todo base64鏆傛椂鍘绘帀锛屽悗杈瑰仛杩滅▼鍥剧墖涓婁紶鍚庯紝骞叉帀杩欎釜
                         if (val = node.getAttr('src')) {
                             if (/^data:/.test(val)) {
                                 node.parentNode.removeChild(node);
@@ -10046,8 +9520,7 @@ UE.plugins['defaultfilter'] = function () {
 //                            node.setAttr('style', cssStyle)
 //
 //                        }
-                        //p标签不允许嵌套
-                        utils.each(node.children,function(n){
+                        //p鏍囩涓嶅厑璁稿祵濂?                        utils.each(node.children,function(n){
                             if(n.type == 'element' && n.tagName == 'p'){
                                 var next = n.nextSibling();
                                 node.parentNode.insertAfter(n,node);
@@ -10069,7 +9542,7 @@ UE.plugins['defaultfilter'] = function () {
                         if(node.getAttr('cdata_tag')){
                             break;
                         }
-                        //针对代码这里不处理插入代码的div
+                        //閽堝浠ｇ爜杩欓噷涓嶅鐞嗘彃鍏ヤ唬鐮佺殑div
                         val = node.getAttr('class');
                         if(val && /^line number\d+/.test(val)){
                             break;
@@ -10134,8 +9607,7 @@ UE.plugins['defaultfilter'] = function () {
 
     });
 
-    //从编辑器出去的内容处理
-    me.addOutputRule(function (root) {
+    //浠庣紪杈戝櫒鍑哄幓鐨勫唴瀹瑰鐞?    me.addOutputRule(function (root) {
 
         var val;
         root.traversal(function (node) {
@@ -10193,30 +9665,24 @@ UE.plugins['defaultfilter'] = function () {
 
 // plugins/inserthtml.js
 /**
- * 插入html字符串插件
- * @file
+ * 鎻掑叆html瀛楃涓叉彃浠? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 插入html代码
+ * 鎻掑叆html浠ｇ爜
  * @command inserthtml
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { String } html 插入的html字符串
- * @remaind 插入的标签内容是在当前的选区位置上插入，如果当前是闭合状态，那直接插入内容， 如果当前是选中状态，将先清除当前选中内容后，再做插入
- * @warning 注意:该命令会对当前选区的位置，对插入的内容进行过滤转换处理。 过滤的规则遵循html语意化的原则。
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } html 鎻掑叆鐨刪tml瀛楃涓? * @remaind 鎻掑叆鐨勬爣绛惧唴瀹规槸鍦ㄥ綋鍓嶇殑閫夊尯浣嶇疆涓婃彃鍏ワ紝濡傛灉褰撳墠鏄棴鍚堢姸鎬侊紝閭ｇ洿鎺ユ彃鍏ュ唴瀹癸紝 濡傛灉褰撳墠鏄€変腑鐘舵€侊紝灏嗗厛娓呴櫎褰撳墠閫変腑鍐呭鍚庯紝鍐嶅仛鎻掑叆
+ * @warning 娉ㄦ剰:璇ュ懡浠や細瀵瑰綋鍓嶉€夊尯鐨勪綅缃紝瀵规彃鍏ョ殑鍐呭杩涜杩囨护杞崲澶勭悊銆?杩囨护鐨勮鍒欓伒寰猦tml璇剰鍖栫殑鍘熷垯銆? * @example
  * ```javascript
- * //xxx[BB]xxx 当前选区为非闭合选区，选中BB这两个文本
- * //执行命令，插入<b>CC</b>
- * //插入后的效果 xxx<b>CC</b>xxx
- * //<p>xx|xxx</p> 当前选区为闭合状态
- * //插入<p>CC</p>
- * //结果 <p>xx</p><p>CC</p><p>xxx</p>
- * //<p>xxxx</p>|</p>xxx</p> 当前选区在两个p标签之间
- * //插入 xxxx
- * //结果 <p>xxxx</p><p>xxxx</p></p>xxx</p>
+ * //xxx[BB]xxx 褰撳墠閫夊尯涓洪潪闂悎閫夊尯锛岄€変腑BB杩欎袱涓枃鏈? * //鎵ц鍛戒护锛屾彃鍏?b>CC</b>
+ * //鎻掑叆鍚庣殑鏁堟灉 xxx<b>CC</b>xxx
+ * //<p>xx|xxx</p> 褰撳墠閫夊尯涓洪棴鍚堢姸鎬? * //鎻掑叆<p>CC</p>
+ * //缁撴灉 <p>xx</p><p>CC</p><p>xxx</p>
+ * //<p>xxxx</p>|</p>xxx</p> 褰撳墠閫夊尯鍦ㄤ袱涓猵鏍囩涔嬮棿
+ * //鎻掑叆 xxxx
+ * //缁撴灉 <p>xxxx</p><p>xxxx</p></p>xxx</p>
  * ```
  */
 
@@ -10237,12 +9703,11 @@ UE.commands['inserthtml'] = {
 
         if (!notNeedFilter) {
             var root = UE.htmlparser(html);
-            //如果给了过滤规则就先进行过滤
+            //濡傛灉缁欎簡杩囨护瑙勫垯灏卞厛杩涜杩囨护
             if(me.options.filterRules){
                 UE.filterNode(root,me.options.filterRules);
             }
-            //执行默认的处理
-            me.filterInputRule(root);
+            //鎵ц榛樿鐨勫鐞?            me.filterInputRule(root);
             html = root.toHtml()
         }
         div.innerHTML = utils.trim( html );
@@ -10257,7 +9722,7 @@ UE.commands['inserthtml'] = {
                 range.setEndAfter(tmpNode)
             }
             range.txtToElmBoundary();
-            //结束边界可能放到了br的前边，要把br包含进来
+            //缁撴潫杈圭晫鍙兘鏀惧埌浜哹r鐨勫墠杈癸紝瑕佹妸br鍖呭惈杩涙潵
             // x[xxx]<br/>
             if(range.endContainer && range.endContainer.nodeType == 1){
                 tmpNode = range.endContainer.childNodes[range.endOffset];
@@ -10292,8 +9757,7 @@ UE.commands['inserthtml'] = {
 
 
         var child,parent,pre,tmp,hadBreak = 0, nextNode;
-        //如果当前位置选中了fillchar要干掉，要不会产生空行
-        if(range.inFillChar()){
+        //濡傛灉褰撳墠浣嶇疆閫変腑浜唂illchar瑕佸共鎺夛紝瑕佷笉浼氫骇鐢熺┖琛?        if(range.inFillChar()){
             child = range.startContainer;
             if(domUtils.isFillChar(child)){
                 range.setStartBefore(child).collapse(true);
@@ -10304,12 +9768,12 @@ UE.commands['inserthtml'] = {
                 range.collapsed && range.collapse(true)
             }
         }
-        //列表单独处理
+        //鍒楄〃鍗曠嫭澶勭悊
         var li = domUtils.findParentByTagName(range.startContainer,'li',true);
         if(li){
             var next,last;
             while(child = div.firstChild){
-                //针对hr单独处理一下先
+                //閽堝hr鍗曠嫭澶勭悊涓€涓嬪厛
                 while(child && (child.nodeType == 3 || !domUtils.isBlockElm(child) || child.tagName=='HR' )){
                     next = child.nextSibling;
                     range.insertNode( child).collapse();
@@ -10378,13 +9842,13 @@ UE.commands['inserthtml'] = {
 
 
                         domUtils.breakParent( child, pre || tmp );
-                        //去掉break后前一个多余的节点  <p>|<[p> ==> <p></p><div></div><p>|</p>
+                        //鍘绘帀break鍚庡墠涓€涓浣欑殑鑺傜偣  <p>|<[p> ==> <p></p><div></div><p>|</p>
                         var pre = child.previousSibling;
                         domUtils.trimWhiteTextNode(pre);
                         if(!pre.childNodes.length){
                             domUtils.remove(pre);
                         }
-                        //trace:2012,在非ie的情况，切开后剩下的节点有可能不能点入光标添加br占位
+                        //trace:2012,鍦ㄩ潪ie鐨勬儏鍐碉紝鍒囧紑鍚庡墿涓嬬殑鑺傜偣鏈夊彲鑳戒笉鑳界偣鍏ュ厜鏍囨坊鍔燽r鍗犱綅
 
                         if(!browser.ie &&
                             (next = child.nextSibling) &&
@@ -10411,7 +9875,7 @@ UE.commands['inserthtml'] = {
             if(nextNode && domUtils.isBr(nextNode)){
                 domUtils.remove(nextNode)
             }
-            //用chrome可能有空白展位符
+            //鐢╟hrome鍙兘鏈夌┖鐧藉睍浣嶇
             if(domUtils.isBlockElm(child) && domUtils.isEmptyNode(child)){
                 if(nextNode = child.nextSibling){
                     domUtils.remove(child);
@@ -10431,7 +9895,7 @@ UE.commands['inserthtml'] = {
                 }
 
             }
-            //加上true因为在删除表情等时会删两次，第一次是删的fillData
+            //鍔犱笂true鍥犱负鍦ㄥ垹闄よ〃鎯呯瓑鏃朵細鍒犱袱娆★紝绗竴娆℃槸鍒犵殑fillData
             try{
                 range.select(true);
             }catch(e){}
@@ -10451,17 +9915,15 @@ UE.commands['inserthtml'] = {
 
 // plugins/autotypeset.js
 /**
- * 自动排版
+ * 鑷姩鎺掔増
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 对当前编辑器的内容执行自动排版， 排版的行为根据config配置文件里的“autotypeset”选项进行控制。
- * @command autotypeset
+ * 瀵瑰綋鍓嶇紪杈戝櫒鐨勫唴瀹规墽琛岃嚜鍔ㄦ帓鐗堬紝 鎺掔増鐨勮涓烘牴鎹甤onfig閰嶇疆鏂囦欢閲岀殑鈥渁utotypeset鈥濋€夐」杩涜鎺у埗銆? * @command autotypeset
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'autotypeset' );
  * ```
@@ -10470,20 +9932,14 @@ UE.commands['inserthtml'] = {
 UE.plugins['autotypeset'] = function(){
 
     this.setOpt({'autotypeset': {
-        mergeEmptyline: true,           //合并空行
-        removeClass: true,              //去掉冗余的class
-        removeEmptyline: false,         //去掉空行
-        textAlign:"left",               //段落的排版方式，可以是 left,right,center,justify 去掉这个属性表示不执行排版
-        imageBlockLine: 'center',       //图片的浮动方式，独占一行剧中,左右浮动，默认: center,left,right,none 去掉这个属性表示不执行排版
-        pasteFilter: false,             //根据规则过滤没事粘贴进来的内容
-        clearFontSize: false,           //去掉所有的内嵌字号，使用编辑器默认的字号
-        clearFontFamily: false,         //去掉所有的内嵌字体，使用编辑器默认的字体
-        removeEmptyNode: false,         // 去掉空节点
-        //可以去掉的标签
-        removeTagNames: utils.extend({div:1},dtd.$removeEmpty),
-        indent: false,                  // 行首缩进
-        indentValue : '2em',            //行首缩进的大小
-        bdc2sb: false,
+        mergeEmptyline: true,           //鍚堝苟绌鸿
+        removeClass: true,              //鍘绘帀鍐椾綑鐨刢lass
+        removeEmptyline: false,         //鍘绘帀绌鸿
+        textAlign:"left",               //娈佃惤鐨勬帓鐗堟柟寮忥紝鍙互鏄?left,right,center,justify 鍘绘帀杩欎釜灞炴€ц〃绀轰笉鎵ц鎺掔増
+        imageBlockLine: 'center',       //鍥剧墖鐨勬诞鍔ㄦ柟寮忥紝鐙崰涓€琛屽墽涓?宸﹀彸娴姩锛岄粯璁? center,left,right,none 鍘绘帀杩欎釜灞炴€ц〃绀轰笉鎵ц鎺掔増
+        pasteFilter: false,             //鏍规嵁瑙勫垯杩囨护娌′簨绮樿创杩涙潵鐨勫唴瀹?        clearFontSize: false,           //鍘绘帀鎵€鏈夌殑鍐呭祵瀛楀彿锛屼娇鐢ㄧ紪杈戝櫒榛樿鐨勫瓧鍙?        clearFontFamily: false,         //鍘绘帀鎵€鏈夌殑鍐呭祵瀛椾綋锛屼娇鐢ㄧ紪杈戝櫒榛樿鐨勫瓧浣?        removeEmptyNode: false,         // 鍘绘帀绌鸿妭鐐?        //鍙互鍘绘帀鐨勬爣绛?        removeTagNames: utils.extend({div:1},dtd.$removeEmpty),
+        indent: false,                  // 琛岄缂╄繘
+        indentValue : '2em',            //琛岄缂╄繘鐨勫ぇ灏?        bdc2sb: false,
         tobdc: false
     }});
 
@@ -10500,12 +9956,11 @@ UE.plugins['autotypeset'] = function(){
         tags = {
             div:1,
             p:1,
-            //trace:2183 这些也认为是行
-            blockquote:1,center:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,
+            //trace:2183 杩欎簺涔熻涓烘槸琛?            blockquote:1,center:1,h1:1,h2:1,h3:1,h4:1,h5:1,h6:1,
             span:1
         },
         highlightCont;
-    //升级了版本，但配置项目里没有autotypeset
+    //鍗囩骇浜嗙増鏈紝浣嗛厤缃」鐩噷娌℃湁autotypeset
     if(!opt){
         return;
     }
@@ -10552,7 +10007,7 @@ UE.plugins['autotypeset'] = function(){
         }
         var nodes = domUtils.getElementsByTagName(cont,'*');
 
-        // 行首缩进，段落方向，段间距，段内间距
+        // 琛岄缂╄繘锛屾钀芥柟鍚戯紝娈甸棿璺濓紝娈靛唴闂磋窛
         for(var i=0,ci;ci=nodes[i++];){
 
             if(me.fireEvent('excludeNodeinautotype',ci) === true){
@@ -10572,7 +10027,7 @@ UE.plugins['autotypeset'] = function(){
             }
 
             if(isLine(ci)){
-                //合并空行
+                //鍚堝苟绌鸿
                 if(opt.mergeEmptyline ){
                     var next = ci.nextSibling,tmpNode,isBr = domUtils.isBr(ci);
                     while(isLine(next)){
@@ -10585,7 +10040,7 @@ UE.plugins['autotypeset'] = function(){
                     }
 
                 }
-                 //去掉空行，保留占位的空行
+                 //鍘绘帀绌鸿锛屼繚鐣欏崰浣嶇殑绌鸿
                 if(opt.removeEmptyline && domUtils.inDoc(ci,cont) && !remainTag[ci.parentNode.tagName.toLowerCase()] ){
                     if(domUtils.isBr(ci)){
                         next = ci.nextSibling;
@@ -10611,8 +10066,7 @@ UE.plugins['autotypeset'] = function(){
 
             }
 
-            //去掉class,保留的class不去掉
-            if(opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]){
+            //鍘绘帀class,淇濈暀鐨刢lass涓嶅幓鎺?            if(opt.removeClass && ci.className && !remainClass[ci.className.toLowerCase()]){
 
                 if(highlightCont && highlightCont.contains(ci)){
                      continue;
@@ -10620,8 +10074,7 @@ UE.plugins['autotypeset'] = function(){
                 domUtils.removeAttributes(ci,['class']);
             }
 
-            //表情不处理
-            if(opt.imageBlockLine && ci.tagName.toLowerCase() == 'img' && !ci.getAttribute('emotion')){
+            //琛ㄦ儏涓嶅鐞?            if(opt.imageBlockLine && ci.tagName.toLowerCase() == 'img' && !ci.getAttribute('emotion')){
                 if(html){
                     var img = ci;
                     switch (opt.imageBlockLine){
@@ -10686,8 +10139,7 @@ UE.plugins['autotypeset'] = function(){
 
             }
 
-            //去掉冗余的标签
-            if(opt.removeEmptyNode){
+            //鍘绘帀鍐椾綑鐨勬爣绛?            if(opt.removeEmptyNode){
                 if(opt.removeTagNames[ci.tagName.toLowerCase()] && domUtils.hasNoAttributes(ci) && domUtils.isEmptyBlock(ci)){
                     domUtils.remove(ci);
                 }
@@ -10722,11 +10174,10 @@ UE.plugins['autotypeset'] = function(){
     function DBC2SB(str) {
         var result = '';
         for (var i = 0; i < str.length; i++) {
-            var code = str.charCodeAt(i); //获取当前字符的unicode编码
-            if (code >= 65281 && code <= 65373)//在这个unicode编码范围中的是所有的英文字母已经各种字符
+            var code = str.charCodeAt(i); //鑾峰彇褰撳墠瀛楃鐨剈nicode缂栫爜
+            if (code >= 65281 && code <= 65373)//鍦ㄨ繖涓猽nicode缂栫爜鑼冨洿涓殑鏄墍鏈夌殑鑻辨枃瀛楁瘝宸茬粡鍚勭瀛楃
             {
-                result += String.fromCharCode(str.charCodeAt(i) - 65248); //把全角字符的unicode编码转换为对应半角字符的unicode码
-            } else if (code == 12288)//空格
+                result += String.fromCharCode(str.charCodeAt(i) - 65248); //鎶婂叏瑙掑瓧绗︾殑unicode缂栫爜杞崲涓哄搴斿崐瑙掑瓧绗︾殑unicode鐮?            } else if (code == 12288)//绌烘牸
             {
                 result += String.fromCharCode(str.charCodeAt(i) - 12288 + 32);
             } else {
@@ -10738,7 +10189,7 @@ UE.plugins['autotypeset'] = function(){
     function ToDBC(txtstring) {
         txtstring = utils.html(txtstring);
         var tmp = "";
-        var mark = "";/*用于判断,如果是html尖括里的标记,则不进行全角的转换*/
+        var mark = "";/*鐢ㄤ簬鍒ゆ柇,濡傛灉鏄痟tml灏栨嫭閲岀殑鏍囪,鍒欎笉杩涜鍏ㄨ鐨勮浆鎹?/
         for (var i = 0; i < txtstring.length; i++) {
             if (txtstring.charCodeAt(i) == 32) {
                 tmp = tmp + String.fromCharCode(12288);
@@ -10775,17 +10226,15 @@ UE.plugins['autotypeset'] = function(){
 
 // plugins/autosubmit.js
 /**
- * 快捷键提交
- * @file
+ * 蹇嵎閿彁浜? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 提交表单
+ * 鎻愪氦琛ㄥ崟
  * @command autosubmit
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'autosubmit' );
  * ```
@@ -10794,7 +10243,7 @@ UE.plugins['autotypeset'] = function(){
 UE.plugin.register('autosubmit',function(){
     return {
         shortcutkey:{
-            "autosubmit":"ctrl+13" //手动提交
+            "autosubmit":"ctrl+13" //鎵嬪姩鎻愪氦
         },
         commands:{
             'autosubmit':{
@@ -10816,7 +10265,7 @@ UE.plugin.register('autosubmit',function(){
 
 // plugins/background.js
 /**
- * 背景插件，为UEditor提供设置背景功能
+ * 鑳屾櫙鎻掍欢锛屼负UEditor鎻愪緵璁剧疆鑳屾櫙鍔熻兘
  * @file
  * @since 1.2.6.1
  */
@@ -10849,7 +10298,7 @@ UE.plugin.register('background', function () {
             utils.cssRule(cssRuleId, '', me.document)
         }
     }
-    //重写editor.hasContent方法
+    //閲嶅啓editor.hasContent鏂规硶
 
     var orgFn = me.hasContents;
     me.hasContents = function(){
@@ -10925,31 +10374,26 @@ UE.plugin.register('background', function () {
 
 // plugins/image.js
 /**
- * 图片插入、排版插件
- * @file
+ * 鍥剧墖鎻掑叆銆佹帓鐗堟彃浠? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 图片对齐方式
+ * 鍥剧墖瀵归綈鏂瑰紡
  * @command imagefloat
  * @method execCommand
- * @remind 值center为独占一行居中
- * @param { String } cmd 命令字符串
- * @param { String } align 对齐方式，可传left、right、none、center
- * @remaind center表示图片独占一行
- * @example
+ * @remind 鍊糲enter涓虹嫭鍗犱竴琛屽眳涓? * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } align 瀵归綈鏂瑰紡锛屽彲浼爈eft銆乺ight銆乶one銆乧enter
+ * @remaind center琛ㄧず鍥剧墖鐙崰涓€琛? * @example
  * ```javascript
  * editor.execCommand( 'imagefloat', 'center' );
  * ```
  */
 
 /**
- * 如果选区所在位置是图片区域
+ * 濡傛灉閫夊尯鎵€鍦ㄤ綅缃槸鍥剧墖鍖哄煙
  * @command imagefloat
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { String } 返回图片对齐方式
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { String } 杩斿洖鍥剧墖瀵归綈鏂瑰紡
  * @example
  * ```javascript
  * editor.queryCommandValue( 'imagefloat' );
@@ -11024,8 +10468,7 @@ UE.commands['imagefloat'] = {
                             tmpNode.removeAttribute('id');
                             tmpNode = tmpNode.firstChild;
                             range.selectNode(tmpNode).select();
-                            //去掉后边多余的元素
-                            next = tmpNode.parentNode.nextSibling;
+                            //鍘绘帀鍚庤竟澶氫綑鐨勫厓绱?                            next = tmpNode.parentNode.nextSibling;
                             if (next && domUtils.isEmptyNode(next)) {
                                 domUtils.remove(next);
                             }
@@ -11077,14 +10520,10 @@ UE.commands['imagefloat'] = {
 
 
 /**
- * 插入图片
+ * 鎻掑叆鍥剧墖
  * @command insertimage
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { Object } opt 属性键值对，这些属性都将被复制到当前插入图片
- * @remind 该命令第二个参数可接受一个图片配置项对象的数组，可以插入多张图片，
- * 此时数组的每一个元素都是一个Object类型的图片属性集合。
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { Object } opt 灞炴€ч敭鍊煎锛岃繖浜涘睘鎬ч兘灏嗚澶嶅埗鍒板綋鍓嶆彃鍏ュ浘鐗? * @remind 璇ュ懡浠ょ浜屼釜鍙傛暟鍙帴鍙椾竴涓浘鐗囬厤缃」瀵硅薄鐨勬暟缁勶紝鍙互鎻掑叆澶氬紶鍥剧墖锛? * 姝ゆ椂鏁扮粍鐨勬瘡涓€涓厓绱犻兘鏄竴涓狾bject绫诲瀷鐨勫浘鐗囧睘鎬ч泦鍚堛€? * @example
  * ```javascript
  * editor.execCommand( 'insertimage', {
  *     src:'a/b/c.jpg',
@@ -11201,28 +10640,25 @@ UE.commands['insertimage'] = {
 
 // plugins/justify.js
 /**
- * 段落格式
+ * 娈佃惤鏍煎紡
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 段落对齐方式
+ * 娈佃惤瀵归綈鏂瑰紡
  * @command justify
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { String } align 对齐方式：left => 居左，right => 居右，center => 居中，justify => 两端对齐
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } align 瀵归綈鏂瑰紡锛歭eft => 灞呭乏锛宺ight => 灞呭彸锛宑enter => 灞呬腑锛宩ustify => 涓ょ瀵归綈
  * @example
  * ```javascript
  * editor.execCommand( 'justify', 'center' );
  * ```
  */
 /**
- * 如果选区所在位置是段落区域，返回当前段落对齐方式
- * @command justify
+ * 濡傛灉閫夊尯鎵€鍦ㄤ綅缃槸娈佃惤鍖哄煙锛岃繑鍥炲綋鍓嶆钀藉榻愭柟寮? * @command justify
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { String } 返回段落对齐方式
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { String } 杩斿洖娈佃惤瀵归綈鏂瑰紡
  * @example
  * ```javascript
  * editor.queryCommandValue( 'justify' );
@@ -11284,8 +10720,7 @@ UE.plugins['justify']=function(){
             var range = this.selection.getRange(),
                 txt;
 
-            //闭合时单独处理
-            if (range.collapsed) {
+            //闂悎鏃跺崟鐙鐞?            if (range.collapsed) {
                 txt = this.document.createTextNode('p');
                 range.insertNode(txt);
             }
@@ -11318,28 +10753,25 @@ UE.plugins['justify']=function(){
 
 // plugins/font.js
 /**
- * 字体颜色,背景色,字号,字体,下划线,删除线
- * @file
+ * 瀛椾綋棰滆壊,鑳屾櫙鑹?瀛楀彿,瀛椾綋,涓嬪垝绾?鍒犻櫎绾? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 字体颜色
+ * 瀛椾綋棰滆壊
  * @command forecolor
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { String } value 色值(必须十六进制)
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } value 鑹插€?蹇呴』鍗佸叚杩涘埗)
  * @example
  * ```javascript
  * editor.execCommand( 'forecolor', '#000' );
  * ```
  */
 /**
- * 返回选区字体颜色
+ * 杩斿洖閫夊尯瀛椾綋棰滆壊
  * @command forecolor
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { String } 返回字体颜色
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { String } 杩斿洖瀛椾綋棰滆壊
  * @example
  * ```javascript
  * editor.queryCommandValue( 'forecolor' );
@@ -11347,22 +10779,20 @@ UE.plugins['justify']=function(){
  */
 
 /**
- * 字体背景颜色
+ * 瀛椾綋鑳屾櫙棰滆壊
  * @command backcolor
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { String } value 色值(必须十六进制)
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } value 鑹插€?蹇呴』鍗佸叚杩涘埗)
  * @example
  * ```javascript
  * editor.execCommand( 'backcolor', '#000' );
  * ```
  */
 /**
- * 返回选区字体颜色
+ * 杩斿洖閫夊尯瀛椾綋棰滆壊
  * @command backcolor
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { String } 返回字体背景颜色
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { String } 杩斿洖瀛椾綋鑳屾櫙棰滆壊
  * @example
  * ```javascript
  * editor.queryCommandValue( 'backcolor' );
@@ -11370,22 +10800,20 @@ UE.plugins['justify']=function(){
  */
 
 /**
- * 字体大小
+ * 瀛椾綋澶у皬
  * @command fontsize
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { String } value 字体大小
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } value 瀛椾綋澶у皬
  * @example
  * ```javascript
  * editor.execCommand( 'fontsize', '14px' );
  * ```
  */
 /**
- * 返回选区字体大小
+ * 杩斿洖閫夊尯瀛椾綋澶у皬
  * @command fontsize
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { String } 返回字体大小
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { String } 杩斿洖瀛椾綋澶у皬
  * @example
  * ```javascript
  * editor.queryCommandValue( 'fontsize' );
@@ -11393,22 +10821,20 @@ UE.plugins['justify']=function(){
  */
 
 /**
- * 字体样式
+ * 瀛椾綋鏍峰紡
  * @command fontfamily
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { String } value 字体样式
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } value 瀛椾綋鏍峰紡
  * @example
  * ```javascript
- * editor.execCommand( 'fontfamily', '微软雅黑' );
+ * editor.execCommand( 'fontfamily', '寰蒋闆呴粦' );
  * ```
  */
 /**
- * 返回选区字体样式
+ * 杩斿洖閫夊尯瀛椾綋鏍峰紡
  * @command fontfamily
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { String } 返回字体样式
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { String } 杩斿洖瀛椾綋鏍峰紡
  * @example
  * ```javascript
  * editor.queryCommandValue( 'fontfamily' );
@@ -11416,33 +10842,30 @@ UE.plugins['justify']=function(){
  */
 
 /**
- * 字体下划线,与删除线互斥
+ * 瀛椾綋涓嬪垝绾?涓庡垹闄ょ嚎浜掓枼
  * @command underline
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'underline' );
  * ```
  */
 
 /**
- * 字体删除线,与下划线互斥
+ * 瀛椾綋鍒犻櫎绾?涓庝笅鍒掔嚎浜掓枼
  * @command strikethrough
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'strikethrough' );
  * ```
  */
 
 /**
- * 字体边框
+ * 瀛椾綋杈规
  * @command fontborder
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'fontborder' );
  * ```
@@ -11469,11 +10892,11 @@ UE.plugins['font'] = function () {
         };
     me.setOpt({
         'fontfamily': [
-            { name: 'songti', val: '宋体,SimSun'},
-            { name: 'yahei', val: '微软雅黑,Microsoft YaHei'},
-            { name: 'kaiti', val: '楷体,楷体_GB2312, SimKai'},
-            { name: 'heiti', val: '黑体, SimHei'},
-            { name: 'lishu', val: '隶书, SimLi'},
+            { name: 'songti', val: '瀹嬩綋,SimSun'},
+            { name: 'yahei', val: '寰蒋闆呴粦,Microsoft YaHei'},
+            { name: 'kaiti', val: '妤蜂綋,妤蜂綋_GB2312, SimKai'},
+            { name: 'heiti', val: '榛戜綋, SimHei'},
+            { name: 'lishu', val: '闅朵功, SimLi'},
             { name: 'andaleMono', val: 'andale mono'},
             { name: 'arial', val: 'arial, helvetica,sans-serif'},
             { name: 'arialBlack', val: 'arial black,avant garde'},
@@ -11568,8 +10991,7 @@ UE.plugins['font'] = function () {
 
             mergeWithParent(span);
             if(browser.ie && browser.version > 8 ){
-                //拷贝父亲们的特别的属性,这里只做背景颜色的处理
-                var parent = domUtils.findParent(span,function(n){return n.tagName == 'SPAN' && /background-color/.test(n.style.cssText)});
+                //鎷疯礉鐖朵翰浠殑鐗瑰埆鐨勫睘鎬?杩欓噷鍙仛鑳屾櫙棰滆壊鐨勫鐞?                var parent = domUtils.findParent(span,function(n){return n.tagName == 'SPAN' && /background-color/.test(n.style.cssText)});
                 if(parent && !/background-color/.test(span.style.cssText)){
                     span.style.backgroundColor = parent.style.backgroundColor;
                 }
@@ -11729,8 +11151,7 @@ UE.plugins['font'] = function () {
                                 span = range.document.createElement('span');
 
                                 if (needCmd[cmd]) {
-                                    //a标签内的不处理跳过
-                                    if (domUtils.findParentByTagName(text, 'a', true)) {
+                                    //a鏍囩鍐呯殑涓嶅鐞嗚烦杩?                                    if (domUtils.findParentByTagName(text, 'a', true)) {
                                         range.setStartBefore(text).setCursor();
                                         domUtils.remove(text);
                                         return;
@@ -11742,12 +11163,11 @@ UE.plugins['font'] = function () {
 
 
                                 text.parentNode.insertBefore(span, text);
-                                //修复，span套span 但样式不继承的问题
-                                if (!browser.ie || browser.ie && browser.version == 9) {
+                                //淇锛宻pan濂梥pan 浣嗘牱寮忎笉缁ф壙鐨勯棶棰?                                if (!browser.ie || browser.ie && browser.version == 9) {
                                     var spanParent = span.parentNode;
                                     while (!domUtils.isBlockElm(spanParent)) {
                                         if (spanParent.tagName == 'SPAN') {
-                                            //opera合并style不会加入";"
+                                            //opera鍚堝苟style涓嶄細鍔犲叆";"
                                             span.style.cssText = spanParent.style.cssText + ";" + span.style.cssText;
                                         }
                                         spanParent = spanParent.parentNode;
@@ -11844,17 +11264,14 @@ UE.plugins['font'] = function () {
 
 // plugins/link.js
 /**
- * 超链接
- * @file
+ * 瓒呴摼鎺? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 插入超链接
- * @command link
+ * 鎻掑叆瓒呴摼鎺? * @command link
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { Object } options   设置自定义属性，例如：url、title、target
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { Object } options   璁剧疆鑷畾涔夊睘鎬э紝渚嬪锛歶rl銆乼itle銆乼arget
  * @example
  * ```javascript
  * editor.execCommand( 'link', '{
@@ -11865,23 +11282,19 @@ UE.plugins['font'] = function () {
  * ```
  */
 /**
- * 返回当前选中的第一个超链接节点
+ * 杩斿洖褰撳墠閫変腑鐨勭涓€涓秴閾炬帴鑺傜偣
  * @command link
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { Element } 超链接节点
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { Element } 瓒呴摼鎺ヨ妭鐐? * @example
  * ```javascript
  * editor.queryCommandValue( 'link' );
  * ```
  */
 
 /**
- * 取消超链接
- * @command unlink
+ * 鍙栨秷瓒呴摼鎺? * @command unlink
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'unlink');
  * ```
@@ -11964,8 +11377,7 @@ UE.plugins['link'] = function(){
             opt.href && (opt.href = utils.unhtml(opt.href,/[<">]/g));
             opt.textValue && (opt.textValue = utils.unhtml(opt.textValue,/[<">]/g));
             doLink(range=this.selection.getRange(),opt,this);
-            //闭合都不加占位符，如果加了会在a后边多个占位符节点，导致a是图片背景组成的列表，出现空白问题
-            range.collapse().select(true);
+            //闂悎閮戒笉鍔犲崰浣嶇锛屽鏋滃姞浜嗕細鍦╝鍚庤竟澶氫釜鍗犱綅绗﹁妭鐐癸紝瀵艰嚧a鏄浘鐗囪儗鏅粍鎴愮殑鍒楄〃锛屽嚭鐜扮┖鐧介棶棰?            range.collapse().select(true);
 
         },
         queryCommandValue : function() {
@@ -11973,7 +11385,7 @@ UE.plugins['link'] = function(){
                 node;
             if ( range.collapsed ) {
 //                    node = this.selection.getStart();
-                //在ie下getstart()取值偏上了
+                //鍦╥e涓媑etstart()鍙栧€煎亸涓婁簡
                 node = range.startContainer;
                 node = node.nodeType == 1 ? node : node.parentNode;
 
@@ -11982,7 +11394,7 @@ UE.plugins['link'] = function(){
                     return node;
                 }
             } else {
-                //trace:1111  如果是<p><a>xx</a></p> startContainer是p就会找不到a
+                //trace:1111  濡傛灉鏄?p><a>xx</a></p> startContainer鏄痯灏变細鎵句笉鍒癮
                 range.shrinkBoundary();
                 var start = range.startContainer.nodeType  == 3 || !range.startContainer.childNodes[range.startOffset] ? range.startContainer : range.startContainer.childNodes[range.startOffset],
                     end =  range.endContainer.nodeType == 3 || range.endOffset == 0 ? range.endContainer : range.endContainer.childNodes[range.endOffset-1],
@@ -12009,7 +11421,7 @@ UE.plugins['link'] = function(){
 
         },
         queryCommandState : function() {
-            //判断如果是视频的话连接不可用
+            //鍒ゆ柇濡傛灉鏄棰戠殑璇濊繛鎺ヤ笉鍙敤
             //fix 853
             var img = this.selection.getRange().getClosedNode(),
                 flag = img && (img.className == "edui-faked-video" || img.className.indexOf("edui-upload-video")!=-1);
@@ -12021,9 +11433,9 @@ UE.plugins['link'] = function(){
 // plugins/iframe.js
 ///import core
 ///import plugins\inserthtml.js
-///commands 插入框架
+///commands 鎻掑叆妗嗘灦
 ///commandsName  InsertFrame
-///commandsTitle  插入Iframe
+///commandsTitle  鎻掑叆Iframe
 ///commandsDialog  dialogs\insertframe
 
 UE.plugins['insertframe'] = function() {
@@ -12042,9 +11454,9 @@ UE.plugins['insertframe'] = function() {
 
 // plugins/scrawl.js
 ///import core
-///commands 涂鸦
+///commands 娑傞甫
 ///commandsName  Scrawl
-///commandsTitle  涂鸦
+///commandsTitle  娑傞甫
 ///commandsDialog  dialogs\scrawl
 UE.commands['scrawl'] = {
     queryCommandState : function(){
@@ -12055,19 +11467,18 @@ UE.commands['scrawl'] = {
 
 // plugins/removeformat.js
 /**
- * 清除格式
+ * 娓呴櫎鏍煎紡
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 清除文字样式
+ * 娓呴櫎鏂囧瓧鏍峰紡
  * @command removeformat
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param   {String}   tags     以逗号隔开的标签。如：strong
- * @param   {String}   style    样式如：color
- * @param   {String}   attrs    属性如:width
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param   {String}   tags     浠ラ€楀彿闅斿紑鐨勬爣绛俱€傚锛歴trong
+ * @param   {String}   style    鏍峰紡濡傦細color
+ * @param   {String}   attrs    灞炴€у:width
  * @example
  * ```javascript
  * editor.execCommand( 'removeformat', 'strong','color','width' );
@@ -12096,8 +11507,7 @@ UE.plugins['removeformat'] = function(){
                     return 0;
                 }
                 if (browser.ie) {
-                    //ie 下判断实效，所以只能简单用style来判断
-                    //return node.style.cssText == '' ? 1 : 0;
+                    //ie 涓嬪垽鏂疄鏁堬紝鎵€浠ュ彧鑳界畝鍗曠敤style鏉ュ垽鏂?                    //return node.style.cssText == '' ? 1 : 0;
                     var attrs = node.attributes;
                     if ( attrs.length ) {
                         for ( var i = 0,l = attrs.length; i<l; i++ ) {
@@ -12117,7 +11527,7 @@ UE.plugins['removeformat'] = function(){
                     range.enlarge( true );
                 }
 
-                //不能把a标签切了
+                //涓嶈兘鎶奱鏍囩鍒囦簡
                 if(!notIncludeA){
                     var aNode = domUtils.findParentByTagName(range.startContainer,'a',true);
                     if(aNode){
@@ -12136,22 +11546,19 @@ UE.plugins['removeformat'] = function(){
 
                 node = bookmark.start;
 
-                //切开始
-                while ( (parent = node.parentNode) && !domUtils.isBlockElm( parent ) ) {
+                //鍒囧紑濮?                while ( (parent = node.parentNode) && !domUtils.isBlockElm( parent ) ) {
                     domUtils.breakParent( node, parent );
 
                     domUtils.clearEmptySibling( node );
                 }
                 if ( bookmark.end ) {
-                    //切结束
-                    node = bookmark.end;
+                    //鍒囩粨鏉?                    node = bookmark.end;
                     while ( (parent = node.parentNode) && !domUtils.isBlockElm( parent ) ) {
                         domUtils.breakParent( node, parent );
                         domUtils.clearEmptySibling( node );
                     }
 
-                    //开始去除样式
-                    var current = domUtils.getNextDomNode( bookmark.start, false, filter ),
+                    //寮€濮嬪幓闄ゆ牱寮?                    var current = domUtils.getNextDomNode( bookmark.start, false, filter ),
                         next;
                     while ( current ) {
                         if ( current == bookmark.end ) {
@@ -12171,7 +11578,7 @@ UE.plugins['removeformat'] = function(){
                                     domUtils.remove( current, true );
                                 }
                             } else {
-                                //trace:939  不能把list上的样式去掉
+                                //trace:939  涓嶈兘鎶妉ist涓婄殑鏍峰紡鍘绘帀
                                 if(!dtd.$tableContent[current.tagName] && !dtd.$list[current.tagName]){
                                     domUtils.removeAttributes( current, removeFormatAttributes );
                                     if ( isRedundantSpan( current ) ){
@@ -12185,8 +11592,7 @@ UE.plugins['removeformat'] = function(){
                     }
                 }
                 //trace:1035
-                //trace:1096 不能把td上的样式去掉，比如边框
-                var pN = bookmark.start.parentNode;
+                //trace:1096 涓嶈兘鎶妕d涓婄殑鏍峰紡鍘绘帀锛屾瘮濡傝竟妗?                var pN = bookmark.start.parentNode;
                 if(domUtils.isBlockElm(pN) && !dtd.$tableContent[pN.tagName] && !dtd.$list[pN.tagName]){
                     domUtils.removeAttributes(  pN,removeFormatAttributes );
                 }
@@ -12195,7 +11601,7 @@ UE.plugins['removeformat'] = function(){
                     domUtils.removeAttributes(  pN,removeFormatAttributes );
                 }
                 range.moveToBookmark( bookmark ).moveToBookmark(bookmark1);
-                //清除冗余的代码 <b><bookmark></b>
+                //娓呴櫎鍐椾綑鐨勪唬鐮?<b><bookmark></b>
                 var node = range.startContainer,
                     tmp,
                     collapsed = range.collapsed;
@@ -12203,7 +11609,7 @@ UE.plugins['removeformat'] = function(){
                     tmp = node.parentNode;
                     range.setStartBefore(node);
                     //trace:937
-                    //更新结束边界
+                    //鏇存柊缁撴潫杈圭晫
                     if(range.startContainer === range.endContainer){
                         range.endOffset--;
                     }
@@ -12240,29 +11646,26 @@ UE.plugins['removeformat'] = function(){
 
 // plugins/blockquote.js
 /**
- * 添加引用
+ * 娣诲姞寮曠敤
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 添加引用
+ * 娣诲姞寮曠敤
  * @command blockquote
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'blockquote' );
  * ```
  */
 
 /**
- * 添加引用
+ * 娣诲姞寮曠敤
  * @command blockquote
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { Object } attrs 节点属性
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { Object } attrs 鑺傜偣灞炴€? * @example
  * ```javascript
  * editor.execCommand( 'blockquote',{
  *     style: "color: red;"
@@ -12291,7 +11694,7 @@ UE.plugins['blockquote'] = function(){
                         end = range.endContainer,
                         endBlock = domUtils.isBlockElm(end) ? end :  domUtils.findParent(end,function(node){return domUtils.isBlockElm(node)});
 
-                    //处理一下li
+                    //澶勭悊涓€涓媗i
                     startBlock = domUtils.findParentByTagName(startBlock,'li',true) || startBlock;
                     endBlock = domUtils.findParentByTagName(endBlock,'li',true) || endBlock;
 
@@ -12333,8 +11736,7 @@ UE.plugins['blockquote'] = function(){
                     preNode = node,
                     doEnd = 1;
 
-                //调整开始
-                while ( 1 ) {
+                //璋冩暣寮€濮?                while ( 1 ) {
                     if ( domUtils.isBody(node) ) {
                         if ( preNode !== node ) {
                             if ( range.collapsed ) {
@@ -12362,7 +11764,7 @@ UE.plugins['blockquote'] = function(){
                     node = node.parentNode;
                 }
 
-                //调整结束
+                //璋冩暣缁撴潫
                 if ( doEnd ) {
                     preNode = node =  node = tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
                     while ( 1 ) {
@@ -12394,8 +11796,7 @@ UE.plugins['blockquote'] = function(){
                 domUtils.setAttributes( node, attrs );
                 node.appendChild( tmpRange.extractContents() );
                 tmpRange.insertNode( node );
-                //去除重复的
-                var childs = domUtils.getElementsByTagName(node,'blockquote');
+                //鍘婚櫎閲嶅鐨?                var childs = domUtils.getElementsByTagName(node,'blockquote');
                 for(var i=0,ci;ci=childs[i++];){
                     if(ci.parentNode){
                         domUtils.remove(ci,true);
@@ -12415,28 +11816,23 @@ UE.plugins['blockquote'] = function(){
 
 // plugins/convertcase.js
 /**
- * 大小写转换
- * @file
+ * 澶у皬鍐欒浆鎹? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 把选区内文本变大写，与“tolowercase”命令互斥
- * @command touppercase
+ * 鎶婇€夊尯鍐呮枃鏈彉澶у啓锛屼笌鈥渢olowercase鈥濆懡浠や簰鏂? * @command touppercase
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'touppercase' );
  * ```
  */
 
 /**
- * 把选区内文本变小写，与“touppercase”命令互斥
- * @command tolowercase
+ * 鎶婇€夊尯鍐呮枃鏈彉灏忓啓锛屼笌鈥渢ouppercase鈥濆懡浠や簰鏂? * @command tolowercase
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'tolowercase' );
  * ```
@@ -12474,17 +11870,16 @@ UE.commands['tolowercase'] = {
 
 // plugins/indent.js
 /**
- * 首行缩进
+ * 棣栬缂╄繘
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 缩进
+ * 缂╄繘
  * @command indent
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'indent' );
  * ```
@@ -12504,17 +11899,16 @@ UE.commands['indent'] = {
 
 // plugins/print.js
 /**
- * 打印
+ * 鎵撳嵃
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 打印
+ * 鎵撳嵃
  * @command print
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'print' );
  * ```
@@ -12530,17 +11924,16 @@ UE.commands['print'] = {
 
 // plugins/preview.js
 /**
- * 预览
+ * 棰勮
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 预览
+ * 棰勮
  * @command preview
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'preview' );
  * ```
@@ -12561,17 +11954,14 @@ UE.commands['preview'] = {
 
 // plugins/selectall.js
 /**
- * 全选
- * @file
+ * 鍏ㄩ€? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 选中所有内容
- * @command selectall
+ * 閫変腑鎵€鏈夊唴瀹? * @command selectall
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'selectall' );
  * ```
@@ -12580,13 +11970,12 @@ UE.plugins['selectall'] = function(){
     var me = this;
     me.commands['selectall'] = {
         execCommand : function(){
-            //去掉了原生的selectAll,因为会出现报错和当内容为空时，不能出现闭合状态的光标
+            //鍘绘帀浜嗗師鐢熺殑selectAll,鍥犱负浼氬嚭鐜版姤閿欏拰褰撳唴瀹逛负绌烘椂锛屼笉鑳藉嚭鐜伴棴鍚堢姸鎬佺殑鍏夋爣
             var me = this,body = me.body,
                 range = me.selection.getRange();
             range.selectNodeContents(body);
             if(domUtils.isEmptyBlock(body)){
-                //opera不能自动合并到元素的里边，要手动处理一下
-                if(browser.opera && body.firstChild && body.firstChild.nodeType == 1){
+                //opera涓嶈兘鑷姩鍚堝苟鍒板厓绱犵殑閲岃竟锛岃鎵嬪姩澶勭悊涓€涓?                if(browser.opera && body.firstChild && body.firstChild.nodeType == 1){
                     range.setStartAtFirst(body.firstChild);
                 }
                 range.collapse(true);
@@ -12597,8 +11986,7 @@ UE.plugins['selectall'] = function(){
     };
 
 
-    //快捷键
-    me.addshortcutkey({
+    //蹇嵎閿?    me.addshortcutkey({
          "selectAll" : "ctrl+65"
     });
 };
@@ -12606,19 +11994,17 @@ UE.plugins['selectall'] = function(){
 
 // plugins/paragraph.js
 /**
- * 段落样式
+ * 娈佃惤鏍峰紡
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 段落格式
+ * 娈佃惤鏍煎紡
  * @command paragraph
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param {String}   style               标签值为：'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
- * @param {Object}   attrs               标签的属性
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param {String}   style               鏍囩鍊间负锛?p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+ * @param {Object}   attrs               鏍囩鐨勫睘鎬? * @example
  * ```javascript
  * editor.execCommand( 'Paragraph','h1','{
  *     class:'test'
@@ -12627,12 +12013,10 @@ UE.plugins['selectall'] = function(){
  */
 
 /**
- * 返回选区内节点标签名
+ * 杩斿洖閫夊尯鍐呰妭鐐规爣绛惧悕
  * @command paragraph
  * @method queryCommandValue
- * @param { String } cmd 命令字符串
- * @return { String } 节点标签名
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @return { String } 鑺傜偣鏍囩鍚? * @example
  * ```javascript
  * editor.queryCommandValue( 'Paragraph' );
  * ```
@@ -12674,8 +12058,7 @@ UE.plugins['paragraph'] = function() {
                         }
                     }
                     para.appendChild( tmpRange.extractContents() );
-                    //需要内容占位
-                    if(domUtils.isEmptyNode(para)){
+                    //闇€瑕佸唴瀹瑰崰浣?                    if(domUtils.isEmptyNode(para)){
                         domUtils.fillChar(range.document,para);
                         
                     }
@@ -12683,9 +12066,9 @@ UE.plugins['paragraph'] = function() {
                     tmpRange.insertNode( para );
 
                     var parent = para.parentNode;
-                    //如果para上一级是一个block元素且不是body,td就删除它
+                    //濡傛灉para涓婁竴绾ф槸涓€涓猙lock鍏冪礌涓斾笉鏄痓ody,td灏卞垹闄ゅ畠
                     if ( block( parent ) && !domUtils.isBody( para.parentNode ) && utils.indexOf(notExchange,parent.tagName)==-1) {
-                        //存储dir,style
+                        //瀛樺偍dir,style
                         if(!(sourceCmdName && sourceCmdName == 'customstyle')){
                             parent.getAttribute('dir') && para.setAttribute('dir',parent.getAttribute('dir'));
                             //trace:1070
@@ -12696,8 +12079,7 @@ UE.plugins['paragraph'] = function() {
                             parent.style.padding && !para.style.padding && (para.style.padding = parent.style.padding);
                         }
 
-                        //trace:1706 选择的就是h1-6要删除
-                        if(attrs && /h\d/i.test(parent.tagName) && !/h\d/i.test(para.tagName) ){
+                        //trace:1706 閫夋嫨鐨勫氨鏄痟1-6瑕佸垹闄?                        if(attrs && /h\d/i.test(parent.tagName) && !/h\d/i.test(para.tagName) ){
                             domUtils.setAttributes(parent,attrs);
                             if(sourceCmdName && sourceCmdName == 'customstyle' && attrs.style){
                                 parent.style.cssText = attrs.style;
@@ -12727,11 +12109,10 @@ UE.plugins['paragraph'] = function() {
     me.commands['paragraph'] = {
         execCommand : function( cmdName, style,attrs,sourceCmdName ) {
             var range = this.selection.getRange();
-             //闭合时单独处理
-            if(range.collapsed){
+             //闂悎鏃跺崟鐙鐞?            if(range.collapsed){
                 var txt = this.document.createTextNode('p');
                 range.insertNode(txt);
-                //去掉冗余的fillchar
+                //鍘绘帀鍐椾綑鐨刦illchar
                 if(browser.ie){
                     var node = txt.previousSibling;
                     if(node && domUtils.isWhitespace(node)){
@@ -12763,8 +12144,7 @@ UE.plugins['paragraph'] = function() {
                     range.setStart(child,0).collapse(true);
                 }
             }
-            //trace:1097 原来有true，原因忘了，但去了就不能清除多余的占位符了
-            range.select();
+            //trace:1097 鍘熸潵鏈塼rue锛屽師鍥犲繕浜嗭紝浣嗗幓浜嗗氨涓嶈兘娓呴櫎澶氫綑鐨勫崰浣嶇浜?            range.select();
 
 
             return true;
@@ -12779,7 +12159,7 @@ UE.plugins['paragraph'] = function() {
 
 // plugins/directionality.js
 /**
- * 设置文字输入的方向的插件
+ * 璁剧疆鏂囧瓧杈撳叆鐨勬柟鍚戠殑鎻掍欢
  * @file
  * @since 1.2.6.1
  */
@@ -12789,8 +12169,7 @@ UE.plugins['paragraph'] = function() {
 //            var startNode = editor.selection.getStart(),
 //                parents;
 //            if ( startNode ) {
-//                //查找所有的是block的父亲节点
-//                parents = domUtils.findParents( startNode, true, block, true );
+//                //鏌ユ壘鎵€鏈夌殑鏄痓lock鐨勭埗浜茶妭鐐?//                parents = domUtils.findParents( startNode, true, block, true );
 //                for ( var i = 0,ci; ci = parents[i++]; ) {
 //                    if ( ci.getAttribute( 'dir' ) ) {
 //                        return ci;
@@ -12831,11 +12210,11 @@ UE.plugins['paragraph'] = function() {
                     tmpRange.setEndAfter( tmpNode );
                     var common = tmpRange.getCommonAncestor();
                     if ( !domUtils.isBody( common ) && block( common ) ) {
-                        //遍历到了block节点
+                        //閬嶅巻鍒颁簡block鑺傜偣
                         common.setAttribute( 'dir', forward );
                         current = common;
                     } else {
-                        //没有遍历到，添加一个block节点
+                        //娌℃湁閬嶅巻鍒帮紝娣诲姞涓€涓猙lock鑺傜偣
                         var p = range.document.createElement( 'p' );
                         p.setAttribute( 'dir', forward );
                         var frag = tmpRange.extractContents();
@@ -12853,11 +12232,10 @@ UE.plugins['paragraph'] = function() {
         };
 
     /**
-     * 文字输入方向
+     * 鏂囧瓧杈撳叆鏂瑰悜
      * @command directionality
      * @method execCommand
-     * @param { String } cmdName 命令字符串
-     * @param { String } forward 传入'ltr'表示从左向右输入，传入'rtl'表示从右向左输入
+     * @param { String } cmdName 鍛戒护瀛楃涓?     * @param { String } forward 浼犲叆'ltr'琛ㄧず浠庡乏鍚戝彸杈撳叆锛屼紶鍏?rtl'琛ㄧず浠庡彸鍚戝乏杈撳叆
      * @example
      * ```javascript
      * editor.execCommand( 'directionality', 'ltr');
@@ -12865,11 +12243,9 @@ UE.plugins['paragraph'] = function() {
      */
 
     /**
-     * 查询当前选区的文字输入方向
-     * @command directionality
+     * 鏌ヨ褰撳墠閫夊尯鐨勬枃瀛楄緭鍏ユ柟鍚?     * @command directionality
      * @method queryCommandValue
-     * @param { String } cmdName 命令字符串
-     * @return { String } 返回'ltr'表示从左向右输入，返回'rtl'表示从右向左输入
+     * @param { String } cmdName 鍛戒护瀛楃涓?     * @return { String } 杩斿洖'ltr'琛ㄧず浠庡乏鍚戝彸杈撳叆锛岃繑鍥?rtl'琛ㄧず浠庡彸鍚戝乏杈撳叆
      * @example
      * ```javascript
      * editor.queryCommandValue( 'directionality');
@@ -12878,8 +12254,7 @@ UE.plugins['paragraph'] = function() {
     UE.commands['directionality'] = {
         execCommand : function( cmdName,forward ) {
             var range = this.selection.getRange();
-            //闭合时单独处理
-            if(range.collapsed){
+            //闂悎鏃跺崟鐙鐞?            if(range.collapsed){
                 var txt = this.document.createTextNode('d');
                 range.insertNode(txt);
             }
@@ -12903,17 +12278,14 @@ UE.plugins['paragraph'] = function() {
 
 // plugins/horizontal.js
 /**
- * 插入分割线插件
- * @file
+ * 鎻掑叆鍒嗗壊绾挎彃浠? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 插入分割线
- * @command horizontal
+ * 鎻掑叆鍒嗗壊绾? * @command horizontal
  * @method execCommand
- * @param { String } cmdName 命令字符串
- * @example
+ * @param { String } cmdName 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'horizontal' );
  * ```
@@ -12950,8 +12322,7 @@ UE.plugins['horizontal'] = function(){
             }
 
         },
-        //边界在table里不能加分隔线
-        queryCommandState : function() {
+        //杈圭晫鍦╰able閲屼笉鑳藉姞鍒嗛殧绾?        queryCommandState : function() {
             return domUtils.filterNodeList(this.selection.getStartElementPath(),'table') ? -1 : 0;
         }
     };
@@ -13010,28 +12381,25 @@ UE.plugins['horizontal'] = function(){
 
 // plugins/time.js
 /**
- * 插入时间和日期
- * @file
+ * 鎻掑叆鏃堕棿鍜屾棩鏈? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 插入时间，默认格式：12:59:59
+ * 鎻掑叆鏃堕棿锛岄粯璁ゆ牸寮忥細12:59:59
  * @command time
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'time');
  * ```
  */
 
 /**
- * 插入日期，默认格式：2013-08-30
+ * 鎻掑叆鏃ユ湡锛岄粯璁ゆ牸寮忥細2013-08-30
  * @command date
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'date');
  * ```
@@ -13063,18 +12431,15 @@ UE.commands['time'] = UE.commands["date"] = {
 
 // plugins/rowspacing.js
 /**
- * 段前段后间距插件
+ * 娈靛墠娈靛悗闂磋窛鎻掍欢
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 设置段间距
- * @command rowspacing
+ * 璁剧疆娈甸棿璺? * @command rowspacing
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @param { String } value 段间距的值，以px为单位
- * @param { String } dir 间距位置，top或bottom，分别表示段前和段后
+ * @param { String } cmd 鍛戒护瀛楃涓? * @param { String } value 娈甸棿璺濈殑鍊硷紝浠x涓哄崟浣? * @param { String } dir 闂磋窛浣嶇疆锛宼op鎴朾ottom锛屽垎鍒〃绀烘鍓嶅拰娈靛悗
  * @example
  * ```javascript
  * editor.execCommand( 'rowspacing', '10', 'top' );
@@ -13112,7 +12477,7 @@ UE.plugins['rowspacing'] = function(){
 
 // plugins/lineheight.js
 /**
- * 设置行内间距
+ * 璁剧疆琛屽唴闂磋窛
  * @file
  * @since 1.2.6.1
  */
@@ -13121,22 +12486,19 @@ UE.plugins['lineheight'] = function(){
     me.setOpt({'lineheight':['1', '1.5','1.75','2', '3', '4', '5']});
 
     /**
-     * 行距
+     * 琛岃窛
      * @command lineheight
      * @method execCommand
-     * @param { String } cmdName 命令字符串
-     * @param { String } value 传入的行高值， 该值是当前字体的倍数， 例如： 1.5, 1.75
+     * @param { String } cmdName 鍛戒护瀛楃涓?     * @param { String } value 浼犲叆鐨勮楂樺€硷紝 璇ュ€兼槸褰撳墠瀛椾綋鐨勫€嶆暟锛?渚嬪锛?1.5, 1.75
      * @example
      * ```javascript
      * editor.execCommand( 'lineheight', 1.5);
      * ```
      */
     /**
-     * 查询当前选区内容的行高大小
-     * @command lineheight
+     * 鏌ヨ褰撳墠閫夊尯鍐呭鐨勮楂樺ぇ灏?     * @command lineheight
      * @method queryCommandValue
-     * @param { String } cmd 命令字符串
-     * @return { String } 返回当前行高大小
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @return { String } 杩斿洖褰撳墠琛岄珮澶у皬
      * @example
      * ```javascript
      * editor.queryCommandValue( 'lineheight' );
@@ -13163,7 +12525,7 @@ UE.plugins['lineheight'] = function(){
 
 // plugins/insertcode.js
 /**
- * 插入代码插件
+ * 鎻掑叆浠ｇ爜鎻掍欢
  * @file
  * @since 1.2.6.1
  */
@@ -13202,11 +12564,10 @@ UE.plugins['insertcode'] = function() {
     });
 
     /**
-     * 插入代码
+     * 鎻掑叆浠ｇ爜
      * @command insertcode
      * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { String } lang 插入代码的语言
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @param { String } lang 鎻掑叆浠ｇ爜鐨勮瑷€
      * @example
      * ```javascript
      * editor.execCommand( 'insertcode', 'javascript' );
@@ -13214,11 +12575,10 @@ UE.plugins['insertcode'] = function() {
      */
 
     /**
-     * 如果选区所在位置是插入插入代码区域，返回代码的语言
+     * 濡傛灉閫夊尯鎵€鍦ㄤ綅缃槸鎻掑叆鎻掑叆浠ｇ爜鍖哄煙锛岃繑鍥炰唬鐮佺殑璇█
      * @command insertcode
      * @method queryCommandValue
-     * @param { String } cmd 命令字符串
-     * @return { String } 返回代码的语言
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @return { String } 杩斿洖浠ｇ爜鐨勮瑷€
      * @example
      * ```javascript
      * editor.queryCommandValue( 'insertcode' );
@@ -13374,8 +12734,7 @@ UE.plugins['insertcode'] = function() {
             var code = '';
             utils.each(pre.children,function(n){
                if(n.type == 'text'){
-                   //在ie下文本内容有可能末尾带有\n要去掉
-                   //trace:3396
+                   //鍦╥e涓嬫枃鏈唴瀹规湁鍙兘鏈熬甯︽湁\n瑕佸幓鎺?                   //trace:3396
                    code += n.data.replace(/[ ]/g,'&nbsp;').replace(/\n$/,'');
                }else{
                    if(n.tagName == 'br'){
@@ -13391,7 +12750,7 @@ UE.plugins['insertcode'] = function() {
             pre.innerText(code.replace(/(&nbsp;|\n)+$/,''))
         })
     });
-    //不需要判断highlight的command列表
+    //涓嶉渶瑕佸垽鏂環ighlight鐨刢ommand鍒楄〃
     me.notNeedCodeQuery ={
         help:1,
         undo:1,
@@ -13407,7 +12766,7 @@ UE.plugins['insertcode'] = function() {
         inserthtml:1,
         selectall:1
     };
-    //将queyCommamndState重置
+    //灏唓ueyCommamndState閲嶇疆
     var orgQuery = me.queryCommandState;
     me.queryCommandState = function(cmd){
         var me = this;
@@ -13668,7 +13027,7 @@ UE.plugins['insertcode'] = function() {
             return true;
         }
     });
-    //方向键的处理
+    //鏂瑰悜閿殑澶勭悊
     me.addListener('keydown',function(cmd,evt){
         var me = this,keyCode = evt.keyCode || evt.which;
         if(keyCode == 40){
@@ -13706,19 +13065,18 @@ UE.plugins['insertcode'] = function() {
 
 // plugins/cleardoc.js
 /**
- * 清空文档插件
+ * 娓呯┖鏂囨。鎻掍欢
  * @file
  * @since 1.2.6.1
  */
 
 /**
- * 清空文档
+ * 娓呯┖鏂囨。
  * @command cleardoc
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
- * //editor 是编辑器实例
+ * //editor 鏄紪杈戝櫒瀹炰緥
  * editor.execCommand('cleardoc');
  * ```
  */
@@ -13746,7 +13104,7 @@ UE.commands['cleardoc'] = {
 
 // plugins/anchor.js
 /**
- * 锚点插件，为UEditor提供插入锚点支持
+ * 閿氱偣鎻掍欢锛屼负UEditor鎻愪緵鎻掑叆閿氱偣鏀寔
  * @file
  * @since 1.2.6.1
  */
@@ -13792,14 +13150,12 @@ UE.plugin.register('anchor', function (){
        },
        commands:{
            /**
-            * 插入锚点
+            * 鎻掑叆閿氱偣
             * @command anchor
             * @method execCommand
-            * @param { String } cmd 命令字符串
-            * @param { String } name 锚点名称字符串
-            * @example
+            * @param { String } cmd 鍛戒护瀛楃涓?            * @param { String } name 閿氱偣鍚嶇О瀛楃涓?            * @example
             * ```javascript
-            * //editor 是编辑器实例
+            * //editor 鏄紪杈戝櫒瀹炰緥
             * editor.execCommand('anchor', 'anchor1');
             * ```
             */
@@ -13815,8 +13171,7 @@ UE.plugin.register('anchor', function (){
                        }
                    } else {
                        if (name) {
-                           //只在选区的开始插入
-                           var anchor = this.document.createElement('img');
+                           //鍙湪閫夊尯鐨勫紑濮嬫彃鍏?                           var anchor = this.document.createElement('img');
                            range.collapse(true);
                            domUtils.setAttributes(anchor,{
                                'anchorname':name,
@@ -13834,14 +13189,14 @@ UE.plugin.register('anchor', function (){
 
 // plugins/wordcount.js
 ///import core
-///commands 字数统计
+///commands 瀛楁暟缁熻
 ///commandsName  WordCount,wordCount
-///commandsTitle  字数统计
+///commandsTitle  瀛楁暟缁熻
 /*
  * Created by JetBrains WebStorm.
  * User: taoqili
  * Date: 11-9-7
- * Time: 下午8:18
+ * Time: 涓嬪崍8:18
  * To change this template use File | Settings | File Templates.
  */
 
@@ -13856,8 +13211,7 @@ UE.plugins['wordcount'] = function(){
         var me = this;
         domUtils.on(me.body,"keyup",function(evt){
             var code = evt.keyCode||evt.which,
-                //忽略的按键,ctr,alt,shift,方向键
-                ignores = {"16":1,"18":1,"20":1,"37":1,"38":1,"39":1,"40":1};
+                //蹇界暐鐨勬寜閿?ctr,alt,shift,鏂瑰悜閿?                ignores = {"16":1,"18":1,"20":1,"37":1,"38":1,"39":1,"40":1};
             if(code in ignores) return;
             clearTimeout(timer);
             timer = setTimeout(function(){
@@ -13870,7 +13224,7 @@ UE.plugins['wordcount'] = function(){
 
 // plugins/pagebreak.js
 /**
- * 分页功能插件
+ * 鍒嗛〉鍔熻兘鎻掍欢
  * @file
  * @since 1.2.6.1
  */
@@ -13891,8 +13245,7 @@ UE.plugins['pagebreak'] = function () {
             domUtils.fillNode(me.document,tmpNode);
         }
     }
-    //分页符样式添加
-
+    //鍒嗛〉绗︽牱寮忔坊鍔?
     me.ready(function(){
         utils.cssRule('pagebreak','.pagebreak{display:block;clear:both !important;cursor:default !important;width: 100% !important;margin:0;}',me.document);
     });
@@ -13920,16 +13273,11 @@ UE.plugins['pagebreak'] = function () {
     });
 
     /**
-     * 插入分页符
-     * @command pagebreak
+     * 鎻掑叆鍒嗛〉绗?     * @command pagebreak
      * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @remind 在表格中插入分页符会把表格切分成两部分
-     * @remind 获取编辑器内的数据时， 编辑器会把分页符转换成“_ueditor_page_break_tag_”字符串，
-     *          以便于提交数据到服务器端后处理分页。
-     * @example
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @remind 鍦ㄨ〃鏍间腑鎻掑叆鍒嗛〉绗︿細鎶婅〃鏍煎垏鍒嗘垚涓ら儴鍒?     * @remind 鑾峰彇缂栬緫鍣ㄥ唴鐨勬暟鎹椂锛?缂栬緫鍣ㄤ細鎶婂垎椤电杞崲鎴愨€淿ueditor_page_break_tag_鈥濆瓧绗︿覆锛?     *          浠ヤ究浜庢彁浜ゆ暟鎹埌鏈嶅姟鍣ㄧ鍚庡鐞嗗垎椤点€?     * @example
      * ```javascript
-     * editor.execCommand( 'pagebreak'); //插入一个hr标签，带有样式类名pagebreak
+     * editor.execCommand( 'pagebreak'); //鎻掑叆涓€涓猦r鏍囩锛屽甫鏈夋牱寮忕被鍚峱agebreak
      * ```
      */
 
@@ -13942,7 +13290,7 @@ UE.plugins['pagebreak'] = function () {
                 size:"5"
             });
             domUtils.unSelectable(hr);
-            //table单独处理
+            //table鍗曠嫭澶勭悊
             var node = domUtils.findParentByTagName(range.startContainer, notBreakTags, true),
 
                 parents = [], pN;
@@ -13972,8 +13320,7 @@ UE.plugins['pagebreak'] = function () {
                             domUtils.breakParent(hr, pN);
 
                         }
-                        //table要重写绑定一下拖拽
-                        me.fireEvent('afteradjusttable',me.document);
+                        //table瑕侀噸鍐欑粦瀹氫竴涓嬫嫋鎷?                        me.fireEvent('afteradjusttable',me.document);
                 }
 
             } else {
@@ -14032,9 +13379,9 @@ UE.plugins['pagebreak'] = function () {
 
 // plugins/wordimage.js
 ///import core
-///commands 本地图片引导上传
+///commands 鏈湴鍥剧墖寮曞涓婁紶
 ///commandsName  WordImage
-///commandsTitle  本地图片引导上传
+///commandsTitle  鏈湴鍥剧墖寮曞涓婁紶
 ///commandsDialog  dialogs\wordimage
 
 UE.plugin.register('wordimage',function(){
@@ -14152,22 +13499,20 @@ UE.plugins['dragdrop'] = function (){
  */
 
 /**
- * 撤销上一次执行的命令
+ * 鎾ら攢涓婁竴娆℃墽琛岀殑鍛戒护
  * @command undo
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'undo' );
  * ```
  */
 
 /**
- * 重做上一次执行的命令
+ * 閲嶅仛涓婁竴娆℃墽琛岀殑鍛戒护
  * @command redo
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'redo' );
  * ```
@@ -14178,7 +13523,7 @@ UE.plugins['undo'] = function () {
     var me = this,
         maxUndoCount = me.options.maxUndoCount || 20,
         maxInputCount = me.options.maxInputCount || 20,
-        fillchar = new RegExp(domUtils.fillChar + '|<\/hr>', 'gi');// ie会产生多余的</hr>
+        fillchar = new RegExp(domUtils.fillChar + '|<\/hr>', 'gi');// ie浼氫骇鐢熷浣欑殑</hr>
     var noNeedFillCharTags = {
         ol:1,ul:1,table:1,tbody:1,tr:1,body:1
     };
@@ -14243,11 +13588,9 @@ UE.plugins['undo'] = function () {
             me.filterInputRule(root);
             me.options.autoClearEmptyNode = orgState;
             //trace:873
-            //去掉展位符
-            me.document.body.innerHTML = root.toHtml();
+            //鍘绘帀灞曚綅绗?            me.document.body.innerHTML = root.toHtml();
             me.fireEvent('afterscencerestore');
-            //处理undo后空格不展位的问题
-            if (browser.ie) {
+            //澶勭悊undo鍚庣┖鏍间笉灞曚綅鐨勯棶棰?            if (browser.ie) {
                 utils.each(domUtils.getElementsByTagName(me.document,'td th caption p'),function(node){
                     if(domUtils.isEmptyNode(node)){
                         domUtils.fillNode(me.document, node);
@@ -14262,8 +13605,7 @@ UE.plugins['undo'] = function () {
 
             this.update();
             this.clearKey();
-            //不能把自己reset了
-            me.fireEvent('reset', true);
+            //涓嶈兘鎶婅嚜宸眗eset浜?            me.fireEvent('reset', true);
         };
 
         this.getScene = function () {
@@ -14277,7 +13619,7 @@ UE.plugins['undo'] = function () {
             me.options.autoClearEmptyNode = orgState;
             var cont = root.toHtml();
             //trace:3461
-            //这个会引起回退时导致空格丢失的情况
+            //杩欎釜浼氬紩璧峰洖閫€鏃跺鑷寸┖鏍间涪澶辩殑鎯呭喌
 //            browser.ie && (cont = cont.replace(/>&nbsp;</g, '><').replace(/\s*</g, '<').replace(/>\s*/g, '>'));
             me.fireEvent('aftergetscene');
 
@@ -14294,7 +13636,7 @@ UE.plugins['undo'] = function () {
             if(lastScene && lastScene.content != currentScene.content){
                 me.trigger('contentchange')
             }
-            //内容相同位置相同不存
+            //鍐呭鐩稿悓浣嶇疆鐩稿悓涓嶅瓨
             if (lastScene && lastScene.content == currentScene.content &&
                 ( notCompareRange ? 1 : compareRangeAddress(lastScene.address, currentScene.address) )
                 ) {
@@ -14302,14 +13644,13 @@ UE.plugins['undo'] = function () {
             }
             this.list = this.list.slice(0, this.index + 1);
             this.list.push(currentScene);
-            //如果大于最大数量了，就把最前的剔除
+            //濡傛灉澶т簬鏈€澶ф暟閲忎簡锛屽氨鎶婃渶鍓嶇殑鍓旈櫎
             if (this.list.length > maxUndoCount) {
                 this.list.shift();
             }
             this.index = this.list.length - 1;
             this.clearKey();
-            //跟新undo/redo状态
-            this.update();
+            //璺熸柊undo/redo鐘舵€?            this.update();
 
         };
         this.update = function () {
@@ -14366,7 +13707,7 @@ UE.plugins['undo'] = function () {
         },
         keycont = 0,
         lastKeyCode;
-    //输入法状态下不计算字符数
+    //杈撳叆娉曠姸鎬佷笅涓嶈绠楀瓧绗︽暟
     var inputType = false;
     me.addListener('ready', function () {
         domUtils.on(this.body, 'compositionstart', function () {
@@ -14376,8 +13717,7 @@ UE.plugins['undo'] = function () {
             inputType = false;
         })
     });
-    //快捷键
-    me.addshortcutkey({
+    //蹇嵎閿?    me.addshortcutkey({
         "Undo":"ctrl+90", //undo
         "Redo":"ctrl+89" //redo
 
@@ -14435,7 +13775,7 @@ UE.plugins['undo'] = function () {
             }
         }
     });
-    //扩展实例，添加关闭和开启命令undo
+    //鎵╁睍瀹炰緥锛屾坊鍔犲叧闂拰寮€鍚懡浠ndo
     me.stopCmdUndo = function(){
         me.__hasEnterExecCommand = true;
     };
@@ -14459,7 +13799,7 @@ UE.plugin.register('copy', function () {
 
         var client = me.zeroclipboard = new ZeroClipboard();
 
-        // 复制内容
+        // 澶嶅埗鍐呭
         client.on('copy', function (e) {
             var client = e.client,
                 rng = me.selection.getRange(),
@@ -14470,7 +13810,7 @@ UE.plugin.register('copy', function () {
             client.setHtml(div.innerHTML);
             rng.select();
         });
-        // hover事件传递到target
+        // hover浜嬩欢浼犻€掑埌target
         client.on('mouseover mouseout', function (e) {
             var target = e.target;
             if (e.type == 'mouseover') {
@@ -14479,8 +13819,7 @@ UE.plugin.register('copy', function () {
                 domUtils.removeClasses(target, 'edui-state-hover');
             }
         });
-        // flash加载不成功
-        client.on('wrongflash noflash', function () {
+        // flash鍔犺浇涓嶆垚鍔?        client.on('wrongflash noflash', function () {
             ZeroClipboard.destroy();
         });
     }
@@ -14522,11 +13861,10 @@ UE.plugin.register('copy', function () {
 ///import plugins/inserthtml.js
 ///import plugins/undo.js
 ///import plugins/serialize.js
-///commands 粘贴
+///commands 绮樿创
 ///commandsName  PastePlain
-///commandsTitle  纯文本粘贴模式
-/**
- * @description 粘贴
+///commandsTitle  绾枃鏈矘璐存ā寮?/**
+ * @description 绮樿创
  * @author zhanyi
  */
 UE.plugins['paste'] = function () {
@@ -14537,17 +13875,17 @@ UE.plugins['paste'] = function () {
         }
         var range = this.selection.getRange(),
             bk = range.createBookmark(),
-        //创建剪贴的容器div
+        //鍒涘缓鍓创鐨勫鍣╠iv
             pastebin = doc.createElement('div');
         pastebin.id = 'baidu_pastebin';
-        // Safari 要求div必须有内容，才能粘贴内容进来
+        // Safari 瑕佹眰div蹇呴』鏈夊唴瀹癸紝鎵嶈兘绮樿创鍐呭杩涙潵
         browser.webkit && pastebin.appendChild(doc.createTextNode(domUtils.fillChar + domUtils.fillChar));
         doc.body.appendChild(pastebin);
-        //trace:717 隐藏的span不能得到top
+        //trace:717 闅愯棌鐨剆pan涓嶈兘寰楀埌top
         //bk.start.innerHTML = '&nbsp;';
         bk.start.style.display = '';
         pastebin.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;left:-1000px;white-space:nowrap;top:" +
-            //要在现在光标平行的位置加入，否则会出现跳动的问题
+            //瑕佸湪鐜板湪鍏夋爣骞宠鐨勪綅缃姞鍏ワ紝鍚﹀垯浼氬嚭鐜拌烦鍔ㄧ殑闂
             domUtils.getXY(bk.start).y + 'px';
 
         range.selectNodeContents(pastebin).select(true);
@@ -14611,8 +13949,7 @@ UE.plugins['paste'] = function () {
     function filter(div) {
         var html;
         if (div.firstChild) {
-            //去掉cut中添加的边界值
-            var nodes = domUtils.getElementsByTagName(div, 'span');
+            //鍘绘帀cut涓坊鍔犵殑杈圭晫鍊?            var nodes = domUtils.getElementsByTagName(div, 'span');
             for (var i = 0, ni; ni = nodes[i++];) {
                 if (ni.id == '_baidu_cut_start' || ni.id == '_baidu_cut_end') {
                     domUtils.remove(ni);
@@ -14664,21 +14001,17 @@ UE.plugins['paste'] = function () {
                 }
             }
 
-            //ie下使用innerHTML会产生多余的\r\n字符，也会产生&nbsp;这里过滤掉
-            html = div.innerHTML;//.replace(/>(?:(\s|&nbsp;)*?)</g,'><');
+            //ie涓嬩娇鐢╥nnerHTML浼氫骇鐢熷浣欑殑\r\n瀛楃锛屼篃浼氫骇鐢?nbsp;杩欓噷杩囨护鎺?            html = div.innerHTML;//.replace(/>(?:(\s|&nbsp;)*?)</g,'><');
 
-            //过滤word粘贴过来的冗余属性
-            html = UE.filterWord(html);
-            //取消了忽略空白的第二个参数，粘贴过来的有些是有空白的，会被套上相关的标签
+            //杩囨护word绮樿创杩囨潵鐨勫啑浣欏睘鎬?            html = UE.filterWord(html);
+            //鍙栨秷浜嗗拷鐣ョ┖鐧界殑绗簩涓弬鏁帮紝绮樿创杩囨潵鐨勬湁浜涙槸鏈夌┖鐧界殑锛屼細琚涓婄浉鍏崇殑鏍囩
             var root = UE.htmlparser(html);
-            //如果给了过滤规则就先进行过滤
+            //濡傛灉缁欎簡杩囨护瑙勫垯灏卞厛杩涜杩囨护
             if (me.options.filterRules) {
                 UE.filterNode(root, me.options.filterRules);
             }
-            //执行默认的处理
-            me.filterInputRule(root);
-            //针对chrome的处理
-            if (browser.webkit) {
+            //鎵ц榛樿鐨勫鐞?            me.filterInputRule(root);
+            //閽堝chrome鐨勫鐞?            if (browser.webkit) {
                 var br = root.lastChild();
                 if (br && br.type == 'element' && br.tagName == 'br') {
                     root.removeChild(br)
@@ -14691,19 +14024,18 @@ UE.plugins['paste'] = function () {
             }
             html = {'html': root.toHtml()};
             me.fireEvent('beforepaste', html, root);
-            //抢了默认的粘贴，那后边的内容就不执行了，比如表格粘贴
+            //鎶簡榛樿鐨勭矘璐达紝閭ｅ悗杈圭殑鍐呭灏变笉鎵ц浜嗭紝姣斿琛ㄦ牸绮樿创
             if(!html.html){
                 return;
             }
             root = UE.htmlparser(html.html,true);
-            //如果开启了纯文本模式
-            if (me.queryCommandState('pasteplain') === 1) {
+            //濡傛灉寮€鍚簡绾枃鏈ā寮?            if (me.queryCommandState('pasteplain') === 1) {
                 me.execCommand('insertHtml', UE.filterNode(root, me.options.filterTxtRules).toHtml(), true);
             } else {
-                //文本模式
+                //鏂囨湰妯″紡
                 UE.filterNode(root, me.options.filterTxtRules);
                 txtContent = root.toHtml();
-                //完全模式
+                //瀹屽叏妯″紡
                 htmlContent = html.html;
 
                 address = me.selection.getRange().createAddress(true);
@@ -14797,8 +14129,7 @@ UE.plugins['paste'] = function () {
             }
         });
 
-        //ie下beforepaste在点击右键时也会触发，所以用监控键盘才处理
-        domUtils.on(me.body, browser.ie || browser.opera ? 'keydown' : 'paste', function (e) {
+        //ie涓媌eforepaste鍦ㄧ偣鍑诲彸閿椂涔熶細瑙﹀彂锛屾墍浠ョ敤鐩戞帶閿洏鎵嶅鐞?        domUtils.on(me.body, browser.ie || browser.opera ? 'keydown' : 'paste', function (e) {
             if ((browser.ie || browser.opera) && ((!e.ctrlKey && !e.metaKey) || e.keyCode != '86')) {
                 return;
             }
@@ -14827,8 +14158,7 @@ UE.plugins['paste'] = function () {
 
 // plugins/puretxtpaste.js
 /**
- * 纯文本粘贴插件
- * @file
+ * 绾枃鏈矘璐存彃浠? * @file
  * @since 1.2.6.1
  */
 
@@ -14845,8 +14175,7 @@ UE.plugins['pasteplain'] = function(){
                 node.parentNode.removeChild(node,true)
             }
             return {
-                //直接删除及其字节点内容
-                '-' : 'script style object iframe embed input select',
+                //鐩存帴鍒犻櫎鍙婂叾瀛楄妭鐐瑰唴瀹?                '-' : 'script style object iframe embed input select',
                 'p': {$:{}},
                 'br':{$:{}},
                 div: function (node) {
@@ -14879,7 +14208,7 @@ UE.plugins['pasteplain'] = function(){
                 'tr':transP,
                 'h1':transP,'h2':transP,'h3':transP,'h4':transP,'h5':transP,'h6':transP,
                 'td':function(node){
-                        //没有内容的td直接删掉
+                        //娌℃湁鍐呭鐨則d鐩存帴鍒犳帀
                         var txt = !!node.innerText();
                         if(txt){
                          node.parentNode.insertAfter(UE.uNode.createText(' &nbsp; &nbsp;'),node);
@@ -14889,26 +14218,22 @@ UE.plugins['pasteplain'] = function(){
             }
         }()
     });
-    //暂时这里支持一下老版本的属性
-    var pasteplain = me.options.pasteplain;
+    //鏆傛椂杩欓噷鏀寔涓€涓嬭€佺増鏈殑灞炴€?    var pasteplain = me.options.pasteplain;
 
     /**
-     * 启用或取消纯文本粘贴模式
+     * 鍚敤鎴栧彇娑堢函鏂囨湰绮樿创妯″紡
      * @command pasteplain
      * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @example
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @example
      * ```javascript
      * editor.queryCommandState( 'pasteplain' );
      * ```
      */
 
     /**
-     * 查询当前是否处于纯文本粘贴模式
-     * @command pasteplain
+     * 鏌ヨ褰撳墠鏄惁澶勪簬绾枃鏈矘璐存ā寮?     * @command pasteplain
      * @method queryCommandState
-     * @param { String } cmd 命令字符串
-     * @return { int } 如果处于纯文本模式，返回1，否则，返回0
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @return { int } 濡傛灉澶勪簬绾枃鏈ā寮忥紝杩斿洖1锛屽惁鍒欙紝杩斿洖0
      * @example
      * ```javascript
      * editor.queryCommandState( 'pasteplain' );
@@ -14927,7 +14252,7 @@ UE.plugins['pasteplain'] = function(){
 
 // plugins/list.js
 /**
- * 有序列表,无序列表插件
+ * 鏈夊簭鍒楄〃,鏃犲簭鍒楄〃鎻掍欢
  * @file
  * @since 1.2.6.1
  */
@@ -14974,8 +14299,7 @@ UE.plugins['list'] = function () {
         },
         listDefaultPaddingLeft : '30',
         listiconpath : 'http://bs.baidu.com/listicon/',
-        maxListLevel : -1,//-1不限制
-        disablePInList:false
+        maxListLevel : -1,//-1涓嶉檺鍒?        disablePInList:false
     } );
     function listToArray(list){
         var arr = [];
@@ -14990,7 +14314,7 @@ UE.plugins['list'] = function () {
     };
     var liiconpath = me.options.listiconpath;
 
-    //根据用户配置，调整customStyle
+    //鏍规嵁鐢ㄦ埛閰嶇疆锛岃皟鏁碿ustomStyle
     for(var s in customStyle){
         if(!me.options.insertorderedlist.hasOwnProperty(s) && !me.options.insertunorderedlist.hasOwnProperty(s)){
             delete customStyle[s];
@@ -15043,11 +14367,9 @@ UE.plugins['list'] = function () {
         customCss.push('.list-paddingleft-1{padding-left:0}');
         customCss.push('.list-paddingleft-2{padding-left:'+me.options.listDefaultPaddingLeft+'px}');
         customCss.push('.list-paddingleft-3{padding-left:'+me.options.listDefaultPaddingLeft*2+'px}');
-        //如果不给宽度会在自定应样式里出现滚动条
-        utils.cssRule('list', 'ol,ul{margin:0;pading:0;'+(browser.ie ? '' : 'width:95%')+'}li{clear:both;}'+customCss.join('\n'), me.document);
+        //濡傛灉涓嶇粰瀹藉害浼氬湪鑷畾搴旀牱寮忛噷鍑虹幇婊氬姩鏉?        utils.cssRule('list', 'ol,ul{margin:0;pading:0;'+(browser.ie ? '' : 'width:95%')+'}li{clear:both;}'+customCss.join('\n'), me.document);
     });
-    //单独处理剪切的问题
-    me.ready(function(){
+    //鍗曠嫭澶勭悊鍓垏鐨勯棶棰?    me.ready(function(){
         domUtils.on(me.body,'cut',function(){
             setTimeout(function(){
                 var rng = me.selection.getRange(),li;
@@ -15127,7 +14449,7 @@ UE.plugins['list'] = function () {
 
         html.html = root.toHtml();
     });
-    //导出时，去掉p标签
+    //瀵煎嚭鏃讹紝鍘绘帀p鏍囩
     me.getOpt('disablePInList') === true && me.addOutputRule(function(root){
         utils.each(root.getNodesByTagName('li'),function(li){
             var newChildrens = [],index=0;
@@ -15154,7 +14476,7 @@ UE.plugins['list'] = function () {
             }
         });
     });
-    //进入编辑器的li要套p标签
+    //杩涘叆缂栬緫鍣ㄧ殑li瑕佸p鏍囩
     me.addInputRule(function(root){
         utils.each(root.getNodesByTagName('li'),function(li){
             var tmpP = UE.uNode.createElement('p');
@@ -15176,12 +14498,11 @@ UE.plugins['list'] = function () {
                 li.appendChild(tmpP);
             }
             //trace:3357
-            //p不能为空
+            //p涓嶈兘涓虹┖
             if (!tmpP.firstChild()) {
                 tmpP.innerHTML(browser.ie ? '&nbsp;' : '<br/>')
             }
-            //去掉末尾的空白
-            var p = li.firstChild();
+            //鍘绘帀鏈熬鐨勭┖鐧?            var p = li.firstChild();
             var lastChild = p.lastChild();
             if(lastChild && lastChild.type == 'text' && /^\s*$/.test(lastChild.data)){
                 p.removeChild(lastChild)
@@ -15221,8 +14542,7 @@ UE.plugins['list'] = function () {
                     return
                 }
 
-                //word粘贴过来的会带有margin要去掉,但这样也可能会误命中一些央视
-                node.setStyle('margin','');
+                //word绮樿创杩囨潵鐨勪細甯︽湁margin瑕佸幓鎺?浣嗚繖鏍蜂篃鍙兘浼氳鍛戒腑涓€浜涘ぎ瑙?                node.setStyle('margin','');
                 node.setStyle('margin-left','');
                 node.setAttr('class','');
 
@@ -15275,7 +14595,7 @@ UE.plugins['list'] = function () {
 
     });
 
-    //调整索引标签
+    //璋冩暣绱㈠紩鏍囩
     me.addListener('contentchange',function(){
         adjustListStyle(me.document)
     });
@@ -15418,7 +14738,7 @@ UE.plugins['list'] = function () {
             return null;
         }
         var keyCode = evt.keyCode || evt.which;
-        if (keyCode == 13 && !evt.shiftKey) {//回车
+        if (keyCode == 13 && !evt.shiftKey) {//鍥炶溅
             var rng = me.selection.getRange(),
                 parent = domUtils.findParent(rng.startContainer,function(node){return domUtils.isBlockElm(node)},true),
                 li = domUtils.findParentByTagName(rng.startContainer,'li',true);
@@ -15513,8 +14833,7 @@ UE.plugins['list'] = function () {
                                 domUtils.remove(parentList);
                             }
                         }
-                        //嵌套不处理
-                        if (!dtd.$list[li.parentNode.tagName]) {
+                        //宓屽涓嶅鐞?                        if (!dtd.$list[li.parentNode.tagName]) {
 
                             if (!domUtils.isBlockElm(li.firstChild)) {
                                 p = me.document.createElement('p');
@@ -15583,13 +14902,12 @@ UE.plugins['list'] = function () {
 
         }
         if (keyCode == 8) {
-            //修中ie中li下的问题
+            //淇腑ie涓璴i涓嬬殑闂
             range = me.selection.getRange();
             if (range.collapsed && domUtils.isStartInblock(range)) {
                 tmpRange = range.cloneRange().trimBoundary();
                 li = domUtils.findParentByTagName(range.startContainer, 'li', true);
-                //要在li的最左边，才能处理
-                if (li && domUtils.isStartInblock(tmpRange)) {
+                //瑕佸湪li鐨勬渶宸﹁竟锛屾墠鑳藉鐞?                if (li && domUtils.isStartInblock(tmpRange)) {
                     start = domUtils.findParentByTagName(range.startContainer, 'p', true);
                     if (start && start !== li.firstChild) {
                         var parentList = domUtils.findParentByTagName(start,['ol','ul']);
@@ -15606,7 +14924,7 @@ UE.plugins['list'] = function () {
                         if (keyCode == 46 && li.childNodes.length) {
                             return;
                         }
-                        //有可能上边的兄弟节点是个2级菜单，要追加到2级菜单的最后的li
+                        //鏈夊彲鑳戒笂杈圭殑鍏勫紵鑺傜偣鏄釜2绾ц彍鍗曪紝瑕佽拷鍔犲埌2绾ц彍鍗曠殑鏈€鍚庣殑li
                         if (dtd.$list[pre.tagName]) {
                             pre = pre.lastChild;
                         }
@@ -15617,16 +14935,14 @@ UE.plugins['list'] = function () {
 //                                    range.setEnd(pre, pre.childNodes.length).shrinkBoundary().collapse().select(true);
                                 pre.appendChild(first);
                                 range.setStart(first, 0).setCursor(false, true);
-                                //first不是唯一的节点
-                                while (li.firstChild) {
+                                //first涓嶆槸鍞竴鐨勮妭鐐?                                while (li.firstChild) {
                                     pre.appendChild(li.firstChild);
                                 }
                             } else {
 
                                 span = me.document.createElement('span');
                                 range.insertNode(span);
-                                //判断pre是否是空的节点,如果是<p><br/></p>类型的空节点，干掉p标签防止它占位
-                                if (domUtils.isEmptyBlock(pre)) {
+                                //鍒ゆ柇pre鏄惁鏄┖鐨勮妭鐐?濡傛灉鏄?p><br/></p>绫诲瀷鐨勭┖鑺傜偣锛屽共鎺塸鏍囩闃叉瀹冨崰浣?                                if (domUtils.isEmptyBlock(pre)) {
                                     pre.innerHTML = '';
                                 }
                                 domUtils.moveChild(li, pre);
@@ -15703,12 +15019,11 @@ UE.plugins['list'] = function () {
             }
         }
     });
-    //处理tab键
-    me.addListener('tabkeydown',function(){
+    //澶勭悊tab閿?    me.addListener('tabkeydown',function(){
 
         var range = me.selection.getRange();
 
-        //控制级数
+        //鎺у埗绾ф暟
         function checkLevel(li){
             if(me.options.maxListLevel != -1){
                 var level = li.parentNode,levelNum = 0;
@@ -15721,8 +15036,7 @@ UE.plugins['list'] = function () {
                 }
             }
         }
-        //只以开始为准
-        //todo 后续改进
+        //鍙互寮€濮嬩负鍑?        //todo 鍚庣画鏀硅繘
         var li = domUtils.findParentByTagName(range.startContainer, 'li', true);
         if(li){
 
@@ -15810,33 +15124,29 @@ UE.plugins['list'] = function () {
     }
 
     /**
-     * 有序列表，与“insertunorderedlist”命令互斥
-     * @command insertorderedlist
+     * 鏈夊簭鍒楄〃锛屼笌鈥渋nsertunorderedlist鈥濆懡浠や簰鏂?     * @command insertorderedlist
      * @method execCommand
-     * @param { String } command 命令字符串
-     * @param { String } style 插入的有序列表类型，值为：decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
+     * @param { String } command 鍛戒护瀛楃涓?     * @param { String } style 鎻掑叆鐨勬湁搴忓垪琛ㄧ被鍨嬶紝鍊间负锛歞ecimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
      * @example
      * ```javascript
      * editor.execCommand( 'insertorderedlist','decimal');
      * ```
      */
     /**
-     * 查询当前选区内容是否有序列表
+     * 鏌ヨ褰撳墠閫夊尯鍐呭鏄惁鏈夊簭鍒楄〃
      * @command insertorderedlist
      * @method queryCommandState
-     * @param { String } cmd 命令字符串
-     * @return { int } 如果当前选区是有序列表返回1，否则返回0
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @return { int } 濡傛灉褰撳墠閫夊尯鏄湁搴忓垪琛ㄨ繑鍥?锛屽惁鍒欒繑鍥?
      * @example
      * ```javascript
      * editor.queryCommandState( 'insertorderedlist' );
      * ```
      */
     /**
-     * 查询当前选区内容是否有序列表
+     * 鏌ヨ褰撳墠閫夊尯鍐呭鏄惁鏈夊簭鍒楄〃
      * @command insertorderedlist
      * @method queryCommandValue
-     * @param { String } cmd 命令字符串
-     * @return { String } 返回当前有序列表的类型，值为null或decimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @return { String } 杩斿洖褰撳墠鏈夊簭鍒楄〃鐨勭被鍨嬶紝鍊间负null鎴杁ecimal,lower-alpha,lower-roman,upper-alpha,upper-roman,cn,cn1,cn2,num,num1,num2
      * @example
      * ```javascript
      * editor.queryCommandValue( 'insertorderedlist' );
@@ -15844,33 +15154,28 @@ UE.plugins['list'] = function () {
      */
 
     /**
-     * 无序列表，与“insertorderedlist”命令互斥
-     * @command insertunorderedlist
+     * 鏃犲簭鍒楄〃锛屼笌鈥渋nsertorderedlist鈥濆懡浠や簰鏂?     * @command insertunorderedlist
      * @method execCommand
-     * @param { String } command 命令字符串
-     * @param { String } style 插入的无序列表类型，值为：circle,disc,square,dash,dot
+     * @param { String } command 鍛戒护瀛楃涓?     * @param { String } style 鎻掑叆鐨勬棤搴忓垪琛ㄧ被鍨嬶紝鍊间负锛歝ircle,disc,square,dash,dot
      * @example
      * ```javascript
      * editor.execCommand( 'insertunorderedlist','circle');
      * ```
      */
     /**
-     * 查询当前是否有word文档粘贴进来的图片
-     * @command insertunorderedlist
+     * 鏌ヨ褰撳墠鏄惁鏈墂ord鏂囨。绮樿创杩涙潵鐨勫浘鐗?     * @command insertunorderedlist
      * @method insertunorderedlist
-     * @param { String } command 命令字符串
-     * @return { int } 如果当前选区是无序列表返回1，否则返回0
+     * @param { String } command 鍛戒护瀛楃涓?     * @return { int } 濡傛灉褰撳墠閫夊尯鏄棤搴忓垪琛ㄨ繑鍥?锛屽惁鍒欒繑鍥?
      * @example
      * ```javascript
      * editor.queryCommandState( 'insertunorderedlist' );
      * ```
      */
     /**
-     * 查询当前选区内容是否有序列表
+     * 鏌ヨ褰撳墠閫夊尯鍐呭鏄惁鏈夊簭鍒楄〃
      * @command insertunorderedlist
      * @method queryCommandValue
-     * @param { String } command 命令字符串
-     * @return { String } 返回当前无序列表的类型，值为null或circle,disc,square,dash,dot
+     * @param { String } command 鍛戒护瀛楃涓?     * @return { String } 杩斿洖褰撳墠鏃犲簭鍒楄〃鐨勭被鍨嬶紝鍊间负null鎴朿ircle,disc,square,dash,dot
      * @example
      * ```javascript
      * editor.queryCommandValue( 'insertunorderedlist' );
@@ -15891,8 +15196,7 @@ UE.plugins['list'] = function () {
                     },
                     tag = command.toLowerCase() == 'insertorderedlist' ? 'ol' : 'ul',
                     frag = me.document.createDocumentFragment();
-                //去掉是因为会出现选到末尾，导致adjustmentBoundary缩到ol/ul的位置
-                //range.shrinkBoundary();//.adjustmentBoundary();
+                //鍘绘帀鏄洜涓轰細鍑虹幇閫夊埌鏈熬锛屽鑷碼djustmentBoundary缂╁埌ol/ul鐨勪綅缃?                //range.shrinkBoundary();//.adjustmentBoundary();
                 range.adjustmentBoundary().shrinkBoundary();
                 var bko = range.createBookmark(true),
                     start = getLi(me.document.getElementById(bko.start)),
@@ -15943,7 +15247,7 @@ UE.plugins['list'] = function () {
                         if (startParent.tagName.toLowerCase() == tag && nodeStyle == style) {
                             for (var i = 0, ci, tmpFrag = me.document.createDocumentFragment(); ci = frag.firstChild;) {
                                 if(domUtils.isTagNode(ci,'ol ul')){
-//                                  删除时，子列表不处理
+//                                  鍒犻櫎鏃讹紝瀛愬垪琛ㄤ笉澶勭悊
 //                                  utils.each(domUtils.getElementsByTagName(ci,'li'),function(li){
 //                                        while(li.firstChild){
 //                                            tmpFrag.appendChild(li.firstChild);
@@ -15973,8 +15277,7 @@ UE.plugins['list'] = function () {
                         range.moveToBookmark(bko).select();
                         return;
                     }
-                    //开始
-                    if (start) {
+                    //寮€濮?                    if (start) {
                         while (start) {
                             tmp = start.nextSibling;
                             if (domUtils.isTagNode(start, 'ol ul')) {
@@ -16011,7 +15314,7 @@ UE.plugins['list'] = function () {
                     }
 
                     if (end && domUtils.inDoc(endParent, me.document)) {
-                        //结束
+                        //缁撴潫
                         start = endParent.firstChild;
                         while (start && start !== end) {
                             tmp = start.nextSibling;
@@ -16128,9 +15431,8 @@ UE.plugins['list'] = function () {
                 setListStyle(list,style);
                 list.appendChild(frag);
                 range.insertNode(list);
-                //当前list上下看能否合并
-                adjustList(list, tag, style);
-                //去掉冗余的tmpDiv
+                //褰撳墠list涓婁笅鐪嬭兘鍚﹀悎骞?                adjustList(list, tag, style);
+                //鍘绘帀鍐椾綑鐨則mpDiv
                 for (var i = 0, ci, tmpDivs = domUtils.getElementsByTagName(list, 'div'); ci = tmpDivs[i++];) {
                     if (ci.getAttribute('tmpDiv')) {
                         domUtils.remove(ci, true)
@@ -16176,7 +15478,7 @@ UE.plugins['list'] = function () {
 
 // plugins/source.js
 /**
- * 源码编辑插件
+ * 婧愮爜缂栬緫鎻掍欢
  * @file
  * @since 1.2.6.1
  */
@@ -16186,8 +15488,7 @@ UE.plugins['list'] = function () {
         textarea: function (editor, holder){
             var textarea = holder.ownerDocument.createElement('textarea');
             textarea.style.cssText = 'position:absolute;resize:none;width:100%;height:100%;border:0;padding:0;margin:0;overflow-y:auto;';
-            // todo: IE下只有onresize属性可用... 很纠结
-            if (browser.ie && browser.version < 8) {
+            // todo: IE涓嬪彧鏈塷nresize灞炴€у彲鐢?.. 寰堢籂缁?            if (browser.ie && browser.version < 8) {
                 textarea.style.width = holder.offsetWidth + 'px';
                 textarea.style.height = holder.offsetHeight + 'px';
                 holder.onresize = function (){
@@ -16210,8 +15511,7 @@ UE.plugins['list'] = function () {
                         range.collapse(true);
                         range.select();
                     } else {
-                        //todo: chrome下无法设置焦点
-                        textarea.setSelectionRange(0, 0);
+                        //todo: chrome涓嬫棤娉曡缃劍鐐?                        textarea.setSelectionRange(0, 0);
                         textarea.focus();
                     }
                 },
@@ -16274,27 +15574,23 @@ UE.plugins['list'] = function () {
         }
 
         var bakCssText;
-        //解决在源码模式下getContent不能得到最新的内容问题
+        //瑙ｅ喅鍦ㄦ簮鐮佹ā寮忎笅getContent涓嶈兘寰楀埌鏈€鏂扮殑鍐呭闂
         var oldGetContent,
             bakAddress;
 
         /**
-         * 切换源码模式和编辑模式
-         * @command source
+         * 鍒囨崲婧愮爜妯″紡鍜岀紪杈戞ā寮?         * @command source
          * @method execCommand
-         * @param { String } cmd 命令字符串
-         * @example
+         * @param { String } cmd 鍛戒护瀛楃涓?         * @example
          * ```javascript
          * editor.execCommand( 'source');
          * ```
          */
 
         /**
-         * 查询当前编辑区域的状态是源码模式还是可视化模式
-         * @command source
+         * 鏌ヨ褰撳墠缂栬緫鍖哄煙鐨勭姸鎬佹槸婧愮爜妯″紡杩樻槸鍙鍖栨ā寮?         * @command source
          * @method queryCommandState
-         * @param { String } cmd 命令字符串
-         * @return { int } 如果当前是源码编辑模式，返回1，否则返回0
+         * @param { String } cmd 鍛戒护瀛楃涓?         * @return { int } 濡傛灉褰撳墠鏄簮鐮佺紪杈戞ā寮忥紝杩斿洖1锛屽惁鍒欒繑鍥?
          * @example
          * ```javascript
          * editor.queryCommandState( 'source' );
@@ -16349,7 +15645,7 @@ UE.plugins['list'] = function () {
                     orgSetContent = me.setContent;
 
                     me.setContent = function(html){
-                        //这里暂时不触发事件，防止报错
+                        //杩欓噷鏆傛椂涓嶈Е鍙戜簨浠讹紝闃叉鎶ラ敊
                         var root = UE.htmlparser(html);
                         me.filterInputRule(root);
                         html = root.toHtml();
@@ -16365,7 +15661,7 @@ UE.plugins['list'] = function () {
                         });
                     });
 
-                    //重置getContent，源码模式下取值也能是最新的数据
+                    //閲嶇疆getContent锛屾簮鐮佹ā寮忎笅鍙栧€间篃鑳芥槸鏈€鏂扮殑鏁版嵁
                     oldGetContent = me.getContent;
                     me.getContent = function (){
                         return sourceEditor.getContent() || '<p>' + (browser.ie ? '' : '<br/>')+'</p>';
@@ -16373,7 +15669,7 @@ UE.plugins['list'] = function () {
                 } else {
                     me.iframe.style.cssText = bakCssText;
                     var cont = sourceEditor.getContent() || '<p>' + (browser.ie ? '' : '<br/>')+'</p>';
-                    //处理掉block节点前后的空格,有可能会误命中，暂时不考虑
+                    //澶勭悊鎺塨lock鑺傜偣鍓嶅悗鐨勭┖鏍?鏈夊彲鑳戒細璇懡涓紝鏆傛椂涓嶈€冭檻
                     cont = cont.replace(new RegExp('[\\r\\t\\n ]*<\/?(\\w+)\\s*(?:[^>]*)>','g'), function(a,b){
                         if(b && !dtd.$inlineWithA[b.toLowerCase()]){
                             return a.replace(/(^[\n\r\t ]*)|([\n\r\t ]*$)/g,'');
@@ -16386,19 +15682,18 @@ UE.plugins['list'] = function () {
                     me.setContent(cont);
                     sourceEditor.dispose();
                     sourceEditor = null;
-                    //还原getContent方法
+                    //杩樺師getContent鏂规硶
                     me.getContent = oldGetContent;
                     var first = me.body.firstChild;
-                    //trace:1106 都删除空了，下边会报错，所以补充一个p占位
+                    //trace:1106 閮藉垹闄ょ┖浜嗭紝涓嬭竟浼氭姤閿欙紝鎵€浠ヨˉ鍏呬竴涓猵鍗犱綅
                     if(!first){
                         me.body.innerHTML = '<p>'+(browser.ie?'':'<br/>')+'</p>';
                         first = me.body.firstChild;
                     }
 
 
-                    //要在ifm为显示时ff才能取到selection,否则报错
-                    //这里不能比较位置了
-                    me.undoManger && me.undoManger.save(true);
+                    //瑕佸湪ifm涓烘樉绀烘椂ff鎵嶈兘鍙栧埌selection,鍚﹀垯鎶ラ敊
+                    //杩欓噷涓嶈兘姣旇緝浣嶇疆浜?                    me.undoManger && me.undoManger.save(true);
 
                     if(browser.gecko){
 
@@ -16419,8 +15714,7 @@ UE.plugins['list'] = function () {
 
                         });
                     }else{
-                        //ie下有可能报错，比如在代码顶头的情况
-                        try{
+                        //ie涓嬫湁鍙兘鎶ラ敊锛屾瘮濡傚湪浠ｇ爜椤跺ご鐨勬儏鍐?                        try{
                             me.selection.getRange().moveToAddress(bakAddress).select(true);
                         }catch(e){}
 
@@ -16438,7 +15732,7 @@ UE.plugins['list'] = function () {
         me.queryCommandState = function (cmdName){
             cmdName = cmdName.toLowerCase();
             if (sourceMode) {
-                //源码模式下可以开启的命令
+                //婧愮爜妯″紡涓嬪彲浠ュ紑鍚殑鍛戒护
                 return cmdName in {
                     'source' : 1,
                     'fullscreen' : 1
@@ -16479,11 +15773,11 @@ UE.plugins['list'] = function () {
 // plugins/enterkey.js
 ///import core
 ///import plugins/undo.js
-///commands 设置回车标签p或br
+///commands 璁剧疆鍥炶溅鏍囩p鎴朾r
 ///commandsName  EnterKey
-///commandsTitle  设置回车标签p或br
+///commandsTitle  璁剧疆鍥炶溅鏍囩p鎴朾r
 /**
- * @description 处理回车
+ * @description 澶勭悊鍥炶溅
  * @author zhanyi
  */
 UE.plugins['enterkey'] = function() {
@@ -16498,8 +15792,7 @@ UE.plugins['enterkey'] = function() {
                 start = range.startContainer,
                 doSave;
 
-            //修正在h1-h6里边回车后不能嵌套p的问题
-            if (!browser.ie) {
+            //淇鍦╤1-h6閲岃竟鍥炶溅鍚庝笉鑳藉祵濂梡鐨勯棶棰?            if (!browser.ie) {
 
                 if (/h\d/i.test(hTag)) {
                     if (browser.gecko) {
@@ -16533,7 +15826,7 @@ UE.plugins['enterkey'] = function() {
                         me.undoManger.save();
                     }
                 }
-                //没有站位符，会出现多行的问题
+                //娌℃湁绔欎綅绗︼紝浼氬嚭鐜板琛岀殑闂
                 browser.opera &&  range.select();
             }else{
                 me.fireEvent('saveScene',true,true)
@@ -16543,7 +15836,7 @@ UE.plugins['enterkey'] = function() {
 
     me.addListener('keydown', function(type, evt) {
         var keyCode = evt.keyCode || evt.which;
-        if (keyCode == 13) {//回车
+        if (keyCode == 13) {//鍥炶溅
             if(me.fireEvent('beforeenterkeydown')){
                 domUtils.preventDefault(evt);
                 return;
@@ -16555,8 +15848,7 @@ UE.plugins['enterkey'] = function() {
             var range = me.selection.getRange();
 
             if (!range.collapsed) {
-                //跨td不能删
-                var start = range.startContainer,
+                //璺╰d涓嶈兘鍒?                var start = range.startContainer,
                     end = range.endContainer,
                     startTd = domUtils.findParentByTagName(start, 'td', true),
                     endTd = domUtils.findParentByTagName(end, 'td', true);
@@ -16572,7 +15864,7 @@ UE.plugins['enterkey'] = function() {
 
                     start = domUtils.findParentByTagName(range.startContainer, ['ol','ul','p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6','blockquote','caption'], true);
 
-                    //opera下执行formatblock会在table的场景下有问题，回车在opera原生支持很好，所以暂时在opera去掉调用这个原生的command
+                    //opera涓嬫墽琛宖ormatblock浼氬湪table鐨勫満鏅笅鏈夐棶棰橈紝鍥炶溅鍦╫pera鍘熺敓鏀寔寰堝ソ锛屾墍浠ユ殏鏃跺湪opera鍘绘帀璋冪敤杩欎釜鍘熺敓鐨刢ommand
                     //trace:2431
                     if (!start && !browser.opera) {
 
@@ -16655,7 +15947,7 @@ UE.plugins['enterkey'] = function() {
 
 
 // plugins/keystrokes.js
-/* 处理特殊键的兼容性问题 */
+/* 澶勭悊鐗规畩閿殑鍏煎鎬ч棶棰?*/
 UE.plugins['keystrokes'] = function() {
     var me = this;
     var collapsed = true;
@@ -16663,7 +15955,7 @@ UE.plugins['keystrokes'] = function() {
         var keyCode = evt.keyCode || evt.which,
             rng = me.selection.getRange();
 
-        //处理全选的情况
+        //澶勭悊鍏ㄩ€夌殑鎯呭喌
         if(!rng.collapsed && !(evt.ctrlKey || evt.shiftKey || evt.altKey || evt.metaKey) && (keyCode >= 65 && keyCode <=90
             || keyCode >= 48 && keyCode <= 57 ||
             keyCode >= 96 && keyCode <= 111 || {
@@ -16682,7 +15974,7 @@ UE.plugins['keystrokes'] = function() {
                 rng.setEndAfter(tmpNode)
             }
             rng.txtToElmBoundary();
-            //结束边界可能放到了br的前边，要把br包含进来
+            //缁撴潫杈圭晫鍙兘鏀惧埌浜哹r鐨勫墠杈癸紝瑕佹妸br鍖呭惈杩涙潵
             // x[xxx]<br/>
             if(rng.endContainer && rng.endContainer.nodeType == 1){
                 tmpNode = rng.endContainer.childNodes[rng.endOffset];
@@ -16705,7 +15997,7 @@ UE.plugins['keystrokes'] = function() {
             }
         }
 
-        //处理backspace
+        //澶勭悊backspace
         if (keyCode == keymap.Backspace) {
             rng = me.selection.getRange();
             collapsed = rng.collapsed;
@@ -16713,7 +16005,7 @@ UE.plugins['keystrokes'] = function() {
                 return;
             }
             var start,end;
-            //避免按两次删除才能生效的问题
+            //閬垮厤鎸変袱娆″垹闄ゆ墠鑳界敓鏁堢殑闂
             if(rng.collapsed && rng.inFillChar()){
                 start = rng.startContainer;
 
@@ -16727,8 +16019,7 @@ UE.plugins['keystrokes'] = function() {
                 }
             }
 
-            //解决选中control元素不能删除的问题
-            if (start = rng.getClosedNode()) {
+            //瑙ｅ喅閫変腑control鍏冪礌涓嶈兘鍒犻櫎鐨勯棶棰?            if (start = rng.getClosedNode()) {
                 me.fireEvent('saveScene');
                 rng.setStartBefore(start);
                 domUtils.remove(start);
@@ -16737,7 +16028,7 @@ UE.plugins['keystrokes'] = function() {
                 domUtils.preventDefault(evt);
                 return;
             }
-            //阻止在table上的删除
+            //闃绘鍦╰able涓婄殑鍒犻櫎
             if (!browser.ie) {
                 start = domUtils.findParentByTagName(rng.startContainer, 'table', true);
                 end = domUtils.findParentByTagName(rng.endContainer, 'table', true);
@@ -16748,15 +16039,14 @@ UE.plugins['keystrokes'] = function() {
             }
 
         }
-        //处理tab键的逻辑
+        //澶勭悊tab閿殑閫昏緫
         if (keyCode == keymap.Tab) {
-            //不处理以下标签
-            var excludeTagNameForTabKey = {
+            //涓嶅鐞嗕互涓嬫爣绛?            var excludeTagNameForTabKey = {
                 'ol' : 1,
                 'ul' : 1,
                 'table':1
             };
-            //处理组件里的tab按下事件
+            //澶勭悊缁勪欢閲岀殑tab鎸変笅浜嬩欢
             if(me.fireEvent('tabkeydown',evt)){
                 domUtils.preventDefault(evt);
                 return;
@@ -16775,7 +16065,7 @@ UE.plugins['keystrokes'] = function() {
                     return domUtils.isBlockElm(node) && !excludeTagNameForTabKey[node.tagName.toLowerCase()]
 
                 };
-                //普通的情况
+                //鏅€氱殑鎯呭喌
                 start = domUtils.findParent(range.startContainer, filterFn,true);
                 end = domUtils.findParent(range.endContainer, filterFn,true);
                 if (start && end && start === end) {
@@ -16796,7 +16086,7 @@ UE.plugins['keystrokes'] = function() {
             domUtils.preventDefault(evt)
         }
         //trace:1634
-        //ff的del键在容器空的时候，也会删除
+        //ff鐨刣el閿湪瀹瑰櫒绌虹殑鏃跺€欙紝涔熶細鍒犻櫎
         if(browser.gecko && keyCode == 46){
             range = me.selection.getRange();
             if(range.collapsed){
@@ -16842,7 +16132,7 @@ UE.plugins['keystrokes'] = function() {
                         }
                     }
                 }
-                //处理当删除到body时，要重新给p标签展位
+                //澶勭悊褰撳垹闄ゅ埌body鏃讹紝瑕侀噸鏂扮粰p鏍囩灞曚綅
                 if(domUtils.isBody(rng.startContainer)){
                     var tmpNode = domUtils.createElement(me.document,'p',{
                         'innerHTML' : browser.ie ? domUtils.fillChar : '<br/>'
@@ -16852,8 +16142,7 @@ UE.plugins['keystrokes'] = function() {
             }
 
 
-            //chrome下如果删除了inline标签，浏览器会有记忆，在输入文字还是会套上刚才删除的标签，所以这里再选一次就不会了
-            if( !collapsed && (rng.startContainer.nodeType == 3 || rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer))){
+            //chrome涓嬪鏋滃垹闄や簡inline鏍囩锛屾祻瑙堝櫒浼氭湁璁板繂锛屽湪杈撳叆鏂囧瓧杩樻槸浼氬涓婂垰鎵嶅垹闄ょ殑鏍囩锛屾墍浠ヨ繖閲屽啀閫変竴娆″氨涓嶄細浜?            if( !collapsed && (rng.startContainer.nodeType == 3 || rng.startContainer.nodeType == 1 && domUtils.isEmptyBlock(rng.startContainer))){
                 if(browser.ie){
                     var span = rng.document.createElement('span');
                     rng.insertNode(span).setStartBefore(span).collapse(true);
@@ -16872,11 +16161,8 @@ UE.plugins['keystrokes'] = function() {
 
 // plugins/fiximgclick.js
 ///import core
-///commands 修复chrome下图片不能点击的问题，出现八个角可改变大小
-///commandsName  FixImgClick
-///commandsTitle  修复chrome下图片不能点击的问题，出现八个角可改变大小
-//修复chrome下图片不能点击的问题，出现八个角可改变大小
-
+///commands 淇chrome涓嬪浘鐗囦笉鑳界偣鍑荤殑闂锛屽嚭鐜板叓涓鍙敼鍙樺ぇ灏?///commandsName  FixImgClick
+///commandsTitle  淇chrome涓嬪浘鐗囦笉鑳界偣鍑荤殑闂锛屽嚭鐜板叓涓鍙敼鍙樺ぇ灏?//淇chrome涓嬪浘鐗囦笉鑳界偣鍑荤殑闂锛屽嚭鐜板叓涓鍙敼鍙樺ぇ灏?
 UE.plugins['fiximgclick'] = (function () {
 
     var elementUpdated = false;
@@ -16981,7 +16267,7 @@ UE.plugins['fiximgclick'] = (function () {
                             me.dragId = -1;
                         }
                         domUtils.un(me.doc,'mousemove', me.proxy(me._eventHandler, me));
-                        //修复只是点击挪动点，但没有改变大小，不应该触发contentchange
+                        //淇鍙槸鐐瑰嚮鎸姩鐐癸紝浣嗘病鏈夋敼鍙樺ぇ灏忥紝涓嶅簲璇ヨЕ鍙慶ontentchange
                         if(elementUpdated){
                             elementUpdated = false;
                             me.editor.fireEvent('contentchange');
@@ -17151,8 +16437,7 @@ UE.plugins['fiximgclick'] = (function () {
                                 me.selection.getRange().selectNode(target).select();
                             }
                         });
-                        //TODO 有iframe的情况，mousedown不能往下传。。
-                        domUtils.on(imageScale.resizer, 'mousedown', function (e) {
+                        //TODO 鏈塱frame鐨勬儏鍐碉紝mousedown涓嶈兘寰€涓嬩紶銆傘€?                        domUtils.on(imageScale.resizer, 'mousedown', function (e) {
                             me.selection.getNative().removeAllRanges();
                             var ele = e.target || e.srcElement;
                             if (ele && ele.className.indexOf('edui-editor-imagescale-hand') == -1) {
@@ -17189,11 +16474,11 @@ UE.plugins['fiximgclick'] = (function () {
 
 // plugins/autolink.js
 ///import core
-///commands 为非ie浏览器自动添加a标签
+///commands 涓洪潪ie娴忚鍣ㄨ嚜鍔ㄦ坊鍔燼鏍囩
 ///commandsName  AutoLink
-///commandsTitle  自动增加链接
+///commandsTitle  鑷姩澧炲姞閾炬帴
 /**
- * @description 为非ie浏览器自动添加a标签
+ * @description 涓洪潪ie娴忚鍣ㄨ嚜鍔ㄦ坊鍔燼鏍囩
  * @author zhanyi
  */
 
@@ -17269,7 +16554,7 @@ UE.plugin.register('autolink',function(){
                                 }
 
                             }
-                            //range的开始边界已经在a标签里的不再处理
+                            //range鐨勫紑濮嬭竟鐣屽凡缁忓湪a鏍囩閲岀殑涓嶅啀澶勭悊
                             if(domUtils.findParentByTagName(range.startContainer,'a',true)){
                                 return;
                             }
@@ -17368,17 +16653,15 @@ UE.plugin.register('autolink',function(){
 
 // plugins/autoheight.js
 ///import core
-///commands 当输入内容超过编辑器高度时，编辑器自动增高
-///commandsName  AutoHeight,autoHeightEnabled
-///commandsTitle  自动增高
+///commands 褰撹緭鍏ュ唴瀹硅秴杩囩紪杈戝櫒楂樺害鏃讹紝缂栬緫鍣ㄨ嚜鍔ㄥ楂?///commandsName  AutoHeight,autoHeightEnabled
+///commandsTitle  鑷姩澧為珮
 /**
- * @description 自动伸展
+ * @description 鑷姩浼稿睍
  * @author zhanyi
  */
 UE.plugins['autoheight'] = function () {
     var me = this;
-    //提供开关，就算加载也可以关闭
-    me.autoHeightEnabled = me.options.autoHeightEnabled !== false;
+    //鎻愪緵寮€鍏筹紝灏辩畻鍔犺浇涔熷彲浠ュ叧闂?    me.autoHeightEnabled = me.options.autoHeightEnabled !== false;
     if (!me.autoHeightEnabled) {
         return;
     }
@@ -17434,7 +16717,7 @@ UE.plugins['autoheight'] = function () {
         bakOverflow = doc.body.style.overflowY;
         doc.body.style.overflowY = 'hidden';
         me.addListener('contentchange afterinserthtml keyup mouseup',adjustHeight);
-        //ff不给事件算得不对
+        //ff涓嶇粰浜嬩欢绠楀緱涓嶅
 
         setTimeout(function () {
             adjustHeight.call(me);
@@ -17467,8 +16750,7 @@ UE.plugins['autoheight'] = function () {
             }, 100);
 
         });
-        //修复内容过多时，回到顶部，顶部内容被工具栏遮挡问题
-        var lastScrollY;
+        //淇鍐呭杩囧鏃讹紝鍥炲埌椤堕儴锛岄《閮ㄥ唴瀹硅宸ュ叿鏍忛伄鎸￠棶棰?        var lastScrollY;
         window.onscroll = function(){
             if(lastScrollY === null){
                 lastScrollY = this.scrollY
@@ -17486,13 +16768,10 @@ UE.plugins['autoheight'] = function () {
 
 // plugins/autofloat.js
 ///import core
-///commands 悬浮工具栏
-///commandsName  AutoFloat,autoFloatEnabled
-///commandsTitle  悬浮工具栏
-/**
+///commands 鎮诞宸ュ叿鏍?///commandsName  AutoFloat,autoFloatEnabled
+///commandsTitle  鎮诞宸ュ叿鏍?/**
  *  modified by chengchao01
- *  注意： 引入此功能后，在IE6下会将body的背景图片覆盖掉！
- */
+ *  娉ㄦ剰锛?寮曞叆姝ゅ姛鑳藉悗锛屽湪IE6涓嬩細灏哹ody鐨勮儗鏅浘鐗囪鐩栨帀锛? */
 UE.plugins['autofloat'] = function() {
     var me = this,
         lang = me.getLang();
@@ -17503,8 +16782,7 @@ UE.plugins['autofloat'] = function() {
         topOffset = me.options.topOffset;
 
 
-    //如果不固定toolbar的位置，则直接退出
-    if(!optsAutoFloatEnabled){
+    //濡傛灉涓嶅浐瀹歵oolbar鐨勪綅缃紝鍒欑洿鎺ラ€€鍑?    if(!optsAutoFloatEnabled){
         return;
     }
     var uiUtils = UE.ui.uiUtils,
@@ -17527,8 +16805,7 @@ UE.plugins['autofloat'] = function() {
         placeHolder = document.createElement('div'),
         toolbarBox,orgTop,
         getPosition,
-        flag =true;   //ie7模式下需要偏移
-    function setFloating(){
+        flag =true;   //ie7妯″紡涓嬮渶瑕佸亸绉?    function setFloating(){
         var toobarBoxPos = domUtils.getXY(toolbarBox),
             origalFloat = domUtils.getComputedStyle(toolbarBox,'position'),
             origalLeft = domUtils.getComputedStyle(toolbarBox,'left');
@@ -17581,7 +16858,7 @@ UE.plugins['autofloat'] = function() {
 
     me.addListener('ready', function(){
         if(checkHasUI(me)){
-            //加载了ui组件，但在new时，没有加载ui，导致编辑器实例上没有ui类，所以这里做判断
+            //鍔犺浇浜唘i缁勪欢锛屼絾鍦╪ew鏃讹紝娌℃湁鍔犺浇ui锛屽鑷寸紪杈戝櫒瀹炰緥涓婃病鏈塽i绫伙紝鎵€浠ヨ繖閲屽仛鍒ゆ柇
             if(!me.ui){
                 return;
             }
@@ -17624,7 +16901,7 @@ UE.plugins['autofloat'] = function() {
 
 // plugins/video.js
 /**
- * video插件， 为UEditor提供视频插入支持
+ * video鎻掍欢锛?涓篣Editor鎻愪緵瑙嗛鎻掑叆鏀寔
  * @file
  * @since 1.2.6.1
  */
@@ -17633,13 +16910,12 @@ UE.plugins['video'] = function (){
     var me =this;
 
     /**
-     * 创建插入视频字符窜
-     * @param url 视频地址
-     * @param width 视频宽度
-     * @param height 视频高度
-     * @param align 视频对齐
-     * @param toEmbed 是否以flash代替显示
-     * @param addParagraph  是否需要添加P 标签
+     * 鍒涘缓鎻掑叆瑙嗛瀛楃绐?     * @param url 瑙嗛鍦板潃
+     * @param width 瑙嗛瀹藉害
+     * @param height 瑙嗛楂樺害
+     * @param align 瑙嗛瀵归綈
+     * @param toEmbed 鏄惁浠lash浠ｆ浛鏄剧ず
+     * @param addParagraph  鏄惁闇€瑕佹坊鍔燩 鏍囩
      */
     function creatInsertStr(url,width,height,id,align,classname,type){
 
@@ -17694,68 +16970,62 @@ UE.plugins['video'] = function (){
     });
 
     /**
-     * 插入视频
+     * 鎻掑叆瑙嗛
      * @command insertvideo
      * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { Object } videoAttr 键值对对象， 描述一个视频的所有属性
-     * @example
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @param { Object } videoAttr 閿€煎瀵硅薄锛?鎻忚堪涓€涓棰戠殑鎵€鏈夊睘鎬?     * @example
      * ```javascript
      *
      * var videoAttr = {
-     *      //视频地址
+     *      //瑙嗛鍦板潃
      *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
+     *      //瑙嗛瀹介珮鍊硷紝 鍗曚綅px
      *      width: 200,
      *      height: 100
      * };
      *
-     * //editor 是编辑器实例
-     * //向编辑器插入单个视频
+     * //editor 鏄紪杈戝櫒瀹炰緥
+     * //鍚戠紪杈戝櫒鎻掑叆鍗曚釜瑙嗛
      * editor.execCommand( 'insertvideo', videoAttr );
      * ```
      */
 
     /**
-     * 插入视频
+     * 鎻掑叆瑙嗛
      * @command insertvideo
      * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @param { Array } videoArr 需要插入的视频的数组， 其中的每一个元素都是一个键值对对象， 描述了一个视频的所有属性
-     * @example
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @param { Array } videoArr 闇€瑕佹彃鍏ョ殑瑙嗛鐨勬暟缁勶紝 鍏朵腑鐨勬瘡涓€涓厓绱犻兘鏄竴涓敭鍊煎瀵硅薄锛?鎻忚堪浜嗕竴涓棰戠殑鎵€鏈夊睘鎬?     * @example
      * ```javascript
      *
      * var videoAttr1 = {
-     *      //视频地址
+     *      //瑙嗛鍦板潃
      *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
+     *      //瑙嗛瀹介珮鍊硷紝 鍗曚綅px
      *      width: 200,
      *      height: 100
      * },
      * videoAttr2 = {
-     *      //视频地址
+     *      //瑙嗛鍦板潃
      *      url: 'http://www.youku.com/xxx',
-     *      //视频宽高值， 单位px
+     *      //瑙嗛瀹介珮鍊硷紝 鍗曚綅px
      *      width: 200,
      *      height: 100
      * }
      *
-     * //editor 是编辑器实例
-     * //该方法将会向编辑器内插入两个视频
+     * //editor 鏄紪杈戝櫒瀹炰緥
+     * //璇ユ柟娉曞皢浼氬悜缂栬緫鍣ㄥ唴鎻掑叆涓や釜瑙嗛
      * editor.execCommand( 'insertvideo', [ videoAttr1, videoAttr2 ] );
      * ```
      */
 
     /**
-     * 查询当前光标所在处是否是一个视频
-     * @command insertvideo
+     * 鏌ヨ褰撳墠鍏夋爣鎵€鍦ㄥ鏄惁鏄竴涓棰?     * @command insertvideo
      * @method queryCommandState
-     * @param { String } cmd 需要查询的命令字符串
-     * @return { int } 如果当前光标所在处的元素是一个视频对象， 则返回1，否则返回0
+     * @param { String } cmd 闇€瑕佹煡璇㈢殑鍛戒护瀛楃涓?     * @return { int } 濡傛灉褰撳墠鍏夋爣鎵€鍦ㄥ鐨勫厓绱犳槸涓€涓棰戝璞★紝 鍒欒繑鍥?锛屽惁鍒欒繑鍥?
      * @example
      * ```javascript
      *
-     * //editor 是编辑器实例
+     * //editor 鏄紪杈戝櫒瀹炰緥
      * editor.queryCommandState( 'insertvideo' );
      * ```
      */
@@ -17791,12 +17061,11 @@ UE.plugins['video'] = function (){
  * Created with JetBrains WebStorm.
  * User: taoqili
  * Date: 13-1-18
- * Time: 上午11:09
+ * Time: 涓婂崍11:09
  * To change this template use File | Settings | File Templates.
  */
 /**
- * UE表格操作类
- * @param table
+ * UE琛ㄦ牸鎿嶄綔绫? * @param table
  * @constructor
  */
 (function () {
@@ -17808,7 +17077,7 @@ UE.plugins['video'] = function (){
         this.update(table);
     };
 
-    //===以下为静态工具方法===
+    //===浠ヤ笅涓洪潤鎬佸伐鍏锋柟娉?==
     UETable.removeSelectedClass = function (cells) {
         utils.each(cells, function (cell) {
             domUtils.removeClasses(cell, "selectTdClass");
@@ -17837,10 +17106,9 @@ UE.plugins['video'] = function (){
     };
 
     /**
-     * 获取单元格或者单元格组的“对齐”状态。 如果当前的检测对象是一个单元格组， 只有在满足所有单元格的 水平和竖直 对齐属性都相同的
-     * 条件时才会返回其状态值，否则将返回null； 如果当前只检测了一个单元格， 则直接返回当前单元格的对齐状态；
-     * @param table cell or table cells , 支持单个单元格dom对象 或者 单元格dom对象数组
-     * @return { align: 'left' || 'right' || 'center', valign: 'top' || 'middle' || 'bottom' } 或者 null
+     * 鑾峰彇鍗曞厓鏍兼垨鑰呭崟鍏冩牸缁勭殑鈥滃榻愨€濈姸鎬併€?濡傛灉褰撳墠鐨勬娴嬪璞℃槸涓€涓崟鍏冩牸缁勶紝 鍙湁鍦ㄦ弧瓒虫墍鏈夊崟鍏冩牸鐨?姘村钩鍜岀珫鐩?瀵归綈灞炴€ч兘鐩稿悓鐨?     * 鏉′欢鏃舵墠浼氳繑鍥炲叾鐘舵€佸€硷紝鍚﹀垯灏嗚繑鍥瀗ull锛?濡傛灉褰撳墠鍙娴嬩簡涓€涓崟鍏冩牸锛?鍒欑洿鎺ヨ繑鍥炲綋鍓嶅崟鍏冩牸鐨勫榻愮姸鎬侊紱
+     * @param table cell or table cells , 鏀寔鍗曚釜鍗曞厓鏍糳om瀵硅薄 鎴栬€?鍗曞厓鏍糳om瀵硅薄鏁扮粍
+     * @return { align: 'left' || 'right' || 'center', valign: 'top' || 'middle' || 'bottom' } 鎴栬€?null
      */
     UETable.getTableCellAlignState = function ( cells ) {
 
@@ -17849,8 +17117,7 @@ UE.plugins['video'] = function (){
         var result = {},
             status = ['align', 'valign'],
             tempStatus = null,
-            isSame = true;//状态是否相同
-
+            isSame = true;//鐘舵€佹槸鍚︾浉鍚?
         utils.each( cells, function( cellNode ){
 
             utils.each( status, function( currentState ){
@@ -17875,19 +17142,18 @@ UE.plugins['video'] = function (){
     };
 
     /**
-     * 根据当前选区获取相关的table信息
+     * 鏍规嵁褰撳墠閫夊尯鑾峰彇鐩稿叧鐨則able淇℃伅
      * @return {Object}
      */
     UETable.getTableItemsByRange = function (editor) {
         var start = editor.selection.getStart();
 
-        //ff下会选中bookmark
+        //ff涓嬩細閫変腑bookmark
         if( start && start.id && start.id.indexOf('_baidu_bookmark_start_') === 0 && start.nextSibling) {
             start = start.nextSibling;
         }
 
-        //在table或者td边缘有可能存在选中tr的情况
-        var cell = start && domUtils.findParentByTagName(start, ["td", "th"], true),
+        //鍦╰able鎴栬€卼d杈圭紭鏈夊彲鑳藉瓨鍦ㄩ€変腑tr鐨勬儏鍐?        var cell = start && domUtils.findParentByTagName(start, ["td", "th"], true),
             tr = cell && cell.parentNode,
             caption = start && domUtils.findParentByTagName(start, 'caption', true),
             table = caption ? caption.parentNode : tr && tr.parentNode.parentNode;
@@ -17947,7 +17213,7 @@ UE.plugins['video'] = function (){
         }
     };
     /**
-     * 根据当前点击的td或者table获取索引对象
+     * 鏍规嵁褰撳墠鐐瑰嚮鐨則d鎴栬€卼able鑾峰彇绱㈠紩瀵硅薄
      * @param tdOrTable
      */
     UETable.getUETable = function (tdOrTable) {
@@ -17969,7 +17235,7 @@ UE.plugins['video'] = function (){
         if (ignoreMerge) {
             tmpCell.rowSpan = tmpCell.colSpan = 1;
         }
-        //去掉宽高
+        //鍘绘帀瀹介珮
         !keepPro && domUtils.removeAttributes(tmpCell,'width height');
         !keepPro && domUtils.removeAttributes(tmpCell,'style');
 
@@ -17996,8 +17262,7 @@ UE.plugins['video'] = function (){
             return maxLen;
         },
         /**
-         * 获取当前表格的最大列数
-         */
+         * 鑾峰彇褰撳墠琛ㄦ牸鐨勬渶澶у垪鏁?         */
         getMaxCols:function () {
             var rows = this.table.rows, maxLen = 0, cellRows = {};
             for (var i = 0, row; row = rows[i]; i++) {
@@ -18024,8 +17289,7 @@ UE.plugins['video'] = function (){
 
         },
         /**
-         * 获取当前cell旁边的单元格，
-         * @param cell
+         * 鑾峰彇褰撳墠cell鏃佽竟鐨勫崟鍏冩牸锛?         * @param cell
          * @param right
          */
         getHSideCell:function (cell, right) {
@@ -18034,7 +17298,7 @@ UE.plugins['video'] = function (){
                     previewRowIndex, previewColIndex;
                 var len = this.selectedTds.length,
                     range = this.cellsRange;
-                //首行或者首列没有前置单元格
+                //棣栬鎴栬€呴鍒楁病鏈夊墠缃崟鍏冩牸
                 if ((!right && (!len ? !cellInfo.colIndex : !range.beginColIndex)) || (right && (!len ? (cellInfo.colIndex == (this.colsNum - 1)) : (range.endColIndex == this.colsNum - 1)))) return null;
 
                 previewRowIndex = !len ? cellInfo.rowIndex : range.beginRowIndex;
@@ -18064,8 +17328,7 @@ UE.plugins['video'] = function (){
 
         },
         /**
-         * 获取视觉上的后置单元格
-         * @param cell
+         * 鑾峰彇瑙嗚涓婄殑鍚庣疆鍗曞厓鏍?         * @param cell
          * @param bottom
          */
         getVSideCell:function (cell, bottom, ignoreRange) {
@@ -18074,7 +17337,7 @@ UE.plugins['video'] = function (){
                     nextRowIndex, nextColIndex;
                 var len = this.selectedTds.length && !ignoreRange,
                     range = this.cellsRange;
-                //末行或者末列没有后置单元格
+                //鏈鎴栬€呮湯鍒楁病鏈夊悗缃崟鍏冩牸
                 if ((!bottom && (cellInfo.rowIndex == 0)) || (bottom && (!len ? (cellInfo.rowIndex + cellInfo.rowSpan > this.rowsNum - 1) : (range.endRowIndex == this.rowsNum - 1)))) return null;
 
                 nextRowIndex = !bottom ? ( !len ? cellInfo.rowIndex - 1 : range.beginRowIndex - 1)
@@ -18086,8 +17349,7 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 获取相同结束位置的单元格，xOrY指代了是获取x轴相同还是y轴相同
-         */
+         * 鑾峰彇鐩稿悓缁撴潫浣嶇疆鐨勫崟鍏冩牸锛寈OrY鎸囦唬浜嗘槸鑾峰彇x杞寸浉鍚岃繕鏄痽杞寸浉鍚?         */
         getSameEndPosCells:function (cell, xOrY) {
             try {
                 var flag = (xOrY.toLowerCase() === "x"),
@@ -18098,11 +17360,10 @@ UE.plugins['video'] = function (){
                     cells = rows[i].cells;
                     for (var j = 0, tmpCell; tmpCell = cells[j++];) {
                         var tmpEnd = domUtils.getXY(tmpCell)[flag ? 'x' : 'y'] + tmpCell["offset" + (flag ? 'Width' : 'Height')];
-                        //对应行的td已经被上面行rowSpan了
-                        if (tmpEnd > end && flag) break;
+                        //瀵瑰簲琛岀殑td宸茬粡琚笂闈㈣rowSpan浜?                        if (tmpEnd > end && flag) break;
                         if (cell == tmpCell || end == tmpEnd) {
-                            //只获取单一的单元格
-                            //todo 仅获取单一单元格在特定情况下会造成returns为空，从而影响后续的拖拽实现，修正这个。需考虑性能
+                            //鍙幏鍙栧崟涓€鐨勫崟鍏冩牸
+                            //todo 浠呰幏鍙栧崟涓€鍗曞厓鏍煎湪鐗瑰畾鎯呭喌涓嬩細閫犳垚returns涓虹┖锛屼粠鑰屽奖鍝嶅悗缁殑鎷栨嫿瀹炵幇锛屼慨姝ｈ繖涓€傞渶鑰冭檻鎬ц兘
                             if (tmpCell[flag ? "colSpan" : "rowSpan"] == 1) {
                                 returns.push(tmpCell);
                             }
@@ -18120,8 +17381,7 @@ UE.plugins['video'] = function (){
         },
         cloneCell:UETable.cloneCell,
         /**
-         * 获取跟当前单元格的右边竖线为左边的所有未合并单元格
-         */
+         * 鑾峰彇璺熷綋鍓嶅崟鍏冩牸鐨勫彸杈圭珫绾夸负宸﹁竟鐨勬墍鏈夋湭鍚堝苟鍗曞厓鏍?         */
         getSameStartPosXCells:function (cell) {
             try {
                 var start = domUtils.getXY(cell).x + cell.offsetWidth,
@@ -18143,7 +17403,7 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 更新table对应的索引表
+         * 鏇存柊table瀵瑰簲鐨勭储寮曡〃
          */
         update:function (table) {
             this.table = table || this.table;
@@ -18162,17 +17422,16 @@ UE.plugins['video'] = function (){
             for (var i = 0, len = rows.length; i < len; i++) {
                 this.indexTable[i] = new Array(colsNum);
             }
-            //填充索引表
-            for (var rowIndex = 0, row; row = rows[rowIndex]; rowIndex++) {
+            //濉厖绱㈠紩琛?            for (var rowIndex = 0, row; row = rows[rowIndex]; rowIndex++) {
                 for (var cellIndex = 0, cell, cells = row.cells; cell = cells[cellIndex]; cellIndex++) {
-                    //修正整行被rowSpan时导致的行数计算错误
+                    //淇鏁磋琚玶owSpan鏃跺鑷寸殑琛屾暟璁＄畻閿欒
                     if (cell.rowSpan > rowsNum) {
                         cell.rowSpan = rowsNum;
                     }
                     var colIndex = cellIndex,
                         rowSpan = cell.rowSpan || 1,
                         colSpan = cell.colSpan || 1;
-                    //当已经被上一行rowSpan或者被前一列colSpan了，则跳到下一个单元格进行
+                    //褰撳凡缁忚涓婁竴琛宺owSpan鎴栬€呰鍓嶄竴鍒梒olSpan浜嗭紝鍒欒烦鍒颁笅涓€涓崟鍏冩牸杩涜
                     while (this.indexTable[rowIndex][colIndex]) colIndex++;
                     for (var j = 0; j < rowSpan; j++) {
                         for (var k = 0; k < colSpan; k++) {
@@ -18187,7 +17446,7 @@ UE.plugins['video'] = function (){
                     }
                 }
             }
-            //修复残缺td
+            //淇娈嬬己td
             for (j = 0; j < rowsNum; j++) {
                 for (k = 0; k < colsNum; k++) {
                     if (this.indexTable[j][k] === undefined) {
@@ -18208,8 +17467,7 @@ UE.plugins['video'] = function (){
                     }
                 }
             }
-            //当框选后删除行或者列后撤销，需要重建选区。
-            var tds = domUtils.getElementsByTagName(this.table, "td"),
+            //褰撴閫夊悗鍒犻櫎琛屾垨鑰呭垪鍚庢挙閿€锛岄渶瑕侀噸寤洪€夊尯銆?            var tds = domUtils.getElementsByTagName(this.table, "td"),
                 selectTds = [];
             utils.each(tds, function (td) {
                 if (domUtils.hasClass(td, "selectTdClass")) {
@@ -18229,7 +17487,7 @@ UE.plugins['video'] = function (){
                     endColIndex:endInfo.colIndex + endInfo.colSpan - 1
                 };
             }
-            //给第一行设置firstRow的样式名称,在排序图标的样式上使用到
+            //缁欑涓€琛岃缃甪irstRow鐨勬牱寮忓悕绉?鍦ㄦ帓搴忓浘鏍囩殑鏍峰紡涓婁娇鐢ㄥ埌
             if(!domUtils.hasClass(this.table.rows[0], "firstRow")) {
                 domUtils.addClass(this.table.rows[0], "firstRow");
                 for(var i = 1; i< this.table.rows.length; i++) {
@@ -18238,7 +17496,7 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 获取单元格的索引信息
+         * 鑾峰彇鍗曞厓鏍肩殑绱㈠紩淇℃伅
          */
         getCellInfo:function (cell) {
             if (!cell) return;
@@ -18254,21 +17512,20 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 根据行列号获取单元格
+         * 鏍规嵁琛屽垪鍙疯幏鍙栧崟鍏冩牸
          */
         getCell:function (rowIndex, cellIndex) {
             return rowIndex < this.rowsNum && this.table.rows[rowIndex].cells[cellIndex] || null;
         },
         /**
-         * 删除单元格
-         */
+         * 鍒犻櫎鍗曞厓鏍?         */
         deleteCell:function (cell, rowIndex) {
             rowIndex = typeof rowIndex == 'number' ? rowIndex : cell.parentNode.rowIndex;
             var row = this.table.rows[rowIndex];
             row.deleteCell(cell.cellIndex);
         },
         /**
-         * 根据始末两个单元格获取被框选的所有单元格范围
+         * 鏍规嵁濮嬫湯涓や釜鍗曞厓鏍艰幏鍙栬妗嗛€夌殑鎵€鏈夊崟鍏冩牸鑼冨洿
          */
         getCellsRange:function (cellA, cellB) {
             function checkRange(beginRowIndex, beginColIndex, endRowIndex, endColIndex) {
@@ -18277,7 +17534,7 @@ UE.plugins['video'] = function (){
                     tmpEndRowIndex = endRowIndex,
                     tmpEndColIndex = endColIndex,
                     cellInfo, colIndex, rowIndex;
-                // 通过indexTable检查是否存在超出TableRange上边界的情况
+                // 閫氳繃indexTable妫€鏌ユ槸鍚﹀瓨鍦ㄨ秴鍑篢ableRange涓婅竟鐣岀殑鎯呭喌
                 if (beginRowIndex > 0) {
                     for (colIndex = beginColIndex; colIndex < endColIndex; colIndex++) {
                         cellInfo = me.indexTable[beginRowIndex][colIndex];
@@ -18287,7 +17544,7 @@ UE.plugins['video'] = function (){
                         }
                     }
                 }
-                // 通过indexTable检查是否存在超出TableRange右边界的情况
+                // 閫氳繃indexTable妫€鏌ユ槸鍚﹀瓨鍦ㄨ秴鍑篢ableRange鍙宠竟鐣岀殑鎯呭喌
                 if (endColIndex < me.colsNum) {
                     for (rowIndex = beginRowIndex; rowIndex < endRowIndex; rowIndex++) {
                         cellInfo = me.indexTable[rowIndex][endColIndex];
@@ -18297,7 +17554,7 @@ UE.plugins['video'] = function (){
                         }
                     }
                 }
-                // 检查是否有超出TableRange下边界的情况
+                // 妫€鏌ユ槸鍚︽湁瓒呭嚭TableRange涓嬭竟鐣岀殑鎯呭喌
                 if (endRowIndex < me.rowsNum) {
                     for (colIndex = beginColIndex; colIndex < endColIndex; colIndex++) {
                         cellInfo = me.indexTable[endRowIndex][colIndex];
@@ -18307,7 +17564,7 @@ UE.plugins['video'] = function (){
                         }
                     }
                 }
-                // 检查是否有超出TableRange左边界的情况
+                // 妫€鏌ユ槸鍚︽湁瓒呭嚭TableRange宸﹁竟鐣岀殑鎯呭喌
                 if (beginColIndex > 0) {
                     for (rowIndex = beginRowIndex; rowIndex < endRowIndex; rowIndex++) {
                         cellInfo = me.indexTable[rowIndex][beginColIndex];
@@ -18317,12 +17574,10 @@ UE.plugins['video'] = function (){
                         }
                     }
                 }
-                //递归调用直至所有完成所有框选单元格的扩展
-                if (tmpBeginRowIndex != beginRowIndex || tmpBeginColIndex != beginColIndex || tmpEndRowIndex != endRowIndex || tmpEndColIndex != endColIndex) {
+                //閫掑綊璋冪敤鐩磋嚦鎵€鏈夊畬鎴愭墍鏈夋閫夊崟鍏冩牸鐨勬墿灞?                if (tmpBeginRowIndex != beginRowIndex || tmpBeginColIndex != beginColIndex || tmpEndRowIndex != endRowIndex || tmpEndColIndex != endColIndex) {
                     return checkRange(tmpBeginRowIndex, tmpBeginColIndex, tmpEndRowIndex, tmpEndColIndex);
                 } else {
-                    // 不需要扩展TableRange的情况
-                    return {
+                    // 涓嶉渶瑕佹墿灞昑ableRange鐨勬儏鍐?                    return {
                         beginRowIndex:beginRowIndex,
                         beginColIndex:beginColIndex,
                         endRowIndex:endRowIndex,
@@ -18343,7 +17598,7 @@ UE.plugins['video'] = function (){
                     };
                 }
                 var cellBInfo = me.getCellInfo(cellB);
-                // 计算TableRange的四个边
+                // 璁＄畻TableRange鐨勫洓涓竟
                 var beginRowIndex = Math.min(cellAInfo.rowIndex, cellBInfo.rowIndex),
                     beginColIndex = Math.min(cellAInfo.colIndex, cellBInfo.colIndex),
                     endRowIndex = Math.max(cellAInfo.rowIndex + cellAInfo.rowSpan - 1, cellBInfo.rowIndex + cellBInfo.rowSpan - 1),
@@ -18355,10 +17610,10 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 依据cellsRange获取对应的单元格集合
+         * 渚濇嵁cellsRange鑾峰彇瀵瑰簲鐨勫崟鍏冩牸闆嗗悎
          */
         getCells:function (range) {
-            //每次获取cells之前必须先清除上次的选择，否则会对后续获取操作造成影响
+            //姣忔鑾峰彇cells涔嬪墠蹇呴』鍏堟竻闄や笂娆＄殑閫夋嫨锛屽惁鍒欎細瀵瑰悗缁幏鍙栨搷浣滈€犳垚褰卞搷
             this.clearSelected();
             var beginRowIndex = range.beginRowIndex,
                 beginColIndex = range.beginColIndex,
@@ -18370,8 +17625,7 @@ UE.plugins['video'] = function (){
                     cellInfo = this.indexTable[i][j];
                     rowIndex = cellInfo.rowIndex;
                     colIndex = cellInfo.colIndex;
-                    // 如果Cells里已经包含了此Cell则跳过
-                    var key = rowIndex + '|' + colIndex;
+                    // 濡傛灉Cells閲屽凡缁忓寘鍚簡姝ell鍒欒烦杩?                    var key = rowIndex + '|' + colIndex;
                     if (tdHash[key]) continue;
                     tdHash[key] = 1;
                     if (rowIndex < i || colIndex < j || rowIndex + cellInfo.rowSpan - 1 > endRowIndex || colIndex + cellInfo.colSpan - 1 > endColIndex) {
@@ -18383,7 +17637,7 @@ UE.plugins['video'] = function (){
             return returnTds;
         },
         /**
-         * 清理已经选中的单元格
+         * 娓呯悊宸茬粡閫変腑鐨勫崟鍏冩牸
          */
         clearSelected:function () {
             UETable.removeSelectedClass(this.selectedTds);
@@ -18391,7 +17645,7 @@ UE.plugins['video'] = function (){
             this.cellsRange = {};
         },
         /**
-         * 根据range设置已经选中的单元格
+         * 鏍规嵁range璁剧疆宸茬粡閫変腑鐨勫崟鍏冩牸
          */
         setSelected:function (range) {
             var cells = this.getCells(range);
@@ -18412,8 +17666,7 @@ UE.plugins['video'] = function (){
 
         },
         /**
-         * 获取视觉上的前置单元格，默认是左边，top传入时
-         * @param cell
+         * 鑾峰彇瑙嗚涓婄殑鍓嶇疆鍗曞厓鏍硷紝榛樿鏄乏杈癸紝top浼犲叆鏃?         * @param cell
          * @param top
          */
         getNextCell:function (cell, bottom, ignoreRange) {
@@ -18422,7 +17675,7 @@ UE.plugins['video'] = function (){
                     nextRowIndex, nextColIndex;
                 var len = this.selectedTds.length && !ignoreRange,
                     range = this.cellsRange;
-                //末行或者末列没有后置单元格
+                //鏈鎴栬€呮湯鍒楁病鏈夊悗缃崟鍏冩牸
                 if ((!bottom && (cellInfo.rowIndex == 0)) || (bottom && (!len ? (cellInfo.rowIndex + cellInfo.rowSpan > this.rowsNum - 1) : (range.endRowIndex == this.rowsNum - 1)))) return null;
 
                 nextRowIndex = !bottom ? ( !len ? cellInfo.rowIndex - 1 : range.beginRowIndex - 1)
@@ -18439,7 +17692,7 @@ UE.plugins['video'] = function (){
                     previewRowIndex, previewColIndex;
                 var len = this.selectedTds.length,
                     range = this.cellsRange;
-                //首行或者首列没有前置单元格
+                //棣栬鎴栬€呴鍒楁病鏈夊墠缃崟鍏冩牸
                 if ((!top && (!len ? !cellInfo.colIndex : !range.beginColIndex)) || (top && (!len ? (cellInfo.rowIndex > (this.colsNum - 1)) : (range.endColIndex == this.colsNum - 1)))) return null;
 
                 previewRowIndex = !top ? ( !len ? cellInfo.rowIndex : range.beginRowIndex )
@@ -18452,8 +17705,7 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 移动单元格中的内容
-         */
+         * 绉诲姩鍗曞厓鏍间腑鐨勫唴瀹?         */
         moveContent:function (cellTo, cellFrom) {
             if (UETable.isEmptyBlock(cellFrom)) return;
             if (UETable.isEmptyBlock(cellTo)) {
@@ -18469,26 +17721,23 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 向右合并单元格
-         */
+         * 鍚戝彸鍚堝苟鍗曞厓鏍?         */
         mergeRight:function (cell) {
             var cellInfo = this.getCellInfo(cell),
                 rightColIndex = cellInfo.colIndex + cellInfo.colSpan,
                 rightCellInfo = this.indexTable[cellInfo.rowIndex][rightColIndex],
                 rightCell = this.getCell(rightCellInfo.rowIndex, rightCellInfo.cellIndex);
-            //合并
+            //鍚堝苟
             cell.colSpan = cellInfo.colSpan + rightCellInfo.colSpan;
-            //被合并的单元格不应存在宽度属性
-            cell.removeAttribute("width");
-            //移动内容
+            //琚悎骞剁殑鍗曞厓鏍间笉搴斿瓨鍦ㄥ搴﹀睘鎬?            cell.removeAttribute("width");
+            //绉诲姩鍐呭
             this.moveContent(cell, rightCell);
-            //删掉被合并的Cell
+            //鍒犳帀琚悎骞剁殑Cell
             this.deleteCell(rightCell, rightCellInfo.rowIndex);
             this.update();
         },
         /**
-         * 向下合并单元格
-         */
+         * 鍚戜笅鍚堝苟鍗曞厓鏍?         */
         mergeDown:function (cell) {
             var cellInfo = this.getCellInfo(cell),
                 downRowIndex = cellInfo.rowIndex + cellInfo.rowSpan,
@@ -18501,11 +17750,10 @@ UE.plugins['video'] = function (){
             this.update();
         },
         /**
-         * 合并整个range中的内容
+         * 鍚堝苟鏁翠釜range涓殑鍐呭
          */
         mergeRange:function () {
-            //由于合并操作可以在任意时刻进行，所以无法通过鼠标位置等信息实时生成range，只能通过缓存实例中的cellsRange对象来访问
-            var range = this.cellsRange,
+            //鐢变簬鍚堝苟鎿嶄綔鍙互鍦ㄤ换鎰忔椂鍒昏繘琛岋紝鎵€浠ユ棤娉曢€氳繃榧犳爣浣嶇疆绛変俊鎭疄鏃剁敓鎴恟ange锛屽彧鑳介€氳繃缂撳瓨瀹炰緥涓殑cellsRange瀵硅薄鏉ヨ闂?            var range = this.cellsRange,
                 leftTopCell = this.getCell(range.beginRowIndex, this.indexTable[range.beginRowIndex][range.beginColIndex].cellIndex);
 
             if (leftTopCell.tagName == "TH" && range.endRowIndex !== range.beginRowIndex) {
@@ -18515,7 +17763,7 @@ UE.plugins['video'] = function (){
                 range = this.getCellsRange(leftTopCell, this.getCell(index[this.rowsNum - 1][info.colIndex].rowIndex, index[this.rowsNum - 1][info.colIndex].cellIndex));
             }
 
-            // 删除剩余的Cells
+            // 鍒犻櫎鍓╀綑鐨凜ells
             var cells = this.getCells(range);
             for(var i= 0,ci;ci=cells[i++];){
                 if (ci !== leftTopCell) {
@@ -18523,8 +17771,7 @@ UE.plugins['video'] = function (){
                     this.deleteCell(ci);
                 }
             }
-            // 修改左上角Cell的rowSpan和colSpan，并调整宽度属性设置
-            leftTopCell.rowSpan = range.endRowIndex - range.beginRowIndex + 1;
+            // 淇敼宸︿笂瑙扖ell鐨剅owSpan鍜宑olSpan锛屽苟璋冩暣瀹藉害灞炴€ц缃?            leftTopCell.rowSpan = range.endRowIndex - range.beginRowIndex + 1;
             leftTopCell.rowSpan > 1 && leftTopCell.removeAttribute("height");
             leftTopCell.colSpan = range.endColIndex - range.beginColIndex + 1;
             leftTopCell.colSpan > 1 && leftTopCell.removeAttribute("width");
@@ -18534,7 +17781,7 @@ UE.plugins['video'] = function (){
 
             if (leftTopCell.colSpan == this.colsNum && leftTopCell.rowSpan != 1) {
                 var rowIndex = leftTopCell.parentNode.rowIndex;
-                //解决IE下的表格操作问题
+                //瑙ｅ喅IE涓嬬殑琛ㄦ牸鎿嶄綔闂
                 if( this.table.deleteRow ) {
                     for (var i = rowIndex+ 1, curIndex=rowIndex+ 1, len=leftTopCell.rowSpan; i < len; i++) {
                         this.table.deleteRow(curIndex);
@@ -18550,7 +17797,7 @@ UE.plugins['video'] = function (){
             this.update();
         },
         /**
-         * 插入一行单元格
+         * 鎻掑叆涓€琛屽崟鍏冩牸
          */
         insertRow:function (rowIndex, sourceCell) {
             var numCols = this.colsNum,
@@ -18578,8 +17825,7 @@ UE.plugins['video'] = function (){
                 }
             }
 
-            //首行直接插入,无需考虑部分单元格被rowspan的情况
-            if (rowIndex == 0 || rowIndex == this.rowsNum) {
+            //棣栬鐩存帴鎻掑叆,鏃犻渶鑰冭檻閮ㄥ垎鍗曞厓鏍艰rowspan鐨勬儏鍐?            if (rowIndex == 0 || rowIndex == this.rowsNum) {
                 for (var colIndex = 0; colIndex < numCols; colIndex++) {
                     cell = this.cloneCell(sourceCell, true);
                     this.setCellContent(cell);
@@ -18592,8 +17838,7 @@ UE.plugins['video'] = function (){
                     cellIndex = 0;
                 for (colIndex = 0; colIndex < numCols; colIndex++) {
                     var cellInfo = infoRow[colIndex];
-                    //如果存在某个单元格的rowspan穿过待插入行的位置，则修改该单元格的rowspan即可，无需插入单元格
-                    if (cellInfo.rowIndex < rowIndex) {
+                    //濡傛灉瀛樺湪鏌愪釜鍗曞厓鏍肩殑rowspan绌胯繃寰呮彃鍏ヨ鐨勪綅缃紝鍒欎慨鏀硅鍗曞厓鏍肩殑rowspan鍗冲彲锛屾棤闇€鎻掑叆鍗曞厓鏍?                    if (cellInfo.rowIndex < rowIndex) {
                         cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
                         cell.rowSpan = cellInfo.rowSpan + 1;
                     } else {
@@ -18604,19 +17849,18 @@ UE.plugins['video'] = function (){
                     if(!isInsertTitle) replaceTdToTh(colIndex, cell, row);
                 }
             }
-            //框选时插入不触发contentchange，需要手动更新索引。
-            this.update();
+            //妗嗛€夋椂鎻掑叆涓嶈Е鍙慶ontentchange锛岄渶瑕佹墜鍔ㄦ洿鏂扮储寮曘€?            this.update();
             return row;
         },
         /**
-         * 删除一行单元格
+         * 鍒犻櫎涓€琛屽崟鍏冩牸
          * @param rowIndex
          */
         deleteRow:function (rowIndex) {
             var row = this.table.rows[rowIndex],
                 infoRow = this.indexTable[rowIndex],
                 colsNum = this.colsNum,
-                count = 0;     //处理计数
+                count = 0;     //澶勭悊璁℃暟
             for (var colIndex = 0; colIndex < colsNum;) {
                 var cellInfo = infoRow[colIndex],
                     cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
@@ -18665,8 +17909,7 @@ UE.plugins['video'] = function (){
                 td.rowSpan--;
             });
             row.parentNode.removeChild(row);
-            //浏览器方法本身存在bug,采用自定义方法删除
-            //this.table.deleteRow(rowIndex);
+            //娴忚鍣ㄦ柟娉曟湰韬瓨鍦╞ug,閲囩敤鑷畾涔夋柟娉曞垹闄?            //this.table.deleteRow(rowIndex);
             this.update();
         },
         insertCol:function (colIndex, sourceCell, defaultValue) {
@@ -18725,14 +17968,12 @@ UE.plugins['video'] = function (){
                         this.setCellContent(cell);
                         cell.setAttribute('vAlign', cell.getAttribute('vAlign'));
                         preCell && cell.setAttribute('width', preCell.getAttribute('width'));
-                        //防止IE下报错
-                        preCell ? tableRow.insertBefore(cell, preCell) : tableRow.appendChild(cell);
+                        //闃叉IE涓嬫姤閿?                        preCell ? tableRow.insertBefore(cell, preCell) : tableRow.appendChild(cell);
                     }
                     if(!isInsertTitleCol) replaceTdToTh(rowIndex, cell, tableRow);
                 }
             }
-            //框选时插入不触发contentchange，需要手动更新索引
-            this.update();
+            //妗嗛€夋椂鎻掑叆涓嶈Е鍙慶ontentchange锛岄渶瑕佹墜鍔ㄦ洿鏂扮储寮?            this.update();
             this.updateWidth(backWidth, defaultValue || {tdPadding:10, tdBorder:1});
         },
         updateWidth:function (width, defaultValue) {
@@ -18758,12 +17999,12 @@ UE.plugins['video'] = function (){
                 var infoRow = indexTable[rowIndex],
                     cellInfo = infoRow[colIndex],
                     key = cellInfo.rowIndex + '_' + cellInfo.colIndex;
-                // 跳过已经处理过的Cell
+                // 璺宠繃宸茬粡澶勭悊杩囩殑Cell
                 if (cacheMap[key])continue;
                 cacheMap[key] = 1;
                 var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
                 if (!backTdWidth) backTdWidth = cell && parseInt(cell.offsetWidth / cell.colSpan, 10).toFixed(0);
-                // 如果Cell的colSpan大于1, 就修改colSpan, 否则就删掉这个Cell
+                // 濡傛灉Cell鐨刢olSpan澶т簬1, 灏变慨鏀筩olSpan, 鍚﹀垯灏卞垹鎺夎繖涓狢ell
                 if (cell.colSpan > 1) {
                     cell.colSpan--;
                 } else {
@@ -18786,11 +18027,10 @@ UE.plugins['video'] = function (){
                 rowIndex = cellInfo.rowIndex,
                 colIndex = cellInfo.colIndex,
                 results = [];
-            // 修改Cell的rowSpan
+            // 淇敼Cell鐨剅owSpan
             cell.rowSpan = 1;
             results.push(cell);
-            // 补齐单元格
-            for (var i = rowIndex, endRow = rowIndex + cellInfo.rowSpan; i < endRow; i++) {
+            // 琛ラ綈鍗曞厓鏍?            for (var i = rowIndex, endRow = rowIndex + cellInfo.rowSpan; i < endRow; i++) {
                 if (i == rowIndex)continue;
                 var tableRow = this.table.rows[i],
                     tmpCell = tableRow.insertCell(colIndex - this.getPreviewMergedCellsNum(i, colIndex));
@@ -18824,12 +18064,11 @@ UE.plugins['video'] = function (){
                 rowIndex = cellInfo.rowIndex,
                 colIndex = cellInfo.colIndex,
                 results = [];
-            // 修改Cell的rowSpan
+            // 淇敼Cell鐨剅owSpan
             cell.colSpan = 1;
             cell.setAttribute("width", backWidth);
             results.push(cell);
-            // 补齐单元格
-            for (var j = colIndex, endCol = colIndex + cellInfo.colSpan; j < endCol; j++) {
+            // 琛ラ綈鍗曞厓鏍?            for (var j = colIndex, endCol = colIndex + cellInfo.colSpan; j < endCol; j++) {
                 if (j == colIndex)continue;
                 var tableRow = this.table.rows[rowIndex],
                     tmpCell = tableRow.insertCell(this.indexTable[rowIndex][j].cellIndex + 1);
@@ -18841,8 +18080,7 @@ UE.plugins['video'] = function (){
                 if (cell.style.cssText) {
                     tmpCell.style.cssText = cell.style.cssText;
                 }
-                //处理th的情况
-                if (cell.tagName == 'TH') {
+                //澶勭悊th鐨勬儏鍐?                if (cell.tagName == 'TH') {
                     var th = cell.ownerDocument.createElement('th');
                     th.appendChild(tmpCell.firstChild);
                     th.setAttribute('vAlign', cell.getAttribute('vAlign'));
@@ -18933,7 +18171,7 @@ UE.plugins['video'] = function (){
  * Created with JetBrains PhpStorm.
  * User: taoqili
  * Date: 13-2-20
- * Time: 下午6:25
+ * Time: 涓嬪崍6:25
  * To change this template use File | Settings | File Templates.
  */
 ;
@@ -18969,7 +18207,7 @@ UE.plugins['video'] = function (){
                     }
                     html.push('</tr>')
                 }
-                //禁止指定table-width
+                //绂佹鎸囧畾table-width
                 return '<table><tbody>' + html.join('') + '</tbody></table>'
             }
 
@@ -18991,8 +18229,7 @@ UE.plugins['video'] = function (){
                 tableWidth = firstParentBlock.offsetWidth,
                 tdWidth = Math.floor(tableWidth / opt.numCols - defaultValue.tdPadding * 2 - defaultValue.tdBorder);
 
-            //todo其他属性
-            !opt.tdvalign && (opt.tdvalign = me.options.tdvalign);
+            //todo鍏朵粬灞炴€?            !opt.tdvalign && (opt.tdvalign = me.options.tdvalign);
             me.execCommand("inserthtml", createTable(opt, tdWidth));
         }
     };
@@ -19197,14 +18434,12 @@ UE.plugins['video'] = function (){
 
             var cellInfo = ut.getCellInfo(cell),
                 rightColIndex = cellInfo.colIndex + cellInfo.colSpan;
-            if (rightColIndex >= ut.colsNum) return -1; // 如果处于最右边则不能向右合并
-
+            if (rightColIndex >= ut.colsNum) return -1; // 濡傛灉澶勪簬鏈€鍙宠竟鍒欎笉鑳藉悜鍙冲悎骞?
             var rightCellInfo = ut.indexTable[cellInfo.rowIndex][rightColIndex],
                 rightCell = table.rows[rightCellInfo.rowIndex].cells[rightCellInfo.cellIndex];
-            if (!rightCell || cell.tagName != rightCell.tagName) return -1; // TH和TD不能相互合并
+            if (!rightCell || cell.tagName != rightCell.tagName) return -1; // TH鍜孴D涓嶈兘鐩镐簰鍚堝苟
 
-            // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
-            return (rightCellInfo.rowIndex == cellInfo.rowIndex && rightCellInfo.rowSpan == cellInfo.rowSpan) ? 0 : -1;
+            // 褰撲笖浠呭綋涓や釜Cell鐨勫紑濮嬪垪鍙峰拰缁撴潫鍒楀彿涓€鑷存椂鑳借繘琛屽悎骞?            return (rightCellInfo.rowIndex == cellInfo.rowIndex && rightCellInfo.rowSpan == cellInfo.rowSpan) ? 0 : -1;
         },
         execCommand: function (cmd) {
             var rng = this.selection.getRange(),
@@ -19227,14 +18462,12 @@ UE.plugins['video'] = function (){
 
             var cellInfo = ut.getCellInfo(cell),
                 downRowIndex = cellInfo.rowIndex + cellInfo.rowSpan;
-            if (downRowIndex >= ut.rowsNum) return -1; // 如果处于最下边则不能向下合并
-
+            if (downRowIndex >= ut.rowsNum) return -1; // 濡傛灉澶勪簬鏈€涓嬭竟鍒欎笉鑳藉悜涓嬪悎骞?
             var downCellInfo = ut.indexTable[downRowIndex][cellInfo.colIndex],
                 downCell = table.rows[downCellInfo.rowIndex].cells[downCellInfo.cellIndex];
-            if (!downCell || cell.tagName != downCell.tagName) return -1; // TH和TD不能相互合并
+            if (!downCell || cell.tagName != downCell.tagName) return -1; // TH鍜孴D涓嶈兘鐩镐簰鍚堝苟
 
-            // 当且仅当两个Cell的开始列号和结束列号一致时能进行合并
-            return (downCellInfo.colIndex == cellInfo.colIndex && downCellInfo.colSpan == cellInfo.colSpan) ? 0 : -1;
+            // 褰撲笖浠呭綋涓や釜Cell鐨勫紑濮嬪垪鍙峰拰缁撴潫鍒楀彿涓€鑷存椂鑳借繘琛屽悎骞?            return (downCellInfo.colIndex == cellInfo.colIndex && downCellInfo.colSpan == cellInfo.colSpan) ? 0 : -1;
         },
         execCommand: function () {
             var rng = this.selection.getRange(),
@@ -19294,7 +18527,7 @@ UE.plugins['video'] = function (){
             if (table.getAttribute("interlaced") === "enabled")this.fireEvent("interlacetable", table);
         }
     };
-    //后插入行
+    //鍚庢彃鍏ヨ
     UE.commands["insertrownext"] = {
         queryCommandState: function () {
             var tableItems = getTableItemsByRange(this),
@@ -19533,7 +18766,7 @@ UE.plugins['video'] = function (){
             }
         };
 
-    //平均分配各列
+    //骞冲潎鍒嗛厤鍚勫垪
     UE.commands['averagedistributecol'] = {
         queryCommandState: function () {
             var ut = getUETableBySelected(this);
@@ -19585,7 +18818,7 @@ UE.plugins['video'] = function (){
             }
         }
     };
-    //平均分配各行
+    //骞冲潎鍒嗛厤鍚勮
     UE.commands['averagedistributerow'] = {
         queryCommandState: function () {
             var ut = getUETableBySelected(this);
@@ -19628,7 +18861,7 @@ UE.plugins['video'] = function (){
                     }
                     rowNum = count;
                 }
-                //ie8下是混杂模式
+                //ie8涓嬫槸娣锋潅妯″紡
                 if (browser.ie && browser.version < 9) {
                     averageHeight = Math.ceil(sumHeight / rowNum);
                 } else {
@@ -19652,8 +18885,7 @@ UE.plugins['video'] = function (){
         }
     };
 
-    //单元格对齐方式
-    UE.commands['cellalignment'] = {
+    //鍗曞厓鏍煎榻愭柟寮?    UE.commands['cellalignment'] = {
         queryCommandState: function () {
             return getTableItemsByRange(this).table ? 0 : -1
         },
@@ -19678,8 +18910,7 @@ UE.plugins['video'] = function (){
             }
         },
         /**
-         * 查询当前点击的单元格的对齐状态， 如果当前已经选择了多个单元格， 则会返回所有单元格经过统一协调过后的状态
-         * @see UE.UETable.getTableCellAlignState
+         * 鏌ヨ褰撳墠鐐瑰嚮鐨勫崟鍏冩牸鐨勫榻愮姸鎬侊紝 濡傛灉褰撳墠宸茬粡閫夋嫨浜嗗涓崟鍏冩牸锛?鍒欎細杩斿洖鎵€鏈夊崟鍏冩牸缁忚繃缁熶竴鍗忚皟杩囧悗鐨勭姸鎬?         * @see UE.UETable.getTableCellAlignState
          */
         queryCommandValue: function (cmd) {
 
@@ -19695,7 +18926,7 @@ UE.plugins['video'] = function (){
 
             } else {
 
-                //获取同时选中的其他单元格
+                //鑾峰彇鍚屾椂閫変腑鐨勫叾浠栧崟鍏冩牸
                 var cells = UE.UETable.getUETable(activeMenuCell).selectedTds;
 
                 !cells.length && ( cells = activeMenuCell );
@@ -19706,7 +18937,7 @@ UE.plugins['video'] = function (){
 
         }
     };
-    //表格对齐方式
+    //琛ㄦ牸瀵归綈鏂瑰紡
     UE.commands['tablealignment'] = {
         queryCommandState: function () {
             if (browser.ie && browser.version < 8) {
@@ -19725,8 +18956,7 @@ UE.plugins['video'] = function (){
         }
     };
 
-    //表格属性
-    UE.commands['edittable'] = {
+    //琛ㄦ牸灞炴€?    UE.commands['edittable'] = {
         queryCommandState: function () {
             return getTableItemsByRange(this).table ? 0 : -1
         },
@@ -19744,8 +18974,7 @@ UE.plugins['video'] = function (){
             }
         }
     };
-    //单元格属性
-    UE.commands['edittd'] = {
+    //鍗曞厓鏍煎睘鎬?    UE.commands['edittd'] = {
         queryCommandState: function () {
             return getTableItemsByRange(this).table ? 0 : -1
         },
@@ -19801,8 +19030,8 @@ UE.plugins['video'] = function (){
             if (!table) return -1;
             var interlaced = table.getAttribute("interlaced");
             if (cmd == "interlacetable") {
-                //TODO 待定
-                //是否需要待定，如果设置，则命令只能单次执行成功，但反射具备toggle效果；否则可以覆盖前次命令，但反射将不存在toggle效果
+                //TODO 寰呭畾
+                //鏄惁闇€瑕佸緟瀹氾紝濡傛灉璁剧疆锛屽垯鍛戒护鍙兘鍗曟鎵ц鎴愬姛锛屼絾鍙嶅皠鍏峰toggle鏁堟灉锛涘惁鍒欏彲浠ヨ鐩栧墠娆″懡浠わ紝浣嗗弽灏勫皢涓嶅瓨鍦╰oggle鏁堟灉
                 return (interlaced === "enabled") ? -1 : 0;
             } else {
                 return (!interlaced || interlaced === "disabled") ? -1 : 0;
@@ -19872,28 +19101,22 @@ UE.plugins['video'] = function (){
  * Created with JetBrains PhpStorm.
  * User: taoqili
  * Date: 12-10-12
- * Time: 上午10:05
+ * Time: 涓婂崍10:05
  * To change this template use File | Settings | File Templates.
  */
 UE.plugins['table'] = function () {
     var me = this,
         tabTimer = null,
-        //拖动计时器
-        tableDragTimer = null,
-        //双击计时器
-        tableResizeTimer = null,
-        //单元格最小宽度
-        cellMinWidth = 5,
+        //鎷栧姩璁℃椂鍣?        tableDragTimer = null,
+        //鍙屽嚮璁℃椂鍣?        tableResizeTimer = null,
+        //鍗曞厓鏍兼渶灏忓搴?        cellMinWidth = 5,
         isInResizeBuffer = false,
-        //单元格边框大小
-        cellBorderWidth = 5,
-        //鼠标偏移距离
+        //鍗曞厓鏍艰竟妗嗗ぇ灏?        cellBorderWidth = 5,
+        //榧犳爣鍋忕Щ璺濈
         offsetOfTableCell = 10,
-        //记录在有限时间内的点击状态， 共有3个取值， 0, 1, 2。 0代表未初始化， 1代表单击了1次，2代表2次
-        singleClickState = 0,
+        //璁板綍鍦ㄦ湁闄愭椂闂村唴鐨勭偣鍑荤姸鎬侊紝 鍏辨湁3涓彇鍊硷紝 0, 1, 2銆?0浠ｈ〃鏈垵濮嬪寲锛?1浠ｈ〃鍗曞嚮浜?娆★紝2浠ｈ〃2娆?        singleClickState = 0,
         userActionStatus = null,
-        //双击允许的时间范围
-        dblclickTime = 360,
+        //鍙屽嚮鍏佽鐨勬椂闂磋寖鍥?        dblclickTime = 360,
         UT = UE.UETable,
         getUETable = function (tdOrTable) {
             return UT.getUETable(tdOrTable);
@@ -19929,18 +19152,16 @@ UE.plugins['table'] = function () {
         }
     })
 
-    //处理拖动及框选相关方法
-    var startTd = null, //鼠标按下时的锚点td
-        currentTd = null, //当前鼠标经过时的td
-        onDrag = "", //指示当前拖动状态，其值可为"","h","v" ,分别表示未拖动状态，横向拖动状态，纵向拖动状态，用于鼠标移动过程中的判断
-        onBorder = false, //检测鼠标按下时是否处在单元格边缘位置
-        dragButton = null,
+    //澶勭悊鎷栧姩鍙婃閫夌浉鍏虫柟娉?    var startTd = null, //榧犳爣鎸変笅鏃剁殑閿氱偣td
+        currentTd = null, //褰撳墠榧犳爣缁忚繃鏃剁殑td
+        onDrag = "", //鎸囩ず褰撳墠鎷栧姩鐘舵€侊紝鍏跺€煎彲涓?","h","v" ,鍒嗗埆琛ㄧず鏈嫋鍔ㄧ姸鎬侊紝妯悜鎷栧姩鐘舵€侊紝绾靛悜鎷栧姩鐘舵€侊紝鐢ㄤ簬榧犳爣绉诲姩杩囩▼涓殑鍒ゆ柇
+        onBorder = false, //妫€娴嬮紶鏍囨寜涓嬫椂鏄惁澶勫湪鍗曞厓鏍艰竟缂樹綅缃?        dragButton = null,
         dragOver = false,
-        dragLine = null, //模拟的拖动线
-        dragTd = null;    //发生拖动的目标td
+        dragLine = null, //妯℃嫙鐨勬嫋鍔ㄧ嚎
+        dragTd = null;    //鍙戠敓鎷栧姩鐨勭洰鏍噒d
 
     var mousedown = false,
-    //todo 判断混乱模式
+    //todo 鍒ゆ柇娣蜂贡妯″紡
         needIEHack = true;
 
     me.setOpt({
@@ -19984,10 +19205,10 @@ UE.plugins['table'] = function () {
     };
     me.ready(function () {
         utils.cssRule('table',
-            //选中的td上的样式
+            //閫変腑鐨則d涓婄殑鏍峰紡
             '.selectTdClass{background-color:#edf5fa !important}' +
                 'table.noBorderTable td,table.noBorderTable th,table.noBorderTable caption{border:1px dashed #ddd !important}' +
-                //插入的表格的默认样式
+                //鎻掑叆鐨勮〃鏍肩殑榛樿鏍峰紡
                 'table{margin-bottom:10px;border-collapse:collapse;display:table;}' +
                 'td,th{padding: 5px 10px;border: 1px solid #DDD;}' +
                 'caption{border:1px dashed #DDD;border-bottom:0;padding:3px;text-align:center;}' +
@@ -19997,7 +19218,7 @@ UE.plugins['table'] = function () {
                 'td p{margin:0;padding:0;}', me.document);
 
         var tableCopyList, isFullCol, isFullRow;
-        //注册del/backspace事件
+        //娉ㄥ唽del/backspace浜嬩欢
         me.addListener('keydown', function (cmd, evt) {
             var me = this;
             var keyCode = evt.keyCode || evt.which;
@@ -20174,7 +19395,7 @@ UE.plugins['table'] = function () {
                             for (var j = 0, cj; cj = ci[j++];) {
                                 if (td) {
                                     td.innerHTML = cj.innerHTML;
-                                    //todo 定制处理
+                                    //todo 瀹氬埗澶勭悊
                                     cj.getAttribute('width') && td.setAttribute('width', cj.getAttribute('width'));
                                     cj.getAttribute('vAlign') && td.setAttribute('vAlign', cj.getAttribute('vAlign'));
                                     cj.getAttribute('align') && td.setAttribute('align', cj.getAttribute('align'));
@@ -20284,11 +19505,9 @@ UE.plugins['table'] = function () {
         });
 
 
-        //内容变化时触发索引更新
-        //todo 可否考虑标记检测，如果不涉及表格的变化就不进行索引重建和更新
-        me.addListener("contentchange", function () {
+        //鍐呭鍙樺寲鏃惰Е鍙戠储寮曟洿鏂?        //todo 鍙惁鑰冭檻鏍囪妫€娴嬶紝濡傛灉涓嶆秹鍙婅〃鏍肩殑鍙樺寲灏变笉杩涜绱㈠紩閲嶅缓鍜屾洿鏂?        me.addListener("contentchange", function () {
             var me = this;
-            //尽可能排除一些不需要更新的状况
+            //灏藉彲鑳芥帓闄や竴浜涗笉闇€瑕佹洿鏂扮殑鐘跺喌
             hideDragLine(me);
             if (getUETableBySelected(me))return;
             var rng = me.selection.getRange();
@@ -20400,7 +19619,7 @@ UE.plugins['table'] = function () {
             }
         });
         /**
-         * 表格隔行变色
+         * 琛ㄦ牸闅旇鍙樿壊
          */
         me.addListener("interlacetable",function(type,table,classList){
             if(!table) return;
@@ -20427,7 +19646,7 @@ UE.plugins['table'] = function () {
 
         me.addListener("mousedown", mouseDownEvent);
         me.addListener("mouseup", mouseUpEvent);
-        //拖动的时候触发mouseup
+        //鎷栧姩鐨勬椂鍊欒Е鍙憁ouseup
         domUtils.on( me.body, 'dragstart', function( evt ){
             mouseUpEvent.call( me, 'dragstart', evt );
         });
@@ -20483,7 +19702,7 @@ UE.plugins['table'] = function () {
         });
         me.addListener("keydown", function (type, evt) {
             var me = this;
-            //处理在表格的最后一个输入tab产生新的表格
+            //澶勭悊鍦ㄨ〃鏍肩殑鏈€鍚庝竴涓緭鍏ab浜х敓鏂扮殑琛ㄦ牸
             var keyCode = evt.keyCode || evt.which;
             if (keyCode == 8 || keyCode == 46) {
                 return;
@@ -20509,7 +19728,7 @@ UE.plugins['table'] = function () {
         me.addListener("getAllHtml", function () {
             removeSelectedClass(me.document.getElementsByTagName("td"));
         });
-        //修正全屏状态下插入的表格宽度在非全屏状态下撑开编辑器的情况
+        //淇鍏ㄥ睆鐘舵€佷笅鎻掑叆鐨勮〃鏍煎搴﹀湪闈炲叏灞忕姸鎬佷笅鎾戝紑缂栬緫鍣ㄧ殑鎯呭喌
         me.addListener("fullscreenchanged", function (type, fullscreen) {
             if (!fullscreen) {
                 var ratio = this.body.offsetWidth / document.body.offsetWidth,
@@ -20529,8 +19748,7 @@ UE.plugins['table'] = function () {
             }
         });
 
-        //重写execCommand命令，用于处理框选时的处理
-        var oldExecCommand = me.execCommand;
+        //閲嶅啓execCommand鍛戒护锛岀敤浜庡鐞嗘閫夋椂鐨勫鐞?        var oldExecCommand = me.execCommand;
         me.execCommand = function (cmd, datatat) {
 
             var me = this,
@@ -20583,8 +19801,7 @@ UE.plugins['table'] = function () {
 
     });
     /**
-     * 删除obj的宽高style，改成属性宽高
-     * @param obj
+     * 鍒犻櫎obj鐨勫楂榮tyle锛屾敼鎴愬睘鎬у楂?     * @param obj
      * @param replaceToProperty
      */
     function removeStyleSize(obj, replaceToProperty) {
@@ -20638,11 +19855,11 @@ UE.plugins['table'] = function () {
 
         try {
 
-            //普通状态下鼠标移动
+            //鏅€氱姸鎬佷笅榧犳爣绉诲姩
             var target = getParentTdOrTh(evt.target || evt.srcElement),
                 pos;
 
-            //区分用户的行为是拖动还是双击
+            //鍖哄垎鐢ㄦ埛鐨勮涓烘槸鎷栧姩杩樻槸鍙屽嚮
             if( isInResizeBuffer  ) {
 
                 me.body.style.webkitUserSelect = 'none';
@@ -20656,8 +19873,7 @@ UE.plugins['table'] = function () {
                 }
             }
 
-            //修改单元格大小时的鼠标移动
-            if (onDrag && dragTd) {
+            //淇敼鍗曞厓鏍煎ぇ灏忔椂鐨勯紶鏍囩Щ鍔?            if (onDrag && dragTd) {
                 singleClickState = 0;
                 me.body.style.webkitUserSelect = 'none';
                 me.selection.getNative()[browser.ie9below ? 'empty' : 'removeAllRanges']();
@@ -20670,9 +19886,8 @@ UE.plugins['table'] = function () {
                 }
                 return;
             }
-            //当鼠标处于table上时，修改移动过程中的光标状态
-            if (target) {
-                //针对使用table作为容器的组件不触发拖拽效果
+            //褰撻紶鏍囧浜巘able涓婃椂锛屼慨鏀圭Щ鍔ㄨ繃绋嬩腑鐨勫厜鏍囩姸鎬?            if (target) {
+                //閽堝浣跨敤table浣滀负瀹瑰櫒鐨勭粍浠朵笉瑙﹀彂鎷栨嫿鏁堟灉
                 if (me.fireEvent('excludetable', target) === true)
                     return;
                 pos = mouseCoords(evt);
@@ -20692,8 +19907,7 @@ UE.plugins['table'] = function () {
                         state = state.replace(/\d/, '');
                         target = getUETable(target).getPreviewCell(target, state == "v");
                     }
-                    //位于第一行的顶部或者第一列的左边时不可拖动
-                    toggleDraggableState(me, target ? !!state : false, target ? state : '', pos, target);
+                    //浣嶄簬绗竴琛岀殑椤堕儴鎴栬€呯涓€鍒楃殑宸﹁竟鏃朵笉鍙嫋鍔?                    toggleDraggableState(me, target ? !!state : false, target ? state : '', pos, target);
 
                 }
             } else {
@@ -20745,8 +19959,7 @@ UE.plugins['table'] = function () {
         var timer;
 
         function doClick(evt, button) {
-            // 部分浏览器下需要清理
-            clearTimeout(timer);
+            // 閮ㄥ垎娴忚鍣ㄤ笅闇€瑕佹竻鐞?            clearTimeout(timer);
             timer = setTimeout(function () {
                 editor.fireEvent("tableClicked", table, button);
             }, 300);
@@ -20791,8 +20004,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 获取拖动时允许的X轴坐标
-     * @param dragTd
+     * 鑾峰彇鎷栧姩鏃跺厑璁哥殑X杞村潗鏍?     * @param dragTd
      * @param evt
      */
     function getPermissionX(dragTd, evt) {
@@ -20812,8 +20024,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 获取拖动时允许的Y轴坐标
-     */
+     * 鑾峰彇鎷栧姩鏃跺厑璁哥殑Y杞村潗鏍?     */
     function getPermissionY(dragTd, evt) {
         try {
             var top = domUtils.getXY(dragTd).y,
@@ -20825,8 +20036,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 移动状态切换
-     */
+     * 绉诲姩鐘舵€佸垏鎹?     */
     function toggleDraggableState(editor, draggable, dir, mousePos, cell) {
         try {
             editor.body.style.cursor = dir == "h" ? "col-resize" : dir == "v" ? "row-resize" : "text";
@@ -20845,8 +20055,8 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 获取与UETable相关的resize line
-     * @param uetable UETable对象
+     * 鑾峰彇涓嶶ETable鐩稿叧鐨剅esize line
+     * @param uetable UETable瀵硅薄
      */
     function getResizeLineByUETable() {
 
@@ -20868,8 +20078,7 @@ UE.plugins['table'] = function () {
                 display: 'none'
             };
 
-            //切换状态
-            line.onmouseout = function(){
+            //鍒囨崲鐘舵€?            line.onmouseout = function(){
                 this.style.display = 'none';
             };
 
@@ -20884,7 +20093,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 更新resize-line
+     * 鏇存柊resize-line
      */
     function updateResizeLine( cell, uetable ) {
 
@@ -20902,7 +20111,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 显示resize-line
+     * 鏄剧ずresize-line
      */
     function showResizeLine( cell ) {
 
@@ -20913,8 +20122,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 获取鼠标与当前单元格的相对位置
-     * @param ele
+     * 鑾峰彇榧犳爣涓庡綋鍓嶅崟鍏冩牸鐨勭浉瀵逛綅缃?     * @param ele
      * @param mousePos
      */
     function getRelation(ele, mousePos) {
@@ -20950,7 +20158,7 @@ UE.plugins['table'] = function () {
             y: evt.clientY
         };
 
-        //右键菜单单独处理
+        //鍙抽敭鑿滃崟鍗曠嫭澶勭悊
         if (evt.button == 2) {
             var ut = getUETableBySelected(me),
                 flag = false;
@@ -20979,13 +20187,13 @@ UE.plugins['table'] = function () {
 
     }
 
-    //清除表格的计时器
+    //娓呴櫎琛ㄦ牸鐨勮鏃跺櫒
     function clearTableTimer() {
         tabTimer && clearTimeout( tabTimer );
         tabTimer = null;
     }
 
-    //双击收缩
+    //鍙屽嚮鏀剁缉
     function tableDbclickHandler(evt) {
         singleClickState = 0;
         evt = evt || me.window.event;
@@ -21034,7 +20242,7 @@ UE.plugins['table'] = function () {
 
                     window.setTimeout( function(){
 
-                        //是否允许改变
+                        //鏄惁鍏佽鏀瑰彉
                         var changeable = true;
 
                         utils.each( cells, function( cell, index ){
@@ -21078,8 +20286,7 @@ UE.plugins['table'] = function () {
 
         removeSelectedClass(domUtils.getElementsByTagName(me.body, "td th"));
         //trace:3113
-        //选中单元格，点击table外部，不会清掉table上挂的ueTable,会引起getUETableBySelected方法返回值
-        utils.each(me.document.getElementsByTagName('table'), function (t) {
+        //閫変腑鍗曞厓鏍硷紝鐐瑰嚮table澶栭儴锛屼笉浼氭竻鎺塼able涓婃寕鐨剈eTable,浼氬紩璧穏etUETableBySelected鏂规硶杩斿洖鍊?        utils.each(me.document.getElementsByTagName('table'), function (t) {
             t.ueTable = null;
         });
         startTd = getTargetTd(me, evt);
@@ -21088,20 +20295,19 @@ UE.plugins['table'] = function () {
         ut = getUETable(table);
         ut && ut.clearSelected();
 
-        //判断当前鼠标状态
-        if (!onBorder) {
+        //鍒ゆ柇褰撳墠榧犳爣鐘舵€?        if (!onBorder) {
             me.document.body.style.webkitUserSelect = '';
             mousedown = true;
             me.addListener('mouseover', mouseOverEvent);
         } else {
-            //边框上的动作处理
+            //杈规涓婄殑鍔ㄤ綔澶勭悊
             borderActionHandler( evt );
         }
 
 
     }
 
-    //处理表格边框上的动作, 这里做延时处理，避免两种动作互相影响
+    //澶勭悊琛ㄦ牸杈规涓婄殑鍔ㄤ綔, 杩欓噷鍋氬欢鏃跺鐞嗭紝閬垮厤涓ょ鍔ㄤ綔浜掔浉褰卞搷
     function borderActionHandler( evt ) {
 
         if ( browser.ie ) {
@@ -21110,7 +20316,7 @@ UE.plugins['table'] = function () {
 
         clearTableDragTimer();
 
-        //是否正在等待resize的缓冲中
+        //鏄惁姝ｅ湪绛夊緟resize鐨勭紦鍐蹭腑
         isInResizeBuffer = true;
 
         tableDragTimer = setTimeout(function(){
@@ -21161,7 +20367,7 @@ UE.plugins['table'] = function () {
 
     }
 
-    //边框拖动
+    //杈规鎷栧姩
     function tableBorderDrag( evt ) {
 
         isInResizeBuffer = false;
@@ -21178,8 +20384,7 @@ UE.plugins['table'] = function () {
         me.fireEvent('saveScene');
         showDragLineAt(state, startTd);
         mousedown = true;
-        //拖动开始
-        onDrag = state;
+        //鎷栧姩寮€濮?        onDrag = state;
         dragTd = startTd;
     }
 
@@ -21217,8 +20422,7 @@ UE.plugins['table'] = function () {
 
         if (evt.button == 2)return;
         var me = this;
-        //清除表格上原生跨选问题
-        var range = me.selection.getRange(),
+        //娓呴櫎琛ㄦ牸涓婂師鐢熻法閫夐棶棰?        var range = me.selection.getRange(),
             start = domUtils.findParentByTagName(range.startContainer, 'table', true),
             end = domUtils.findParentByTagName(range.endContainer, 'table', true);
 
@@ -21235,7 +20439,7 @@ UE.plugins['table'] = function () {
         }
         mousedown = false;
         me.document.body.style.webkitUserSelect = '';
-        //拖拽状态下的mouseUP
+        //鎷栨嫿鐘舵€佷笅鐨刴ouseUP
         if ( onDrag && dragTd ) {
 
             me.selection.getNative()[browser.ie9below ? 'empty' : 'removeAllRanges']();
@@ -21265,7 +20469,7 @@ UE.plugins['table'] = function () {
                 return;
             }
         }
-        //正常状态下的mouseup
+        //姝ｅ父鐘舵€佷笅鐨刴ouseup
         if (!startTd) {
             var target = domUtils.findParentByTagName(evt.target || evt.srcElement, "td", true);
             if (!target) target = domUtils.findParentByTagName(evt.target || evt.srcElement, "th", true);
@@ -21289,8 +20493,7 @@ UE.plugins['table'] = function () {
                 if (!range.collapsed) {
                     var start = domUtils.findParentByTagName(range.startContainer, ['td', 'th'], true),
                         end = domUtils.findParentByTagName(range.endContainer, ['td', 'th'], true);
-                    //在table里边的不能清除
-                    if (start && !end || !start && end || start && end && start !== end) {
+                    //鍦╰able閲岃竟鐨勪笉鑳芥竻闄?                    if (start && !end || !start && end || start && end && start !== end) {
                         range.setCursor(false, true);
                     }
                 }
@@ -21310,7 +20513,7 @@ UE.plugins['table'] = function () {
         var me = this,
             tar = evt.target || evt.srcElement;
         currentTd = domUtils.findParentByTagName(tar, "td", true) || domUtils.findParentByTagName(tar, "th", true);
-        //需要判断两个TD是否位于同一个表格内
+        //闇€瑕佸垽鏂袱涓猅D鏄惁浣嶄簬鍚屼竴涓〃鏍煎唴
         if (startTd && currentTd &&
             ((startTd.tagName == "TD" && currentTd.tagName == "TD") || (startTd.tagName == "TH" && currentTd.tagName == "TH")) &&
             domUtils.findParentByTagName(startTd, 'table') == domUtils.findParentByTagName(currentTd, 'table')) {
@@ -21347,15 +20550,13 @@ UE.plugins['table'] = function () {
         var ut = getUETable(cell);
         if (ut) {
 
-            //根据当前移动的边框获取相关的单元格
-            var table = ut.table,
+            //鏍规嵁褰撳墠绉诲姩鐨勮竟妗嗚幏鍙栫浉鍏崇殑鍗曞厓鏍?            var table = ut.table,
                 cells = getCellsByMoveBorder( cell, table );
 
             table.style.width = "";
             table.removeAttribute("width");
 
-            //修正改变量
-            changeValue = correctChangeValue( changeValue, cell, cells );
+            //淇鏀瑰彉閲?            changeValue = correctChangeValue( changeValue, cell, cells );
 
             if (cell.nextSibling) {
 
@@ -21388,8 +20589,7 @@ UE.plugins['table'] = function () {
         var ut = getUETable(td);
         if (ut) {
             var cells = ut.getSameEndPosCells(td, "y"),
-            //备份需要连带变化的td的原始高度，否则后期无法获取正确的值
-                backHeight = cells[0] ? cells[0].offsetHeight : 0;
+            //澶囦唤闇€瑕佽繛甯﹀彉鍖栫殑td鐨勫師濮嬮珮搴︼紝鍚﹀垯鍚庢湡鏃犳硶鑾峰彇姝ｇ‘鐨勫€?                backHeight = cells[0] ? cells[0].offsetHeight : 0;
             for (var i = 0, cell; cell = cells[i++];) {
                 setCellHeight(cell, changeValue, backHeight);
             }
@@ -21398,9 +20598,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 获取调整单元格大小的相关单元格
-     * @isContainMergeCell 返回的结果中是否包含发生合并后的单元格
-     */
+     * 鑾峰彇璋冩暣鍗曞厓鏍煎ぇ灏忕殑鐩稿叧鍗曞厓鏍?     * @isContainMergeCell 杩斿洖鐨勭粨鏋滀腑鏄惁鍖呭惈鍙戠敓鍚堝苟鍚庣殑鍗曞厓鏍?     */
     function getCellsByMoveBorder( cell, table, isContainMergeCell ) {
 
         if( !table ) {
@@ -21411,15 +20609,14 @@ UE.plugins['table'] = function () {
             return null;
         }
 
-        //获取到该单元格所在行的序列号
+        //鑾峰彇鍒拌鍗曞厓鏍兼墍鍦ㄨ鐨勫簭鍒楀彿
         var index = domUtils.getNodeIndex( cell ),
             temp = cell,
             rows = table.rows,
             colIndex = 0;
 
         while( temp ) {
-            //获取到当前单元格在未发生单元格合并时的序列
-            if( temp.nodeType === 1 ) {
+            //鑾峰彇鍒板綋鍓嶅崟鍏冩牸鍦ㄦ湭鍙戠敓鍗曞厓鏍煎悎骞舵椂鐨勫簭鍒?            if( temp.nodeType === 1 ) {
                 colIndex += (temp.colSpan || 1);
             }
             temp = temp.previousSibling;
@@ -21427,7 +20624,7 @@ UE.plugins['table'] = function () {
 
         temp = null;
 
-        //记录想关的单元格
+        //璁板綍鎯冲叧鐨勫崟鍏冩牸
         var borderCells = [];
 
         utils.each(rows, function( tabRow ){
@@ -21470,7 +20667,7 @@ UE.plugins['table'] = function () {
 
 
     /**
-     * 通过给定的单元格集合获取最小的单元格width
+     * 閫氳繃缁欏畾鐨勫崟鍏冩牸闆嗗悎鑾峰彇鏈€灏忕殑鍗曞厓鏍紈idth
      */
     function getMinWidthByTableCells( cells ) {
 
@@ -21488,7 +20685,7 @@ UE.plugins['table'] = function () {
 
     function correctChangeValue( changeValue, relatedCell, cells ) {
 
-        //为单元格的paading预留空间
+        //涓哄崟鍏冩牸鐨刾aading棰勭暀绌洪棿
         changeValue -= getTabcellSpace();
 
         if( changeValue < 0 ) {
@@ -21497,18 +20694,16 @@ UE.plugins['table'] = function () {
 
         changeValue -= getTableCellWidth( relatedCell );
 
-        //确定方向
+        //纭畾鏂瑰悜
         var direction = changeValue < 0 ? 'left':'right';
 
         changeValue = Math.abs(changeValue);
 
-        //只关心非最后一个单元格就可以
-        utils.each( cells, function( cellGroup ){
+        //鍙叧蹇冮潪鏈€鍚庝竴涓崟鍏冩牸灏卞彲浠?        utils.each( cells, function( cellGroup ){
 
             var curCell = cellGroup[direction];
 
-            //为单元格保留最小空间
-            if( curCell ) {
+            //涓哄崟鍏冩牸淇濈暀鏈€灏忕┖闂?            if( curCell ) {
                 changeValue = Math.min( changeValue, getTableCellWidth( curCell )-cellMinWidth );
             }
 
@@ -21516,7 +20711,7 @@ UE.plugins['table'] = function () {
         } );
 
 
-        //修正越界
+        //淇瓒婄晫
         changeValue = changeValue < 0 ? 0 : changeValue;
 
         return direction === 'left' ? -changeValue : changeValue;
@@ -21526,12 +20721,10 @@ UE.plugins['table'] = function () {
     function getTableCellWidth( cell ) {
 
         var width = 0,
-            //偏移纠正量
-            offset = 0,
+            //鍋忕Щ绾犳閲?            offset = 0,
             width = cell.offsetWidth - getTabcellSpace();
 
-        //最后一个节点纠正一下
-        if( !cell.nextSibling ) {
+        //鏈€鍚庝竴涓妭鐐圭籂姝ｄ竴涓?        if( !cell.nextSibling ) {
 
             width -= getTableCellOffset( cell );
 
@@ -21549,7 +20742,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 获取单元格所在表格的最末单元格的偏移量
+     * 鑾峰彇鍗曞厓鏍兼墍鍦ㄨ〃鏍肩殑鏈€鏈崟鍏冩牸鐨勫亸绉婚噺
      */
     function getTableCellOffset( cell ) {
 
@@ -21561,8 +20754,7 @@ UE.plugins['table'] = function () {
 
             if( prev ) {
 
-                //最后一个单元格和前一个单元格的width diff结果 如果恰好为一个border width， 则条件成立
-                tab.offsetVal = cell.offsetWidth - prev.offsetWidth === UT.borderWidth ? UT.borderWidth : 0;
+                //鏈€鍚庝竴涓崟鍏冩牸鍜屽墠涓€涓崟鍏冩牸鐨剋idth diff缁撴灉 濡傛灉鎭板ソ涓轰竴涓猙order width锛?鍒欐潯浠舵垚绔?                tab.offsetVal = cell.offsetWidth - prev.offsetWidth === UT.borderWidth ? UT.borderWidth : 0;
 
             } else {
                 tab.offsetVal = 0;
@@ -21644,7 +20836,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 依据state（v|h）在cell位置显示横线
+     * 渚濇嵁state锛坴|h锛夊湪cell浣嶇疆鏄剧ず妯嚎
      * @param state
      * @param cell
      */
@@ -21663,7 +20855,7 @@ UE.plugins['table'] = function () {
                 break;
             case "v":
                 css = 'width:' + width + 'px;left:' + tablePos.x + 'px;top:' + (cellPos.y + cell.offsetHeight );
-                //必须加上border:0和color:blue，否则低版ie不支持背景色显示
+                //蹇呴』鍔犱笂border:0鍜宑olor:blue锛屽惁鍒欎綆鐗坕e涓嶆敮鎸佽儗鏅壊鏄剧ず
                 dragLine.style.cssText = css + 'px;overflow:hidden;position: absolute;display:block;background-color:blue;height:1px;border:0;color:blue;opacity:.2;filter:alpha(opacity=20)';
                 break;
             default:
@@ -21671,8 +20863,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 当表格边框颜色为白色时设置为虚线,true为添加虚线
-     * @param editor
+     * 褰撹〃鏍艰竟妗嗛鑹蹭负鐧借壊鏃惰缃负铏氱嚎,true涓烘坊鍔犺櫄绾?     * @param editor
      * @param flag
      */
     function switchBorderColor(editor, flag) {
@@ -21698,7 +20889,7 @@ UE.plugins['table'] = function () {
     }
 
     /**
-     * 获取当前拖动的单元格
+     * 鑾峰彇褰撳墠鎷栧姩鐨勫崟鍏冩牸
      */
     function getTargetTd(editor, evt) {
 
@@ -21711,7 +20902,7 @@ UE.plugins['table'] = function () {
 
         dir = getRelation( target, mouseCoords( evt ) );
 
-        //如果有前一个节点， 需要做一个修正， 否则可能会得到一个错误的td
+        //濡傛灉鏈夊墠涓€涓妭鐐癸紝 闇€瑕佸仛涓€涓慨姝ｏ紝 鍚﹀垯鍙兘浼氬緱鍒颁竴涓敊璇殑td
 
         if( !target ) {
             return null;
@@ -21738,7 +20929,7 @@ UE.plugins['table'] = function () {
         }
 
 
-        //排除了非td内部以及用于代码高亮部分的td
+        //鎺掗櫎浜嗛潪td鍐呴儴浠ュ強鐢ㄤ簬浠ｇ爜楂樹寒閮ㄥ垎鐨則d
         return target && !(editor.fireEvent("excludetable", target) === true) ? target : null;
     }
 
@@ -21750,7 +20941,7 @@ UE.plugins['table'] = function () {
  * Created with JetBrains PhpStorm.
  * User: Jinqn
  * Date: 13-10-12
- * Time: 上午10:20
+ * Time: 涓婂崍10:20
  * To change this template use File | Settings | File Templates.
  */
 
@@ -21804,11 +20995,10 @@ UE.UETable.prototype.sortTable = function (sortByCellIndex, compareFn) {
         }
     };
 
-    //对表格设置排序的标记data-sort-type
+    //瀵硅〃鏍艰缃帓搴忕殑鏍囪data-sort-type
     table.setAttribute('data-sort-type', compareFn && typeof compareFn === "string" && Fn[compareFn] ? compareFn:'');
 
-    //th不参与排序
-    flag && trArray.splice(0, 1);
+    //th涓嶅弬涓庢帓搴?    flag && trArray.splice(0, 1);
     trArray = utils.sort(trArray,function (tr1, tr2) {
         var result;
         if (compareFn && typeof compareFn === "function") {
@@ -21846,14 +21036,13 @@ UE.plugins['tablesort'] = function () {
 
 
     me.ready(function () {
-        //添加表格可排序的样式
+        //娣诲姞琛ㄦ牸鍙帓搴忕殑鏍峰紡
         utils.cssRule('tablesort',
             'table.sortEnabled tr.firstRow th,table.sortEnabled tr.firstRow td{padding-right:20px;background-repeat: no-repeat;background-position: center right;' +
                 '   background-image:url(' + me.options.themePath + me.options.theme + '/images/sortable.png);}',
             me.document);
 
-        //做单元格合并操作时,清除可排序标识
-        me.addListener("afterexeccommand", function (type, cmd) {
+        //鍋氬崟鍏冩牸鍚堝苟鎿嶄綔鏃?娓呴櫎鍙帓搴忔爣璇?        me.addListener("afterexeccommand", function (type, cmd) {
             if( cmd == 'mergeright' || cmd == 'mergedown' || cmd == 'mergecells') {
                 this.execCommand('disablesort');
             }
@@ -21862,7 +21051,7 @@ UE.plugins['tablesort'] = function () {
 
 
 
-    //表格排序
+    //琛ㄦ牸鎺掑簭
     UE.commands['sorttable'] = {
         queryCommandState: function () {
             var me = this,
@@ -21891,8 +21080,7 @@ UE.plugins['tablesort'] = function () {
         }
     };
 
-    //设置表格可排序,清除表格可排序
-    UE.commands["enablesort"] = UE.commands["disablesort"] = {
+    //璁剧疆琛ㄦ牸鍙帓搴?娓呴櫎琛ㄦ牸鍙帓搴?    UE.commands["enablesort"] = UE.commands["disablesort"] = {
         queryCommandState: function (cmd) {
             var table = getTableItemsByRange(this).table;
             if(table && cmd=='enablesort') {
@@ -21915,11 +21103,11 @@ UE.plugins['tablesort'] = function () {
 
 // plugins/contextmenu.js
 ///import core
-///commands 右键菜单
+///commands 鍙抽敭鑿滃崟
 ///commandsName  ContextMenu
-///commandsTitle  右键菜单
+///commandsTitle  鍙抽敭鑿滃崟
 /**
- * 右键菜单
+ * 鍙抽敭鑿滃崟
  * @function
  * @name baidu.editor.plugins.contextmenu
  * @author zhanyi
@@ -22338,8 +21526,7 @@ UE.plugins['contextmenu'] = function () {
                             }
                         }
                         contextItems.push( {
-                            //todo 修正成自动获取方式
-                            'label':getLabel(),
+                            //todo 淇鎴愯嚜鍔ㄨ幏鍙栨柟寮?                            'label':getLabel(),
                             className:'edui-for-' + item.icon,
                             'subMenu':{
                                 items:subMenu,
@@ -22349,7 +21536,7 @@ UE.plugins['contextmenu'] = function () {
                     }
 
                 } else {
-                    //有可能commmand没有加载右键不能出来，或者没有command也想能展示出来添加query方法
+                    //鏈夊彲鑳絚ommmand娌℃湁鍔犺浇鍙抽敭涓嶈兘鍑烘潵锛屾垨鑰呮病鏈塩ommand涔熸兂鑳藉睍绀哄嚭鏉ユ坊鍔爍uery鏂规硶
                     if ( (me.commands[item.cmdName] || UE.commands[item.cmdName] || item.query) &&
                             (item.query ? item.query.call(me) : me.queryCommandState( item.cmdName )) > -1 ) {
 
@@ -22397,7 +21584,7 @@ UE.plugins['contextmenu'] = function () {
         }
     });
 
-    // 添加复制的flash按钮
+    // 娣诲姞澶嶅埗鐨刦lash鎸夐挳
     me.addListener('aftershowcontextmenu', function(type, menu) {
         if (me.zeroclipboard) {
             var items = menu.items;
@@ -22414,11 +21601,11 @@ UE.plugins['contextmenu'] = function () {
 
 // plugins/shortcutmenu.js
 ///import core
-///commands       弹出菜单
+///commands       寮瑰嚭鑿滃崟
 // commandsName  popupmenu
-///commandsTitle  弹出菜单
+///commandsTitle  寮瑰嚭鑿滃崟
 /**
- * 弹出菜单
+ * 寮瑰嚭鑿滃崟
  * @function
  * @name baidu.editor.plugins.popupmenu
  * @author xuheng
@@ -22496,7 +21683,7 @@ UE.plugins['shortcutmenu'] = function () {
 
 // plugins/basestyle.js
 /**
- * B、I、sub、super命令支持
+ * B銆両銆乻ub銆乻uper鍛戒护鏀寔
  * @file
  * @since 1.2.6.1
  */
@@ -22504,74 +21691,58 @@ UE.plugins['shortcutmenu'] = function () {
 UE.plugins['basestyle'] = function(){
 
     /**
-     * 字体加粗
+     * 瀛椾綋鍔犵矖
      * @command bold
-     * @param { String } cmd 命令字符串
-     * @remind 对已加粗的文本内容执行该命令， 将取消加粗
-     * @method execCommand
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @remind 瀵瑰凡鍔犵矖鐨勬枃鏈唴瀹规墽琛岃鍛戒护锛?灏嗗彇娑堝姞绮?     * @method execCommand
      * @example
      * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行加粗操作
-     * //第一次执行， 文本内容加粗
+     * //editor鏄紪杈戝櫒瀹炰緥
+     * //瀵瑰綋鍓嶉€変腑鐨勬枃鏈唴瀹规墽琛屽姞绮楁搷浣?     * //绗竴娆℃墽琛岋紝 鏂囨湰鍐呭鍔犵矖
      * editor.execCommand( 'bold' );
      *
-     * //第二次执行， 文本内容取消加粗
+     * //绗簩娆℃墽琛岋紝 鏂囨湰鍐呭鍙栨秷鍔犵矖
      * editor.execCommand( 'bold' );
      * ```
      */
 
 
     /**
-     * 字体倾斜
+     * 瀛椾綋鍊炬枩
      * @command italic
      * @method execCommand
-     * @param { String } cmd 命令字符串
-     * @remind 对已倾斜的文本内容执行该命令， 将取消倾斜
+     * @param { String } cmd 鍛戒护瀛楃涓?     * @remind 瀵瑰凡鍊炬枩鐨勬枃鏈唴瀹规墽琛岃鍛戒护锛?灏嗗彇娑堝€炬枩
      * @example
      * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行斜体操作
-     * //第一次操作， 文本内容将变成斜体
-     * editor.execCommand( 'italic' );
+     * //editor鏄紪杈戝櫒瀹炰緥
+     * //瀵瑰綋鍓嶉€変腑鐨勬枃鏈唴瀹规墽琛屾枩浣撴搷浣?     * //绗竴娆℃搷浣滐紝 鏂囨湰鍐呭灏嗗彉鎴愭枩浣?     * editor.execCommand( 'italic' );
      *
-     * //再次对同一文本内容执行， 则文本内容将恢复正常
+     * //鍐嶆瀵瑰悓涓€鏂囨湰鍐呭鎵ц锛?鍒欐枃鏈唴瀹瑰皢鎭㈠姝ｅ父
      * editor.execCommand( 'italic' );
      * ```
      */
 
     /**
-     * 下标文本，与“superscript”命令互斥
-     * @command subscript
+     * 涓嬫爣鏂囨湰锛屼笌鈥渟uperscript鈥濆懡浠や簰鏂?     * @command subscript
      * @method execCommand
-     * @remind  把选中的文本内容切换成下标文本， 如果当前选中的文本已经是下标， 则该操作会把文本内容还原成正常文本
-     * @param { String } cmd 命令字符串
-     * @example
+     * @remind  鎶婇€変腑鐨勬枃鏈唴瀹瑰垏鎹㈡垚涓嬫爣鏂囨湰锛?濡傛灉褰撳墠閫変腑鐨勬枃鏈凡缁忔槸涓嬫爣锛?鍒欒鎿嶄綔浼氭妸鏂囨湰鍐呭杩樺師鎴愭甯告枃鏈?     * @param { String } cmd 鍛戒护瀛楃涓?     * @example
      * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行下标操作
-     * //第一次操作， 文本内容将变成下标文本
-     * editor.execCommand( 'subscript' );
+     * //editor鏄紪杈戝櫒瀹炰緥
+     * //瀵瑰綋鍓嶉€変腑鐨勬枃鏈唴瀹规墽琛屼笅鏍囨搷浣?     * //绗竴娆℃搷浣滐紝 鏂囨湰鍐呭灏嗗彉鎴愪笅鏍囨枃鏈?     * editor.execCommand( 'subscript' );
      *
-     * //再次对同一文本内容执行， 则文本内容将恢复正常
+     * //鍐嶆瀵瑰悓涓€鏂囨湰鍐呭鎵ц锛?鍒欐枃鏈唴瀹瑰皢鎭㈠姝ｅ父
      * editor.execCommand( 'subscript' );
      * ```
      */
 
     /**
-     * 上标文本，与“subscript”命令互斥
-     * @command superscript
+     * 涓婃爣鏂囨湰锛屼笌鈥渟ubscript鈥濆懡浠や簰鏂?     * @command superscript
      * @method execCommand
-     * @remind 把选中的文本内容切换成上标文本， 如果当前选中的文本已经是上标， 则该操作会把文本内容还原成正常文本
-     * @param { String } cmd 命令字符串
-     * @example
+     * @remind 鎶婇€変腑鐨勬枃鏈唴瀹瑰垏鎹㈡垚涓婃爣鏂囨湰锛?濡傛灉褰撳墠閫変腑鐨勬枃鏈凡缁忔槸涓婃爣锛?鍒欒鎿嶄綔浼氭妸鏂囨湰鍐呭杩樺師鎴愭甯告枃鏈?     * @param { String } cmd 鍛戒护瀛楃涓?     * @example
      * ```javascript
-     * //editor是编辑器实例
-     * //对当前选中的文本内容执行上标操作
-     * //第一次操作， 文本内容将变成上标文本
-     * editor.execCommand( 'superscript' );
+     * //editor鏄紪杈戝櫒瀹炰緥
+     * //瀵瑰綋鍓嶉€変腑鐨勬枃鏈唴瀹规墽琛屼笂鏍囨搷浣?     * //绗竴娆℃搷浣滐紝 鏂囨湰鍐呭灏嗗彉鎴愪笂鏍囨枃鏈?     * editor.execCommand( 'superscript' );
      *
-     * //再次对同一文本内容执行， 则文本内容将恢复正常
+     * //鍐嶆瀵瑰悓涓€鏂囨湰鍐呭鎵ц锛?鍒欐枃鏈唴瀹瑰皢鎭㈠姝ｅ父
      * editor.execCommand( 'superscript' );
      * ```
      */
@@ -22585,8 +21756,7 @@ UE.plugins['basestyle'] = function(){
             return domUtils.filterNodeList(editor.selection.getStartElementPath(),tagNames);
         },
         me = this;
-    //添加快捷键
-    me.addshortcutkey({
+    //娣诲姞蹇嵎閿?    me.addshortcutkey({
         "Bold" : "ctrl+66",//^B
         "Italic" : "ctrl+73", //^I
         "Underline" : "ctrl+85"//^U
@@ -22647,7 +21817,7 @@ UE.plugins['basestyle'] = function(){
 
 // plugins/elementpath.js
 /**
- * 选取路径命令
+ * 閫夊彇璺緞鍛戒护
  * @file
  */
 UE.plugins['elementpath'] = function(){
@@ -22666,7 +21836,7 @@ UE.plugins['elementpath'] = function(){
             range.selectNode(start).select();
         },
         queryCommandValue : function() {
-            //产生一个副本，不能修改原来的startElementPath;
+            //浜х敓涓€涓壇鏈紝涓嶈兘淇敼鍘熸潵鐨剆tartElementPath;
             var parents = [].concat(this.selection.getStartElementPath()).reverse(),
                 names = [];
             tagNames = parents;
@@ -22693,22 +21863,17 @@ UE.plugins['elementpath'] = function(){
 
 // plugins/formatmatch.js
 /**
- * 格式刷，只格式inline的
- * @file
+ * 鏍煎紡鍒凤紝鍙牸寮廼nline鐨? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 格式刷
- * @command formatmatch
+ * 鏍煎紡鍒? * @command formatmatch
  * @method execCommand
- * @remind 该操作不能复制段落格式
- * @param { String } cmd 命令字符串
- * @example
+ * @remind 璇ユ搷浣滀笉鑳藉鍒舵钀芥牸寮? * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
- * //editor是编辑器实例
- * //获取格式刷
- * editor.execCommand( 'formatmatch' );
+ * //editor鏄紪杈戝櫒瀹炰緥
+ * //鑾峰彇鏍煎紡鍒? * editor.execCommand( 'formatmatch' );
  * ```
  */
 UE.plugins['formatmatch'] = function(){
@@ -22757,8 +21922,7 @@ UE.plugins['formatmatch'] = function(){
 
                 }
                 me.__hasEnterExecCommand = true;
-                //不能把block上的属性干掉
-                //trace:1553
+                //涓嶈兘鎶奲lock涓婄殑灞炴€у共鎺?                //trace:1553
                 var removeFormatAttributes = me.options.removeFormatAttributes;
                 me.options.removeFormatAttributes = '';
                 me.execCommand('removeformat');
@@ -22807,7 +21971,7 @@ UE.plugins['formatmatch'] = function(){
                list = domUtils.findParents(start,true,function(node){
                    return !domUtils.isBlockElm(node) && node.nodeType == 1;
                });
-               //a不能加入格式刷, 并且克隆节点
+               //a涓嶈兘鍔犲叆鏍煎紡鍒? 骞朵笖鍏嬮殕鑺傜偣
                for(var i=0,ci;ci=list[i];i++){
                    if(ci.tagName == 'A'){
                        list.splice(i,1);
@@ -22833,12 +21997,12 @@ UE.plugins['formatmatch'] = function(){
 
 // plugins/searchreplace.js
 ///import core
-///commands 查找替换
+///commands 鏌ユ壘鏇挎崲
 ///commandsName  SearchReplace
-///commandsTitle  查询替换
+///commandsTitle  鏌ヨ鏇挎崲
 ///commandsDialog  dialogs\searchreplace
 /**
- * @description 查找替换
+ * @description 鏌ユ壘鏇挎崲
  * @author zhanyi
  */
 
@@ -22930,7 +22094,7 @@ UE.plugin.register('searchreplace',function(){
 
         rng.shrinkBoundary(true);
 
-        //判断是不是第一次选中
+        //鍒ゆ柇鏄笉鏄涓€娆￠€変腑
         if(!rng.collapsed){
             rng.select();
             var rngText = me.selection.getText();
@@ -23028,17 +22192,14 @@ UE.plugin.register('searchreplace',function(){
 
 // plugins/customstyle.js
 /**
- * 自定义样式
- * @file
+ * 鑷畾涔夋牱寮? * @file
  * @since 1.2.6.1
  */
 
 /**
- * 根据config配置文件里“customstyle”选项的值对匹配的标签执行样式替换。
- * @command customstyle
+ * 鏍规嵁config閰嶇疆鏂囦欢閲屸€渃ustomstyle鈥濋€夐」鐨勫€煎鍖归厤鐨勬爣绛炬墽琛屾牱寮忔浛鎹€? * @command customstyle
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
  * editor.execCommand( 'customstyle' );
  * ```
@@ -23068,8 +22229,7 @@ UE.plugins['customstyle'] = function() {
                 range = this.selection.getRange();
                 bk = range.createBookmark();
                 if (range.collapsed) {
-                    //trace:1732 删掉自定义标签，要有p来回填站位
-                    if(dtd.$block[node.tagName]){
+                    //trace:1732 鍒犳帀鑷畾涔夋爣绛撅紝瑕佹湁p鏉ュ洖濉珯浣?                    if(dtd.$block[node.tagName]){
                         var fillNode = me.document.createElement('p');
                         domUtils.moveChild(node, fillNode);
                         node.parentNode.insertBefore(fillNode, node);
@@ -23150,7 +22310,7 @@ UE.plugins['customstyle'] = function() {
             return  parent ? parent.getAttribute('label') : '';
         }
     };
-    //当去掉customstyle是，如果是块元素，用p代替
+    //褰撳幓鎺塩ustomstyle鏄紝濡傛灉鏄潡鍏冪礌锛岀敤p浠ｆ浛
     me.addListener('keyup', function(type, evt) {
         var keyCode = evt.keyCode || evt.which;
 
@@ -23176,17 +22336,16 @@ UE.plugins['customstyle'] = function() {
 
 // plugins/catchremoteimage.js
 ///import core
-///commands 远程图片抓取
+///commands 杩滅▼鍥剧墖鎶撳彇
 ///commandsName  catchRemoteImage,catchremoteimageenable
-///commandsTitle  远程图片抓取
+///commandsTitle  杩滅▼鍥剧墖鎶撳彇
 /**
- * 远程图片抓取,当开启本插件时所有不符合本地域名的图片都将被抓取成为本地服务器上的图片
- */
+ * 杩滅▼鍥剧墖鎶撳彇,褰撳紑鍚湰鎻掍欢鏃舵墍鏈変笉绗﹀悎鏈湴鍩熷悕鐨勫浘鐗囬兘灏嗚鎶撳彇鎴愪负鏈湴鏈嶅姟鍣ㄤ笂鐨勫浘鐗? */
 UE.plugins['catchremoteimage'] = function () {
     var me = this,
         ajax = UE.ajax;
 
-    /* 设置默认值 */
+    /* 璁剧疆榛樿鍊?*/
     if (me.options.catchRemoteImageEnable === false) return;
     me.setOpt({
         catchRemoteImageEnable: false
@@ -23231,7 +22390,7 @@ UE.plugins['catchremoteimage'] = function () {
 
         if (remoteImages.length) {
             catchremoteimage(remoteImages, {
-                //成功抓取
+                //鎴愬姛鎶撳彇
                 success: function (r) {
                     try {
                         var info = r.state !== undefined ? r:eval("(" + r.responseText + ")");
@@ -23239,14 +22398,13 @@ UE.plugins['catchremoteimage'] = function () {
                         return;
                     }
 
-                    /* 获取源路径和新路径 */
+                    /* 鑾峰彇婧愯矾寰勫拰鏂拌矾寰?*/
                     var i, j, ci, cj, oldSrc, newSrc, list = info.list;
 
                     for (i = 0; ci = imgs[i++];) {
                         oldSrc = ci.getAttribute("_src") || ci.src || "";
                         for (j = 0; cj = list[j++];) {
-                            if (oldSrc == cj.source && cj.state == "SUCCESS") {  //抓取失败时不做替换处理
-                                newSrc = catcherUrlPrefix + cj.url;
+                            if (oldSrc == cj.source && cj.state == "SUCCESS") {  //鎶撳彇澶辫触鏃朵笉鍋氭浛鎹㈠鐞?                                newSrc = catcherUrlPrefix + cj.url;
                                 domUtils.setAttributes(ci, {
                                     "src": newSrc,
                                     "_src": newSrc
@@ -23257,8 +22415,7 @@ UE.plugins['catchremoteimage'] = function () {
                     }
                     me.fireEvent('catchremotesuccess')
                 },
-                //回调失败，本次请求超时
-                error: function () {
+                //鍥炶皟澶辫触锛屾湰娆¤姹傝秴鏃?                error: function () {
                     me.fireEvent("catchremoteerror");
                 }
             });
@@ -23271,8 +22428,7 @@ UE.plugins['catchremoteimage'] = function () {
                 opt = {
                     'method': 'POST',
                     'dataType': isJsonp ? 'jsonp':'',
-                    'timeout': 60000, //单位：毫秒，回调请求超时设置。目标用户如果网速不是很快的话此处建议设置一个较大的数值
-                    'onsuccess': callbacks["success"],
+                    'timeout': 60000, //鍗曚綅锛氭绉掞紝鍥炶皟璇锋眰瓒呮椂璁剧疆銆傜洰鏍囩敤鎴峰鏋滅綉閫熶笉鏄緢蹇殑璇濇澶勫缓璁缃竴涓緝澶х殑鏁板€?                    'onsuccess': callbacks["success"],
                     'onerror': callbacks["error"]
                 };
             opt[catcherFieldName] = imgs;
@@ -23284,7 +22440,7 @@ UE.plugins['catchremoteimage'] = function () {
 
 // plugins/snapscreen.js
 /**
- * 截屏插件，为UEditor提供插入支持
+ * 鎴睆鎻掍欢锛屼负UEditor鎻愪緵鎻掑叆鏀寔
  * @file
  * @since 1.4.2
  */
@@ -23319,11 +22475,10 @@ UE.plugin.register('snapscreen', function (){
     return {
         commands:{
             /**
-             * 字体背景颜色
+             * 瀛椾綋鑳屾櫙棰滆壊
              * @command snapscreen
              * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @example
+             * @param { String } cmd 鍛戒护瀛楃涓?             * @example
              * ```javascript
              * editor.execCommand('snapscreen');
              * ```
@@ -23388,20 +22543,19 @@ UE.plugin.register('snapscreen', function (){
 
 // plugins/insertparagraph.js
 /**
- * 插入段落
+ * 鎻掑叆娈佃惤
  * @file
  * @since 1.2.6.1
  */
 
 
 /**
- * 插入段落
+ * 鎻掑叆娈佃惤
  * @command insertparagraph
  * @method execCommand
- * @param { String } cmd 命令字符串
- * @example
+ * @param { String } cmd 鍛戒护瀛楃涓? * @example
  * ```javascript
- * //editor是编辑器实例
+ * //editor鏄紪杈戝櫒瀹炰緥
  * editor.execCommand( 'insertparagraph' );
  * ```
  */
@@ -23435,30 +22589,29 @@ UE.commands['insertparagraph'] = {
 
 // plugins/webapp.js
 /**
- * 百度应用
+ * 鐧惧害搴旂敤
  * @file
  * @since 1.2.6.1
  */
 
 
 /**
- * 插入百度应用
+ * 鎻掑叆鐧惧害搴旂敤
  * @command webapp
  * @method execCommand
- * @remind 需要百度APPKey
- * @remind 百度应用主页： <a href="http://app.baidu.com/" target="_blank">http://app.baidu.com/</a>
- * @param { Object } appOptions 应用所需的参数项， 支持的key有： title=>应用标题， width=>应用容器宽度，
- * height=>应用容器高度，logo=>应用logo，url=>应用地址
+ * @remind 闇€瑕佺櫨搴PPKey
+ * @remind 鐧惧害搴旂敤涓婚〉锛?<a href="http://app.baidu.com/" target="_blank">http://app.baidu.com/</a>
+ * @param { Object } appOptions 搴旂敤鎵€闇€鐨勫弬鏁伴」锛?鏀寔鐨刱ey鏈夛細 title=>搴旂敤鏍囬锛?width=>搴旂敤瀹瑰櫒瀹藉害锛? * height=>搴旂敤瀹瑰櫒楂樺害锛宭ogo=>搴旂敤logo锛寀rl=>搴旂敤鍦板潃
  * @example
  * ```javascript
- * //editor是编辑器实例
- * //在编辑器里插入一个“植物大战僵尸”的APP
+ * //editor鏄紪杈戝櫒瀹炰緥
+ * //鍦ㄧ紪杈戝櫒閲屾彃鍏ヤ竴涓€滄鐗╁ぇ鎴樺兊灏糕€濈殑APP
  * editor.execCommand( 'webapp' , {
- *     title: '植物大战僵尸',
+ *     title: '妞嶇墿澶ф垬鍍靛案',
  *     width: 560,
  *     height: 465,
- *     logo: '应用展示的图片',
- *     url: '百度应用的地址'
+ *     logo: '搴旂敤灞曠ず鐨勫浘鐗?,
+ *     url: '鐧惧害搴旂敤鐨勫湴鍧€'
  * } );
  * ```
  */
@@ -23562,23 +22715,22 @@ UE.plugin.register('webapp', function (){
         },
         commands:{
             /**
-             * 插入百度应用
+             * 鎻掑叆鐧惧害搴旂敤
              * @command webapp
              * @method execCommand
-             * @remind 需要百度APPKey
-             * @remind 百度应用主页： <a href="http://app.baidu.com/" target="_blank">http://app.baidu.com/</a>
-             * @param { Object } appOptions 应用所需的参数项， 支持的key有： title=>应用标题， width=>应用容器宽度，
-             * height=>应用容器高度，logo=>应用logo，url=>应用地址
+             * @remind 闇€瑕佺櫨搴PPKey
+             * @remind 鐧惧害搴旂敤涓婚〉锛?<a href="http://app.baidu.com/" target="_blank">http://app.baidu.com/</a>
+             * @param { Object } appOptions 搴旂敤鎵€闇€鐨勫弬鏁伴」锛?鏀寔鐨刱ey鏈夛細 title=>搴旂敤鏍囬锛?width=>搴旂敤瀹瑰櫒瀹藉害锛?             * height=>搴旂敤瀹瑰櫒楂樺害锛宭ogo=>搴旂敤logo锛寀rl=>搴旂敤鍦板潃
              * @example
              * ```javascript
-             * //editor是编辑器实例
-             * //在编辑器里插入一个“植物大战僵尸”的APP
+             * //editor鏄紪杈戝櫒瀹炰緥
+             * //鍦ㄧ紪杈戝櫒閲屾彃鍏ヤ竴涓€滄鐗╁ぇ鎴樺兊灏糕€濈殑APP
              * editor.execCommand( 'webapp' , {
-             *     title: '植物大战僵尸',
+             *     title: '妞嶇墿澶ф垬鍍靛案',
              *     width: 560,
              *     height: 465,
-             *     logo: '应用展示的图片',
-             *     url: '百度应用的地址'
+             *     logo: '搴旂敤灞曠ず鐨勫浘鐗?,
+             *     url: '鐧惧害搴旂敤鐨勫湴鍧€'
              * } );
              * ```
              */
@@ -23606,9 +22758,9 @@ UE.plugin.register('webapp', function (){
 ///import core
 ///import plugins\inserthtml.js
 ///import plugins\cleardoc.js
-///commands 模板
+///commands 妯℃澘
 ///commandsName  template
-///commandsTitle  模板
+///commandsTitle  妯℃澘
 ///commandsDialog  dialogs\template
 UE.plugins['template'] = function () {
     UE.commands['template'] = {
@@ -23646,7 +22798,7 @@ UE.plugins['template'] = function () {
 
 // plugins/music.js
 /**
- * 插入音乐命令
+ * 鎻掑叆闊充箰鍛戒护
  * @file
  */
 UE.plugin.register('music', function (){
@@ -23691,20 +22843,19 @@ UE.plugin.register('music', function (){
         },
         commands:{
             /**
-             * 插入音乐
+             * 鎻掑叆闊充箰
              * @command music
              * @method execCommand
-             * @param { Object } musicOptions 插入音乐的参数项， 支持的key有： url=>音乐地址；
-             * width=>音乐容器宽度；height=>音乐容器高度；align=>音乐文件的对齐方式， 可选值有: left, center, right, none
+             * @param { Object } musicOptions 鎻掑叆闊充箰鐨勫弬鏁伴」锛?鏀寔鐨刱ey鏈夛細 url=>闊充箰鍦板潃锛?             * width=>闊充箰瀹瑰櫒瀹藉害锛沨eight=>闊充箰瀹瑰櫒楂樺害锛沘lign=>闊充箰鏂囦欢鐨勫榻愭柟寮忥紝 鍙€夊€兼湁: left, center, right, none
              * @example
              * ```javascript
-             * //editor是编辑器实例
-             * //在编辑器里插入一个“植物大战僵尸”的APP
+             * //editor鏄紪杈戝櫒瀹炰緥
+             * //鍦ㄧ紪杈戝櫒閲屾彃鍏ヤ竴涓€滄鐗╁ぇ鎴樺兊灏糕€濈殑APP
              * editor.execCommand( 'music' , {
              *     width: 400,
              *     height: 95,
              *     align: "center",
-             *     url: "音乐地址"
+             *     url: "闊充箰鍦板潃"
              * } );
              * ```
              */
@@ -23728,8 +22879,8 @@ UE.plugin.register('music', function (){
 // plugins/autoupload.js
 /**
  * @description
- * 1.拖放文件到编辑区域，自动上传并插入到选区
- * 2.插入粘贴板的图片，自动上传并插入到选区
+ * 1.鎷栨斁鏂囦欢鍒扮紪杈戝尯鍩燂紝鑷姩涓婁紶骞舵彃鍏ュ埌閫夊尯
+ * 2.鎻掑叆绮樿创鏉跨殑鍥剧墖锛岃嚜鍔ㄤ笂浼犲苟鎻掑叆鍒伴€夊尯
  * @author Jinqn
  * @date 2013-10-14
  */
@@ -23737,7 +22888,7 @@ UE.plugin.register('autoupload', function (){
 
     function sendAndInsertFile(file, editor) {
         var me  = editor;
-        //模拟数据
+        //妯℃嫙鏁版嵁
         var fieldName, urlPrefix, maxSize, allowFiles, actionUrl,
             loadingHtml, errorHandler, successHandler,
             filetype = /image\/\w+/i.test(file.type) ? 'image':'file',
@@ -23793,27 +22944,27 @@ UE.plugin.register('autoupload', function (){
             };
         }
 
-        /* 插入loading的占位符 */
+        /* 鎻掑叆loading鐨勫崰浣嶇 */
         me.execCommand('inserthtml', loadingHtml);
 
-        /* 判断后端配置是否没有加载成功 */
+        /* 鍒ゆ柇鍚庣閰嶇疆鏄惁娌℃湁鍔犺浇鎴愬姛 */
         if (!me.getOpt(filetype + 'ActionName')) {
             errorHandler(me.getLang('autoupload.errorLoadConfig'));
             return;
         }
-        /* 判断文件大小是否超出限制 */
+        /* 鍒ゆ柇鏂囦欢澶у皬鏄惁瓒呭嚭闄愬埗 */
         if(file.size > maxSize) {
             errorHandler(me.getLang('autoupload.exceedSizeError'));
             return;
         }
-        /* 判断文件格式是否超出允许 */
+        /* 鍒ゆ柇鏂囦欢鏍煎紡鏄惁瓒呭嚭鍏佽 */
         var fileext = file.name ? file.name.substr(file.name.lastIndexOf('.')):'';
         if ((fileext && filetype != 'image') || (allowFiles && (allowFiles.join('') + '.').indexOf(fileext.toLowerCase() + '.') == -1)) {
             errorHandler(me.getLang('autoupload.exceedTypeError'));
             return;
         }
 
-        /* 创建Ajax并提交 */
+        /* 鍒涘缓Ajax骞舵彁浜?*/
         var xhr = new XMLHttpRequest(),
             fd = new FormData(),
             params = utils.serializeParam(me.queryCommandValue('serverparam')) || '',
@@ -23859,15 +23010,13 @@ UE.plugin.register('autoupload', function (){
             });
         },
         bindEvents:{
-            //插入粘贴板的图片，拖放插入图片
-            'ready':function(e){
+            //鎻掑叆绮樿创鏉跨殑鍥剧墖锛屾嫋鏀炬彃鍏ュ浘鐗?            'ready':function(e){
                 var me = this;
                 if(window.FormData && window.FileReader) {
                     domUtils.on(me.body, 'paste drop', function(e){
                         var hasImg = false,
                             items;
-                        //获取粘贴板文件列表或者拖放文件列表
-                        items = e.type == 'paste' ? getPasteImage(e):getDropImage(e);
+                        //鑾峰彇绮樿创鏉挎枃浠跺垪琛ㄦ垨鑰呮嫋鏀炬枃浠跺垪琛?                        items = e.type == 'paste' ? getPasteImage(e):getDropImage(e);
                         if(items){
                             var len = items.length,
                                 file;
@@ -23883,15 +23032,14 @@ UE.plugin.register('autoupload', function (){
                         }
 
                     });
-                    //取消拖放图片时出现的文字光标位置提示
+                    //鍙栨秷鎷栨斁鍥剧墖鏃跺嚭鐜扮殑鏂囧瓧鍏夋爣浣嶇疆鎻愮ず
                     domUtils.on(me.body, 'dragover', function (e) {
                         if(e.dataTransfer.types[0] == 'Files') {
                             e.preventDefault();
                         }
                     });
 
-                    //设置loading的样式
-                    utils.cssRule('loading',
+                    //璁剧疆loading鐨勬牱寮?                    utils.cssRule('loading',
                         '.loadingclass{display:inline-block;cursor:default;background: url(\''
                             + this.options.themePath
                             + this.options.theme +'/images/loading.gif\') no-repeat center center transparent;border:1px solid #cccccc;margin-left:1px;height: 22px;width: 22px;}\n' +
@@ -23910,10 +23058,9 @@ UE.plugin.register('autoupload', function (){
 UE.plugin.register('autosave', function (){
 
     var me = this,
-        //无限循环保护
+        //鏃犻檺寰幆淇濇姢
         lastSaveTime = new Date(),
-        //最小保存间隔时间
-        MIN_TIME = 20,
+        //鏈€灏忎繚瀛橀棿闅旀椂闂?        MIN_TIME = 20,
         //auto save key
         saveKey = null;
 
@@ -23926,8 +23073,7 @@ UE.plugin.register('autosave', function (){
         }
 
         if ( !editor.hasContents() ) {
-            //这里不能调用命令来删除， 会造成事件死循环
-            saveKey && me.removePreferences( saveKey );
+            //杩欓噷涓嶈兘璋冪敤鍛戒护鏉ュ垹闄わ紝 浼氶€犳垚浜嬩欢姝诲惊鐜?            saveKey && me.removePreferences( saveKey );
             return;
         }
 
@@ -23953,7 +23099,7 @@ UE.plugin.register('autosave', function (){
 
     return {
         defaultOptions: {
-            //默认间隔时间
+            //榛樿闂撮殧鏃堕棿
             saveInterval: 500
         },
         bindEvents:{
@@ -23968,7 +23114,7 @@ UE.plugin.register('autosave', function (){
                     key = ( me.container.parentNode.id || 'ue-common' ) + _suffix;
                 }
 
-                //页面地址+编辑器ID 保持唯一
+                //椤甸潰鍦板潃+缂栬緫鍣↖D 淇濇寔鍞竴
                 saveKey = ( location.protocol + location.host + location.pathname ).replace( /[.:\/]/g, '_' ) + key;
 
             },
@@ -24070,9 +23216,9 @@ UE.plugin.register('charts', function (){
                     config.yTitle = data.yTitle || '';
                     config.suffix = data.suffix || '';
                     config.tip = data.tip || '';
-                    //数据对齐方式
+                    //鏁版嵁瀵归綈鏂瑰紡
                     config.dataFormat = data.tableDataFormat || '';
-                    //图表类型
+                    //鍥捐〃绫诲瀷
                     config.chartType = data.chartType || 0;
 
                     for ( var key in config ) {
@@ -24126,17 +23272,17 @@ UE.plugin.register('charts', function (){
         var firstRows = null,
             cellCount = 0;
 
-        //行数不够
+        //琛屾暟涓嶅
         if ( table.rows.length < 2 ) {
             return false;
         }
 
-        //列数不够
+        //鍒楁暟涓嶅
         if ( table.rows[0].cells.length < 2 ) {
             return false;
         }
 
-        //第一行所有cell必须是th
+        //绗竴琛屾墍鏈塩ell蹇呴』鏄痶h
         firstRows = table.rows[ 0 ].cells;
         cellCount = firstRows.length;
 
@@ -24150,12 +23296,12 @@ UE.plugin.register('charts', function (){
 
         for ( var i = 1, row; row = table.rows[ i ]; i++ ) {
 
-            //每行单元格数不匹配， 返回false
+            //姣忚鍗曞厓鏍兼暟涓嶅尮閰嶏紝 杩斿洖false
             if ( row.cells.length != cellCount ) {
                 return false;
             }
 
-            //第一列不是th也返回false
+            //绗竴鍒椾笉鏄痶h涔熻繑鍥瀎alse
             if ( row.cells[0].tagName.toLowerCase() !== 'th' ) {
                 return false;
             }
@@ -24166,8 +23312,7 @@ UE.plugin.register('charts', function (){
 
                 value = value.replace( new RegExp( UE.dom.domUtils.fillChar, 'g' ), '' ).replace( /^\s+|\s+$/g, '' );
 
-                //必须是数字
-                if ( !/^\d*\.?\d+$/.test( value ) ) {
+                //蹇呴』鏄暟瀛?                if ( !/^\d*\.?\d+$/.test( value ) ) {
                     return false;
                 }
 
@@ -24183,12 +23328,12 @@ UE.plugin.register('charts', function (){
 
 // plugins/section.js
 /**
- * 目录大纲支持插件
+ * 鐩綍澶х翰鏀寔鎻掍欢
  * @file
  * @since 1.3.0
  */
 UE.plugin.register('section', function (){
-    /* 目录节点对象 */
+    /* 鐩綍鑺傜偣瀵硅薄 */
     function Section(option){
         this.tag = '';
         this.level = -1,
@@ -24223,20 +23368,20 @@ UE.plugin.register('section', function (){
             }
         },
         bindEvents:{
-            /* 初始化、拖拽、粘贴、执行setcontent之后 */
+            /* 鍒濆鍖栥€佹嫋鎷姐€佺矘璐淬€佹墽琛宻etcontent涔嬪悗 */
             'ready': function (){
                 me.fireEvent('updateSections');
                 domUtils.on(me.body, 'drop paste', function(){
                     me.fireEvent('updateSections');
                 });
             },
-            /* 执行paragraph命令之后 */
+            /* 鎵цparagraph鍛戒护涔嬪悗 */
             'afterexeccommand': function (type, cmd) {
                 if(cmd == 'paragraph') {
                     me.fireEvent('updateSections');
                 }
             },
-            /* 部分键盘操作，触发updateSections事件 */
+            /* 閮ㄥ垎閿洏鎿嶄綔锛岃Е鍙憉pdateSections浜嬩欢 */
             'keyup': function (type, e) {
                 var me = this,
                     range = me.selection.getRange();
@@ -24331,7 +23476,7 @@ UE.plugin.register('section', function (){
                     targetAddress = isAfter ? targetSection.endAddress:targetSection.startAddress;
                     target = getNodeFromAddress(targetAddress, me.body);
 
-                    /* 判断目标地址是否被源章节包含 */
+                    /* 鍒ゆ柇鐩爣鍦板潃鏄惁琚簮绔犺妭鍖呭惈 */
                     if(!targetAddress || !target || isContainsAddress(sourceSection.startAddress, sourceSection.endAddress, targetAddress)) return;
 
                     var startNode = getNodeFromAddress(sourceSection.startAddress, me.body),
@@ -24359,7 +23504,7 @@ UE.plugin.register('section', function (){
 
                     me.fireEvent('updateSections');
 
-                    /* 获取地址的包含关系 */
+                    /* 鑾峰彇鍦板潃鐨勫寘鍚叧绯?*/
                     function isContainsAddress(startAddress, endAddress, addressTarget){
                         var isAfterStartAddress = false,
                             isBeforeEndAddress = false;
@@ -24455,7 +23600,7 @@ UE.plugin.register('section', function (){
 // plugins/simpleupload.js
 /**
  * @description
- * 简单上传:点击按钮,直接选择文件上传
+ * 绠€鍗曚笂浼?鐐瑰嚮鎸夐挳,鐩存帴閫夋嫨鏂囦欢涓婁紶
  * @author Jinqn
  * @date 2014-03-31
  */
@@ -24552,12 +23697,12 @@ UE.plugin.register('simpleupload', function (){
                     }
                 }
 
-                /* 判断后端配置是否没有加载成功 */
+                /* 鍒ゆ柇鍚庣閰嶇疆鏄惁娌℃湁鍔犺浇鎴愬姛 */
                 if (!me.getOpt('imageActionName')) {
                     errorHandler(me.getLang('autoupload.errorLoadConfig'));
                     return;
                 }
-                // 判断文件格式是否错误
+                // 鍒ゆ柇鏂囦欢鏍煎紡鏄惁閿欒
                 var filename = input.value,
                     fileext = filename ? filename.substr(filename.lastIndexOf('.')):'';
                 if (!fileext || (allowFiles && (allowFiles.join('') + '.').indexOf(fileext.toLowerCase() + '.') == -1)) {
@@ -24592,8 +23737,7 @@ UE.plugin.register('simpleupload', function (){
     return {
         bindEvents:{
             'ready': function() {
-                //设置loading的样式
-                utils.cssRule('loading',
+                //璁剧疆loading鐨勬牱寮?                utils.cssRule('loading',
                     '.loadingclass{display:inline-block;cursor:default;background: url(\''
                     + this.options.themePath
                     + this.options.theme +'/images/loading.gif\') no-repeat center center transparent;border:1px solid #cccccc;margin-right:1px;height: 22px;width: 22px;}\n' +
@@ -24603,7 +23747,7 @@ UE.plugin.register('simpleupload', function (){
                     '}',
                     this.document);
             },
-            /* 初始化简单上传按钮 */
+            /* 鍒濆鍖栫畝鍗曚笂浼犳寜閽?*/
             'simpleuploadbtnready': function(type, container) {
                 containerBtn = container;
                 me.afterConfigReady(initUploadBtn);
@@ -24628,7 +23772,7 @@ UE.plugin.register('simpleupload', function (){
 
 // plugins/serverparam.js
 /**
- * 服务器提交的额外参数列表设置插件
+ * 鏈嶅姟鍣ㄦ彁浜ょ殑棰濆鍙傛暟鍒楄〃璁剧疆鎻掍欢
  * @file
  * @since 1.2.6.1
  */
@@ -24640,91 +23784,76 @@ UE.plugin.register('serverparam', function (){
     return {
         commands:{
             /**
-             * 修改服务器提交的额外参数列表,清除所有项
+             * 淇敼鏈嶅姟鍣ㄦ彁浜ょ殑棰濆鍙傛暟鍒楄〃,娓呴櫎鎵€鏈夐」
              * @command serverparam
              * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @example
+             * @param { String } cmd 鍛戒护瀛楃涓?             * @example
              * ```javascript
              * editor.execCommand('serverparam');
-             * editor.queryCommandValue('serverparam'); //返回空
-             * ```
+             * editor.queryCommandValue('serverparam'); //杩斿洖绌?             * ```
              */
             /**
-             * 修改服务器提交的额外参数列表,删除指定项
-             * @command serverparam
+             * 淇敼鏈嶅姟鍣ㄦ彁浜ょ殑棰濆鍙傛暟鍒楄〃,鍒犻櫎鎸囧畾椤?             * @command serverparam
              * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { String } key 要清除的属性
-             * @example
+             * @param { String } cmd 鍛戒护瀛楃涓?             * @param { String } key 瑕佹竻闄ょ殑灞炴€?             * @example
              * ```javascript
-             * editor.execCommand('serverparam', 'name'); //删除属性name
+             * editor.execCommand('serverparam', 'name'); //鍒犻櫎灞炴€ame
              * ```
              */
             /**
-             * 修改服务器提交的额外参数列表,使用键值添加项
+             * 淇敼鏈嶅姟鍣ㄦ彁浜ょ殑棰濆鍙傛暟鍒楄〃,浣跨敤閿€兼坊鍔犻」
              * @command serverparam
              * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { String } key 要添加的属性
-             * @param { String } value 要添加属性的值
-             * @example
+             * @param { String } cmd 鍛戒护瀛楃涓?             * @param { String } key 瑕佹坊鍔犵殑灞炴€?             * @param { String } value 瑕佹坊鍔犲睘鎬х殑鍊?             * @example
              * ```javascript
              * editor.execCommand('serverparam', 'name', 'hello');
-             * editor.queryCommandValue('serverparam'); //返回对象 {'name': 'hello'}
+             * editor.queryCommandValue('serverparam'); //杩斿洖瀵硅薄 {'name': 'hello'}
              * ```
              */
             /**
-             * 修改服务器提交的额外参数列表,传入键值对对象添加多项
+             * 淇敼鏈嶅姟鍣ㄦ彁浜ょ殑棰濆鍙傛暟鍒楄〃,浼犲叆閿€煎瀵硅薄娣诲姞澶氶」
              * @command serverparam
              * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { Object } key 传入的键值对对象
+             * @param { String } cmd 鍛戒护瀛楃涓?             * @param { Object } key 浼犲叆鐨勯敭鍊煎瀵硅薄
              * @example
              * ```javascript
              * editor.execCommand('serverparam', {'name': 'hello'});
-             * editor.queryCommandValue('serverparam'); //返回对象 {'name': 'hello'}
+             * editor.queryCommandValue('serverparam'); //杩斿洖瀵硅薄 {'name': 'hello'}
              * ```
              */
             /**
-             * 修改服务器提交的额外参数列表,使用自定义函数添加多项
-             * @command serverparam
+             * 淇敼鏈嶅姟鍣ㄦ彁浜ょ殑棰濆鍙傛暟鍒楄〃,浣跨敤鑷畾涔夊嚱鏁版坊鍔犲椤?             * @command serverparam
              * @method execCommand
-             * @param { String } cmd 命令字符串
-             * @param { Function } key 自定义获取参数的函数
+             * @param { String } cmd 鍛戒护瀛楃涓?             * @param { Function } key 鑷畾涔夎幏鍙栧弬鏁扮殑鍑芥暟
              * @example
              * ```javascript
              * editor.execCommand('serverparam', function(editor){
              *     return {'key': 'value'};
              * });
-             * editor.queryCommandValue('serverparam'); //返回对象 {'key': 'value'}
+             * editor.queryCommandValue('serverparam'); //杩斿洖瀵硅薄 {'key': 'value'}
              * ```
              */
 
             /**
-             * 获取服务器提交的额外参数列表
+             * 鑾峰彇鏈嶅姟鍣ㄦ彁浜ょ殑棰濆鍙傛暟鍒楄〃
              * @command serverparam
              * @method queryCommandValue
-             * @param { String } cmd 命令字符串
-             * @example
+             * @param { String } cmd 鍛戒护瀛楃涓?             * @example
              * ```javascript
-             * editor.queryCommandValue( 'serverparam' ); //返回对象 {'key': 'value'}
+             * editor.queryCommandValue( 'serverparam' ); //杩斿洖瀵硅薄 {'key': 'value'}
              * ```
              */
             'serverparam':{
                 execCommand:function (cmd, key, value) {
-                    if (key === undefined || key === null) { //不传参数,清空列表
+                    if (key === undefined || key === null) { //涓嶄紶鍙傛暟,娓呯┖鍒楄〃
                         serverParam = {};
-                    } else if (utils.isString(key)) { //传入键值
-                        if(value === undefined || value === null) {
+                    } else if (utils.isString(key)) { //浼犲叆閿€?                        if(value === undefined || value === null) {
                             delete serverParam[key];
                         } else {
                             serverParam[key] = value;
                         }
-                    } else if (utils.isObject(key)) { //传入对象,覆盖列表项
-                        utils.extend(serverParam, key, true);
-                    } else if (utils.isFunction(key)){ //传入函数,添加列表项
-                        utils.extend(serverParam, key(), true);
+                    } else if (utils.isObject(key)) { //浼犲叆瀵硅薄,瑕嗙洊鍒楄〃椤?                        utils.extend(serverParam, key, true);
+                    } else if (utils.isFunction(key)){ //浼犲叆鍑芥暟,娣诲姞鍒楄〃椤?                        utils.extend(serverParam, key(), true);
                     }
                 },
                 queryCommandValue: function(){
@@ -24738,7 +23867,7 @@ UE.plugin.register('serverparam', function (){
 
 // plugins/insertfile.js
 /**
- * 插入附件
+ * 鎻掑叆闄勪欢
  */
 UE.plugin.register('insertfile', function (){
 
@@ -24811,8 +23940,7 @@ UE.plugin.register('insertfile', function (){
 // plugins/xssFilter.js
 /**
  * @file xssFilter.js
- * @desc xss过滤器
- * @author robbenmu
+ * @desc xss杩囨护鍣? * @author robbenmu
  */
 
 UE.plugins.xssFilter = function() {
@@ -24838,8 +23966,7 @@ UE.plugins.xssFilter = function() {
 		});
 	}
 
-	// 添加inserthtml\paste等操作用的过滤规则
-	if (whitList && config.xssFilterRules) {
+	// 娣诲姞inserthtml\paste绛夋搷浣滅敤鐨勮繃婊よ鍒?	if (whitList && config.xssFilterRules) {
 		this.options.filterRules = function () {
 
 			var result = {};
@@ -24860,7 +23987,7 @@ UE.plugins.xssFilter = function() {
 		tagList.push(key);
 	});
 
-	// 添加input过滤规则
+	// 娣诲姞input杩囨护瑙勫垯
 	//
 	if (whitList && config.inputXssFilter) {
 		this.addInputRule(function (root) {
@@ -24873,7 +24000,7 @@ UE.plugins.xssFilter = function() {
 			});
 		});
 	}
-	// 添加output过滤规则
+	// 娣诲姞output杩囨护瑙勫垯
 	//
 	if (whitList && config.outputXssFilter) {
 		this.addOutputRule(function (root) {
@@ -24947,8 +24074,7 @@ UE.ui = baidu.editor.ui = {};
         },
         getClientRect: function (element){
             var bcr;
-            //trace  IE6下在控制编辑器显隐时可能会报错，catch一下
-            try{
+            //trace  IE6涓嬪湪鎺у埗缂栬緫鍣ㄦ樉闅愭椂鍙兘浼氭姤閿欙紝catch涓€涓?            try{
                 bcr = element.getBoundingClientRect();
             }catch(e){
                 bcr={left:0,top:0,height:0,width:0}
@@ -25180,7 +24306,7 @@ UE.ui = baidu.editor.ui = {};
             var html = this.renderHtml();
             var el = uiUtils.createElementByHtml(html);
 
-            //by xuheng 给每个node添加class
+            //by xuheng 缁欐瘡涓猲ode娣诲姞class
             var list = domUtils.getElementsByTagName(el, "*");
             var theme = "edui-" + (this.theme || this.editor.options.theme);
             var layer = document.getElementById('edui_fixedlayer');
@@ -25393,7 +24519,7 @@ UE.ui = baidu.editor.ui = {};
                 this.content.postRender();
             }
 
-            //捕获鼠标滚轮
+            //鎹曡幏榧犳爣婊氳疆
             if( this.captureWheel && !this.captured ) {
 
                 this.captured = true;
@@ -25411,10 +24537,10 @@ UE.ui = baidu.editor.ui = {};
                     _height -= 30;
                 }
                 content.style.height = _height + 'px';
-                //同步更改iframe高度
+                //鍚屾鏇存敼iframe楂樺害
                 ifr && ( ifr.style.height = _height + 'px' );
 
-                //阻止在combox上的鼠标滚轮事件, 防止用户的正常操作被误解
+                //闃绘鍦╟ombox涓婄殑榧犳爣婊氳疆浜嬩欢, 闃叉鐢ㄦ埛鐨勬甯告搷浣滆璇В
                 if( window.XMLHttpRequest ) {
 
                     domUtils.on( content, ( 'onmousewheel' in document.body ) ? 'mousewheel' :'DOMMouseScroll' , function(e){
@@ -25759,14 +24885,13 @@ UE.ui = baidu.editor.ui = {};
     
     baidu.editor.ui.Stateful = {
         alwalysHoverable: false,
-        target:null,//目标元素和this指向dom不一样
-        Stateful_init: function (){
+        target:null,//鐩爣鍏冪礌鍜宼his鎸囧悜dom涓嶄竴鏍?        Stateful_init: function (){
             this._Stateful_dGetHtmlTpl = this.getHtmlTpl;
             this.getHtmlTpl = this.Stateful_getHtmlTpl;
         },
         Stateful_getHtmlTpl: function (){
             var tpl = this._Stateful_dGetHtmlTpl();
-            // 使用function避免$转义
+            // 浣跨敤function閬垮厤$杞箟
             return tpl.replace(/stateful/g, function (){ return TPL_STATEFUL; });
         },
         Stateful_onMouseEnter: function (evt, el){
@@ -25992,8 +25117,7 @@ UE.ui = baidu.editor.ui = {};
                 '</div></div></div>';
         },
         showPopup: function (){
-            // 当popup往上弹出的时候，做特殊处理
-            var rect = uiUtils.getClientRect(this.getDom());
+            // 褰損opup寰€涓婂脊鍑虹殑鏃跺€欙紝鍋氱壒娈婂鐞?            var rect = uiUtils.getClientRect(this.getDom());
             rect.top -= this.popup.SHADOW_RADIUS;
             rect.height += this.popup.SHADOW_RADIUS;
             this.popup.showAnchorRect(rect);
@@ -26257,7 +25381,7 @@ UE.ui = baidu.editor.ui = {};
 
             var me = this;
             this.popup = new Popup({
-                //传入配置参数
+                //浼犲叆閰嶇疆鍙傛暟
                 content: new AutoTypeSetPicker({editor:me.editor}),
                 'editor':me.editor,
                 hide : function(){
@@ -26287,7 +25411,7 @@ UE.ui = baidu.editor.ui = {};
                         editorId = me.editor.uid;
                     if (target && target.tagName == 'INPUT') {
 
-                        // 点击图片浮动的checkbox,去除对应的radio
+                        // 鐐瑰嚮鍥剧墖娴姩鐨刢heckbox,鍘婚櫎瀵瑰簲鐨剅adio
                         if (target.name == 'imageBlockLine' || target.name == 'textAlign' || target.name == 'symbolConver') {
                             var checked = target.checked,
                                 radioTd = document.getElementById( target.name + 'Value' + editorId),
@@ -26308,7 +25432,7 @@ UE.ui = baidu.editor.ui = {};
                                 }
                             }
                         }
-                        // 点击radio,选中对应的checkbox
+                        // 鐐瑰嚮radio,閫変腑瀵瑰簲鐨刢heckbox
                         if (target.name == ('imageBlockLineValue' + editorId) || target.name == ('textAlignValue' + editorId) || target.name == 'bdc') {
                             var checkboxs = target.parentNode.previousSibling.getElementsByTagName('input');
                             checkboxs && (checkboxs[0].checked = true);
@@ -26338,8 +25462,8 @@ UE.ui = baidu.editor.ui = {};
         UIBase = baidu.editor.ui.UIBase;
 
     /**
-     * 该参数将新增一个参数： selected， 参数类型为一个Object， 形如{ 'align': 'center', 'valign': 'top' }， 表示单元格的初始
-     * 对齐状态为： 竖直居上，水平居中; 其中 align的取值为：'center', 'left', 'right'; valign的取值为: 'top', 'middle', 'bottom'
+     * 璇ュ弬鏁板皢鏂板涓€涓弬鏁帮細 selected锛?鍙傛暟绫诲瀷涓轰竴涓狾bject锛?褰㈠{ 'align': 'center', 'valign': 'top' }锛?琛ㄧず鍗曞厓鏍肩殑鍒濆
+     * 瀵归綈鐘舵€佷负锛?绔栫洿灞呬笂锛屾按骞冲眳涓? 鍏朵腑 align鐨勫彇鍊间负锛?center', 'left', 'right'; valign鐨勫彇鍊间负: 'top', 'middle', 'bottom'
      * @update 2013/4/2 hancong03@baidu.com
      */
     var CellAlignPicker = baidu.editor.ui.CellAlignPicker = function (options) {
@@ -26348,7 +25472,7 @@ UE.ui = baidu.editor.ui = {};
         this.initCellAlignPicker();
     };
     CellAlignPicker.prototype = {
-        //初始化选中状态， 该方法将根据传递进来的参数获取到应该选中的对齐方式图标的索引
+        //鍒濆鍖栭€変腑鐘舵€侊紝 璇ユ柟娉曞皢鏍规嵁浼犻€掕繘鏉ョ殑鍙傛暟鑾峰彇鍒板簲璇ラ€変腑鐨勫榻愭柟寮忓浘鏍囩殑绱㈠紩
         initSelected: function(){
 
             var status = {
@@ -26601,7 +25725,7 @@ UE.ui = baidu.editor.ui = {};
             return menuSeparator;
         },
         createItem:function (item) {
-            //新增一个参数menu, 该参数存储了menuItem所对应的menu引用
+            //鏂板涓€涓弬鏁癿enu, 璇ュ弬鏁板瓨鍌ㄤ簡menuItem鎵€瀵瑰簲鐨刴enu寮曠敤
             item.menu = this;
             return new MenuItem(item);
         },
@@ -26672,7 +25796,7 @@ UE.ui = baidu.editor.ui = {};
     utils.inherits(Menu, Popup);
 
     /**
-     * @update 2013/04/03 hancong03 新增一个参数menu, 该参数存储了menuItem所对应的menu引用
+     * @update 2013/04/03 hancong03 鏂板涓€涓弬鏁癿enu, 璇ュ弬鏁板瓨鍌ㄤ簡menuItem鎵€瀵瑰簲鐨刴enu寮曠敤
      * @type {Function}
      */
     var MenuItem = baidu.editor.ui.MenuItem = function (options) {
@@ -26683,8 +25807,7 @@ UE.ui = baidu.editor.ui = {};
             if (options.className && options.className.indexOf("aligntd") != -1) {
                 var me = this;
 
-                //获取单元格对齐初始状态
-                this.subMenu.selected = this.editor.queryCommandValue( 'cellalignment' );
+                //鑾峰彇鍗曞厓鏍煎榻愬垵濮嬬姸鎬?                this.subMenu.selected = this.editor.queryCommandValue( 'cellalignment' );
 
                 this.subMenu = new Popup({
                     content:new CellAlignPicker(this.subMenu),
@@ -26833,7 +25956,7 @@ UE.ui = baidu.editor.ui = {};
 ///import ui/menu.js
 ///import ui/splitbutton.js
 (function (){
-    // todo: menu和item提成通用list
+    // todo: menu鍜宨tem鎻愭垚閫氱敤list
     var utils = baidu.editor.utils,
         uiUtils = baidu.editor.ui.uiUtils,
         Menu = baidu.editor.ui.Menu,
@@ -26957,7 +26080,7 @@ UE.ui = baidu.editor.ui = {};
                 onclose: function (t, ok){
                     return ok ? this.onok() : this.oncancel();
                 },
-                //是否控制dialog中的scroll事件， 默认为不阻止
+                //鏄惁鎺у埗dialog涓殑scroll浜嬩欢锛?榛樿涓轰笉闃绘
                 holdScroll: false
             },options));
             this.initDialog();
@@ -27106,8 +26229,7 @@ UE.ui = baidu.editor.ui = {};
                 dialogWrapNode.style.height = vpRect.height + "px";
                 dialogWrapNode.style.left = 0;
 
-                //保存环境的overflow值
-                this._originalContext = {
+                //淇濆瓨鐜鐨刼verflow鍊?                this._originalContext = {
                     html: {
                         overflowX: document.documentElement.style.overflowX,
                         overflowY: document.documentElement.style.overflowY
@@ -27163,7 +26285,7 @@ UE.ui = baidu.editor.ui = {};
                 '</div></div></div>';
         },
         postRender: function (){
-            // todo: 保持居中/记住上次关闭位置选项
+            // todo: 淇濇寔灞呬腑/璁颁綇涓婃鍏抽棴浣嶇疆閫夐」
             if (!this.modalMask.getDom()) {
                 this.modalMask.render();
                 this.modalMask.hide();
@@ -27192,8 +26314,7 @@ UE.ui = baidu.editor.ui = {};
                 });
             });
 
-            //hold住scroll事件，防止dialog的滚动影响页面
-//            if( this.holdScroll ) {
+            //hold浣弒croll浜嬩欢锛岄槻姝ialog鐨勬粴鍔ㄥ奖鍝嶉〉闈?//            if( this.holdScroll ) {
 //
 //                if( !me.iframeUrl ) {
 //                    domUtils.on( document.getElementById( me.id + "_iframe"), !browser.gecko ? "mousewheel" : "DOMMouseScroll", function(e){
@@ -27273,7 +26394,7 @@ UE.ui = baidu.editor.ui = {};
             if (this._hidden) {
                 this.getDom().style.display = '';
 
-                //要高过编辑器的zindxe
+                //瑕侀珮杩囩紪杈戝櫒鐨剒indxe
                 this.editor.container.style.zIndex && (this.getDom().style.zIndex = this.editor.container.style.zIndex * 1 + 10);
                 this._hidden = false;
                 this.fireEvent('show');
@@ -27296,7 +26417,7 @@ UE.ui = baidu.editor.ui = {};
         },
         open: function (){
             if (this.autoReset) {
-                //有可能还没有渲染
+                //鏈夊彲鑳借繕娌℃湁娓叉煋
                 try{
                     this.reset();
                 }catch(e){
@@ -27317,7 +26438,7 @@ UE.ui = baidu.editor.ui = {};
         },
         close: function (ok){
             if (this.fireEvent('close', ok) !== false) {
-                //还原环境
+                //杩樺師鐜
                 if ( this.fullscreen ) {
 
                     document.documentElement.style.overflowX = this._originalContext.html.overflowX;
@@ -27329,7 +26450,7 @@ UE.ui = baidu.editor.ui = {};
                 }
                 this._hide();
 
-                //销毁content
+                //閿€姣乧ontent
                 var content = this.getDom('content');
                 var iframe = this.getDom('iframe');
                 if (content && iframe) {
@@ -27389,7 +26510,7 @@ UE.ui = baidu.editor.ui = {};
 // ui/multiMenu.js
 ///import core
 ///import uicore
- ///commands 表情
+ ///commands 琛ㄦ儏
 (function(){
     var utils = baidu.editor.utils,
         Popup = baidu.editor.ui.Popup,
@@ -27436,9 +26557,8 @@ UE.ui = baidu.editor.ui = {};
         utils = baidu.editor.utils,
         domUtils = baidu.editor.dom.domUtils;
 
-    var allMenus = [],//存储所有快捷菜单
-        timeID,
-        isSubMenuShow = false;//是否有子pop显示
+    var allMenus = [],//瀛樺偍鎵€鏈夊揩鎹疯彍鍗?        timeID,
+        isSubMenuShow = false;//鏄惁鏈夊瓙pop鏄剧ず
 
     var ShortCutMenu = UI.ShortCutMenu = function (options) {
         this.initOptions (options);
@@ -27463,7 +26583,7 @@ UE.ui = baidu.editor.ui = {};
 
             domUtils.on (doc , "mousemove" , function (e) {
                 if (me.isHidden === false) {
-                    //有pop显示就不隐藏快捷菜单
+                    //鏈塸op鏄剧ず灏变笉闅愯棌蹇嵎鑿滃崟
                     if (me.getSubMenuMark () || me.eventType == "contextmenu")   return;
 
 
@@ -27471,10 +26591,10 @@ UE.ui = baidu.editor.ui = {};
                         el = me.getDom (),
                         wt = el.offsetWidth,
                         ht = el.offsetHeight,
-                        distanceX = wt / 2 + me.SPACE,//距离中心X标准
-                        distanceY = ht / 2,//距离中心Y标准
-                        x = Math.abs (e.screenX - me.left),//离中心距离横坐标
-                        y = Math.abs (e.screenY - me.top);//离中心距离纵坐标
+                        distanceX = wt / 2 + me.SPACE,//璺濈涓績X鏍囧噯
+                        distanceY = ht / 2,//璺濈涓績Y鏍囧噯
+                        x = Math.abs (e.screenX - me.left),//绂讳腑蹇冭窛绂绘í鍧愭爣
+                        y = Math.abs (e.screenY - me.top);//绂讳腑蹇冭窛绂荤旱鍧愭爣
 
                     clearTimeout (timeID);
                     timeID = setTimeout (function () {
@@ -27498,7 +26618,7 @@ UE.ui = baidu.editor.ui = {};
                 }
             });
 
-            //ie\ff下 mouseout不准
+            //ie\ff涓?mouseout涓嶅噯
             if (browser.chrome) {
                 domUtils.on (doc , "mouseout" , function (e) {
                     var relatedTgt = e.relatedTarget || e.toElement;
@@ -27703,7 +26823,7 @@ UE.ui = baidu.editor.ui = {};
         },
         getHtmlTpl: function (){
             return '<div id="##" class="edui-message %%">' +
-            ' <div id="##_closer" class="edui-message-closer">×</div>' +
+            ' <div id="##_closer" class="edui-message-closer">脳</div>' +
             ' <div id="##_body" class="edui-message-body edui-message-type-info">' +
             ' <iframe style="position:absolute;z-index:-1;left:0;top:0;background-color: transparent;" frameborder="0" width="100%" height="100%" src="about:blank"></iframe>' +
             ' <div class="edui-shadow"></div>' +
@@ -27766,9 +26886,7 @@ UE.ui = baidu.editor.ui = {};
 
 
 // adapter/editorui.js
-//ui跟编辑器的适配層
-//那个按钮弹出是dialog，是下拉筐等都是在这个js中配置
-//自己写的ui也要在这里配置，放到baidu.editor.ui下边，当编辑器实例化的时候会根据ueditor.config中的toolbars找到相应的进行实例化
+//ui璺熺紪杈戝櫒鐨勯€傞厤灞?//閭ｄ釜鎸夐挳寮瑰嚭鏄痙ialog锛屾槸涓嬫媺绛愮瓑閮芥槸鍦ㄨ繖涓猨s涓厤缃?//鑷繁鍐欑殑ui涔熻鍦ㄨ繖閲岄厤缃紝鏀惧埌baidu.editor.ui涓嬭竟锛屽綋缂栬緫鍣ㄥ疄渚嬪寲鐨勬椂鍊欎細鏍规嵁ueditor.config涓殑toolbars鎵惧埌鐩稿簲鐨勮繘琛屽疄渚嬪寲
 (function () {
     var utils = baidu.editor.utils;
     var editorui = baidu.editor.ui;
@@ -27825,8 +26943,7 @@ UE.ui = baidu.editor.ui = {};
         'background':'~/dialogs/background/background.html',
         'charts': '~/dialogs/charts/charts.html'
     };
-    //为工具栏添加按钮，以下都是统一的按钮触发命令，所以写在一起
-    var btnCmds = ['undo', 'redo', 'formatmatch',
+    //涓哄伐鍏锋爮娣诲姞鎸夐挳锛屼互涓嬮兘鏄粺涓€鐨勬寜閽Е鍙戝懡浠わ紝鎵€浠ュ啓鍦ㄤ竴璧?    var btnCmds = ['undo', 'redo', 'formatmatch',
         'bold', 'italic', 'underline', 'fontborder', 'touppercase', 'tolowercase',
         'strikethrough', 'subscript', 'superscript', 'source', 'indent', 'outdent',
         'blockquote', 'pasteplain', 'pagebreak',
@@ -27865,7 +26982,7 @@ UE.ui = baidu.editor.ui = {};
         }(ci);
     }
 
-    //清除文档
+    //娓呴櫎鏂囨。
     editorui.cleardoc = function (editor) {
         var ui = new editorui.Button({
             className:'edui-for-cleardoc',
@@ -27884,7 +27001,7 @@ UE.ui = baidu.editor.ui = {};
         return ui;
     };
 
-    //排版，图片排版，文字方向
+    //鎺掔増锛屽浘鐗囨帓鐗堬紝鏂囧瓧鏂瑰悜
     var typeset = {
         'justify':['left', 'right', 'center', 'justify'],
         'imagefloat':['none', 'left', 'center', 'right'],
@@ -27917,8 +27034,7 @@ UE.ui = baidu.editor.ui = {};
         })(p, typeset[p])
     }
 
-    //字体颜色和背景颜色
-    for (var i = 0, ci; ci = ['backcolor', 'forecolor'][i++];) {
+    //瀛椾綋棰滆壊鍜岃儗鏅鑹?    for (var i = 0, ci; ci = ['backcolor', 'forecolor'][i++];) {
         editorui[ci] = function (cmd) {
             return function (editor) {
                 var ui = new editorui.ColorButton({
@@ -27957,8 +27073,7 @@ UE.ui = baidu.editor.ui = {};
     for (var p in dialogBtns) {
         (function (type, vals) {
             for (var i = 0, ci; ci = vals[i++];) {
-                //todo opera下存在问题
-                if (browser.opera && ci === "searchreplace") {
+                //todo opera涓嬪瓨鍦ㄩ棶棰?                if (browser.opera && ci === "searchreplace") {
                     continue;
                 }
                 (function (cmd) {
@@ -27967,7 +27082,7 @@ UE.ui = baidu.editor.ui = {};
                         title = editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || '';
 
                         var dialog;
-                        //没有iframeUrl不创建dialog
+                        //娌℃湁iframeUrl涓嶅垱寤篸ialog
                         if (iframeUrl) {
                             dialog = new editorui.Dialog(utils.extend({
                                 iframeUrl:editor.ui.mapUrl(iframeUrl),
@@ -28032,8 +27147,7 @@ UE.ui = baidu.editor.ui = {};
                         });
                         editorui.buttons[cmd] = ui;
                         editor.addListener('selectionchange', function () {
-                            //只存在于右键菜单而无工具栏按钮的ui不需要检测状态
-                            var unNeedCheckState = {'edittable':1};
+                            //鍙瓨鍦ㄤ簬鍙抽敭鑿滃崟鑰屾棤宸ュ叿鏍忔寜閽殑ui涓嶉渶瑕佹娴嬬姸鎬?                            var unNeedCheckState = {'edittable':1};
                             if (cmd in unNeedCheckState)return;
 
                             var state = editor.queryCommandState(cmd);
@@ -28151,7 +27265,7 @@ UE.ui = baidu.editor.ui = {};
                         ui.setValue(title);
                         return;
                     }
-                    //trace:1871 ie下从源码模式切换回来时，字体会带单引号，而且会有逗号
+                    //trace:1871 ie涓嬩粠婧愮爜妯″紡鍒囨崲鍥炴潵鏃讹紝瀛椾綋浼氬甫鍗曞紩鍙凤紝鑰屼笖浼氭湁閫楀彿
                     value && (value = value.replace(/['"]/g, '').split(',')[0]);
                     ui.setValue(value);
 
@@ -28212,7 +27326,7 @@ UE.ui = baidu.editor.ui = {};
                 } else {
                     ui.setDisabled(false);
                     var value = editor.queryCommandValue('FontFamily');
-                    //trace:1871 ie下从源码模式切换回来时，字体会带单引号，而且会有逗号
+                    //trace:1871 ie涓嬩粠婧愮爜妯″紡鍒囨崲鍥炴潵鏃讹紝瀛椾綋浼氬甫鍗曞紩鍙凤紝鑰屼笖浼氭湁閫楀彿
                     value && (value = value.replace(/['"]/g, '').split(',')[0]);
                     ui.setValue(value);
 
@@ -28320,8 +27434,7 @@ UE.ui = baidu.editor.ui = {};
     };
 
 
-    //自定义标题
-    editorui.customstyle = function (editor) {
+    //鑷畾涔夋爣棰?    editorui.customstyle = function (editor) {
         var list = editor.options['customstyle'] || [],
             title = editor.options.labelMap['customstyle'] || editor.getLang("labelMap.customstyle") || '';
         if (!list.length)return;
@@ -28413,8 +27526,7 @@ UE.ui = baidu.editor.ui = {};
         if (!val.length)return;
         for (var i = 0, ci, items = []; ci = val[i++];) {
             items.push({
-                //todo:写死了
-                label:ci,
+                //todo:鍐欐浜?                label:ci,
                 value:ci,
                 theme:editor.options.theme,
                 onclick:function () {
@@ -28489,8 +27601,7 @@ UE.ui = baidu.editor.ui = {};
             }
         })(ri)
     }
-    //有序，无序列表
-    var lists = ['insertorderedlist', 'insertunorderedlist'];
+    //鏈夊簭锛屾棤搴忓垪琛?    var lists = ['insertorderedlist', 'insertunorderedlist'];
     for (var l = 0, cl; cl = lists[l++];) {
         (function (cmd) {
             editorui[cmd] = function (editor) {
@@ -28555,7 +27666,7 @@ UE.ui = baidu.editor.ui = {};
         return ui;
     };
 
-    // 表情
+    // 琛ㄦ儏
     editorui["emotion"] = function (editor, iframeUrl) {
         var cmd = "emotion";
         var ui = new editorui.MultiMenuPop({
@@ -28588,7 +27699,7 @@ UE.ui = baidu.editor.ui = {};
         return ui;
     };
 
-    /* 简单上传插件 */
+    /* 绠€鍗曚笂浼犳彃浠?*/
     editorui["simpleupload"] = function (editor) {
         var name = 'simpleupload',
             ui = new editorui.Button({
@@ -28624,9 +27735,9 @@ UE.ui = baidu.editor.ui = {};
 
 // adapter/editor.js
 ///import core
-///commands 全屏
+///commands 鍏ㄥ睆
 ///commandsName FullScreen
-///commandsTitle  全屏
+///commandsTitle  鍏ㄥ睆
 (function () {
     var utils = baidu.editor.utils,
         uiUtils = baidu.editor.ui.uiUtils,
@@ -28650,14 +27761,14 @@ UE.ui = baidu.editor.ui = {};
                 me = this;
 
             editor.addListener('ready', function () {
-                //提供getDialog方法
+                //鎻愪緵getDialog鏂规硶
                 editor.getDialog = function (name) {
                     return editor.ui._dialogs[name + "Dialog"];
                 };
                 domUtils.on(editor.window, 'scroll', function (evt) {
                     baidu.editor.ui.Popup.postHide(evt);
                 });
-                //提供编辑器实时宽高(全屏时宽高不变化)
+                //鎻愪緵缂栬緫鍣ㄥ疄鏃跺楂?鍏ㄥ睆鏃跺楂樹笉鍙樺寲)
                 editor.ui._actualFrameWidth = editor.options.initialFrameWidth;
 
                 UE.browser.ie && UE.browser.version === 6 && editor.container.ownerDocument.execCommand("BackgroundImageCache", false, true);
@@ -28899,7 +28010,7 @@ UE.ui = baidu.editor.ui = {};
                                     '<span onclick=$$._onRemoveButtonClick(\'anchor\') class="edui-clickable">' + editor.getLang("delete") + '</span></nobr>');
                         }
                         if (img.getAttribute("word_img")) {
-                            //todo 放到dialog去做查询
+                            //todo 鏀惧埌dialog鍘诲仛鏌ヨ
                             editor.word_img = [img.getAttribute("word_img")];
                             dialogName = "wordimageDialog"
                         }
@@ -28971,8 +28082,7 @@ UE.ui = baidu.editor.ui = {};
                             toolbarItemUi = new baidu.editor.ui[toolbarItem](editor);
                         }
 
-                        //fullscreen这里单独处理一下，放到首行去
-                        if (toolbarItem == 'fullscreen') {
+                        //fullscreen杩欓噷鍗曠嫭澶勭悊涓€涓嬶紝鏀惧埌棣栬鍘?                        if (toolbarItem == 'fullscreen') {
                             if (toolbarUis && toolbarUis[0]) {
                                 toolbarUis[0].items.splice(0, 0, toolbarItemUi);
                             } else {
@@ -28994,7 +28104,7 @@ UE.ui = baidu.editor.ui = {};
                 toolbarUis[i] = toolbarUi;
             }
 
-            //接受外部定制的UI
+            //鎺ュ彈澶栭儴瀹氬埗鐨刄I
 
             utils.each(UE._customizeUI,function(obj,key){
                 var itemUI,index;
@@ -29073,13 +28183,13 @@ UE.ui = baidu.editor.ui = {};
 
                     this._bakEditorContaninerWidth = editor.iframe.parentNode.offsetWidth;
                     if (this._bakAutoHeight) {
-                        //当全屏时不能执行自动长高
+                        //褰撳叏灞忔椂涓嶈兘鎵ц鑷姩闀块珮
                         editor.autoHeightEnabled = false;
                         this.editor.disableAutoHeight();
                     }
 
                     document.documentElement.style.overflow = 'hidden';
-                    //修复，滚动条不收起的问题
+                    //淇锛屾粴鍔ㄦ潯涓嶆敹璧风殑闂
 
                     window.scrollTo(0,window.scrollY);
                     this._bakCssText = this.getDom().style.cssText;
@@ -29132,8 +28242,7 @@ UE.ui = baidu.editor.ui = {};
                 this.getDom().style.cssText = 'border:0;position:absolute;left:0;top:' + (this.editor.options.topOffset || 0) + 'px;width:' + vpRect.width + 'px;height:' + vpRect.height + 'px;z-index:' + (this.getDom().style.zIndex * 1 + 100);
                 uiUtils.setViewportOffset(this.getDom(), { left:0, top:this.editor.options.topOffset || 0 });
                 this.editor.setHeight(vpRect.height - this.getDom('toolbarbox').offsetHeight - this.getDom('bottombar').offsetHeight - (this.editor.options.topOffset || 0),true);
-                //不手动调一下，会导致全屏失效
-                if(browser.gecko){
+                //涓嶆墜鍔ㄨ皟涓€涓嬶紝浼氬鑷村叏灞忓け鏁?                if(browser.gecko){
                     try{
                         window.onresize();
                     }catch(e){
@@ -29205,8 +28314,7 @@ UE.ui = baidu.editor.ui = {};
             }
 
             var me = this;
-            //by xuheng 全屏时关掉缩放
-            this.editor.addListener('fullscreenchanged', function (e, fullScreen) {
+            //by xuheng 鍏ㄥ睆鏃跺叧鎺夌缉鏀?            this.editor.addListener('fullscreenchanged', function (e, fullScreen) {
                 if (fullScreen) {
                     me.disableScale();
 
@@ -29389,8 +28497,7 @@ UE.ui = baidu.editor.ui = {};
                     domUtils.addClass(holder, "edui-" + editor.options.theme);
                     editor.ui.render(holder);
                     var opt = editor.options;
-                    //给实例添加一个编辑器的容器引用
-                    editor.container = editor.ui.getDom();
+                    //缁欏疄渚嬫坊鍔犱竴涓紪杈戝櫒鐨勫鍣ㄥ紩鐢?                    editor.container = editor.ui.getDom();
                     var parents = domUtils.findParents(holder,true);
                     var displays = [];
                     for(var i = 0 ,ci;ci=parents[i];i++){
@@ -29414,8 +28521,7 @@ UE.ui = baidu.editor.ui = {};
                     for(var i = 0 ,ci;ci=parents[i];i++){
                         ci.style.display =  displays[i]
                     }
-                    //编辑器最外容器设置了高度，会导致，编辑器不占位
-                    //todo 先去掉，没有找到原因
+                    //缂栬緫鍣ㄦ渶澶栧鍣ㄨ缃簡楂樺害锛屼細瀵艰嚧锛岀紪杈戝櫒涓嶅崰浣?                    //todo 鍏堝幓鎺夛紝娌℃湁鎵惧埌鍘熷洜
                     if(holder.style.height){
                         holder.style.height = ''
                     }
@@ -29434,21 +28540,18 @@ UE.ui = baidu.editor.ui = {};
      * @file
      * @name UE
      * @short UE
-     * @desc UEditor的顶部命名空间
-     */
+     * @desc UEditor鐨勯《閮ㄥ懡鍚嶇┖闂?     */
     /**
      * @name getEditor
      * @since 1.2.4+
-     * @grammar UE.getEditor(id,[opt])  =>  Editor实例
-     * @desc 提供一个全局的方法得到编辑器实例
+     * @grammar UE.getEditor(id,[opt])  =>  Editor瀹炰緥
+     * @desc 鎻愪緵涓€涓叏灞€鐨勬柟娉曞緱鍒扮紪杈戝櫒瀹炰緥
      *
-     * * ''id''  放置编辑器的容器id, 如果容器下的编辑器已经存在，就直接返回
-     * * ''opt'' 编辑器的可选参数
-     * @example
-     *  UE.getEditor('containerId',{onready:function(){//创建一个编辑器实例
+     * * ''id''  鏀剧疆缂栬緫鍣ㄧ殑瀹瑰櫒id, 濡傛灉瀹瑰櫒涓嬬殑缂栬緫鍣ㄥ凡缁忓瓨鍦紝灏辩洿鎺ヨ繑鍥?     * * ''opt'' 缂栬緫鍣ㄧ殑鍙€夊弬鏁?     * @example
+     *  UE.getEditor('containerId',{onready:function(){//鍒涘缓涓€涓紪杈戝櫒瀹炰緥
      *      this.setContent('hello')
      *  }});
-     *  UE.getEditor('containerId'); //返回刚创建的实例
+     *  UE.getEditor('containerId'); //杩斿洖鍒氬垱寤虹殑瀹炰緥
      *
      */
     UE.getEditor = function (id, opt) {

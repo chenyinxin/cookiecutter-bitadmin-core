@@ -1,4 +1,4 @@
-<!DOCTYPE>
+﻿<!DOCTYPE>
 <html>
 <head>
     <title></title>
@@ -15,19 +15,11 @@
         <div id="appShow"></div>
     </div>
     <script type="text/javascript">
-        //此处配置您在百度上申请到的appkey。
-        var apikey = editor.options.webAppKey;
+        //姝ゅ閰嶇疆鎮ㄥ湪鐧惧害涓婄敵璇峰埌鐨刟ppkey銆?        var apikey = editor.options.webAppKey;
         if ( apikey && apikey.length == 24 ) {
             var searchConfig = {
-                container:'appShow', //容器ID
-                tips:"", //该值用于自动清空
-                search:1, //是否显示搜索框
-                ps:12, //每页显示的条数
-                suggest:1, //是否开启搜索自动完成
-                limit:0, //搜索结果显示条数，0表示无限制
-                searchNow:0, //是否在初始化完成时立即搜索
-                apikey:apikey, //每人得
-                pager:1,
+                container:'appShow', //瀹瑰櫒ID
+                tips:"", //璇ュ€肩敤浜庤嚜鍔ㄦ竻绌?                search:1, //鏄惁鏄剧ず鎼滅储妗?                ps:12, //姣忛〉鏄剧ず鐨勬潯鏁?                suggest:1, //鏄惁寮€鍚悳绱㈣嚜鍔ㄥ畬鎴?                limit:0, //鎼滅储缁撴灉鏄剧ず鏉℃暟锛?琛ㄧず鏃犻檺鍒?                searchNow:0, //鏄惁鍦ㄥ垵濮嬪寲瀹屾垚鏃剁珛鍗虫悳绱?                apikey:apikey, //姣忎汉寰?                pager:1,
                 cid:7134562,
                 outputHTML:1
             },baiduApp;

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,70 +38,52 @@
             maxImageSideLength:900
         });
 
-            //全局变量
-        var imageUrls = [],          //用于保存从服务器返回的图片信息数组
-            selectedImageCount = 0,  //当前已选择的但未上传的图片数量
+            //鍏ㄥ眬鍙橀噺
+        var imageUrls = [],          //鐢ㄤ簬淇濆瓨浠庢湇鍔″櫒杩斿洖鐨勫浘鐗囦俊鎭暟缁?            selectedImageCount = 0,  //褰撳墠宸查€夋嫨鐨勪絾鏈笂浼犵殑鍥剧墖鏁伴噺
             optImageUrl = editor.getActionUrl(editor.getOpt('imageActionName')),
             optImageFieldName = editor.getOpt('imageFieldName'),
             optImageCompressBorder = editor.getOpt('imageCompressEnable') ? editor.getOpt('imageCompressBorder'):null,
             maxSize = editor.getOpt('imageMaxSize') / 1024,
             extension = editor.getOpt('imageAllowFiles').join(';').replace(/\./g, '*.');
 
-        /* 添加额外的GET参数 */
+        /* 娣诲姞棰濆鐨凣ET鍙傛暟 */
         var params = utils.serializeParam(editor.queryCommandValue('serverparam')) || '',
             urlWidthParams = optImageUrl + (optImageUrl.indexOf('?') == -1 ? '?':'&') + params;
 
         utils.domReady(function(){
-            //创建Flash相关的参数集合
-            var flashOptions = {
-                container:"flashContainer",                                                    //flash容器id
-                url:urlWidthParams,                                           // 上传处理页面的url地址
-                ext:editor.queryCommandValue('serverParam') || {},                                 //可向服务器提交的自定义参数列表
-                fileType:'{"description":"'+lang.fileType+'", "extension":"' + extension + '"}',     //上传文件格式限制
-                flashUrl:'imageUploader.swf',                                                  //上传用的flash组件地址
-                width:600,          //flash的宽度
-                height:272,         //flash的高度
-                gridWidth:120,     // 每一个预览图片所占的宽度
-                gridHeight:120,    // 每一个预览图片所占的高度
-                picWidth:100,      // 单张预览图片的宽度
-                picHeight:100,     // 单张预览图片的高度
-                uploadDataFieldName: optImageFieldName,    // POST请求中图片数据的key
-                picDescFieldName:'pictitle',      // POST请求中图片描述的key
-                maxSize: maxSize,                         // 文件的最大体积,单位M
-                compressSize:1,                   // 上传前如果图片体积超过该值，会先压缩,单位M
-                maxNum:32,                         // 单次最大可上传多少个文件
-                compressSide: 0,                 //等比压缩的基准，0为按照最长边，1为按照宽度，2为按照高度
-                compressLength: optImageCompressBorder        //能接受的最大边长，超过该值Flash会自动等比压缩
-            };
-            //回调函数集合，支持传递函数名的字符串、函数句柄以及函数本身三种类型
-            var callbacks={
-                selectFileCallback: function(selectFiles){                // 选择文件的回调
-                    selectedImageCount += selectFiles.length;
+            //鍒涘缓Flash鐩稿叧鐨勫弬鏁伴泦鍚?            var flashOptions = {
+                container:"flashContainer",                                                    //flash瀹瑰櫒id
+                url:urlWidthParams,                                           // 涓婁紶澶勭悊椤甸潰鐨剈rl鍦板潃
+                ext:editor.queryCommandValue('serverParam') || {},                                 //鍙悜鏈嶅姟鍣ㄦ彁浜ょ殑鑷畾涔夊弬鏁板垪琛?                fileType:'{"description":"'+lang.fileType+'", "extension":"' + extension + '"}',     //涓婁紶鏂囦欢鏍煎紡闄愬埗
+                flashUrl:'imageUploader.swf',                                                  //涓婁紶鐢ㄧ殑flash缁勪欢鍦板潃
+                width:600,          //flash鐨勫搴?                height:272,         //flash鐨勯珮搴?                gridWidth:120,     // 姣忎竴涓瑙堝浘鐗囨墍鍗犵殑瀹藉害
+                gridHeight:120,    // 姣忎竴涓瑙堝浘鐗囨墍鍗犵殑楂樺害
+                picWidth:100,      // 鍗曞紶棰勮鍥剧墖鐨勫搴?                picHeight:100,     // 鍗曞紶棰勮鍥剧墖鐨勯珮搴?                uploadDataFieldName: optImageFieldName,    // POST璇锋眰涓浘鐗囨暟鎹殑key
+                picDescFieldName:'pictitle',      // POST璇锋眰涓浘鐗囨弿杩扮殑key
+                maxSize: maxSize,                         // 鏂囦欢鐨勬渶澶т綋绉?鍗曚綅M
+                compressSize:1,                   // 涓婁紶鍓嶅鏋滃浘鐗囦綋绉秴杩囪鍊硷紝浼氬厛鍘嬬缉,鍗曚綅M
+                maxNum:32,                         // 鍗曟鏈€澶у彲涓婁紶澶氬皯涓枃浠?                compressSide: 0,                 //绛夋瘮鍘嬬缉鐨勫熀鍑嗭紝0涓烘寜鐓ф渶闀胯竟锛?涓烘寜鐓у搴︼紝2涓烘寜鐓ч珮搴?                compressLength: optImageCompressBorder        //鑳芥帴鍙楃殑鏈€澶ц竟闀匡紝瓒呰繃璇ュ€糉lash浼氳嚜鍔ㄧ瓑姣斿帇缂?            };
+            //鍥炶皟鍑芥暟闆嗗悎锛屾敮鎸佷紶閫掑嚱鏁板悕鐨勫瓧绗︿覆銆佸嚱鏁板彞鏌勪互鍙婂嚱鏁版湰韬笁绉嶇被鍨?            var callbacks={
+                selectFileCallback: function(selectFiles){                // 閫夋嫨鏂囦欢鐨勫洖璋?                    selectedImageCount += selectFiles.length;
                     if(selectedImageCount) baidu.g("upload").style.display = "";
-                    dialog.buttons[0].setDisabled(true); //初始化时置灰确定按钮
+                    dialog.buttons[0].setDisabled(true); //鍒濆鍖栨椂缃伆纭畾鎸夐挳
                 },
-                deleteFileCallback: function(delFiles){                 // 删除文件的回调
-                    selectedImageCount -= delFiles.length;
+                deleteFileCallback: function(delFiles){                 // 鍒犻櫎鏂囦欢鐨勫洖璋?                    selectedImageCount -= delFiles.length;
                     if (!selectedImageCount) {
                         baidu.g("upload").style.display = "none";
-                        dialog.buttons[0].setDisabled(false);         //没有选择图片时重新点亮按钮
-                    }
+                        dialog.buttons[0].setDisabled(false);         //娌℃湁閫夋嫨鍥剧墖鏃堕噸鏂扮偣浜寜閽?                    }
                 },
-                uploadCompleteCallback: function(data){               // 单个文件上传完成的回调
-                    try{var info = eval("(" + data.info + ")");
+                uploadCompleteCallback: function(data){               // 鍗曚釜鏂囦欢涓婁紶瀹屾垚鐨勫洖璋?                    try{var info = eval("(" + data.info + ")");
                     info && imageUrls.push(info);
                     selectedImageCount--;
                     }catch(e){}
                 },
-                uploadErrorCallback: function (data){         // 单个文件上传失败的回调,
+                uploadErrorCallback: function (data){         // 鍗曚釜鏂囦欢涓婁紶澶辫触鐨勫洖璋?
                     console && console.log(data);
                 },
-                allCompleteCallback: function(){              // 全部上传完成时的回调
-                    dialog.buttons[0].setDisabled(false);    //上传完毕后点亮按钮
-                }
-                //exceedFileCallback: 'exceedFileCallback',   // 文件超出限制的最大体积时的回调
-                //startUploadCallback: startUploadCallback    // 开始上传某个文件时的回调
-            };
+                allCompleteCallback: function(){              // 鍏ㄩ儴涓婁紶瀹屾垚鏃剁殑鍥炶皟
+                    dialog.buttons[0].setDisabled(false);    //涓婁紶瀹屾瘯鍚庣偣浜寜閽?                }
+                //exceedFileCallback: 'exceedFileCallback',   // 鏂囦欢瓒呭嚭闄愬埗鐨勬渶澶т綋绉椂鐨勫洖璋?                //startUploadCallback: startUploadCallback    // 寮€濮嬩笂浼犳煇涓枃浠舵椂鐨勫洖璋?            };
             wordImage.init(flashOptions,callbacks);
         });
 

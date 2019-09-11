@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -81,9 +81,7 @@
                 'title' : $G("title").value.replace(/^\s+|\s+$/g, ''),
                 '_href':href
             };
-            //修改链接内容的情况太特殊了，所以先做到这里了
-            //todo:情况多的时候，做到command里
-            if(orgText && text.value != orgText){
+            //淇敼閾炬帴鍐呭鐨勬儏鍐靛お鐗规畩浜嗭紝鎵€浠ュ厛鍋氬埌杩欓噷浜?            //todo:鎯呭喌澶氱殑鏃跺€欙紝鍋氬埌command閲?            if(orgText && text.value != orgText){
                 link[browser.ie ? 'innerText' : 'textContent'] =  obj.textValue = text.value;
                 range.selectNode(link).select()
             }

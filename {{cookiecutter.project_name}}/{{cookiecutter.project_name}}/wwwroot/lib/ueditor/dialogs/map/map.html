@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -61,7 +61,7 @@
         });
         search.search(document.getElementById('address').value || document.getElementById('city').value);
     }
-    //获得参数
+    //鑾峰緱鍙傛暟
     function getPars(str,par){
         var reg = new RegExp(par+"=((\\d+|[.,])*)","g");
         return reg.exec(str)[1];
@@ -88,11 +88,9 @@
             map.addControl(new BMap.NavigationControl());
             map.centerAndZoom(point, Number(getPars(url,"zoom")));
         }else{
-            point = new BMap.Point(116.404, 39.915);    // 创建点坐标
-            marker = new BMap.Marker(point);
+            point = new BMap.Point(116.404, 39.915);    // 鍒涘缓鐐瑰潗鏍?            marker = new BMap.Marker(point);
             map.addControl(new BMap.NavigationControl());
-            map.centerAndZoom(point, 10);                     // 初始化地图,设置中心点坐标和地图级别。
-        }
+            map.centerAndZoom(point, 10);                     // 鍒濆鍖栧湴鍥?璁剧疆涓績鐐瑰潗鏍囧拰鍦板浘绾у埆銆?        }
         marker.enableDragging();
         map.addOverlay(marker);
     }
