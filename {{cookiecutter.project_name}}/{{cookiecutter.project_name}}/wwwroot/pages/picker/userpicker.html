@@ -1,10 +1,5 @@
 ﻿<!--BitAdmin2.0框架文件-->
 <link href="../../lib/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet" />
-<style type="text/css">
-    .modal .card-body {
-        padding: 0;
-    }
-</style>
 
 <div class="modal fade" id="UserSelection">
     <div class="modal-dialog modal-lg">
@@ -37,7 +32,7 @@
                             <div class="card-header">
                                 组织架构
                             </div>
-                            <div class="card-body" style="height:350px">
+                            <div class="card-body" style="height:350px;padding:0px;">
                                 <div id="departmentTree" data-url="../../picker/GetDepData" data-text="departmentName"></div>
                             </div>
                         </div>
@@ -47,7 +42,7 @@
                             <div class="card-header">
                                 未选择人员
                             </div>
-                            <div class="card-body" style="height:350px">
+                            <div class="card-body" style="height:350px;padding:0px;">
                                 <select name="from" id="UserSelect" class="form-control" style="height:100%" multiple="multiple"></select>
                             </div>
                         </div>
@@ -68,7 +63,7 @@
                             <div class="card-header">
                                 已选择人员
                             </div>
-                            <div class="card-body" style="height:350px">
+                            <div class="card-body" style="height:350px;padding:0px;">
                                 <select name="to" id="UserSelected" class="form-control" style="height:100%" multiple="multiple"></select>
                             </div>
                         </div>

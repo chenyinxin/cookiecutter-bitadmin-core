@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>BitAdminCore-消息推送示例</title>
+    <title>BitAdminCore-框架示例教程</title>
     <meta name="description" content="BitAdminCore, Version 1.0, Alpha" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -29,105 +29,164 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top: 10px;">
+        <h2 style="margin-left:10px;">框架示例教程</h2>
         <div class="row">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>推送电子邮件：</h4>
-                        发送邮件到你自己的邮箱。
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="javascript:sendEmail();" class="btn btn-success">发送电子邮件</a>
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>推送WebSocket消息：</h4>
-                        通过WebSocket方式推送消息到网页，可改造为聊天功能。
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="btn-group">
-                            <a href="javascript:pushWebSocket();" class="btn btn-success">服务端推送</a>
-                            <a href="javascript:sendWebSocket();" class="btn btn-primary">客户端发送</a>
+            <div class="col-md-2">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#remark">简述</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#helloworld">入门系列</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#email">发送电子邮件</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#websocket">发送WebSocket消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#weixinmp">发送微信公众号消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#weixinwork">发送微信企业号消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#igetui">发送个推平台消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#qrcode">生成二维码</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="tab-content" style="margin-top: -5px;">
+                    <div id="remark" class="container tab-pane active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>简述：</h4>
+                                框架提供一套完整的增删查改组件，同时集成常见的技术组件及能力。
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>推送微信公众号消息：</h4>
-                        先扫二维码关注公众号，再向自己推送一条消息。<br />
-                    </div>
-                </div>
-                <div class="row">
-                    <a href="javascript:sendWeixinMP();" class="btn btn-success">推送公众号消息</a>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>推送微信企业号消息：</h4>
-                        先扫二维码加入企业，再向自己推送一条消息。<br />
-                    </div>
-                </div>
-                <div class="row">
-                    <a href="javascript:sendWeixinWork();" class="btn btn-success">推送企业号消息</a>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>推送个推平台消息：</h4>
-                        通过个推平台向手机App推送消息。先绑定当前用户的clientId。
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="btn-group">
-                            <a href="javascript:bindClientId();" class="btn btn-success">绑定clientId</a>
-                            <a href="javascript:pushIgetui();" class="btn btn-primary">推送个推消息</a>
+                    <div id="helloworld" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>入门系列</h4>
+                                <dl>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9023862.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（一）使用Cookiecutter创建应用项目</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9061013.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（二）创建一个简单的增删改查模块</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9077992.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（三）核心套件querySuite入门介绍</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9098902.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（四）核心套件querySuite按钮功能</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9105986.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（五）核心套件querySuite列的定义</a></dd>
+                                </dl>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <hr />
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>生成二维码示例：</h4>
-                        扫描可以下载框架安卓App。
+                    <div id="email" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送电子邮件：</h4>
+                                发送邮件到你自己的邮箱。
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:sendEmail();" class="btn btn-success">发送电子邮件</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>WebSocket在线连接详细信息：</h4>
-                        提供WebSocket服务器信息，用户在线信息。<br />
+                    <div id="websocket" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送WebSocket消息：</h4>
+                                通过WebSocket方式推送消息到网页，可改造为聊天功能。
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn-group">
+                                    <a href="javascript:pushWebSocket();" class="btn btn-success">服务端推送</a>
+                                    <a href="javascript:sendWebSocket();" class="btn btn-primary">客户端发送</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>WebSocket在线连接信息：</h4>
+                                        提供WebSocket服务器信息，用户在线信息。<br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="javascript:online();" class="btn btn-success">刷新连接信息</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table">
+                                        <thead><tr><th>服务器</th><th>心跳时间</th></tr></thead>
+                                        <tbody class="server"></tbody>
+                                    </table>
+                                    <table class="table">
+                                        <thead><tr><th>ID</th><th>远程</th><th>打开</th><th>远程IP</th><th>心跳时间</th></tr></thead>
+                                        <tbody class="socket"></tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="javascript:online();" class="btn btn-success">刷新连接信息</a>
+                    <div id="weixinmp" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送微信公众号消息：</h4>
+                                先扫二维码关注公众号，再向自己推送一条消息。<br />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="javascript:sendWeixinMP();" class="btn btn-success">推送公众号消息</a>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <table class="table">
-                        <thead><tr><th>服务器</th><th>心跳时间</th></tr></thead>
-                        <tbody class="server"></tbody>
-                    </table>
-                    <table class="table">
-                        <thead><tr><th>ID</th><th>远程</th><th>打开</th><th>远程IP</th><th>心跳时间</th></tr></thead>
-                        <tbody class="socket"></tbody>
-                    </table>
-                </div>
-                <div class="row">
+                    <div id="weixinwork" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送微信企业号消息：</h4>
+                                先扫二维码加入企业，再向自己推送一条消息。<br />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="javascript:sendWeixinWork();" class="btn btn-success">推送企业号消息</a>
+                        </div>
+                    </div>
+                    <div id="igetui" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送个推平台消息：</h4>
+                                通过个推平台向手机App推送消息。先绑定当前用户的clientId。
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn-group">
+                                    <a href="javascript:bindClientId();" class="btn btn-success">绑定clientId</a>
+                                    <a href="javascript:pushIgetui();" class="btn btn-primary">推送个推消息</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="qrcode" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>生成二维码示例：</h4>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

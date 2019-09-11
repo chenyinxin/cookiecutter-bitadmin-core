@@ -50,7 +50,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             if (SSOClient.IsLogin)
                 return ToMenu(state);
 
-            return Redirect(OAuth2Api.GetCode(WeixinWorkService.CorpId, _authorizeUrl, state, _agentid, _response_type, scope));
+            return Redirect(OAuth2Api.GetCode(WeixinWorkHelper.CorpId, _authorizeUrl, state, _agentid, _response_type, scope));
         }
         public ActionResult SignIn(string code, string state)
         {
@@ -59,7 +59,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (string.IsNullOrEmpty(code))
                     return Redirect("/pages/error/error.html");
 
-                var token = CommonApi.GetToken(WeixinWorkService.CorpId, WeixinWorkService.AgentSecrets[_agentid]);
+                var token = CommonApi.GetToken(WeixinWorkHelper.CorpId, WeixinWorkHelper.AgentSecrets[_agentid]);
                 if (token.errcode != 0)
                     return Redirect("/pages/error/error.html");
 
@@ -103,7 +103,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 //同步部门
-                GetDepartmentListResult result = MailListApi.GetDepartmentList(WeixinWorkService.GetToken());
+                GetDepartmentListResult result = MailListApi.GetDepartmentList(WeixinWorkHelper.GetToken());
                 var departments = dbContext.SysDepartment.OrderByDescending(c => c.DepartmentName).ToList();
                 foreach (var item in departments)
                 {
@@ -115,11 +115,11 @@ namespace {{cookiecutter.project_name}}.Controllers
                     if (qyDep == null)
                     {
 
-                        var createResult = MailListApi.CreateDepartment(WeixinWorkService.GetToken(), item.DepartmentName, parentId == 0 ? 1 : parentId, 1000 - (item.OrderNo.HasValue ? item.OrderNo.Value : 0));
+                        var createResult = MailListApi.CreateDepartment(WeixinWorkHelper.GetToken(), item.DepartmentName, parentId == 0 ? 1 : parentId, 1000 - (item.OrderNo.HasValue ? item.OrderNo.Value : 0));
                         item.WeixinWorkId = createResult.id;
                     }
                     else
-                        MailListApi.UpdateDepartment(WeixinWorkService.GetToken(), qyDep.id, item.DepartmentName, parentId == 0 ? 1 : parentId, 1000 - (item.OrderNo.HasValue ? item.OrderNo.Value : 0));
+                        MailListApi.UpdateDepartment(WeixinWorkHelper.GetToken(), qyDep.id, item.DepartmentName, parentId == 0 ? 1 : parentId, 1000 - (item.OrderNo.HasValue ? item.OrderNo.Value : 0));
                     dbContext.SaveChanges();
                 }
                 //同步用户
@@ -130,7 +130,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                     longArr[0] = Convert.ToInt64(dbContext.SysDepartment.Where(c => c.DepartmentId == userItem.DepartmentId).FirstOrDefault().WeixinWorkId);
                     try
                     {
-                        var memberResult = MailListApi.GetMember(WeixinWorkService.GetToken(), userItem.UserCode);
+                        var memberResult = MailListApi.GetMember(WeixinWorkHelper.GetToken(), userItem.UserCode);
                         if (memberResult.errcode == Senparc.Weixin.ReturnCode_Work.UserID不存在)
                         {
                             MemberCreateRequest request = new MemberCreateRequest();
@@ -140,7 +140,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                             request.mobile = userItem.Mobile;
                             request.name = userItem.UserName;
                             request.userid = userItem.UserCode;
-                            MailListApi.CreateMember(WeixinWorkService.GetToken(), request);
+                            MailListApi.CreateMember(WeixinWorkHelper.GetToken(), request);
                         }
                         else
                         {
@@ -151,7 +151,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                             updateRequest.mobile = userItem.Mobile;
                             updateRequest.name = userItem.UserName;
                             updateRequest.userid = userItem.UserCode;
-                            MailListApi.UpdateMember(WeixinWorkService.GetToken(), updateRequest);
+                            MailListApi.UpdateMember(WeixinWorkHelper.GetToken(), updateRequest);
                         }
                     }
                     catch { }

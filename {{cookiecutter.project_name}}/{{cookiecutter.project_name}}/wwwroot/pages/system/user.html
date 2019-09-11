@@ -55,7 +55,7 @@
                     <thead>
                         <tr>
                             <th style="width:30px;"><input type="checkbox" /></th>
-                            <th data-field="userCode" data-format="edit">工号</th>
+                            <th data-field="userCode" data-format="edit">账号</th>
                             <th data-field="userName">姓名</th>
                             <th data-field="post">职位</th>
                             <th data-field="mobile">联系电话</th>
@@ -78,23 +78,45 @@
                       data-load-url="../../system/LoadUserData">
                     <table>
                         <tr>
-                            <th>工号：</th>
+                            <th>账号：</th>
                             <td>
                                 <input type="hidden" name="userId">
                                 <input type="hidden" name="departmentId" />
-                                <input name="userCode" required class="form-control required" />
+                                <input name="userCode" required class="form-control required" placeholder="用户标识，可用于登录" />
+                            </td>
+                            <td rowspan="6" style="vertical-align:top;">
+                                <input type="hidden" name="userImage" />
+                                <div id="userImage" style="float:left;"></div>
                             </td>
                         </tr>
                         <tr>
                             <th>姓名：</th>
                             <td>
-                                <input name="userName" class="form-control required" />
+                                <input name="userName" class="form-control required" placeholder="用户姓名" />
                             </td>
                         </tr>
                         <tr>
-                            <th>电话号码：</th>
+                            <th>手机：</th>
                             <td>
-                                <input type="text" name="mobile" class="form-control phone" placeholder="电话号码">
+                                <input type="text" name="mobile" class="form-control phone" placeholder="手机号码">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>邮箱：</th>
+                            <td>
+                                <input type="text" name="email" class="form-control email" placeholder="电子邮箱">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>证件：</th>
+                            <td>
+                                <input type="text" name="idCard" class="form-control" placeholder="证件号码">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>生日：</th>
+                            <td>
+                                <input type="text" name="birthDay" class="form-control" data-picker="datetime" data-format="yyyy-MM-dd" placeholder="生日日期" />
                             </td>
                         </tr>
                     </table>
@@ -112,6 +134,7 @@
     </div><!-- /.modal -->
 </div>
 
+<script src="../../js/lib/singleupload.js"></script>
 <script src="../../lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -122,10 +145,36 @@
         var formSuite = $("#formSuite").formSuite()
             .add(function () {
                 $("[name=departmentId]").val($("#parentId").val());
+                userImageBox.src("");
+            })
+            .edit(function (result) {
+                userImageBox.src(result.data.userImage);
             })
             .submit(function () {
                 querySuite.query();
             });
+
+        var userImageBox = new SingleImageUpload("#userImage", {
+            callback: function (files) {
+                var form = new FormData();
+                form.append("file", files[0], files[0].name);
+                form.append("thumbnailSizes", "1024");
+                $.ajax({
+                    type: "post",
+                    url: "../../FileService/Upload",
+                    data: form,
+                    contentType: false, //注意这里应设为false
+                    processData: false, //false
+                    cache: false,       //缓存
+                    success: function (result) {
+                        //使用压缩后的图片。
+                        var arrUrl = result.data.url.split('/');
+                        arrUrl[arrUrl.length - 1] = result.data.names;
+                        $("[name=userImage]").val(arrUrl.join('/'));
+                    }
+                });
+            }
+        });
 
         //加载组织架构
         var ouTree = $("#departmentTree").bitTree()

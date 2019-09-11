@@ -137,7 +137,6 @@
                     <ul class="nav nav-tabs" id="page-tabs" style="border-bottom: none; position: relative; white-space: nowrap; overflow: hidden;flex-wrap:nowrap;">
                         <li class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab" aria-expanded="false">首页</a></li>
                         <li class="nav-item"><a class="nav-link" href="#notice" data-toggle="tab" aria-expanded="false">示例</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#learn" data-toggle="tab" aria-expanded="false">教程</a></li>
                         <li class="nav-item"><a class="nav-link" href="#ad" data-toggle="tab" aria-expanded="false">支持</a></li>
                     </ul>
                 </div>
@@ -147,9 +146,6 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="notice">
                         <iframe id="iframe_page_notice" style="width: 100%;" src="notice.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="learn">
-                        <iframe id="iframe_page_learn" style="width: 100%;" src="learn.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="ad">
                         <iframe id="iframe_page_ad" style="width: 100%;" src="ad.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
@@ -170,38 +166,32 @@
         </footer>
         <!-- 修改密码 -->
         <div class="modal fade" id="PasswordModal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4>修改用户密码</h4>
+                        <h4>修改密码</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <span>请输入旧密码：</span>
-                        </div>
-                        <div class="input-group mb-3">
+                    <div class="modal-body" style="padding:0.5rem;">
+                        <div class="input-group" style="margin-bottom:0.5rem;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             </div>
                             <input type="password" id="OldPassword" class="form-control" placeholder="旧密码">
                         </div>
-                        <div class="input-group mb-3">
-                            <span>请输入新密码：</span>
-                        </div>
-                        <div class="input-group mb-3">
+                        <div class="input-group" style="margin-bottom:0.5rem;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             </div>
                             <input type="password" id="NewPasswordOne" class="form-control" placeholder="新密码">
                         </div>
-                        <div class="input-group mb-3">
+                        <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             </div>
                             <input type="password" id="NewPasswordTow" class="form-control" placeholder="新密码确认">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"style="margin-bottom:0px;">
                             <span id="spanmsg" style="color:red;"></span>
                         </div>
                     </div>

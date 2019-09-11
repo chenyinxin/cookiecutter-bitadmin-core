@@ -69,7 +69,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                WeixinMPService.SendText(userCode, "这是一个测试信息");
+                WeixinMPHelper.SendText(userCode, "这是一个测试信息");
                 return Json(new { Code = 0 });
             }
             catch (Exception ex)
@@ -82,7 +82,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                WeixinWorkService.SendText("", userCode, "这是一个测试信息");
+                WeixinWorkHelper.SendText("", userCode, "这是一个测试信息");
                 return Json(new { Code = 0 });
             }
             catch (Exception ex)

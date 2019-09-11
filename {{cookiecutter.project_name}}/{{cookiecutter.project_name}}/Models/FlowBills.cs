@@ -26,6 +26,6 @@ namespace {{cookiecutter.project_name}}.Models
         public string Description { get; set; }
         public int? Version { get; set; }
 
-        public ICollection<FlowBillsRecord> FlowBillsRecord { get; set; }
+        public virtual ICollection<FlowBillsRecord> FlowBillsRecord { get; set; }
     }
 }

@@ -393,3 +393,76 @@ CREATE TABLE [dbo].[SysSmsCode](
 ) ON [PRIMARY]
 GO
 
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SysQueue](
+	[Id] [uniqueidentifier] NOT NULL,
+	[ClientId] [nvarchar](64) NULL,
+	[CreateTime] [datetime] NULL,
+	[ActionName] [nvarchar](32) NULL,
+	[ActionObjectId] [nvarchar](64) NULL,
+	[ActionObjectType] [nvarchar](32) NULL,
+	[ActionData] [nvarchar](max) NULL,
+	[ResultState] [nvarchar](32) NULL,
+	[ResultNumber] [int] NULL,
+	[ResultTime] [datetime] NULL,
+	[ResultRemark] [nvarchar](128) NULL,
+ CONSTRAINT [PK_SysQueue] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SysQueueHistory](
+	[Id] [uniqueidentifier] NOT NULL,
+	[ClientId] [nvarchar](64) NULL,
+	[CreateTime] [datetime] NULL,
+	[ActionName] [nvarchar](32) NULL,
+	[ActionObjectId] [nvarchar](64) NULL,
+	[ActionObjectType] [nvarchar](32) NULL,
+	[ActionData] [nvarchar](max) NULL,
+	[ResultState] [nvarchar](32) NULL,
+	[ResultNumber] [int] NULL,
+	[ResultTime] [datetime] NULL,
+	[ResultRemark] [nvarchar](128) NULL,
+ CONSTRAINT [PK_SysQueueHistory] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[SysUserFaceFeature](
+	[UserId] [uniqueidentifier] NOT NULL,
+	[UserName] [nvarchar](32) NULL,
+	[UserType] [nvarchar](32) NULL,
+	[FaceImage] [nvarchar](512) NULL,
+	[FaceFeature] [nvarchar](max) NULL,
+	[FaceFeatureType] [nvarchar](32) NULL,
+	[FaceTimeOut] [datetime] NULL,
+	[CreateTime] [datetime] NULL,
+	[UpdateTime] [datetime] NULL,
+ CONSTRAINT [PK_SysUserFaceFeature] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO

@@ -27,7 +27,7 @@ namespace {{cookiecutter.project_name}}.Models
         public string Description { get; set; }
         public int? Batch { get; set; }
 
-        public FlowBills Bills { get; set; }
-        public ICollection<FlowBillsRecordUser> FlowBillsRecordUser { get; set; }
+        public virtual FlowBills Bills { get; set; }
+        public virtual ICollection<FlowBillsRecordUser> FlowBillsRecordUser { get; set; }
     }
 }

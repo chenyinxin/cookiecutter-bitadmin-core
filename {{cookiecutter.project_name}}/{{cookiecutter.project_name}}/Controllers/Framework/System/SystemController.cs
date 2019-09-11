@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using {{cookiecutter.project_name}}.Helpers;
 using System.Net;
 using Newtonsoft.Json;
+using {{cookiecutter.project_name}}.BLL;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
@@ -223,10 +224,11 @@ namespace {{cookiecutter.project_name}}.Controllers
             }
         }
         
-        public JsonResult SaveUserData(Guid? UserID, string userCode)
+        public JsonResult SaveUserData(Guid? UserID, string userCode,string userImage)
         {
             try
             {
+                bool updateFace = true;
                 List<SysUser> models = dbContext.SysUser.Where(x => x.UserCode == userCode || x.UserId == UserID).ToList();
 
                 if (models.FirstOrDefault(x => x.UserCode == userCode && x.UserId != UserID) != null)
@@ -243,10 +245,13 @@ namespace {{cookiecutter.project_name}}.Controllers
                 }
                 else
                 {
+                    updateFace = (model.UserImage != userImage);
                     this.ToModel(model);
                 }
                 model.UpdateBy = SSOClient.UserId;
                 dbContext.SaveChanges();
+
+                if (updateFace) FaceCompareBLL.UpdateUserFace(model);
 
                 return Json(new { Code = 0, Msg = "保存成功" });
             }
@@ -458,8 +463,9 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             try
             {
-                var model = dbContext.SysRole.FirstOrDefault(a => a.Id == roleID);
-                dbContext.Set<SysRole>().Remove(model);
+                dbContext.Set<SysRoleUser>().RemoveRange(dbContext.SysRoleUser.Where(x => x.RoleId == roleID));
+                dbContext.Set<SysRoleOperatePower>().RemoveRange(dbContext.SysRoleOperatePower.Where(x => x.RoleId == roleID));
+                dbContext.Set<SysRole>().Remove(dbContext.SysRole.FirstOrDefault(a => a.Id == roleID));
                 dbContext.SaveChanges();
                 return Json(new { Code = 0, Msg = "删除成功！" });
             }

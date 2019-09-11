@@ -21,6 +21,6 @@ namespace {{cookiecutter.project_name}}.Models
         public string DisplayState { get; set; }
         public DateTime? RunTime { get; set; }
 
-        public FlowBillsRecord BillsRecord { get; set; }
+        public virtual FlowBillsRecord BillsRecord { get; set; }
     }
 }

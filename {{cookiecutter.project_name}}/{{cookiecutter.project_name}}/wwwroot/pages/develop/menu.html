@@ -49,7 +49,7 @@
 </div>
 <!-- 模态框（Modal）编辑模块 -->
 <div id="addModel" class="modal fade formSuite-wrapper">
-    <div class="modal-dialog" style="overflow-y:auto;">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="模块"
@@ -109,6 +109,10 @@
                       data-load-url="../../develop/LoadMeunsData">
                     <table>
                         <tr>
+                            <th>唯一标识：</th>
+                            <td>
+                                <input type="text" name="pageSign" required class="form-control" />
+                            </td>
                             <th>页面名称：</th>
                             <td>
                                 <input type="hidden" name="id" />
@@ -123,31 +127,31 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>唯一标识：</th>
+                            <th>页面排序：</th>
                             <td>
-                                <input type="text" name="pageSign" required class="form-control" />
+                                <input type="text" name="orderNo" class="form-control" />
                             </td>
                             <th>页面图标：</th>
                             <td>
                                 <input type="text" name="pageIcon" class="form-control" />
+                            </td>
+                            <td colspan="2">
+                                <a href="https://fontawesome.com/icons" target="_blank">查找图标</a>
                             </td>
                         </tr>
                         <tr>
                             <th></th>
                             <td></td>
                             <th></th>
-                            <td>
-                                图标使用FontAwesome完整样式名称，<a href="https://fontawesome.com/icons" target="_blank">查找图标</a>
-                            </td>
                         </tr>
                         <tr>
                             <th>页面路径：</th>
-                            <td colspan="3">
+                            <td colspan="5">
                                 <input type="text" name="pageUrl" required class="form-control" placeholder="例：/module/page" />
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4" style="font-size:9pt;padding-left:100px;">
+                            <td colspan="6" style="font-size:9pt;padding-left:100px;line-height:20px;">
                                 <b>通过tab打开：</b><br />
                                 （1）使用模板，格式：/system/log 对应 /pages/system/log.html<br />
                                 （2）使用模板，格式：../news/system/log 对应 /news/system/log.html<br />
@@ -158,8 +162,8 @@
                         </tr>
                         <tr>
                             <th>描述：</th>
-                            <td colspan="3">
-                                <textarea name="pageDesc" class="form-control"></textarea>
+                            <td colspan="5">
+                                <textarea name="description" class="form-control"></textarea>
                             </td>
                         </tr>
                     </table>

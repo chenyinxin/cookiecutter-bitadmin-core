@@ -1,11 +1,5 @@
 ﻿<!--BitAdmin2.0框架文件-->
 <link href="../../lib/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet" />
-<style type="text/css">
-    .modal .card-body {
-        padding: 0;
-    }
-</style>
-
 <div class="modal fade" id="OUSelection">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -22,7 +16,7 @@
                             <div class="card-header">
                                 组织架构
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" style="padding:0px;">
                                 <div id="OUSelectionTree" data-url="../../picker/GetDepData" data-text="departmentName" style="height:300px; overflow-y:auto"></div>
                             </div>
                         </div>
@@ -32,7 +26,7 @@
                             <div class="card-header">
                                 已选组织
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" style="padding:0px;">
                                 <ul class="list-group" id="OUSelectionSelect" style="height: 300px; overflow-y: auto;width:100%; margin-bottom:0px;"></ul>
                             </div>
                         </div>
@@ -68,7 +62,7 @@
             });
             return { text: text, value: val };
         });
-    
+
     //加载部门
     $("#OUSelection #OUSelectionTree").bitTree()
         .select(function (event, node) {

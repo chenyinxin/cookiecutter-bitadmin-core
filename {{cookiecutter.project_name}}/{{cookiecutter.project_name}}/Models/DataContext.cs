@@ -33,6 +33,8 @@ namespace {{cookiecutter.project_name}}.Models
         public virtual DbSet<SysModulePage> SysModulePage { get; set; }
         public virtual DbSet<SysOperation> SysOperation { get; set; }
         public virtual DbSet<SysPageOperation> SysPageOperation { get; set; }
+        public virtual DbSet<SysQueue> SysQueue { get; set; }
+        public virtual DbSet<SysQueueHistory> SysQueueHistory { get; set; }
         public virtual DbSet<SysRole> SysRole { get; set; }
         public virtual DbSet<SysRoleOperatePower> SysRoleOperatePower { get; set; }
         public virtual DbSet<SysRoleUser> SysRoleUser { get; set; }
@@ -40,6 +42,7 @@ namespace {{cookiecutter.project_name}}.Models
         public virtual DbSet<SysSmsCode> SysSmsCode { get; set; }
         public virtual DbSet<SysUser> SysUser { get; set; }
         public virtual DbSet<SysUserClientId> SysUserClientId { get; set; }
+        public virtual DbSet<SysUserFaceFeature> SysUserFaceFeature { get; set; }
         public virtual DbSet<SysUserOpenId> SysUserOpenId { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -52,6 +55,8 @@ namespace {{cookiecutter.project_name}}.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
+
             modelBuilder.Entity<FlowBills>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
@@ -153,7 +158,8 @@ namespace {{cookiecutter.project_name}}.Models
 
             modelBuilder.Entity<FlowStep>(entity =>
             {
-                entity.HasKey(e => e.StepId);
+                entity.HasKey(e => e.StepId)
+                    .HasName("PK_dbo.FlowStep");
 
                 entity.Property(e => e.StepId).ValueGeneratedNever();
 
@@ -261,11 +267,15 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasColumnName("OUPicker")
                     .HasMaxLength(64);
 
+                entity.Property(e => e.PlainDecimal).HasColumnType("decimal(18, 2)");
+
                 entity.Property(e => e.PlainText).HasMaxLength(64);
 
                 entity.Property(e => e.RepeatText).HasMaxLength(64);
 
                 entity.Property(e => e.RequiredText).HasMaxLength(64);
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.UserPicker).HasMaxLength(64);
             });
@@ -311,22 +321,28 @@ namespace {{cookiecutter.project_name}}.Models
             modelBuilder.Entity<SysDictionary>(entity =>
             {
                 entity.HasKey(e => new { e.Type, e.Member })
+                    .HasName("PK_Dictionary")
                     .ForSqlServerIsClustered(false);
 
                 entity.Property(e => e.Type).HasMaxLength(64);
 
                 entity.Property(e => e.Member).HasMaxLength(64);
 
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
                 entity.Property(e => e.Description).HasMaxLength(2048);
 
                 entity.Property(e => e.MemberName)
                     .IsRequired()
                     .HasMaxLength(64);
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysLeader>(entity =>
             {
-                entity.HasKey(e => e.LeaderId);
+                entity.HasKey(e => e.LeaderId)
+                    .HasName("PK_Leader");
 
                 entity.Property(e => e.LeaderId).ValueGeneratedNever();
 
@@ -360,7 +376,7 @@ namespace {{cookiecutter.project_name}}.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserAgent)
-                    .HasMaxLength(128)
+                    .HasMaxLength(512)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserCode)
@@ -378,16 +394,22 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.ModuleId).ValueGeneratedNever();
 
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
                 entity.Property(e => e.Description).HasMaxLength(2048);
 
                 entity.Property(e => e.ModuleIcon).HasMaxLength(512);
 
                 entity.Property(e => e.ModuleName).HasMaxLength(64);
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysModulePage>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Description).HasMaxLength(2048);
 
@@ -402,19 +424,21 @@ namespace {{cookiecutter.project_name}}.Models
                     .HasMaxLength(64);
 
                 entity.Property(e => e.PageUrl).HasMaxLength(512);
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysOperation>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.CreateBy).HasMaxLength(64);
-
                 entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.OperationName).HasMaxLength(64);
 
                 entity.Property(e => e.OperationSign).HasMaxLength(64);
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysPageOperation>(entity =>
@@ -428,11 +452,57 @@ namespace {{cookiecutter.project_name}}.Models
                 entity.Property(e => e.PageId).HasColumnName("PageID");
             });
 
+            modelBuilder.Entity<SysQueue>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.ActionName).HasMaxLength(32);
+
+                entity.Property(e => e.ActionObjectId).HasMaxLength(64);
+
+                entity.Property(e => e.ActionObjectType).HasMaxLength(32);
+
+                entity.Property(e => e.ClientId).HasMaxLength(64);
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultRemark).HasMaxLength(128);
+
+                entity.Property(e => e.ResultState).HasMaxLength(32);
+
+                entity.Property(e => e.ResultTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<SysQueueHistory>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.ActionName).HasMaxLength(32);
+
+                entity.Property(e => e.ActionObjectId).HasMaxLength(64);
+
+                entity.Property(e => e.ActionObjectType).HasMaxLength(32);
+
+                entity.Property(e => e.ClientId).HasMaxLength(64);
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ResultRemark).HasMaxLength(128);
+
+                entity.Property(e => e.ResultState).HasMaxLength(32);
+
+                entity.Property(e => e.ResultTime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<SysRole>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
                 entity.Property(e => e.RoleName).HasMaxLength(64);
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<SysRoleOperatePower>(entity =>
@@ -504,6 +574,8 @@ namespace {{cookiecutter.project_name}}.Models
 
                 entity.Property(e => e.UserCode).HasMaxLength(32);
 
+                entity.Property(e => e.UserImage).HasMaxLength(128);
+
                 entity.Property(e => e.UserName).HasMaxLength(32);
 
                 entity.Property(e => e.UserPassword).HasMaxLength(128);
@@ -520,6 +592,28 @@ namespace {{cookiecutter.project_name}}.Models
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.UpdateTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<SysUserFaceFeature>(entity =>
+            {
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK_SysUserFace");
+
+                entity.Property(e => e.UserId).ValueGeneratedNever();
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.FaceFeatureType).HasMaxLength(32);
+
+                entity.Property(e => e.FaceImage).HasMaxLength(512);
+
+                entity.Property(e => e.FaceTimeOut).HasColumnType("datetime");
+
+                entity.Property(e => e.UpdateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.UserName).HasMaxLength(32);
+
+                entity.Property(e => e.UserType).HasMaxLength(32);
             });
 
             modelBuilder.Entity<SysUserOpenId>(entity =>

@@ -25,6 +25,9 @@ namespace {{cookiecutter.project_name}}
             var value = session.GetString(key);
             return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
         }
-
+        public static string MapPath(string url)
+        {
+            return AppDomain.CurrentDomain.BaseDirectory + url.Replace("/", "\\");
+        }
     }
 }
