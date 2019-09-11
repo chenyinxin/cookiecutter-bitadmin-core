@@ -1,0 +1,7 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "bitadmin-core": "^1.2.0"
+  }
+}
