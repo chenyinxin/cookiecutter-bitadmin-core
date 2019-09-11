@@ -45,6 +45,18 @@
     {
       "library": "jquery-validate@1.19.1",
       "destination": "wwwroot/lib/jquery-validate/"
+    },
+    {
+      "library": "popper.js@1.15.0",
+      "destination": "wwwroot/lib/popper.js/"
+    },
+    {
+      "library": "multiselect@2.2.9",
+      "destination": "wwwroot/lib/multiselect/"
+    },
+    {
+      "library": "jquery-contextmenu@2.8.0",
+      "destination": "wwwroot/lib/jquery-contextmenu/"
     }
   ]
 }
