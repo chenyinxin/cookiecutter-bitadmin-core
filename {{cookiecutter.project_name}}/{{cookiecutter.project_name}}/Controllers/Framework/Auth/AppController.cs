@@ -47,11 +47,39 @@ namespace {{cookiecutter.project_name}}.Controllers.Framework.Auth
             }
         }
 
+        [BitAuthorize]
+        public JsonResult BindClientId(string clientId, Guid? userId)
+        {
+            try
+            {
+                if (!userId.HasValue) userId = SSOClient.UserId;
+                var item = dbContext.SysUserClientId.FirstOrDefault(x => x.ClientId == clientId);
+                if (item == null)
+                {
+                    item = new SysUserClientId() { ClientId = clientId, UserId = userId, UpdateTime = DateTime.Now };
+                    dbContext.SysUserClientId.Add(item);
+                }
+                else
+                {
+                    item.UserId = userId;
+                    item.UpdateTime = DateTime.Now;
+                }
+                dbContext.SaveChanges();
+
+                return Json(new { Code = 0 });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.SaveLog(ex);
+                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
+            }
+        }
+
         public JsonResult Update()
         {
             try
             {
-                string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "apps");
+                string apps = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "uploadfiles", "app", "release");
                 Dictionary<string, string> vers = new Dictionary<string, string>();
                 foreach (var file in Directory.GetFiles(apps))
                 {
@@ -63,7 +91,7 @@ namespace {{cookiecutter.project_name}}.Controllers.Framework.Auth
                 }
                 var ver = vers.Keys.Max();
 
-                string url = string.Format("{0}://{1}/apps/{2}", Request.Scheme, Request.Host, Path.GetFileName(vers[ver]));
+                string url = string.Format("{0}://{1}/uploadfiles/app/release/{2}", Request.Scheme, Request.Host, Path.GetFileName(vers[ver]));
                 var varx = Path.GetFileNameWithoutExtension(vers[ver]).Split("_");
 
                 return Json(new { Code = 0, update = true, Ver = varx[varx.Length - 1], Url = url });

@@ -18,7 +18,7 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <summary>
         /// 获取全量人脸信息
         /// </summary>
-        /// <param name="siteId"></param>
+        /// <param name="siteId">客户端Id</param>
         /// <returns></returns>
         [HttpGet]
         public JsonResult DownLoadFeature(Guid siteId)
@@ -30,11 +30,16 @@ namespace {{cookiecutter.project_name}}.Controllers
 
                 foreach (var user in list)
                 {
+                    var face = dbContext.SysUserFaceFeature.FirstOrDefault(x => x.UserId == user.UserId);
+                    if (face == null) continue;
+
                     var item = new Dictionary<string, string>
                     {
+                        ["ActionName"] = "AddFace",
                         ["Id"] = user.UserId.ToString(),
                         ["Name"] = user.UserName,
                         ["ImageUrl"] = user.UserCode,
+                        ["FaceFeature"] = face.FaceFeature,
                         ["TimeOut"] = DateTime.Now.AddYears(100).ToString()
                     };
                     result.Add(item);
@@ -52,14 +57,14 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <summary>
         /// 获取增量人脸信息
         /// </summary>
-        /// <param name="siteId"></param>
+        /// <param name="siteId">客户端Id</param>
         /// <returns></returns>
         [HttpGet]
         public JsonResult DownLoadFeatureIncrement(string siteId)
         {
             try
             {
-                var list = dbContext.Set<SysQueue>().Where(x => x.ClientId == siteId && x.ActionName == "UpdateFace");
+                var list = dbContext.Set<SysQueue>().Where(x => x.ClientId == siteId && (x.ActionName == "AddFace" || x.ActionData== "DeleteFace"));
                 List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
                 foreach (var item in list)
                 {
@@ -77,7 +82,8 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <summary>
         /// 增量人脸处理结果（提交结果确保闭环）
         /// </summary>
-        /// <param name="siteId"></param>
+        /// <param name="siteId">客户端Id</param>
+        /// <param name="id">消息对象Id</param>
         /// <returns></returns>
         [HttpGet]
         public JsonResult DownLoadFeatureIncrementResult(string siteId, string id)
@@ -117,8 +123,9 @@ namespace {{cookiecutter.project_name}}.Controllers
                 if (files.Count != 2)
                     return Json(new { Code = 2, Msg = "请上传图片！" });
 
-                string file1 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0:yyyyMMdd/HHmmss}_{1}.jpg", DateTime.Now, Guid.NewGuid()));
-                string file2 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0:yyyyMMdd/HHmmss}_{1}.jpg", DateTime.Now, Guid.NewGuid()));
+                DateTime dateTime = DateTime.Now;
+                string file1 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0}/{1:yyyy}/{1:yyyyMMdd}/faces/{1:HHmmssfff}_face_full.jpg", siteId, dateTime));
+                string file2 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0}/{1:yyyy}/{1:yyyyMMdd}/faces/{1:HHmmssfff}_face_cut.jpg", siteId, dateTime));
 
                 if (!Directory.Exists(Path.GetDirectoryName(file1)))
                     Directory.CreateDirectory(Path.GetDirectoryName(file1));
@@ -144,17 +151,16 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// <param name="id"></param>
         /// <param name="score"></param>
         /// <returns></returns>
-        public async Task<JsonResult> UploadFaceForUserResult(string siteId, string id, string score)
+        public async Task<JsonResult> UploadFaceForUserResult(string siteId, string id,string name, string score)
         {
             try
             {
-
                 var files = HttpContextCore.Current.Request.Form.Files;
                 if (files.Count != 2)
                     return Json(new { Code = 2, Msg = "请上传图片！" });
 
-                string file1 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0:yyyyMMdd/HHmmss}_{1}.jpg", DateTime.Now, Guid.NewGuid()));
-                string file2 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0:yyyyMMdd/HHmmss}_{1}.jpg", DateTime.Now, Guid.NewGuid()));
+                string file1 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0}/{1:yyyy}/{1:yyyyMMdd}/users/{1:HHmmssfff}_{2}_{3}_full.jpg", siteId, DateTime.Now, name, score));
+                string file2 = HttpContextCore.MapPath(string.Format("/uploadfiles/FaceResult/{0}/{1:yyyy}/{1:yyyyMMdd}/users/{1:HHmmssfff}_{2}_{3}_cut.jpg", siteId, DateTime.Now, name, score));
 
                 if (!Directory.Exists(Path.GetDirectoryName(file1)))
                     Directory.CreateDirectory(Path.GetDirectoryName(file1));

@@ -2,10 +2,13 @@
  * BitAdmin2.0框架文件
  ***********************/
 using Baidu.Aip.Face;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace {{cookiecutter.project_name}}.Helpers
@@ -32,6 +35,37 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
 
             return false;
+        }
+
+        static string domain = "http://api.bitdao.cn";
+        public static string ExtractFeature(string imgfile)
+        {
+            HttpClient client = new HttpClient();
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            form.Add(HttpHelper.CreateStreamContent("face.jpg", imgfile));
+            HttpResponseMessage res = client.PostAsync(domain + "/FaceCompare/ExtractFeature", form).Result;
+            var json = res.Content.ReadAsStringAsync().Result;
+            var result = JsonConvert.DeserializeObject<UploadResult>(json);
+            return result.Data;
+        }
+
+        public static string MatchFeature(Bitmap image, string feature)
+        {
+            HttpClient client = new HttpClient();
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            form.Add(HttpHelper.CreateByteArrayContent("feature", feature));
+            form.Add(HttpHelper.CreateStreamContent("face.jpg", image));
+            HttpResponseMessage res = client.PostAsync(domain + "/FaceCompare/MatchFeature", form).Result;
+            var json = res.Content.ReadAsStringAsync().Result;
+            var result = JsonConvert.DeserializeObject<UploadResult>(json);
+            return result.Data;
+        }
+
+        private class UploadResult
+        {
+            public int Code { get; set; }
+            public string Msg { get; set; }
+            public string Data { get; set; }
         }
     }
 }

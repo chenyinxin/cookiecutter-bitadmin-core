@@ -251,7 +251,8 @@ namespace {{cookiecutter.project_name}}.Controllers
                 model.UpdateBy = SSOClient.UserId;
                 dbContext.SaveChanges();
 
-                if (updateFace) FaceCompareBLL.UpdateUserFace(model);
+                //更新人脸特征
+                if (updateFace) FaceCompareBLL.AddUserFace(model);
 
                 return Json(new { Code = 0, Msg = "保存成功" });
             }
@@ -271,6 +272,14 @@ namespace {{cookiecutter.project_name}}.Controllers
             try
             {
                 var result = SqlHelper.ExecuteSql(QuerySuite.DeleteSql(ids, "SysUser", "userID"));
+
+                //删除人脸特征
+                foreach (string id in ids.Split(','))
+                {
+                    var item = dbContext.SysUser.FirstOrDefault(x => x.UserId == new Guid(id));
+                    if (item != null)
+                        FaceCompareBLL.DeleteUserFace(item);
+                }
                 return Json(new { Code = 0, Msg = "删除成功" });
             }
             catch (Exception ex)

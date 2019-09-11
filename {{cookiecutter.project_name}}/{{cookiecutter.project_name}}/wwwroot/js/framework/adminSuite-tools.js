@@ -233,6 +233,7 @@ $.fn.bitTree = function (option) {
     var _option = {
         url: null,
         checkbox: false,
+        value: "value",
         text: "text",
         nodes: "children",
         expandIcon: 'fas fa-chevron-right',    //展开图标
@@ -246,6 +247,7 @@ $.fn.bitTree = function (option) {
     $.extend(_option, {
         url: _wrapper.attr("data-url"),
         checkbox: _wrapper.attr("data-checkbox"),
+        value: _wrapper.attr("data-value"),
         text: _wrapper.attr("data-text"),
         nodes: _wrapper.attr("data-nodes")
     });
@@ -255,6 +257,22 @@ $.fn.bitTree = function (option) {
         for (var i in tree) {
             tree[i]["text"] = tree[i][_option.text];
             tree[i]["nodes"] = tree[i][_option.nodes];
+
+            tree[i]['state'] = {};
+            //选中
+            var select = _option.selected();
+            if (select != undefined && tree[i][_option.value] == select[_option.value]) {
+                tree[i]['state']["selected"] = true;
+            }
+            //展开
+            console.log();
+            if (!(_wrapper.treeview(true) instanceof jQuery)) {
+                var exps = _wrapper.treeview('getExpanded');
+                $.each(exps, function (index, data) {
+                    if (tree[i][_option.value] == data[_option.value])
+                        tree[i]['state']["expanded"] = true;
+                });
+            }
             format(tree[i].nodes);
         }
     }
@@ -288,13 +306,19 @@ $.fn.bitTree = function (option) {
     };
     _option.select = function (callback) {
         if ($.isFunction(callback))
-            _option.onNodeSelected = callback;
+            _option.onNodeSelected = function (event, data) {
+                _wrapper.data("selected", data);
+                callback(event, data)
+            };
         return _option;
     };
     _option.unselect = function (callback) {
         if ($.isFunction(callback))
             _option.onNodeUnselected = callback;
         return _option;
+    };
+    _option.selected = function () {
+        return _wrapper.data("selected");
     };
     return _option;
 };

@@ -1,19 +1,41 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace {{cookiecutter.project_name}}.Helpers
 {
     public class HttpHelper
     {
+        /// <summary>
+        /// Post普通数据，可包括多个附件
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="fields"></param>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        public static string HttpPost(string url, Dictionary<string, string> fields, Dictionary<string, string> files)
+        {
+            HttpClient client = new HttpClient();
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            foreach (var field in fields)
+                form.Add(CreateStreamContent(field.Key, field.Value));
+            foreach (var file in files)
+                form.Add(HttpHelper.CreateByteArrayContent(file.Key, file.Value));
+            HttpResponseMessage res = client.PostAsync(url, form).Result;
+            return res.Content.ReadAsStringAsync().Result;
+        }
+
+        /// <summary>
+        /// Post Json数据
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public static string HttpPost(string url, string json)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -45,7 +67,8 @@ namespace {{cookiecutter.project_name}}.Helpers
                 return reader.ReadToEnd();
             }
         }
-        public static StreamContent CreateStreamContent(Bitmap img, string name)
+
+        public static StreamContent CreateStreamContent(string name, Bitmap img)
         {
             MemoryStream ms = new MemoryStream();
             img.Save(ms, ImageFormat.Jpeg);
@@ -58,6 +81,17 @@ namespace {{cookiecutter.project_name}}.Helpers
             fileContent.Headers.ContentDisposition.FileName = name;
             return fileContent;
         }
+
+        public static StreamContent CreateStreamContent(string name, string path)
+        {
+            StreamContent fileContent = new StreamContent(File.OpenRead(path));
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            fileContent.Headers.ContentDisposition.Name = "file";
+            fileContent.Headers.ContentDisposition.FileName = name;
+            return fileContent;
+        }
+
         public static ByteArrayContent CreateByteArrayContent(string key, string value)
         {
             var dataContent = new ByteArrayContent(Encoding.UTF8.GetBytes(value));

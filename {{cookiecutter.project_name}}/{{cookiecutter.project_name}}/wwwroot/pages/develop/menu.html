@@ -44,7 +44,7 @@
             </table>
         </div>
         <!-- 分页 -->
-        <div class="querySuite-paging" data-page-size="10"></div>
+        <div class="querySuite-paging"></div>
     </div>
 </div>
 <!-- 模态框（Modal）编辑模块 -->
@@ -109,15 +109,6 @@
                       data-load-url="../../develop/LoadMeunsData">
                     <table>
                         <tr>
-                            <th>唯一标识：</th>
-                            <td>
-                                <input type="text" name="pageSign" required class="form-control" />
-                            </td>
-                            <th>页面名称：</th>
-                            <td>
-                                <input type="hidden" name="id" />
-                                <input type="text" name="pageName" required class="form-control" />
-                            </td>
                             <th>所属模块：</th>
                             <td>
                                 <div class="input-group" data-picker="../picker/modulepicker.html">
@@ -127,10 +118,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>页面排序：</th>
-                            <td>
-                                <input type="text" name="orderNo" class="form-control" />
-                            </td>
                             <th>页面图标：</th>
                             <td>
                                 <input type="text" name="pageIcon" class="form-control" />
@@ -140,18 +127,26 @@
                             </td>
                         </tr>
                         <tr>
-                            <th></th>
-                            <td></td>
-                            <th></th>
+                            <th>唯一标识：</th>
+                            <td>
+                                <input type="text" name="pageSign" required class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>页面名称：</th>
+                            <td>
+                                <input type="hidden" name="id" />
+                                <input type="text" name="pageName" required class="form-control" />
+                            </td>
                         </tr>
                         <tr>
                             <th>页面路径：</th>
-                            <td colspan="5">
+                            <td colspan="3">
                                 <input type="text" name="pageUrl" required class="form-control" placeholder="例：/module/page" />
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="6" style="font-size:9pt;padding-left:100px;line-height:20px;">
+                            <td colspan="4" style="font-size:9pt;padding-left:100px;line-height:20px;">
                                 <b>通过tab打开：</b><br />
                                 （1）使用模板，格式：/system/log 对应 /pages/system/log.html<br />
                                 （2）使用模板，格式：../news/system/log 对应 /news/system/log.html<br />
@@ -182,7 +177,7 @@
 </div>
 <!-- 模态框（Modal）设置操作 -->
 <div class="modal fade" id="Modal_operation">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="operationLabel"></h4>
@@ -210,11 +205,11 @@
                     <i class="fas fa-times"></i> 关闭
                 </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
+        </div>
+    </div>
 </div>
 
-<div id="modelSql" class="modal fade" role="dialog" aria-hidden="true">
+<div id="modelSql" class="modal fade">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -228,8 +223,8 @@
                     <i class="fas fa-vote-yea"></i> 复制
                 </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
+        </div>
+    </div>
 </div>
 <script src="../../lib/jquery-treegrid/js/jquery.treegrid.min.js"></script>
 <script type="text/javascript">
@@ -238,20 +233,25 @@
             initialState: 'expanded',
             operationFormatter: function (data) {
                 var span = $("<span></span>");
-                var updateSpan = $('<span class="btn btn-link">修改</span>');
-                updateSpan.bind('click', function () {
-                    if (data.type == 1)
-                        addPageSuite.load({ id: data.id });
-                    else
-                        addModelSuite.load({ id: data.id });
-                });
-                span.append(updateSpan);
+
+                span.append($('<span class="btn btn-link">修改</span>')
+                    .bind('click', function () {
+                        if (data.type == 1)
+                            addPageSuite.load({ id: data.id });
+                        else
+                            addModelSuite.load({ id: data.id });
+                    }));
+
                 if (data.type == 1) {
-                    var operationSpan = $('<span class="btn btn-link">设置操作</span>');
-                    operationSpan.bind('click', function () {
-                        operation(data.id, data.name);
-                    });
-                    span.append(operationSpan);
+                    span.append($('<span class="btn btn-link">排序</span>')
+                        .bind('click', function () {
+                            alert(data.id);
+                        }));
+
+                    span.append($('<span class="btn btn-link">设置操作</span>')
+                        .bind('click', function () {
+                            operation(data.id, data.name);
+                        }));
                 }
                 return span;
             },
@@ -289,7 +289,7 @@
                     });
                     $("#ckOperationAll").attr("value", id);
                     $("#ckOperationAll").prop('checked', false);
-                    $("#operationLabel").text("设置【" + name + "】页面操作");
+                    $("#operationLabel").text("【" + name + "】页面操作");
                     $("#Modal_operation").modal('show');
                 }
             });

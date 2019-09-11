@@ -97,7 +97,7 @@ namespace {{cookiecutter.project_name}}.Controllers.Framework.Auth
         }
 
         [BitAuthorize]
-        public ActionResult Sync()
+        public ActionResult DownloadUser()
         {
             try
             {

@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace {{cookiecutter.project_name}}.Controllers
 {
@@ -301,11 +300,11 @@ namespace {{cookiecutter.project_name}}.Controllers
         /// 获取页面操作数据
         /// </summary>
         /// <returns></returns>
-        public JsonResult QueryOperationData(int offset, int limit)
+        public JsonResult QueryOperationData()
         {
             try
             {
-                var list = dbContext.Set<SysOperation>().OrderBy(a => a.OrderNo).Skip(offset).Take(limit).ToList();
+                var list = dbContext.Set<SysOperation>().OrderBy(a => a.OrderNo).ToList();
                 return Json(new { Code = 0, Total = dbContext.Set<SysOperation>().Count(), Data = list });
             }
             catch (Exception ex)

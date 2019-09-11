@@ -28,7 +28,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                 string where = string.IsNullOrEmpty(tablename) ? "" : "where d.name='" + tablename + "'";
                 string strSql = string.Format(@"SELECT 
                                     表名       = case when a.colorder=1 then d.name else '' end,
-                                    表说明     = case when a.colorder=1 then isnull(f.value,'') else '' end,
+                                    表说明     = case when a.colorder=1 then isnull(f.value,d.name) else '' end,
                                     字段序号   = a.colorder,
                                     字段名     = a.name,
                                     标识       = case when COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 then '√'else '' end,
@@ -40,7 +40,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                                     小数位数   = isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),0),
                                     非空     = case when a.isnullable=1 then ''else '√' end,
                                     默认值     = isnull(e.text,''),
-                                    字段说明   = isnull(g.[value],'')
+                                    字段说明   = isnull(g.[value],a.name)
                                 FROM syscolumns a left join systypes b on a.xusertype=b.xusertype
                                 inner join sysobjects d on a.id=d.id  and d.xtype='U' and  d.name<>'dtproperties'
                                 left join syscomments e on a.cdefault=e.id
@@ -76,6 +76,7 @@ namespace {{cookiecutter.project_name}}.Controllers
                         Order = Convert.ToString(row["字段序号"]),
                         Label = Convert.ToString(row["字段说明"]),
                         Name = Convert.ToString(row["字段名"]),
+                        CodeName = QuerySuite.FormatKey(Convert.ToString(row["字段名"])),
                         IsKey = Convert.ToString(row["主键"]),
                         Length = Convert.ToString(row["长度"]),
                         Type = Convert.ToString(row["类型"]),
@@ -104,6 +105,7 @@ namespace {{cookiecutter.project_name}}.Controllers
             public string Order { get; set; }
             public string Label { get; set; }
             public string Name { get; set; }
+            public string CodeName { get; set; }
             public string Type { get; set; }
             public string Length { get; set; }
             public string IsKey { get; set; }

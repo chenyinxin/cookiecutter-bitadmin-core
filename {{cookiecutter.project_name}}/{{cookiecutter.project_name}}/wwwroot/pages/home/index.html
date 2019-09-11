@@ -8,8 +8,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!--基础引用-->
-    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../../lib/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="../../lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../lib/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="../../lib/admin-lte/css/AdminLTE.min.css" rel="stylesheet" />
     <link href="../../lib/admin-lte/css/skins/_all-skins.min.css" rel="stylesheet" />
 
@@ -101,9 +101,9 @@
                             <ul class="dropdown-menu">
                                 <li class="user-header" style="height:145px;text-align:left;">
                                     <img src="../../images/home/user.jpg" class="img-circle userImage">
-                                    <p><span class="userName"></span></p>
+                                    <p><span class="departmentName"></span></p>
                                     <div style="float:right;margin-top:-130px;width:160px;">
-                                        <p style="margin-bottom:0.5rem;color:white;"><span class="departmentName"></span></p>
+                                        <p style="margin-bottom:0.5rem;color:white;"><span class="userName"></span></p>
                                         <p style="margin-bottom:0.5rem;color:white;"><span class="mobile"></span></p>
                                         <p style="margin-bottom:0.5rem;color:white;"><span class="email"></span></p>
                                     </div>
@@ -137,29 +137,22 @@
                     <ul class="nav nav-tabs" id="page-tabs" style="border-bottom: none; position: relative; white-space: nowrap; overflow: hidden;flex-wrap:nowrap;">
                         <li class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab" aria-expanded="false">首页</a></li>
                         <li class="nav-item"><a class="nav-link" href="#notice" data-toggle="tab" aria-expanded="false">示例</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#ad" data-toggle="tab" aria-expanded="false">支持</a></li>
                     </ul>
                 </div>
                 <div class="tab-content" id="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
-                        <iframe id="iframe_page_home" style="width: 100%;" src="readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+                        <iframe id="iframe_page_home" style="width: 100%;" src="summary.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="notice">
-                        <iframe id="iframe_page_notice" style="width: 100%;" src="notice.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="ad">
-                        <iframe id="iframe_page_ad" style="width: 100%;" src="ad.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
+                        <iframe id="iframe_page_notice" style="width: 100%;" src="readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
                     </div>
                 </div>
 
             </section>
         </div>
-        <!--<div class="content-wrapper" style="background-color:white;" mode="iframe">
-    <iframe id="iframe_page_home" style="width: 100%;" src="Readme.html" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="true"></iframe>
-    </div>-->
         <footer class="main-footer" style="padding: 5px;">
             <script>var _hmt = _hmt || []; (function () { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?67d9c965e616fb773b85f279d372b0c4"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })();</script>
-            <strong>Copyright &copy; 2017-2018 <a href="javascript:void();">bitdao</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2017-2019 <a href="javascript:void();">bitdao</a>.</strong> All rights reserved.
             <div style="float:right;">
                 <b>Version</b> 1.0.0
             </div>
@@ -212,7 +205,7 @@
     <!-- ./wrapper -->
     <!--基础引用-->
     <script src="../../lib/jquery/jquery.min.js"></script>
-    <script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../lib/twitter-bootstrap/js/bootstrap.min.js"></script>
     <script src="../../lib/admin-lte/js/adminlte.min.js"></script>
     <!-- 组件引用 -->
     <script type="text/javascript" src="../../js/framework/BitAdmin.js"></script>

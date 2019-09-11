@@ -24,8 +24,6 @@ namespace {{cookiecutter.project_name}}.Helpers
     /// </summary>
     public class QuerySuite
     {
-        string _dbtype = "mssql";        //mysql,oracle
-
         string _select, _orderby;
         Dictionary<string, string> _filter = new Dictionary<string, string>();
 
@@ -44,7 +42,6 @@ namespace {{cookiecutter.project_name}}.Helpers
         }
         public QuerySuite(Controller controller, string defaultOrder,string dbtype)
         {
-            _dbtype = dbtype;
             Init(controller, defaultOrder);
         }
         private void Init(Controller controller, string defaultOrder)
@@ -142,27 +139,17 @@ namespace {{cookiecutter.project_name}}.Helpers
             get
             {
                 //分页之前的总查询
-                switch (_dbtype)
-                {
-                    case "mssql":
-                        Regex regex = new Regex(_select.Trim().Substring(0, 6));
-                        string selectSql = regex.Replace(_select, "select row_number()over (order by {0}) rowNumber,", 1);
-                        if (!_select.Contains("where")) selectSql += " where 1=1 ";
+                Regex regex = new Regex(_select.Trim().Substring(0, 6));
+                string selectSql = regex.Replace(_select, "select row_number()over (order by {0}) rowNumber,", 1);
+                if (!_select.Contains("where")) selectSql += " where 1=1 ";
 
-                        StringBuilder _sbSql = new StringBuilder();
-                        _sbSql.AppendFormat(selectSql, OrderBy);
-                        foreach (var e in _filter)
-                        {
-                            _sbSql.AppendLine(e.Value);
-                        }
-                        return _sbSql.ToString();
-                    case "mysql":
-                        return "";
-                    case "oracle":
-                        return "";
-                    default:
-                        return "";
+                StringBuilder _sbSql = new StringBuilder();
+                _sbSql.AppendFormat(selectSql, OrderBy);
+                foreach (var e in _filter)
+                {
+                    _sbSql.AppendLine(e.Value);
                 }
+                return _sbSql.ToString();
             }
         }
         public SqlParameter[] Params { get { return _sqlParams.ToArray(); } }
@@ -171,17 +158,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         {
             get
             {
-                switch (_dbtype)
-                {
-                    case "mssql":
-                        return string.Format(@"select count(1) from ({0}) t ;select * from ({0}) t where rowNumber between {1} and {2} ",SqlString, StartRow, EndRow);
-                    case "mysql":
-                        return "";
-                    case "oracle":
-                        return "";
-                    default:
-                        return "";
-                }
+                return string.Format(@"select count(1) from ({0}) t ;select * from ({0}) t where rowNumber between {1} and {2} ", SqlString, StartRow, EndRow);
             }
         }
         public string ExportSql { get { return SqlString; } }
@@ -291,7 +268,7 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
             return dicList;
         }
-        private static string FormatKey(string msg)
+        public static string FormatKey(string msg)
         {
 
             int lastUpper = 0;
@@ -306,17 +283,6 @@ namespace {{cookiecutter.project_name}}.Helpers
             }
             if (msgArr.Length > 0) msgArr[0] = msgArr[0].ToString().ToLower()[0];
             return new StringBuilder().Append(msgArr).ToString();
-
-            //char[] msgArr = msg.ToCharArray();
-            //char[] result = msg.ToCharArray();
-            //for (int i = 0; i < msgArr.Length; i++)
-            //{
-            //    if ((i == 0 || i == msgArr.Length - 1) && msgArr[i] >= 'A' && msgArr[i] <= 'Z')
-            //        result[i] = msgArr[i].ToString().ToLower()[0];
-            //    else if (i + 1 < msgArr.Length && msgArr[i] >= 'A' && msgArr[i] <= 'Z' && msgArr[i - 1] >= 'A' && msgArr[i - 1] <= 'Z')
-            //        result[i] = msgArr[i].ToString().ToLower()[0];
-            //}
-            //return new StringBuilder().Append(result).ToString();
         }
     }
 

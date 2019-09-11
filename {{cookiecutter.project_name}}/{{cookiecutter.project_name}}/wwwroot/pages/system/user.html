@@ -3,10 +3,8 @@
 <div class="row box">
     <div class="col-md-3">
         <div class="card querySuite-wrapper">
-            <div class="card-header">
-                组织架构
-            </div>
-            <div id="departmentTree" data-url="../../system/GetDepartmentTree" data-text="departmentName"></div>
+            <div class="card-header"><i class="fas fa-user"></i> 组织架构</div>
+            <div id="tree" data-url="../../system/GetDepartmentTree" data-value="departmentId" data-text="departmentName"></div>
         </div>
     </div>
     <div class="col-md-9">
@@ -47,7 +45,6 @@
             <!-- 列表-->
             <div class="querySuite-table"
                  data-key="userId"
-                 data-order-by="orderNo"
                  data-query-url="../../system/QueryUserData"
                  data-delete-url="../../system/DeleteUserData"
                  data-sort-url="../../system/SortUserData">
@@ -64,7 +61,7 @@
                 </table>
             </div>
             <!-- 分页 -->
-            <div class="querySuite-paging" data-page-size="10"></div>
+            <div class="querySuite-paging"></div>
         </div>
     </div>
 </div>
@@ -177,12 +174,7 @@
         });
 
         //加载组织架构
-        var ouTree = $("#departmentTree").bitTree()
-            .load(function (result) {
-                if (result.data && result.data.length > 0) {
-                    $('#departmentTree > ul >li:eq(0)').click();
-                }
-            })
+        $("#tree").bitTree()
             .select(function (event, data) {
                 $("#parentId").val(data.departmentId);
                 querySuite.query();
@@ -191,7 +183,7 @@
 
         //同步域用户
         $("#adsync").click(function () {
-            $.get("../../ad/sync", function (result) {
+            $.get("../../ad/DownloadUser", function (result) {
                 alert(result.msg);
                 querySuite.query();
             });

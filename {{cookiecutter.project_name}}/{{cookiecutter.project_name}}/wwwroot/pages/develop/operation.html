@@ -33,7 +33,7 @@
             </table>
         </div>
         <!-- 分页 -->
-        <div class="querySuite-paging"></div>
+        <div class="querySuite-paging" style="display:none;"></div>
     </div>
 </div>
 <!-- 模态框（Modal）编辑数据字典信息 -->
@@ -76,19 +76,13 @@
 <script type="text/javascript">
     $(function () {
         //查询套件初始化
-        var querySuite = $(".querySuite-wrapper").querySuite().sortable(function (ids) { querySuite.query(); }).query();
+        var querySuite = $(".querySuite-wrapper").querySuite()
+            .sortable(function (ids) { querySuite.query(); })
+            .query();
 
         //表单套件初始化
         var formSuite = $("#formSuiteOne").formSuite()
-            .add(function () {//点击添加：初始化表单后
-                $('#Type').attr('readonly', false);
-                $('#Member').attr('readonly', false);
-            })
-            .edit(function () {//点击编辑：加载数据后
-                $('#Type').attr('readonly', true);
-                $('#Member').attr('readonly', true);
-            })
-            .submit(function () {//点击保存：数据保存成功后
+            .submit(function () {
                 querySuite.query();
             });
     });

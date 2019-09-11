@@ -183,6 +183,7 @@
 
     .modal-header h4 {
         margin-bottom: 0px;
+        line-height: 1;
     }
 
 .modal-body {
@@ -196,6 +197,10 @@
 
 .modal-lg {
     max-width: 1000px;
+}
+
+.card-header {
+    padding: 0.75rem;
 }
 
 .form-control {

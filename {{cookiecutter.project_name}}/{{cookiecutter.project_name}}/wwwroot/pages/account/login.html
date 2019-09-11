@@ -8,16 +8,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!--基础引用-->
-    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../../lib/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <!--框架引用-->
     <link href="../../lib/admin-lte/css/AdminLTE.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../css/framework/BitAdmin.css" />
     <style type="text/css">
-        .login-box-body, .form-control {
-            border-radius: 2px;
-        }
-
         .gray {
             -webkit-filter: grayscale(100%);
             -moz-filter: grayscale(100%);
@@ -44,12 +40,13 @@
                 </li>
             </ul>
             <div class="tab-content" style="padding-top:15px;">
+                <!--账号密码登录-->
                 <div id="t1" class="tab-pane active">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" id="txtUserCode1" class="form-control" placeholder="帐号/手机/邮箱" value="admin">
+                        <input type="text" id="txtUserCode" class="form-control" placeholder="帐号/手机/邮箱" value="admin">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -67,19 +64,20 @@
                             </div>
                         </div>
                         <div class="col-xs-4" id="divImg">
-                            <img id="verifyCodeImage" src="../../account/verifycode" style="cursor:pointer;" title="点击刷新" />
+                            <img id="verifyCodeImage" src="../../web/verifycode" style="cursor:pointer;" title="点击刷新" />
                         </div>
                     </div>
                     <div class="form-group">
                         <button type="button" id="btnLogin" class="btn btn-primary btn-block ">登录</button>
                     </div>
                 </div>
+                <!--手机验证登录-->
                 <div id="t2" class="tab-pane fade">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" id="txtUserCode2" class="form-control" placeholder="帐号/手机" value="admin">
+                        <input type="text" id="smsUserCode" class="form-control" placeholder="帐号/手机" value="admin">
                     </div>
                     <div class="input-group mb-3">
                         <div class="col-xs-4" style="padding-left:0px;">
@@ -108,7 +106,7 @@
                 使用第三方账号登录
             </div>
             <div class="row" style="padding-left:8px;">
-                <a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101107448&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fauth%2Fqqsignin&scope=">
+                <a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101107448&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fqq%2Flogin&scope=">
                     <img style="width:48px;" src="../../images/account/qq.png" />
                 </a>
                 <a href="https://open.weixin.qq.com/connect/qrconnect?appid={0}&redirect_uri=https%3A%2F%2Fwww.bitadmincore.com%2Fauth%2Fweixinsignin&response_type=code&scope=snsapi_login&state=#wechat_redirect">
@@ -120,7 +118,7 @@
     </div>
     <!--基础引用-->
     <script src="../../lib/jquery/jquery.min.js"></script>
-    <script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../lib/twitter-bootstrap/js/bootstrap.min.js"></script>
     <!--组件引用-->
     <script src="../../lib/jquery-validation/jquery.validate.min.js"></script>
     <script src="../../lib/jquery-form/jquery.form.min.js"></script>
@@ -141,11 +139,11 @@
 
             //账号密码登录
             $("#verifyCodeImage").click(function () {
-                $(this).attr("src", "../../account/verifycode?_" + Math.random());
+                $(this).attr("src", "../../web/verifycode?_" + Math.random());
             });
 
             $("#btnLogin").click(function () {
-                var account = $("#txtUserCode1").val();
+                var account = $("#txtUserCode").val();
                 if (account === "") {
                     $("#spanmsg").text("请输入帐号/手机/邮箱");
                     return;
@@ -163,7 +161,7 @@
 
                 $.showLoading();
                 $.ajax({
-                    url: "../../account/login",
+                    url: "../../web/login",
                     data: { account: account, password: password, verifyCode: verifyCode },
                     datatype: "json",
                     type: "post",
@@ -188,7 +186,7 @@
             //手机验证登录
             $("#smsSend").click(function () {
                 $("#spanmsg").text("");
-                var account = $("#txtUserCode2").val();
+                var account = $("#smsUserCode").val();
                 if (account === "") {
                     $("#spanmsg").text("请输入账号/手机/邮箱");
                     return;
@@ -196,7 +194,7 @@
                 settime();
                 var sign = Math.random();
                 $("#smsSign").val(sign);
-                $.get("../../account/smscode", { account: account, t: sign }, function (result) {
+                $.get("../../sms/verifycode", { account: account, t: sign }, function (result) {
                     if (result.code === 0) {
                         $("#smsLogin").attr('disabled', false);
                     } else {
@@ -206,7 +204,7 @@
                 });
             });
             $("#smsLogin").click(function () {
-                var account = $("#txtUserCode2").val();
+                var account = $("#smsUserCode").val();
                 if (account === "") {
                     $("#spanmsg").text("请输入账号/手机/邮箱");
                     return;
@@ -217,7 +215,7 @@
                     return;
                 }
                 $.showLoading();
-                $.get("../../account/smslogin", { account: account, t: $("#smsSign").val(), code: smsCode }, function (result) {
+                $.get("../../sms/login", { account: account, t: $("#smsSign").val(), code: smsCode }, function (result) {
                     if (result.code === 0) {
                         BitAdmin.RedirectToHomePage();
                     } else {
@@ -229,6 +227,7 @@
                     $.hideLoading();
                 });
             });
+            $("#smsCode").bind('keypress', function (event) { if (event.keyCode === 13) { $("#btnLogin").click(); } });
 
             var countdown = 5;
             function settime() {

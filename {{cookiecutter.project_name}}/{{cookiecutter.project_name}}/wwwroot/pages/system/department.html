@@ -3,9 +3,9 @@
 
 <div class="row box">
     <div class="col-md-3">
-        <div class="card querySuite-wrapper">
-            <div class="card-header">组织架构</div>
-            <div id="DPTree" data-url="../../system/GetDepartmentTree" data-text="departmentName"></div>
+        <div class="card">
+            <div class="card-header"><i class="fas fa-user"></i> 组织架构 <button style="float:right;margin:-6px;" class="btn btn-default" id="reload"><i class="fas fa-search"></i> 刷新</button></div>
+            <div id="tree" data-url="../../system/GetDepartmentTree" data-value="departmentId" data-text="departmentName"></div>
         </div>
     </div>
     <div class="col-md-9">
@@ -19,7 +19,7 @@
                         <th>部门名称：</th>
                         <td>
                             <input type="text" name="departmentName" class="form-control" />
-                            <!--隐藏主键--><input type="hidden" id="parentId" name="parentId" />
+                            <input type="hidden" id="parentId" name="parentId" />
                         </td>
                     </tr>
                 </table>
@@ -30,7 +30,7 @@
                     <button type="button" class="btn btn-default" action="query">
                         <i class="fas fa-search"></i> 查询
                     </button>
-                    <button type="button" class="btn btn-default" action="add" action-modal="formSuiteModal">
+                    <button type="button" class="btn btn-default" action="add" action-modal="formSuite">
                         <i class="fas fa-plus"></i> 添加
                     </button>
                     <button type="button" class="btn btn-default" action="delete">
@@ -57,18 +57,18 @@
                 </table>
             </div>
             <!-- 分页 -->
-            <div class="querySuite-paging" data-page-size="10"></div>
+            <div class="querySuite-paging"></div>
         </div>
     </div>
 </div>
 <!-- 模态框（Modal）编辑数据字典信息 -->
-<div id="formSuiteModal" class="modal fade formSuite-wrapper" role="dialog" aria-hidden="true">
+<div id="formSuite" class="modal fade formSuite-wrapper">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <form data-title="组织架构"
                       data-save-url="../../system/SaveDepartment"
-                      data-load-url="../../system/LoadDepartment" method="post">
+                      data-load-url="../../system/LoadDepartment">
                     <table>
                         <tr>
                             <th>部门编号：</th>
@@ -104,39 +104,33 @@
 <script type="text/javascript">
     $(function () {
         //查询套件初始化
-        var querySuite = $("#querySuite").querySuite()
-            .delete(function () {//点击删除：删除数据成功后
-                ouTree.load();
-            })
-            .query();
+        var querySuite = $("#querySuite").querySuite().query();
 
         //表单套件初始化
-        var formSuite = $("#formSuiteModal").formSuite()
-            .add(function () {//点击添加：初始化表单后
+        $("#formSuite").formSuite()
+            .add(function () {
                 $("#parentDepartmentId").val($("#parentId").val());
             })
-            .edit(function () {//点击编辑：加载数据后
+            .edit(function () {
                 $("#parentDepartmentId").val($("#parentId").val());
             })
-            .submit(function () {//点击保存：数据保存成功后
-                ouTree.load();
+            .submit(function () {
+                querySuite.query();
             });
 
-
-        var ouTree = $("#DPTree").bitTree()
+        var ouTree = $("#tree").bitTree()
             .load(function (result) {
-                if (result.data && result.data.length > 0) {
-                    $('#DPTree > ul >li:eq(0)').click();
+                var select = ouTree.selected();
+                if (select == undefined && result.data.length > 0) {
+                    $("#tree").find('li:eq(0)').click();
                 }
             })
             .select(function (event, data) {
                 $("#parentId").val(data.departmentId);
                 querySuite.query();
             })
-            .unselect(function (event, data) {
-                $("#parentId").val('');
-                querySuite.query();
-            })
             .load();
+
+        $("#reload").click(function () { ouTree.load(); });
     });
 </script>

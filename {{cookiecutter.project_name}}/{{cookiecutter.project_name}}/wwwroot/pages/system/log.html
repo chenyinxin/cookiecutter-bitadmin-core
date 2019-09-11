@@ -52,15 +52,15 @@
                           data-load-url="../../system/LoadLogData">
                         <table class="table-bordered">
                             <tr>
-                                <th>详情：</th>
+                                <th>代理：</th>
                                 <td>
-                                    <textarea name="description" class="form-control" rows="15" readonly />
+                                    <input name="userAgent" class="form-control" readonly style="background-color:white;" />
                                 </td>
                             </tr>
                             <tr>
-                                <th>代理：</th>
+                                <th>详情：</th>
                                 <td>
-                                    <input name="userAgent" class="form-control" readonly />
+                                    <textarea name="description" class="form-control" rows="15" readonly style="background-color:white;" />
                                 </td>
                             </tr>
                         </table>
@@ -77,7 +77,7 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        var querySuite = $(".querySuite-wrapper").querySuite().query();
-        var formSuite = $(".formSuite-wrapper").formSuite();
+        $(".querySuite-wrapper").querySuite().query();
+        $(".formSuite-wrapper").formSuite();
     });
 </script>

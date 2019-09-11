@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -10,6 +10,9 @@
     <DocumentationFile></DocumentationFile>
     <NoWarn>1701;1702;1705;1591;1573;1572;1570</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BitAdminCore.ALL" Version="1.0.10" />
@@ -29,8 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\work\home\" />
-    <Folder Include="wwwroot\work\error\" />
+    <Folder Include="Controllers\Component\" />
   </ItemGroup>
 
 </Project>

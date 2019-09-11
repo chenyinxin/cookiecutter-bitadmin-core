@@ -25,124 +25,37 @@ namespace {{cookiecutter.project_name}}.Controllers
         {
             return Json(Convert.ToString(SSOClient.IsLogin).ToLower());
         }
-        public ActionResult VerifyCode()
+        public ActionResult SignOut()
         {
-            try
-            {
-                var code = VerifyHelper.CreateCode(4);
-                var image = VerifyHelper.CreateImage(code);
-                MemoryStream ms = new MemoryStream();
-                image.Save(ms, ImageFormat.Png);
-                byte[] bytes = ms.GetBuffer();
-                ms.Close();
-
-                HttpContextCore.Current.Session.Set("VerificationCode", code);
-                return File(bytes, "image/jpeg");
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
+            SSOClient.SignOut();
+            return Json(new { Code = 0 });
         }
 
-
-
-
-        public JsonResult Login(string account, string password,string verifyCode)
+        public JsonResult BindUser(string account, string password, string openId)
         {
             try
             {
-                string vcode = HttpContextCore.Current.Session.Get<string>("VerificationCode");
-                if (Convert.ToString(verifyCode).ToLower() != Convert.ToString(vcode).ToLower())
-                    return Json(new { Code = 1, Msg = "验证码不正确，请重新输入！" });
-
                 if (!SSOClient.Validate(account, password, out Guid userId))
                     return Json(new { Code = 1, Msg = "帐号或密码不正确，请重新输入！" });
-
-                HttpContextCore.Current.Session.Set("VerificationCode", string.Empty);
-
-                SSOClient.SignIn(userId);
-                return Json(new { Code = 0 });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-        public ActionResult SMSCode(string account, string t)
-        {
-            try
-            {
-                if (!SSOClient.Validate(account,  out SysUser user))
-                    return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
-
-                string code = VerifyHelper.CreateNumber(4);
-                SMSService.Send(user.Mobile, code);
-                dbContext.SysSmsCode.Add(new SysSmsCode()
+                //公众号绑定
+                SysUserOpenId userOpenId = dbContext.Set<SysUserOpenId>().Where(x => x.OpenId == openId).FirstOrDefault();
+                if (userOpenId != null)
                 {
-                    Id = Guid.NewGuid(),
-                    Mobile = user.Mobile,
-                    CreateTime = DateTime.Now,
-                    OverTime = DateTime.Now.AddMinutes(3),
-                    IsVerify = 0,
-                    SmsCode = code,
-                    SmsSign = t
-                });
-                dbContext.SaveChanges();
-                return Json(new { Code = 0, Msg = "发送成功！" });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
-        public JsonResult SMSLogin(string account, string t, string code)
-        {
-            try
-            {
-                if (!SSOClient.Validate(account, out SysUser user))
-                    return Json(new { Code = 1, Msg = "帐号不存在，请重新输入！" });
-
-                var item = dbContext.SysSmsCode.FirstOrDefault(x => x.Mobile == user.Mobile && x.SmsCode == code && x.SmsSign == t && x.OverTime > DateTime.Now);
-                if(item==null)
-                    return Json(new { Code = 1, Msg = "验证码验证失败，请重新输入！" });
-                item.IsVerify = 1;
-                item.VerifyTime = DateTime.Now;
-                dbContext.SaveChanges();
-
-                SSOClient.SignIn(user.UserId);
-                return Json(new { Code = 0 });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
-        [BitAuthorize]
-        public JsonResult BindClientId(string clientId, Guid? userId)
-        {
-            try
-            {
-                if (!userId.HasValue) userId = SSOClient.UserId;
-                 var item = dbContext.SysUserClientId.FirstOrDefault(x => x.ClientId == clientId);
-                if (item == null)
-                {
-                    item = new SysUserClientId() { ClientId = clientId, UserId = userId, UpdateTime = DateTime.Now };
-                    dbContext.SysUserClientId.Add(item);
+                    userOpenId.UserId = userId;
+                    userOpenId.BindTime = DateTime.Now;
                 }
                 else
                 {
-                    item.UserId = userId;
-                    item.UpdateTime = DateTime.Now;
+                    userOpenId = new SysUserOpenId();
+                    userOpenId.OpenId = openId;
+                    userOpenId.UserId = userId;
+                    userOpenId.CreateTime = DateTime.Now;
+                    userOpenId.BindTime = DateTime.Now;
+                    dbContext.SysUserOpenId.Add(userOpenId);
                 }
                 dbContext.SaveChanges();
 
+                SSOClient.SignIn(userId);
                 return Json(new { Code = 0 });
             }
             catch (Exception ex)
@@ -175,47 +88,6 @@ namespace {{cookiecutter.project_name}}.Controllers
                 return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
             }
         }
-
-        /// <summary>
-        /// 登录出
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult SignOut()
-        {
-            SSOClient.SignOut();
-            return Json(new { Code = 0 });
-        }
-
-        /// <summary>
-        /// 修改密码
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [BitAuthorize]
-        public JsonResult UpdatePassword(string OldPwd, string NewPwd)
-        {
-            try
-            {
-                var userModel = dbContext.SysUser.FirstOrDefault(t => t.UserId.Equals(SSOClient.UserId));
-                if (userModel.UserPassword != EncryptHelper.MD5(OldPwd))
-                {
-                    return Json(new { Code = 1, Msg = "原密码不正确" });
-                }
-                userModel.UserPassword = EncryptHelper.MD5(NewPwd);
-                if (dbContext.SaveChanges() < 0)
-                {
-                    return Json(new { Code = 1, Msg = "修改密码失败，请联系管理员" });
-                }
-                return Json(new { Code = 0, Msg = "修改密码成功" });
-            }
-            catch (Exception ex)
-            {
-                LogHelper.SaveLog(ex);
-                return Json(new { Code = 1, Msg = "服务器异常，请联系管理员！" });
-            }
-        }
-
 
         #region 系统加载菜单
         [BitAuthorize]

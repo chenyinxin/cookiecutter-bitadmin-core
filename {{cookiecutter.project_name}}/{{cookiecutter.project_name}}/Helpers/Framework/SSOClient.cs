@@ -22,7 +22,7 @@ namespace {{cookiecutter.project_name}}.Helpers
                 return HttpContextCore.Current.User.Identity.IsAuthenticated;
             }
         }
-        public static bool Validate(string sign, string password,out Guid userid)
+        public static bool Validate(string sign, string password, out Guid userid)
         {
             userid = Guid.Empty;
             DataContext dbContext = new DataContext();
@@ -37,10 +37,10 @@ namespace {{cookiecutter.project_name}}.Helpers
         public static bool Validate(string sign, out SysUser user)
         {
             DataContext dbContext = new DataContext();
-            user = dbContext.SysUser.FirstOrDefault(t => (t.Mobile == sign || t.Email == sign || t.UserCode == sign) );
+            user = dbContext.SysUser.FirstOrDefault(t => (t.Mobile == sign || t.Email == sign || t.UserCode == sign));
             if (user == null)
                 return false;
-            
+
             return true;
         }
         public static void SignIn(Guid userid)
@@ -76,7 +76,7 @@ namespace {{cookiecutter.project_name}}.Helpers
                     string userCode = HttpContextCore.Current.User.Identity.Name;
                     DataContext dbContext = new DataContext();
                     user = dbContext.SysUser.FirstOrDefault(x => x.UserCode == userCode);
-                    HttpContextCore.Current.Session.Set("bitadmin_user",user);
+                    HttpContextCore.Current.Session.Set("bitadmin_user", user);
                 }
                 return user;
             }
@@ -85,7 +85,7 @@ namespace {{cookiecutter.project_name}}.Helpers
         {
             get
             {
-                SysDepartment department = HttpContextCore.Current.Session.Get<SysDepartment>("bitadmin_department"); 
+                SysDepartment department = HttpContextCore.Current.Session.Get<SysDepartment>("bitadmin_department");
                 if (department == null)
                 {
                     DataContext dbContext = new DataContext();
@@ -95,6 +95,7 @@ namespace {{cookiecutter.project_name}}.Helpers
                 return department;
             }
         }
+        public static bool IsAdmin { get { return !Department.ParentId.HasValue; } }
 
         public static Guid UserId => User.UserId;
         public static IEnumerable<Claim> Roles => (HttpContextCore.Current.User.Identity as ClaimsIdentity).FindAll(x => x.Type == ClaimTypes.Role);

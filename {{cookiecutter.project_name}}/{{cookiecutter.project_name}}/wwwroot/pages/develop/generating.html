@@ -1,48 +1,56 @@
 ﻿<!--BitAdmin2.0框架文件-->
 <link href="../../lib/code-prettify/prettify.css" rel="stylesheet" />
-<div class="row">
-    <div class="col-md-3">
-        <button type="button" class="btn btn-default" id="showTable" style="width:100%;">显示/隐藏</button>
-    </div>
-</div>
-<div class="row">
-    <div id="left" class="col-md-3">
-        <div class="list-group" id="tables"></div>
-    </div>
-    <div id="right" class="col-md-9">
-        <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" class="active"><a href="#tfiled" data-toggle="tab">字段</a></li>
-            <li role="presentation"><a href="#thtml" data-toggle="tab">html</a></li>
-            <li role="presentation"><a href="#tcs" data-toggle="tab">cs</a></li>
-        </ul>
-        <div class="tab-content" style="padding-top:5px;">
-            <div id="tfiled" class="tab-pane fade in active">
-                <table class="table" id="rows">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>主键</th>
-                            <th>非空</th>
-                            <th>字段名</th>
-                            <th>类型</th>
-                            <th>字段说明</th>
-                            <th>长度</th>
-                            <th>小数</th>
-                            <th>默认值</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div id="thtml" class="tab-pane fade">
-<pre class="prettyprint linenums lang-html">
-
-</pre>
-            </div>
-            <div id="tcs" class="tab-pane fade">
-<pre class="prettyprint linenums lang-javascript">
-&lt;select id=&quot;selectOne&quot; data-url=&quot;../adminSuiteExample/GetSelect&quot; data-value=&quot;DepartmentID&quot; data-text=&quot;DepartmentName&quot; class=&quot;form-control&quot;&gt;&lt;/select&gt;
-</pre>
+<div class="container-fluid box">
+    <div class="row">
+        <div id="left" class="col-md-3">
+            <div class="list-group" id="tables"></div>
+        </div>
+        <div id="right" class="col-md-9">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#tabfiled">字段</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tabhtml">html</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tabcs">cs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tabsql">sql</a>
+                </li>
+            </ul>
+            <div class="tab-content" style="padding-top:5px;">
+                <div id="tabfiled" class="tab-pane active">
+                    <table class="table" id="rows">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>主键</th>
+                                <th>非空</th>
+                                <th>字段名</th>
+                                <th>类型</th>
+                                <th>字段说明</th>
+                                <th>长度</th>
+                                <th>小数</th>
+                                <th>默认值</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="tabhtml" class="tab-pane">
+                    <button type="button" style="margin:0px 0px 5px 0px;" class="btn btn-primary copy"><i class="fas fa-vote-yea"></i> 全选 </button>
+                    <pre class="prettyprint linenums lang-html"></pre>
+                </div>
+                <div id="tabcs" class="tab-pane">
+                    <button type="button" style="margin:0px 0px 5px 0px;" class="btn btn-primary copy"><i class="fas fa-vote-yea"></i> 全选 </button>
+                    <pre class="prettyprint linenums lang-javascript"></pre>
+                </div>
+                <div id="tabsql" class="tab-pane">
+                    <button type="button" style="margin:0px 0px 5px 0px;" class="btn btn-primary copy"><i class="fas fa-vote-yea"></i> 全选 </button>
+                    <pre class="prettyprint linenums lang-sql"></pre>
+                </div>
             </div>
         </div>
     </div>
@@ -54,11 +62,11 @@
     $(function () {
         $.get("../../generating/one", function (result) {
             $.each(result.data, function (index, item) {
-                var one = $('<button type="button" class="list-group-item">' + item.name + "(" + item.remark + ')</button>');
+                var one = $('<button type="button" class="list-group-item" style="cursor: pointer;text-align:left;">' + item.name + " => " + item.remark + '</button>');
                 $("#tables").append(one);
                 one.click(function () {
                     var key = "";
-                    var filter = "", table = "", form = "";
+                    var filter = "", table = "", form = "", filteraddparam = "";
                     //filed
                     $.get("../../generating/one", { tablename: item.name }, function (resultone) {
                         $("#rows tbody").empty();
@@ -80,32 +88,42 @@
                             if (row.isKey == "√") key += "," + row.name;
 
                             //field
-                            filter += fieldtemplates.filtertext.replace(/{title}/, row.label).replace(/{name}/, row.name);
-                            table += fieldtemplates.tabletext.replace(/{title}/, row.label).replace(/{name}/, row.name);
-                            form += fieldtemplates.formtext.replace(/{title}/, row.label).replace(/{name}/, row.name);
+                            filter += fieldtemplates.filtertext.replace(/{title}/, row.label).replace(/{name}/, row.codeName);
+                            table += fieldtemplates.tabletext.replace(/{title}/, row.label).replace(/{name}/, row.codeName);
+                            form += fieldtemplates.formtext.replace(/{title}/, row.label).replace(/{name}/, row.codeName);
+
+                            filteraddparam += fieldtemplates.filteraddparam.replace(/{title}/, row.label).replace(/{name}/, row.name);
                         });
                         key = key.substring(1);
 
                         //html
                         $.get("../../generating/htmltemplates", { name: item.name, title: item.remark }, function (resulttow) {
-                            $("#thtml pre").empty();
+                            $("#tabhtml pre").empty();
 
-                            var html = resulttow.data.replace(/{filter}/, filter).replace(/{table}/, table).replace(/{form}/, form).replace(/{key}/, key)
-                            $("#thtml pre").html(html);
+                            var html = resulttow.data
+                                .replace(/{filter}/g, filter)
+                                .replace(/{table}/g, table)
+                                .replace(/{form}/g, form)
+                                .replace(/{key}/g, key);
+                            $("#tabhtml pre").html(html);
 
-                            $("#thtml pre").removeClass("prettyprinted");
+                            $("#tabhtml pre").removeClass("prettyprinted");
                             prettyPrint();
                         });
 
                         //cs
                         $.get("../../generating/csharptemplates", { name: item.name, title: item.remark }, function (resultCsharp) {
-                            $("#tcs pre").empty();
-                            $("#tcs pre").html(resultCsharp.data);
-                            $("#tcs pre").removeClass("prettyprinted");
+                            $("#tabcs pre").empty();
+                            var cs = resultCsharp.data
+                                .replace(/{filter}/g, filteraddparam)
+                                .replace(/{key}/g, key)
+                                .replace(/{keyparam}/g, "Guid? " + key)
+                                .replace(/{keylinq}/g, "x." + key + " == " + key);
+                            $("#tabcs pre").html(cs);
+                            $("#tabcs pre").removeClass("prettyprinted");
                             prettyPrint();
                         });
                     });
-                    $("#showTable").click();
                 });
             });
         });
@@ -116,18 +134,20 @@
             fieldtemplates = result.data;
         });
 
-        $("#showTable").click(function () {
-            if ($("#left").data("state") == false) {
-                $("#left").show();
-                $("#left").data("state", true);
-                $("#right").removeClass("col-md-12");
-                $("#right").addClass("col-md-9");
-            } else {
-                $("#left").hide();
-                $("#left").data("state", false);
-                $("#right").removeClass("col-md-9");
-                $("#right").addClass("col-md-12");
+        $(".copy").click(function () {
+            var text = $(this).next().get(0);
+            if (document.body.createTextRange) {
+                var range = document.body.createTextRange();
+                range.moveToElementText(text);
+                range.select();
+            } else if (window.getSelection) {
+                var selection = window.getSelection();
+                var range = document.createRange();
+                range.selectNodeContents(text);
+                selection.removeAllRanges();
+                selection.addRange(range);
             }
         });
+
     });
 </script>

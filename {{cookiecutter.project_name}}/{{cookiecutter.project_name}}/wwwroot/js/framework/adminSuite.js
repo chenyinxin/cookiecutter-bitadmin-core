@@ -379,7 +379,7 @@ $.fn.zk_table = function (_option, querySuite) {
 $.fn.zk_paging = function (option) {
     var self = this;
     var _default = {
-        pageSize: 10,
+        pageSize: 15,
         pageIndex: 1,
         pageShow: 10,
         totalContent: 1001,
@@ -514,7 +514,7 @@ $.fn.querySuite = function (option) {
         keys: [],
         columns: {},
         pageIndex: 1,
-        pageSize: 10,
+        pageSize: 15,
     };
     $.extend(_option, option, {
         key: _table.attr("data-key"),

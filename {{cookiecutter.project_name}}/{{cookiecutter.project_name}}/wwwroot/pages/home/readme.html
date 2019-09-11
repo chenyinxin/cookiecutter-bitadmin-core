@@ -1,69 +1,240 @@
 ﻿<!--BitAdmin2.0框架文件-->
-<style>
-    p {
-        font-family: 'Microsoft YaHei UI';
-        text-indent: 2em;
-    }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>BitAdminCore-框架示例教程</title>
+    <meta name="description" content="BitAdminCore, Version 1.0, Alpha" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    a:visited {
-        color: #0094ff;
-    }
-</style>
-<link href="../../css/framework/BitAdmin.css" rel="stylesheet" />
-<div class="box">
-    <div class="box-body" style="padding-left:20px;">
-        <h2 style="margin-top:10px;"><span style="font-weight:bold;">BitAdminCore介绍</span></h2>
-        <p>BitAdminCore是基于jQuery，Bootstrap，AdminLTE的 NET Core开发框架，使用SQL Server数据库。</p>
-        <p>BitAdminCore为没有自主开发框架的小团队，提供快速项目搭建及开发能力。让你的团队从零开始在一周之内可以完成一个小型系统的开发。</p>
-        <p>源码地址：<a href="https://github.com/chenyinxin/cookiecutter-bitadmin-core" target="_blank">https://github.com/chenyinxin/cookiecutter-bitadmin-core</a></p>
-        <p>博客地址：<a href="https://www.cnblogs.com/chenyinxin/" target="_blank">https://www.cnblogs.com/chenyinxin/</a></p>
-        <h4><span style="font-weight:bold;">架构思想：</span></h4>
-        <p>定位于后台管理模块开发，以管理员对数据增删改查为核心。</p>
-        <p>以程序易读性为核心，采用布局与逻辑分离、前端后端分离的思路，降低耦合度。</p>
-        <h4><span style="font-weight:bold;">规范约定：</span></h4>
-        <p>使用EF Core与Sql语句混合开发模式；使用骆驼命名法，前端示例：userName；后端示例：UserName。</p>
-        <p></p>
+    <link href="../../lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script src="../../lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+    <link href="../../css/framework/BitAdmin.css" rel="stylesheet" />
 
-        <h2><span style="font-weight:bold;">BitAdminCore套件</span></h2>
-        <h4><span style="font-weight:bold;">querySuite & formSuite：</span></h4>
-        <p>querySuite & formSuite 是增删改查一体化套件，快速实现模块增删改查功能。</p>
-        <h4><span style="font-weight:bold;">generalForm：</span></h4>
-        <p>generalForm 是一个独立表单套件。</p>        
-        <h4><span style="font-weight:bold;">其它组件：</span></h4>
-        <p>bitSelect、bitRadio、bitCheckbox、bitAutoComplete、bitAutoComSelect</p>
-        <p>bitTree、picker、datePicker、linkageSelect、treeTable、fileUpload</p>
+    <style>
+        h4 {
+            font-weight: bold;
+        }
 
-        <h2><span style="font-weight:bold;">BitAdminCore框架（网站）</span></h2>
-        <h4><span style="font-weight:bold;">登录页面：</span></h4>
-        <p>提供基础的用户名、密码、验证码、短信登录。支持负载均衡环境。</p>
-        <p>提供平台登录：微信、QQ、AD域</p>
-        <h4><span style="font-weight:bold;">应用首页：</span></h4>
-        <p>基础布局：头部、菜单、内容；默认tab加载模式，支持iframe。</p>
-        <p>全局配置、通用操作、权限、日志、通知推送等</p>
-        <h4><span style="font-weight:bold;">基础功能：</span></h4>
-        <p>系统管理：部门信息、用户信息、角色权限、日志查看。</p>
-        <p>开发功能：系统菜单、页面操作、数据字典、代码生成、原型示例。</p>
-        <p>流程引擎：流程配置、我的待办、我的已办、我的待阅、我的已阅。</p>
-        <p>示例功能：简单示例、完整示例、流程示例。</p>
+        .row {
+            margin: 5px;
+        }
 
-        <h2><span style="font-weight:bold;">BitAdminCore框架（微信）</span></h2>
-        <h4><span style="font-weight:bold;">登录页面：</span></h4>
-        <p>提供微信平台登录：公众号、企业号</p>
-        <p>提供用户名、密码、验证码、短信用户绑定。支持负载均衡环境。</p>
+        .btn {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid" style="margin-top: 10px;">
+        <h2 style="margin-left:10px;">框架示例教程</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#remark">简述</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#helloworld">入门系列</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#email">发送电子邮件</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#websocket">发送WebSocket消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#weixinmp">发送微信公众号消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#weixinwork">发送微信企业号消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#igetui">发送个推平台消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#qrcode">生成二维码</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="tab-content" style="margin-top: -5px;">
+                    <div id="remark" class="container tab-pane active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>简述：</h4>
+                                框架提供一套完整的增删查改组件，同时集成常见的技术组件及能力。
+                            </div>
+                        </div>
+                    </div>
+                    <div id="helloworld" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>入门系列</h4>
+                                <dl>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9023862.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（一）使用Cookiecutter创建应用项目</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9061013.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（二）创建一个简单的增删改查模块</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9077992.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（三）核心套件querySuite入门介绍</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9098902.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（四）核心套件querySuite按钮功能</a></dd>
+                                    <dd><a href="http://www.cnblogs.com/chenyinxin/p/9105986.html" class="btn-link" target="_blank">BitAdminCore框架应用篇：（五）核心套件querySuite列的定义</a></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="email" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送电子邮件：</h4>
+                                发送邮件到你自己的邮箱。
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:sendEmail();" class="btn btn-success">发送电子邮件</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="websocket" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送WebSocket消息：</h4>
+                                通过WebSocket方式推送消息到网页，可改造为聊天功能。
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn-group">
+                                    <a href="javascript:pushWebSocket();" class="btn btn-success">服务端推送</a>
+                                    <a href="javascript:sendWebSocket();" class="btn btn-primary">客户端发送</a>
+                                </div>
+                            </div>
+                        </div>
 
-        <h2><span style="font-weight:bold;">BitAdminCore文件服务</span></h2>
-        <p>在负载环境下，需要将上传的附件保存到文件服务器。</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>WebSocket在线连接信息：</h4>
+                                        提供WebSocket服务器信息，用户在线信息。<br />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="javascript:online();" class="btn btn-success">刷新连接信息</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table">
+                                        <thead><tr><th>服务器</th><th>心跳时间</th></tr></thead>
+                                        <tbody class="server"></tbody>
+                                    </table>
+                                    <table class="table">
+                                        <thead><tr><th>ID</th><th>远程</th><th>打开</th><th>远程IP</th><th>心跳时间</th></tr></thead>
+                                        <tbody class="socket"></tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
 
-        <h2><span style="font-weight:bold;">BitAdminCore定时服务</span></h2>
-        <p>提供Windows后台服务框架以及服务管理界面，简单开发一个定时服务。</p>
-
+                    </div>
+                    <div id="weixinmp" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送微信公众号消息：</h4>
+                                先扫二维码关注公众号，再向自己推送一条消息。<br />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="javascript:sendWeixinMP();" class="btn btn-success">推送公众号消息</a>
+                        </div>
+                    </div>
+                    <div id="weixinwork" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送微信企业号消息：</h4>
+                                先扫二维码加入企业，再向自己推送一条消息。<br />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="javascript:sendWeixinWork();" class="btn btn-success">推送企业号消息</a>
+                        </div>
+                    </div>
+                    <div id="igetui" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>推送个推平台消息：</h4>
+                                通过个推平台向手机App推送消息。先绑定当前用户的clientId。
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn-group">
+                                    <a href="javascript:bindClientId();" class="btn btn-success">绑定clientId</a>
+                                    <a href="javascript:pushIgetui();" class="btn btn-primary">推送个推消息</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="qrcode" class="container tab-pane">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>生成二维码示例：</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<!--cnzz统计代码，可以移除，开始-->
-<script>var _hmt = _hmt || []; (function () { var hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?67d9c965e616fb773b85f279d372b0c4"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s); })();</script>
-<!--cnzz统计代码，可以移除，结束-->
-<script src="../../lib/jquery/jquery.min.js"></script>
-<script src="../../js/framework/bitadmin.js"></script>
-<script>
+    <script src="../../js/framework/BitAdmin.js"></script>
+    <script>
+        function pushWebSocket() {
+            $.get("../../readme/noticWebSocket", function (result) { }); return false;
+        }
+        function sendWebSocket() {
+            window.parent.BitNoticeService.sendChat("5eeea4ce-71ab-4464-b72f-17f5163ee944", "随机数：" + Math.random());
+        }
+        function sendEmail() {
+            var email = window.prompt("请输入你的电子邮箱地址");
+            $.get("../../readme/noticEmail", { email: email }, function (result) { }); return false;
+        }
+        function pushIgetui() {
+            $.get("../../readme/noticIgetui", function (result) { }); return false;
+        }
+        function bindClientId() {
+            var cid = window.prompt("请输入clientId");
+            $.get("../../account/bindClientId", { clientId: cid, userId: "" }, function (result) { }); return false;
+        }
+        function sendWeixinMP() {
+            var userCode = window.prompt("请输入你的OpenId");
+            $.get("../../readme/noticWeixinMP", { userCode: userCode }, function (result) { }); return false;
+        }
+        function sendWeixinWork() {
+            var userCode = window.prompt("请输入你的账号");
+            $.get("../../readme/noticWeixinWork", { userCode: userCode }, function (result) { }); return false;
+        }
 
-</script>
+        function online() {
+            $.get("../../bitservice/online", function (result) {
+                var server = $(".server");
+                server.empty();
+                for (var name in result.server) {
+                    server.append('<tr><td>' + name + '</td><td>' + time.format(result.server[name], "yyyy-MM-dd HH:mm:ss") + '</td></tr>');
+                }
+
+                var socket = $(".socket");
+                socket.empty();
+                $.each(result.sockets, function (index, val) {
+                    socket.append('<tr><td>' + val["UserId"] + '</td><td>' + val["IsRemote"] + '</td><td>' + val["IsOpen"] + '</td><td>' + val["RemoteIp"] + '</td><td>' + val["RemoteTime"] + '</td></tr>');
+                });
+            }); return false;
+        }
+        online();
+    </script>
+</body>
+</html>
